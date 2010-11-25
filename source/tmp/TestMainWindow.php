@@ -1,10 +1,8 @@
 <?php
 
-require_once '../lib/winbinder.php';
 
-require_once '../source/Components/Windows/AbstractWindow.class.inc';
-require_once '../source/Components/Windows/MainWindow.class.inc';
-require_once '../source/Utils/Misc/Rectangle.class.inc';
+require_once '../bootstrap/phpunit.php';
+
 
 use Woody\Components\Windows\MainWindow;
 use Woody\Utils\Misc\Rectangle;
@@ -34,4 +32,17 @@ sleep(1);
 $win2->moveTo(900, 900);
 sleep(1);
 $win2->moveTo(0, 900);
+sleep(1);
+
+$win2->moveTo(500, 500);
+sleep(1);
+
+
+$win2->resizeBy(10, 10);
+sleep(1);
+$win2->resizeBy(100, 100);
+sleep(1);
+$win2->resizeBy(-100, 300);
+sleep(1);
+$win2->resizeTo(50, 50);
 sleep(1);

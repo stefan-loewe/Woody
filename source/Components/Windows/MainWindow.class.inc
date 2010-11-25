@@ -2,6 +2,7 @@
 
 namespace Woody\Components\Windows;
 
+use Woody\Components\Windows\AbstractWindow;
 use Woody\Utils\Misc\Rectangle;
 
 class MainWindow extends AbstractWindow

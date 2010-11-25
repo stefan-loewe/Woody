@@ -55,4 +55,20 @@ class Rectangle
 
         return $this;
     }
+
+    public function resizeBy($xOffset, $yOffset)
+    {
+        $this->width    += $xOffset;
+        $this->height   += $yOffset;
+
+        return $this;
+    }
+
+    public function resizeTo($width, $height)
+    {
+        $this->width    = $width;
+        $this->height   = $height;
+
+        return $this;
+    }
 }

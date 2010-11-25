@@ -43,7 +43,7 @@ abstract class AbstractWindow
 */
 	public function __construct($type, $id, $label, Rectangle $rectangle, $style, $param, Window $parentWindow = null)
 	{
-        todo: type via decorators???
+        //todo: type via decorators???
         $this->type         = $type;
 
         $this->id           = $id;
@@ -62,13 +62,6 @@ abstract class AbstractWindow
 		//$this->setEventHandler(self::getDefaultCallback());
 	}
 
-	public function destroy()
-	{
-		wb_destroy_window($this->controlID);
-
-        parent::destroy();
-	}
-
     public function create()
     {
         $this->windowID = wb_create_window($this->parentWindow === null ? null : $this->parentWindow->getWindowID(),
@@ -80,10 +73,16 @@ abstract class AbstractWindow
                                                $this->rectangle->getHeight(),
                                                $this->style,
                                                $this->param);
-var_dump(124);
 
 		return $this;
     }
+
+	public function destroy()
+	{
+		wb_destroy_window($this->controlID);
+
+        parent::destroy();
+	}
 
     public function initialize()
     {
@@ -92,6 +91,11 @@ var_dump(124);
 //wb_main_loop();
 
 		return $this;
+    }
+
+    public function getPosition()
+    {
+        return wb_get_position($this->windowID);
     }
 
     public function moveBy($xOffset, $yOffset)
@@ -111,6 +115,27 @@ var_dump(124);
     private function move()
     {
         wb_set_position($this->windowID, $this->rectangle->getX(), $this->rectangle->getY());
+
+        return $this;
+    }
+
+    public function resizeBy($xOffset, $yOffset)
+    {
+        $this->rectangle->resizeBy($xOffset, $yOffset);
+
+        return $this->resize();
+    }
+
+    public function resizeTo($x, $y)
+    {
+        $this->rectangle->resizeTo($x, $y);
+
+        return $this->resize();
+    }
+
+    private function resize()
+    {
+        wb_set_size($this->windowID, $this->rectangle->getWidth(), $this->rectangle->getHeight());
 
         return $this;
     }
