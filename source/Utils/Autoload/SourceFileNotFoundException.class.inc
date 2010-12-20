@@ -8,15 +8,15 @@ namespace Woody\Utils\Autoload;
  */
 class SourceFileNotFoundException extends \Exception
 {
-	/**
-	 * constructor of the exception
-	 *
-	 * @param string $name the name of the class/interface
-	 */
-	public function __construct($name)
-	{
-		$this->message = 'No source file holding the class/interface definition of the class/interface "'.$name.'" were found!';
-	}
+    /**
+     * constructor of the exception
+     *
+     * @param string $name the name of the class/interface
+     */
+    public function __construct($name)
+    {
+        $this->message = 'No source file holding the class/interface definition of the class/interface "'.$name.'" were found!';
+    }
 }
 
 ?>

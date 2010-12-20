@@ -10,20 +10,20 @@ require_once 'SourceFileNotFoundException.class.inc';
 
 class Autoloader
 {
-	/**
-	 *
-	 *
-	 * @var string
-	 */
-	private $baseDirectory = null;
+    /**
+     *
+     *
+     * @var string
+     */
+    private $baseDirectory = null;
 
-	public function __construct($baseDirectory)
-	{
-		$this->baseDirectory = str_replace('\\', \DIRECTORY_SEPARATOR, $baseDirectory);
-	}
+    public function __construct($baseDirectory)
+    {
+        $this->baseDirectory = str_replace('\\', \DIRECTORY_SEPARATOR, $baseDirectory);
+    }
 
-	public function autoload($className)
-	{
+    public function autoload($className)
+    {
         // only handle classes/interfaces that are in the woody package
         if(strpos($className, 'Woody\\') === 0)
         {
@@ -33,7 +33,7 @@ class Autoloader
             else
                 throw new SourceFileNotFoundException($className);
         }
-	}
+    }
 
     private function getFileName($className)
     {

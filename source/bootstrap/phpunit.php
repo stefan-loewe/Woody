@@ -1,10 +1,14 @@
 <?php
 
-require_once 'D:/programming/workspace/PHP/woody/source/Utils/Autoload/Autoloader.class.inc';
-require_once 'D:/programming/workspace/PHP/woody/lib/winbinder.php';
+define('INSTALLATION_FOLDER', str_replace('\\', '/', realpath(__DIR__.'/../..')));
+
+define('SOURCE_FOLDER', INSTALLATION_FOLDER.'/source');
+
+require_once INSTALLATION_FOLDER.'/lib/winbinder.php';
+require_once SOURCE_FOLDER.'/Utils/Autoload/Autoloader.class.inc';
 
 use Woody\Utils\Autoload\Autoloader;
 
-$autoloader = new Autoloader('D:/programming/workspace/PHP/woody/source/');
+$autoloader = new Autoloader(SOURCE_FOLDER.'/');
 
 spl_autoload_register(array($autoloader, 'autoload'));
