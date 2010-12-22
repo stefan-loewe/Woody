@@ -7,7 +7,6 @@ namespace Woody\Utils\Autoload;
 */
 require_once 'SourceFileNotFoundException.class.inc';
 
-
 class Autoloader
 {
     /**
@@ -19,7 +18,7 @@ class Autoloader
 
     public function __construct($baseDirectory)
     {
-        $this->baseDirectory = str_replace('\\', \DIRECTORY_SEPARATOR, $baseDirectory);
+        $this->baseDirectory = str_replace('\\', '/', $baseDirectory);
     }
 
     public function autoload($className)
@@ -37,11 +36,11 @@ class Autoloader
 
     private function getFileName($className)
     {
-        var_dump('org: '.$className);
+        //var_dump('org: '.$className);
         $className = str_replace('Woody\\', '', $className);
-        var_dump('new: '.$className);
-        $fileName  = $this->baseDirectory.str_replace('\\', \DIRECTORY_SEPARATOR, $className).'.class.inc';
-        var_dump('file: '.$fileName);
+        //var_dump('new: '.$className);
+        $fileName  = $this->baseDirectory.str_replace('\\', '/', $className).'.class.inc';
+        //var_dump('file: '.$fileName);
 
         return $fileName;
     }
