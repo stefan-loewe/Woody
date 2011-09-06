@@ -10,6 +10,7 @@ abstract class AbstractWindow
 {
     private $type               = null;
 
+    
     private $windowID           = null;
 
     /**
