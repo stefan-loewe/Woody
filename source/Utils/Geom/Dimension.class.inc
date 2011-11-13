@@ -14,28 +14,33 @@ class Dimension
         $this->height   = $height;
     }
 
-    public function getWidth()
+    public function __get($memberName)
     {
-        return $this->width;
-    }
-
-    public function getHeight()
-    {
-        return $this->height;
+        return $this->$memberName;
     }
 
     public function setWidth($width)
     {
-        $this->width = $width;
-        
-        return $this;
+        return new Dimension($width, $this->height);
     }
 
     public function setHeight($height)
     {
-        $this->height = $height;
+        return new Dimension($this->width, $height);
+    }
 
-        return $this;
+    public function resizeTo($newHeight, $newWidth)
+    {
+        $newDimension = $this->setWidth($newWidth);
+
+        return $newDimension->setHeight($newHeight);
+    }
+
+    public function resizeBy($xOffset, $yOffset)
+    {
+        $newDimension = $this->setWidth($this->width + $xOffset);
+
+        return $newDimension->setHeight($this->height + $yOffset);
     }
 
     public function equals($other)

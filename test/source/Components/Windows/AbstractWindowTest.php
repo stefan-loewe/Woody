@@ -1,6 +1,9 @@
 <?php
 namespace Woody\Components\Windows;
 
+use Woody\Components\Controls\Frame;
+
+
 use Woody\Utils\Geom\Point;
 use Woody\Utils\Geom\Dimension;
 use Woody\System\System;
@@ -41,78 +44,103 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase
 
     public function testMoveBy()
     {
+        $f = new Frame();
+
         $this->object->moveBy(10, 10);
-        $this->assertTrue($this->object->getPosition()->equals(new Point(60, 60)));
-
+        $this->assertEquals($this->object->getPosition()->x, 60);
+        $this->assertEquals($this->object->getPosition()->y, 60);
+usleep(100000);
+sleep(3);
+$this->object->add($f);
+sleep(3);
         $this->object->moveBy(100, 300);
-        $this->assertTrue($this->object->getPosition()->equals(new Point(160, 360)));
-
+        $this->assertEquals($this->object->getPosition()->x, 160);
+        $this->assertEquals($this->object->getPosition()->y, 360);
+usleep(100000);
         $this->object->moveBy(-300, 300);
-        $this->assertTrue($this->object->getPosition()->equals(new Point(System::WIN_MIN_LEFT, 660)));
-
+        $this->assertEquals($this->object->getPosition()->x, System::WIN_MIN_LEFT);
+        $this->assertEquals($this->object->getPosition()->y, 660);
+usleep(100000);
         $this->object->moveBy(140, -660);
-        $this->assertTrue($this->object->getPosition()->equals(new Point(140, System::WIN_MIN_TOP)));
-
+        $this->assertEquals($this->object->getPosition()->x, 140);
+        $this->assertEquals($this->object->getPosition()->y, System::WIN_MIN_TOP);
+usleep(100000);
         $this->object->moveBy(300, 200);
-        $this->assertTrue($this->object->getPosition()->equals(new Point(440, 200)));
+        $this->assertEquals($this->object->getPosition()->x, 440);
+        $this->assertEquals($this->object->getPosition()->y, 200);
     }
 
     public function testMoveTo()
     {
-        $this->object->moveTo(0, 0);
-        $this->assertTrue($this->object->getPosition()->equals(new Point(System::WIN_MIN_LEFT, System::WIN_MIN_TOP)));
-
-        $this->object->moveTo(400, 300);
-        $this->assertTrue($this->object->getPosition()->equals(new Point(400, 300)));
-
-        $this->object->moveTo(4000, 3000);
-        $this->assertTrue($this->object->getPosition()->equals(new Point(4000, 3000)));
-
-        $this->object->moveTo(-400, -300);
-        $this->assertTrue($this->object->getPosition()->equals(new Point(System::WIN_MIN_LEFT, System::WIN_MIN_TOP)));
-
-        $this->object->moveTo(0, 0);
-        $this->assertTrue($this->object->getPosition()->equals(new Point(System::WIN_MIN_LEFT, System::WIN_MIN_TOP)));
+        $this->object->moveTo(new Point(0, 0));
+        $this->assertEquals($this->object->getPosition()->x, System::WIN_MIN_LEFT);
+        $this->assertEquals($this->object->getPosition()->y, System::WIN_MIN_TOP);
+usleep(100000);
+        $this->object->moveTo(new Point(400, 300));
+        $this->assertEquals($this->object->getPosition()->x, 400);
+        $this->assertEquals($this->object->getPosition()->y, 300);
+usleep(100000);
+        $this->object->moveTo(new Point(4000, 3000));
+        $this->assertEquals($this->object->getPosition()->x, 4000);
+        $this->assertEquals($this->object->getPosition()->y, 3000);
+usleep(100000);
+        $this->object->moveTo(new Point(-400, -300));
+        $this->assertEquals($this->object->getPosition()->x, System::WIN_MIN_LEFT);
+        $this->assertEquals($this->object->getPosition()->y, System::WIN_MIN_TOP);
+usleep(100000);
+        $this->object->moveTo(new Point(0, 0));
+        $this->assertEquals($this->object->getPosition()->x, System::WIN_MIN_LEFT);
+        $this->assertEquals($this->object->getPosition()->y, System::WIN_MIN_TOP);
     }
 
     public function testResizeBy()
     {
-//usleep(1000000);
         $this->object->resizeBy(0, 0);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(300, 200)));
-
+        $this->assertEquals($this->object->getDimension()->width, 300);
+        $this->assertEquals($this->object->getDimension()->height, 200);
+usleep(100000);
         $this->object->resizeBy(100, 200);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(400, 400)));
-
+        $this->assertEquals($this->object->getDimension()->width, 400);
+        $this->assertEquals($this->object->getDimension()->height, 400);
+usleep(100000);
         $this->object->resizeBy(500, 600);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(900, 1000)));
-
+        $this->assertEquals($this->object->getDimension()->width, 900);
+        $this->assertEquals($this->object->getDimension()->height, 1000);
+usleep(100000);
         $this->object->resizeBy(-878, -966);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(System::WIN_MIN_WIDTH, System::WIN_MIN_HEIGHT)));
-
+        $this->assertEquals($this->object->getDimension()->width, System::WIN_MIN_WIDTH);
+        $this->assertEquals($this->object->getDimension()->height, System::WIN_MIN_HEIGHT);
+usleep(100000);
         $this->object->resizeBy(-200, -100);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(System::WIN_MIN_WIDTH, System::WIN_MIN_HEIGHT)));
-
+        $this->assertEquals($this->object->getDimension()->width, System::WIN_MIN_WIDTH);
+        $this->assertEquals($this->object->getDimension()->height, System::WIN_MIN_HEIGHT);
+usleep(100000);
         $this->object->resizeBy(177, 166);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(300, 200)));
+        $this->assertEquals($this->object->getDimension()->width, 300);
+        $this->assertEquals($this->object->getDimension()->height, 200);
     }
 
     public function testResizeTo()
     {
-        $this->object->resizeTo(300, 200);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(300, 200)));
-
-        $this->object->resizeTo(600, 400);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(600, 400)));
-
-        $this->object->resizeTo(0, 0);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(System::WIN_MIN_WIDTH, System::WIN_MIN_HEIGHT)));
-
-        $this->object->resizeTo(-100, -200);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(System::WIN_MIN_WIDTH, System::WIN_MIN_HEIGHT)));
-
-        $this->object->resizeTo(300, 200);
-        $this->assertTrue($this->object->getDimension()->equals(new Dimension(300, 200)));
+        $this->object->resizeTo(new Dimension(300, 200));
+        $this->assertEquals($this->object->getDimension()->width, 300);
+        $this->assertEquals($this->object->getDimension()->height, 200);
+usleep(100000);
+        $this->object->resizeTo(new Dimension(600, 400));
+        $this->assertEquals($this->object->getDimension()->width, 600);
+        $this->assertEquals($this->object->getDimension()->height, 400);
+usleep(100000);
+        $this->object->resizeTo(new Dimension(0, 0));
+        $this->assertEquals($this->object->getDimension()->width, System::WIN_MIN_WIDTH);
+        $this->assertEquals($this->object->getDimension()->height, System::WIN_MIN_HEIGHT);
+usleep(100000);
+        $this->object->resizeTo(new Dimension(-100, -200));
+        $this->assertEquals($this->object->getDimension()->width, System::WIN_MIN_WIDTH);
+        $this->assertEquals($this->object->getDimension()->height, System::WIN_MIN_HEIGHT);
+usleep(100000);
+        $this->object->resizeTo(new Dimension(300, 200));
+        $this->assertEquals($this->object->getDimension()->width, 300);
+        $this->assertEquals($this->object->getDimension()->height, 200);
     }
 }
 ?>
