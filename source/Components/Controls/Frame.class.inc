@@ -2,12 +2,12 @@
 
 namespace Woody\Components\Controls;
 
-/**
- * Description of Frame
- *
- * @author Stefan
- */
-class Frame
+use Woody\Components\Component;
+use Woody\Components\Container;
+use Woody\Utils\Geom\Point;
+use Woody\Utils\Geom\Dimension;
+
+class Frame extends Control implements Container
 {
     /**
      * the child controls of this frame
@@ -16,44 +16,53 @@ class Frame
      */
     protected $children = null;
 
-    public function __construct()
+    public function __construct($label, Point $topLeftCorner, Dimension $dimension)
     {
+        parent::__construct($label, $topLeftCorner, $dimension);
+
+        $this->type     = Frame;
+
         $this->children = new \SplObjectStorage();
     }
 
-    public function create($parent)
+    /**
+     * This method adds a control to the frame. Calling this method twice with the same object behaves like moving the control from one parent to the other.
+     *
+     * The controls are only added logically to the frame, physically, they are added to the window to which the frame belongs.
+     * Furthermore, creating of the control (in respect to winbinder) is done only here, and not in the constructor, as the parent element has to be known.
+     *
+     * @param Component $control
+     * @return Frame
+     */
+    public function add(Component $control)
     {
-        $this->parent       = $parent;
-        $this->controlID    = wb_create_control
-                            (
-                                $this->parent->getControlID(),
-                                Frame,
-                                'my new frame',
-                                10,
-                                10,
-                                160,
-                                100,
-                                101010101// , self::UniqueID
-                                //$this->style,
-                                //$this->param,
-                                //$this->tabIndex
-                            );var_dump('created');
-    }
+        if($control->parent !== null)
+            $this->remove($control);
 
-    public function add($control)
-    {
-        // creation has to be delayed until adding control to respective scope (window, frame, etc.)
-        // maybe add flag to denote, if already created once, to avoid duplication ...
-        // c = new Control(); frame->add(c); frame->add(c); ...
         $control->create($this);
 
-        $this->children[$control] = TRUE;
+        $this->children[$control] = $control->controlID;
 
         return $this;
     }
 
-    public function removeControl(ComponentControl $control)
+    /**
+     * This method removes a control from the parent.
+     *
+     * @param Component $control
+     */
+    public function remove(Component $control)
     {
-        //
+        if($this->children->offsetExists($control))
+        {
+            $this->children->offsetUnset($control);
+
+            wb_destroy_control($control->controlID);
+
+            $control->controlID = null;
+            $control->parent    = null;
+        }
+
+        return $this;
     }
 }

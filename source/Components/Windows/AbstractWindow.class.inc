@@ -2,53 +2,21 @@
 
 namespace Woody\Components\Windows;
 
+use Woody\Components\Component;
+use Woody\Components\Container;
 use Woody\Utils\Geom\Point;
 use Woody\Utils\Geom\Dimension;
 use Woody\System\System;
 
-abstract class AbstractWindow
+abstract class AbstractWindow extends Component implements Container
 {
-    private $type               = null;
-
-
     /**
-     * the internal winbinder control id of this window
+     * the child controls of this window
      *
-     * @var int
+     * @var SplObjectStorage
      */
-    private $controlID           = null;
+    protected $children = null;
 
-    /**
-     * the label of the window control
-     *
-     * @var string
-     */
-    private $label              = null;
-
-    /**
-     * the top left corner of the window
-     *
-     * @var Woody\Utils\Misc\Point
-     */
-    private $topLeftCorner      = null;
-
-    /**
-     * the dimension of the window
-     *
-     * @var Woody\Utils\Misc\Dimension
-     */
-    private $dimension          = null;
-
-    /**
-     * the internal winbinder control id of the parent window of this window
-     *
-     * @var int
-     */
-    private $parentID           = null;
-
-    // @TODO think how to handle this ... Decorator?
-    private $param              = null;
-    private $style              = null;
 /*
     const CENTERED              = WBC_CENTER;
 
@@ -56,50 +24,37 @@ abstract class AbstractWindow
 
     const BORDER_WIDTH          = 2;
 */
-    public function __construct($type, $id, $label, Point $topLeftCorner, Dimension $dimension, $style, $param, Window $parentWindow = null)
+    public function __construct($type, $label, Point $topLeftCorner, Dimension $dimension)
     {
+        parent::__construct($label, $topLeftCorner, $dimension);
+
         //todo: type via decorators???
-        $this->type             = $type;
-
-        $this->id               = $id;
-
-        $this->label            = $label;
-
-        $this->topLeftCorner    = new Point($topLeftCorner->x, $topLeftCorner->y);
-
-        $this->dimension        = new Dimension($dimension->width, $dimension->height);
+        $this->type             = $type;/*
 
         $this->style            = $style;
 
-        $this->param            = $param;
+        $this->param            = $param;*/
 
-        $this->parentID     = $parentWindow;
+        $this->parent           = null;
 
         // set the default event handler for closing the window
         //$this->setEventHandler(self::getDefaultCallback());
     }
 
-    public function getControlID()
-    {
-        return $this->controlID;
-    }
-
-    public function add($control)
-    {
-        $control->create($this);
-    }
-
-    public function create()
-    {
-        $this->controlID = wb_create_window($this->parentID === null ? null : $this->parentID->getWindowID(),
+    public function create(Component $parent = null)
+    {$this->style = 0;
+    $this->param = 0;
+        $this->controlID = wb_create_window($this->parent === null ? null : $this->parent->getControlID(),
                                                $this->type,
-                                               $this->label,
+                                               $this->value,
                                                $this->topLeftCorner->x,
                                                $this->topLeftCorner->y,
                                                $this->dimension->width,
                                                $this->dimension->height,
-                                               $this->style | WBC_TASKBAR,
-                                               $this->param);
+                                               $this->style | WBC_TASKBAR | WBC_NOTIFY,
+                                               $this->param | WBC_MOUSEDOWN | WBC_MOUSEUP | WBC_DBLCLICK /*| WBC_MOUSEMOVE*/ | WBC_KEYDOWN | WBC_KEYUP | WBC_GETFOCUS | WBC_CUSTOMDRAW | WBC_REDRAW | WBC_RESIZE | WBC_HEADERSEL);
+
+        $this->children = new \SplObjectStorage();
 
         return $this;
     }
@@ -111,77 +66,45 @@ abstract class AbstractWindow
 
     public function startEventHandler()
     {
-        wb_set_handler($this->controlID, 'str_replace');
+        wb_set_handler($this->controlID, 'globalWinBinderEventHandler');
 
         wb_main_loop();
     }
 
-    public function getPosition()
+    /**
+     * This method adds a control to the window. Calling this method twice with the same object behaves like moving the control from one parent to the other.
+     *
+     * @param Component $control
+     * @return Frame
+     */
+    public function add(Component $control)
     {
-        return new Point($this->topLeftCorner->x, $this->topLeftCorner->y);
-    }
+        if($control->parent !== null)
+            $this->remove($control);
 
-    public function getDimension()
-    {
-        $size = wb_get_size($this->controlID);
+        $control->create($this);
 
-        $this->dimension->setWidth($size[0])
-                ->setHeight($size[1]);
-
-        return new Dimension($this->dimension->width, $this->dimension->height);
-    }
-
-    public function moveBy($xOffset, $yOffset)
-    {
-        $this->topLeftCorner = $this->topLeftCorner->moveBy($xOffset, $yOffset);
-
-        $this->move();
+        $this->children[$control] = $control->controlID;
 
         return $this;
     }
 
-    public function moveTo(Point $topLeftCorner)
+    /**
+     * This method removes a control from the parent.
+     *
+     * @param Component $control
+     */
+    public function remove(Component $control)
     {
-        $this->topLeftCorner = new Point($topLeftCorner->x, $topLeftCorner->y);
+        if($this->children->offsetExists($control))
+        {
+            $this->children->offsetUnset($control);
 
-        $this->move();
+            wb_destroy_control($control->controlID);
 
-        return $this;
-    }
-
-    protected function move()
-    {
-        $x = max(System::WIN_MIN_TOP, $this->topLeftCorner->x);
-        $y = max(System::WIN_MIN_LEFT, $this->topLeftCorner->y);
-        $this->topLeftCorner = new Point($x, $y);
-
-        wb_set_position($this->controlID, $this->topLeftCorner->x, $this->topLeftCorner->y);
-
-        return $this;
-    }
-
-    public function resizeBy($xOffset, $yOffset)
-    {
-        $this->dimension = $this->dimension->resizeBy($xOffset, $yOffset);
-
-        return $this->resize();
-    }
-
-    public function resizeTo(Dimension $dimension)
-    {
-        $this->dimension = new Dimension($dimension->width, $dimension->height);
-
-        return $this->resize();
-    }
-
-    protected function resize()
-    {
-        $width  = (max(System::WIN_MIN_WIDTH, $this->dimension->width));
-        $height = (max(System::WIN_MIN_HEIGHT, $this->dimension->height));
-
-        $this->dimension = new Dimension($width, $height);
-
-        wb_set_size($this->controlID, $this->dimension->width, $this->dimension->height);
+            $control->controlID = null;
+            $control->parent    = null;
+        }
 
         return $this;
     }

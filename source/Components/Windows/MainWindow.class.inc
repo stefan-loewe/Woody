@@ -8,8 +8,8 @@ use Woody\Utils\Geom\Dimension;
 
 class MainWindow extends AbstractWindow
 {
-    public function __construct($id, $label, Point $point, Dimension $dimension, Window $parentWindow = null, $style = 0, $param = 0)
+    public function __construct($label, Point $point, Dimension $dimension)
     {
-        parent::__construct(AppWindow, $id, $label, $point, $dimension, $style, $param, $parentWindow);
+        parent::__construct(AppWindow, $label, $point, $dimension);
     }
 }
