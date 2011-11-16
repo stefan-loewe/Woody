@@ -3,6 +3,7 @@
 namespace Woody\Components\Controls;
 
 use Woody\Components\Windows\MainWindow;
+use Woody\Components\Timer\Timer;
 use Woody\Utils\Geom\Point;
 use Woody\Utils\Geom\Dimension;
 
@@ -15,7 +16,11 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
     /**
      * @var EditBox
      */
-    protected $object;
+    public $object;
+
+    public $counter = 0;
+
+    public $result = 0;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -25,13 +30,24 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
     {
         $this->delay = 1000000;
 
-        $this->window = new MainWindow('MyWin2', new Point(50, 50), new Dimension(300, 200));
+        $this->window = new MainWindow('edit box test', new Point(50, 50), new Dimension(300, 200));
 
         $this->window->create(null);
 
-        $this->object = new EditBox('testValue', new \Woody\Utils\Geom\Point(20, 20), new \Woody\Utils\Geom\Dimension(50, 18));
+        $this->object = new EditBox('testValue', new \Woody\Utils\Geom\Point(20, 20), new \Woody\Utils\Geom\Dimension(100, 18));
 
         $this->window->add($this->object);
+
+        $self = $this;
+        $this->timer = new Timer(function() use ($self)
+                        {
+                            if(++$self->counter > 1)
+                            {
+                                $self->window->destroy();
+                            }
+                        }, 1000);
+
+        $this->timer->start($this->window);
     }
 
     /**
@@ -45,32 +61,63 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
     /**
      * @todo Implement testGetValue().
      */
+    check how do do proper testing here
+        check with old implementation on how a timer can stop itself nicely
     public function testGetValue()
     {
-add timer support to use test cases here
-timer runs callback, that calls test case internals
+        $self = $this;
+        $this->timerTest = new Timer(function() use ($self)
+                        {
+            var_dump('123 - '.$self->object->getValue());
+                            $self->assertEquals('testValue', $self->object->getValue());
+                            $self->timerTest->destroy();
+                        }, 100);
+        $this->timerTest->start($this->window);
+
+        $this->timerTest = new Timer(function() use ($self)
+                        {
+            var_dump('456 - '.$self->object->getValue(TRUE));
+                            $self->assertEquals('testValue', $self->object->getValue(TRUE));
+                            $self->timerTest->destroy();
+                        }, 1000);
+        $this->timerTest->start($this->window);
+
         $this->window->startEventHandler();
-        $this->assertEquals(' testValue     ', $this->object->getValue());
-        usleep($this->delay);
-        $this->assertEquals('testValue', $this->object->getValue(TRUE));
-        wb_destroy_control($this->window->getControlID());
     }
 
     /**
      * @todo Implement testSetValue().
      */
     public function testSetValue()
-    {
+    {/*
+        $self = $this;
+        $this->timerTest = new Timer(function() use ($self)
+                        {
+                            $self->object->setValue('');
+                            $self->assertEquals('', $self->object->getValue());
+                            var_dump($self->object->getValue());
+                        }, 100);
+        $this->timerTest->start($this->window);
 
-        $this->window->startEventHandler();usleep($this->delay);
-        $this->object->setValue('');
-        $this->assertEquals('', $this->object->getValue());
-usleep($this->delay);
-        $this->object->setValue('new Value');
-        $this->assertEquals('new Value', $this->object->getValue());
-usleep($this->delay);
-        $this->object->setValue('12345');
-        $this->assertEquals('12345', $this->object->getValue());
+
+        $this->timerTest = new Timer(function() use ($self)
+                        {
+                            $self->object->setValue('new Value');
+                            $self->assertEquals('new Value', $self->object->getValue());
+                            var_dump($self->object->getValue());
+                        }, 100);
+        $this->timerTest->start($this->window);
+
+
+        $this->timerTest = new Timer(function() use ($self)
+                        {
+                            $self->object->setValue('12345');
+                            $self->assertEquals('12345', $self->object->getValue());
+                            var_dump($self->object->getValue());
+                        }, 100);
+        $this->timerTest->start($this->window);
+
+        $this->window->startEventHandler();*/
     }
 
     /**

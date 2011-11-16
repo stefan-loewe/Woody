@@ -78,13 +78,18 @@ abstract class Component
 
     public function __construct($value, Point $topLeftCorner, Dimension $dimension)
     {
-        $this->id               = self::$IDENTIFIER++;
+        $this->id               = self::getUniqueID();
 
         $this->value            = $value;
 
         $this->topLeftCorner    = new Point($topLeftCorner->x, $topLeftCorner->y);
 
         $this->dimension        = new Dimension($dimension->width, $dimension->height);
+    }
+
+    public static function getUniqueID()
+    {
+        return self::$IDENTIFIER++;
     }
 
     /**
