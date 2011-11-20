@@ -22,6 +22,8 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
 
     public $result = 0;
 
+    private static $cnt = 0;
+
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -30,7 +32,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
     {
         $this->delay = 1000000;
 
-        $this->window = new MainWindow('edit box test', new Point(50, 50), new Dimension(300, 200));
+        $this->window = new MainWindow('edit box test '.(self::$cnt++), new Point(50, 50), new Dimension(300, 200));
 
         $this->window->create(null);
 
@@ -45,7 +47,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
                             {
                                 $self->window->destroy();
                             }
-                        }, 1000);
+                        }, 2000);
 
         $this->timer->start($this->window);
     }
@@ -61,26 +63,24 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
     /**
      * @todo Implement testGetValue().
      */
-    check how do do proper testing here
-        check with old implementation on how a timer can stop itself nicely
     public function testGetValue()
     {
         $self = $this;
-        $this->timerTest = new Timer(function() use ($self)
+        $this->timerTest1 = new Timer(function() use ($self)
                         {
-            var_dump('123 - '.$self->object->getValue());
                             $self->assertEquals('testValue', $self->object->getValue());
-                            $self->timerTest->destroy();
+                            $self->timerTest1->destroy();
                         }, 100);
-        $this->timerTest->start($this->window);
 
-        $this->timerTest = new Timer(function() use ($self)
+        $this->timerTest1->start($this->window);
+
+        $this->timerTest2 = new Timer(function() use ($self)
                         {
-            var_dump('456 - '.$self->object->getValue(TRUE));
-                            $self->assertEquals('testValue', $self->object->getValue(TRUE));
-                            $self->timerTest->destroy();
-                        }, 1000);
-        $this->timerTest->start($this->window);
+                            $self->object->setValue('     testValue     ');
+                            $self->assertEquals('testValue', $self->object->getValue());
+                            $self->timerTest2->destroy();
+                        }, 200);
+        $this->timerTest2->start($this->window);
 
         $this->window->startEventHandler();
     }
@@ -89,47 +89,41 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
      * @todo Implement testSetValue().
      */
     public function testSetValue()
-    {/*
+    {
         $self = $this;
-        $this->timerTest = new Timer(function() use ($self)
+        $this->timerTest3 = new Timer(function() use ($self)
+                           {
+                               $self->object->setValue('  new  value  ');
+                               $self->assertEquals('  new  value  ', $self->object->getValue(FALSE));
+                               $self->timerTest3->destroy();
+                           }, 100);
+        $this->timerTest3->start($this->window);
+
+        $this->timerTest4 = new Timer(function() use ($self)
                         {
                             $self->object->setValue('');
                             $self->assertEquals('', $self->object->getValue());
-                            var_dump($self->object->getValue());
-                        }, 100);
-        $this->timerTest->start($this->window);
+                            $self->timerTest4->destroy();
+                        }, 200);
+        $this->timerTest4->start($this->window);
 
 
-        $this->timerTest = new Timer(function() use ($self)
-                        {
-                            $self->object->setValue('new Value');
-                            $self->assertEquals('new Value', $self->object->getValue());
-                            var_dump($self->object->getValue());
-                        }, 100);
-        $this->timerTest->start($this->window);
-
-
-        $this->timerTest = new Timer(function() use ($self)
+        $this->timerTest5 = new Timer(function() use ($self)
                         {
                             $self->object->setValue('12345');
                             $self->assertEquals('12345', $self->object->getValue());
-                            var_dump($self->object->getValue());
-                        }, 100);
-        $this->timerTest->start($this->window);
+                            $self->timerTest5->destroy();
+                        }, 300);
+        $this->timerTest5->start($this->window);
 
-        $this->window->startEventHandler();*/
+        $this->window->startEventHandler();
     }
 
     /**
      * @todo Implement testSetReadOnly().
      */
-    public function testSetReadOnly() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+    public function testSetReadOnly()
+    {
+        $this->markTestIncomplete('This test has not been implemented yet, because it is hard to test!');
     }
-
 }
-
-?>

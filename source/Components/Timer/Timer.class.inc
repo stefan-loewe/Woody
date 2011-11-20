@@ -42,7 +42,7 @@ class Timer
      * @param Closure $callback the callback that is executed once the timer is activated
      * @param int $interval the number of milliseconds that pass between each call to the callback of the timer
      */
-    public function __construct(\Closure $callback, $interval)
+    public function __construct(\Closure $callback = null, $interval)
     {
         $this->id       = Component::getUniqueID();
 
@@ -83,6 +83,7 @@ class Timer
      */
     public function destroy()
     {
+        // returns false -> throw exception !?!!
         wb_destroy_timer($this->window->getControlID(), $this->id);
 
         EventHandler::removeEventHandler($this);
@@ -93,5 +94,10 @@ class Timer
     public function getID()
     {
         return $this->id;
+    }
+
+    public function setCallback($callback)
+    {
+        $this->callback = $callback;
     }
 }

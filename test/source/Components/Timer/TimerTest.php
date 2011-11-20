@@ -13,23 +13,32 @@ use Woody\Utils\Geom\Dimension;
 class TimerTest extends \PHPUnit_Framework_TestCase {
 
     /**
-     * @var Timer
+     * @var Woody\Components\Timer\Timer
      */
-    public $object;
-
-    public $counter = 0;
-
-    public $starttime;
+    private $object;
 
     /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
+     * @var Woody\Components\Windows\MainWindow
+     */
+    private $window;
+
+    /**
+     * the counter for testing timer callback call-counts
+     *
+     * @var int
+     */
+    private $counter = 0;
+
+    /**
+     * This method sets up a plain window for testing.
      */
     protected function setUp()
     {
         $this->window = new MainWindow('timer test', new Point(50, 50), new Dimension(300, 200));
 
         $this->window->create(null);
+
+        $this->counter = 0;
     }
 
     /**
@@ -45,17 +54,13 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
      */
     public function testStart()
     {
-        $this->starttime = time();
-        $self = $this;
-        $this->object = new Timer(function() use ($self)
+        $this->object = new Timer(function()
                         {
-                            if(++$self->counter > 3)
-                            {
-                                $self->window->destroy();
-                                $self->assertEquals(4, $self->counter);
-                                $self->assertEquals(4, time() - $self->starttime);
-                            }
-                        }, 1000);
+                            $this->object->destroy();
+                            $this->window->destroy();
+
+                            $this->assertEquals(1, ++$this->counter);
+                        }, 100);
 
         $this->object->start($this->window);
 
@@ -63,10 +68,23 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * nothing to test here
+     *
      */
     public function testRun()
     {
+        $this->object = new Timer(function()
+                        {
+                            if(++$this->counter > 10)
+                            {
+                                $this->object->destroy();
+                                $this->window->destroy();
+                                $this->assertEquals(11, $this->counter);
+                            }
+                        }, 100);
+
+        $this->object->start($this->window);
+
+        $this->window->startEventHandler();
     }
 
     /**
@@ -74,7 +92,19 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
      */
     public function testDestroy()
     {
-        //$this->object->destroy();
+        $this->object = new Timer(function()
+                        {
+                            ++$this->counter;
+
+                            $this->object->destroy();
+                            $this->window->destroy();
+
+                            $this->assertEquals(1, $this->counter);
+                        }, 100);
+
+        $this->object->start($this->window);
+
+        $this->window->startEventHandler();
     }
 
     /**
@@ -82,16 +112,24 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetID()
     {
-        $this->object = new Timer(function(){}, 1000);
+        $this->object = new Timer(function()
+                        {
+                            $this->assertEquals($this->window->getID() + 1, $this->object->getID());
+
+                            $this->object->destroy();
+                            $this->window->destroy();
+
+                            $this->assertEquals($this->window->getID() + 1, $this->object->getID());
+                        }, 100);
+
+        $this->assertEquals($this->window->getID() + 1, $this->object->getID());
 
         $this->object->start($this->window);
 
         $this->assertEquals($this->window->getID() + 1, $this->object->getID());
 
-        $this->object->destroy();
+        $this->window->startEventHandler();
 
-        $this->window->destroy();
+        $this->assertEquals($this->window->getID() + 1, $this->object->getID());
     }
 }
-
-?>

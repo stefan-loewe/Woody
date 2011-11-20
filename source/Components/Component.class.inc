@@ -70,11 +70,11 @@ abstract class Component
     protected $style            = null;*/
 
     /**
-     * static internal integer, that is used as id generator for creating components
+     * static internal integer, that is used as id generator for creating components, starting at 1025 not to interfer with special control ids (e.g. 8 is window close)
      *
      * @var int
      */
-    private static $IDENTIFIER  = 0;
+    private static $IDENTIFIER  = 1025;
 
     public function __construct($value, Point $topLeftCorner, Dimension $dimension)
     {

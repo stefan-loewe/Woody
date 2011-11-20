@@ -33,7 +33,10 @@ class EventHandler
     public static function handleEvent($windowID, $id, $controlID, $param1, $param2)
     {
         if($id === IDCLOSE)
+        {
             wb_destroy_window($windowID);
+            return;
+        }
 
         if(self::isTimerEvent($windowID, $controlID))
         {
@@ -46,7 +49,7 @@ class EventHandler
 
             return;
         }
-
+return;
         $pair = self::$controls[$controlID];
 
         if($pair === null)
