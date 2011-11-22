@@ -57,7 +57,7 @@ class Timer
 
         $this->callback = $callback;
 
-        $this->window    = $window;
+        $this->window   = $window;
 
         $this->interval = $interval;
     }
