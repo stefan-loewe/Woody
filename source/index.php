@@ -38,13 +38,12 @@ $win->add($frame2);
 
 $frame2->add(new EditBox("3333", new Point(40, 20), new Dimension(720, 18)));
 
-$timerTest = new Timer(null, 500);
-$timerTest->setCallback($f = function() use ($box1, $timerTest)
+$timerTest = new Timer(function() use ($box1, $timerTest)
                    {
                             $box1->setValue('abc');
 
                             $timerTest->destroy();
-                        });
+                        }, 500);
 $timerTest->start($win);
 
 $timerTest2 = new Timer(null, 750);

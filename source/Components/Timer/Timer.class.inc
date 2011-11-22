@@ -2,9 +2,10 @@
 
 namespace Woody\Components\Timer;
 
-use Woody\Components\Component;
-use Woody\Components\Windows\AbstractWindow;
-use Woody\Event\EventHandler;
+use \Woody\WinBinderException;
+use \Woody\Components\Component;
+use \Woody\Components\Windows\AbstractWindow;
+use \Woody\Event\EventHandler;
 
 class Timer
 {
@@ -18,14 +19,14 @@ class Timer
     /**
      * the window to which the timer is bound to
      *
-     * @var Woody\Components\Windows\AbstractWindow
+     * @var \Woody\Components\Windows\AbstractWindow
      */
     protected $window       = null;
 
     /**
      * the callback that is executed once the timer is activated
      *
-     * @var Closure
+     * @var \Closure
      */
     protected $callback     = null;
 
@@ -37,42 +38,62 @@ class Timer
     protected $interval     = null;
 
     /**
+     * boolean flag to determine, if timer is running
+     *
+     * @var boolean
+     */
+    private $isRunning      = false;
+
+    /**
      * This method acts as the constructor of the timer.
      *
-     * @param Closure $callback the callback that is executed once the timer is activated
+     * @param \Closure $callback the callback that is executed once the timer is activated
+     * @param \Woody\Components\Windows\AbstractWindow $window the window to which the timer is bound to.
      * @param int $interval the number of milliseconds that pass between each call to the callback of the timer
      */
-    public function __construct(\Closure $callback = null, $interval)
+    public function __construct(\Closure $callback, AbstractWindow $window, $interval)
     {
         $this->id       = Component::getUniqueID();
 
         $this->callback = $callback;
 
+        $this->window    = $window;
+
         $this->interval = $interval;
     }
 
     /**
-     * This method starts the timer.
+     * This method starts the timer. If it was already started before without being destroyed since, an exception is thrown.
      *
-     * @param AbstractWindow $window the window to which the timer is bound to.
      * @return Woody\Components\Timer\Timer $this
      */
-    public function start(AbstractWindow $window)
+    public function start()
     {
-        $this->window   = $window;
+        if($this->isRunning)
+            throw new TimerAlreadyRunningException($this);
+
+        if(!wb_create_timer($this->window->getControlID(), $this->id, $this->interval))
+            throw new WinBinderException('Unable to create winbinder timer object for timer with id '.$this->id);
+
+        $this->isRunning = true;
 
         EventHandler::addEventHandler($this, $this->callback);
-
-        wb_create_timer($this->window->getControlID(), $this->id, $this->interval);
 
         return $this;
     }
 
     /**
-     * This method runs the callback of the timer. Never call this method manually.
+     * This method runs the callback of the timer.
+     *
+     * You should never call this method manually.
+     *
+     * @return void
      */
     public function run()
     {
+        if(!$this->isRunning)
+            throw new TimerNotRunningException($this);
+
         $this->callback->__invoke();
     }
 
@@ -83,21 +104,26 @@ class Timer
      */
     public function destroy()
     {
-        // returns false -> throw exception !?!!
-        wb_destroy_timer($this->window->getControlID(), $this->id);
+        if(!$this->isRunning)
+            throw new TimerNotRunningException($this);
+
+        $this->isRunning = false;
 
         EventHandler::removeEventHandler($this);
+
+        if(!wb_destroy_timer($this->window->getControlID(), $this->id))
+            throw new WinBinderException('Unable to destroy winbinder timer object for timer with id '.$this->id);
 
         return $this;
     }
 
+    /**
+     * This method return the id of the timer.
+     *
+     * @return int
+     */
     public function getID()
     {
         return $this->id;
-    }
-
-    public function setCallback($callback)
-    {
-        $this->callback = $callback;
     }
 }
