@@ -2,10 +2,10 @@
 
 namespace Woody\App;
 
-use Woody\Components\Windows\MainWindow;
-use Woody\Components\Timer\Timer;
-use Woody\Utils\Geom\Point;
-use Woody\Utils\Geom\Dimension;
+use \Woody\Components\Windows\MainWindow;
+use \Woody\Components\Timer\Timer;
+use \Woody\Utils\Geom\Point;
+use \Woody\Utils\Geom\Dimension;
 
 class TestApplication extends Application
 {

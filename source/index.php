@@ -1,21 +1,31 @@
 <?php
 
-use Woody\Utils\Geom\Point;
-use Woody\Utils\Geom\Dimension;
-use Woody\Components\Windows\MainWindow;
-use Woody\App\TestApplication;
+use \Woody\Utils\Geom\Point;
+use \Woody\Utils\Geom\Dimension;
+use \Woody\Components\Windows\MainWindow;
+use \Woody\App\TestApplication;
 
-use Woody\Components\Timer\Timer;
+use \Woody\Components\Timer\Timer;
 
-use Woody\Components\Controls\Frame;
-use Woody\Components\Controls\EditBox;
+use \Woody\Components\Controls\Frame;
+use \Woody\Components\Controls\EditBox;
 
 require_once(realpath(__DIR__.'/bootstrap/bootstrap.php'));
 
 var_dump(phpversion());
 
-$testApp = new TestApplication();
-$testApp->start();
+$win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
+$win->create();
+$box1 = new EditBox("abc", new Point(20, 20), new Dimension(720, 18));
+$win->add($box1);
+//var_dump('starting ...');
+//$handle = po$winen('"C:/Program Files/PHP54/php.exe" -S localhost:8008', 'r');
+
+
+//$htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 400));
+//$win->add($htmlControl);
+
+$win->startEventHandler();
 /*
 $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
 

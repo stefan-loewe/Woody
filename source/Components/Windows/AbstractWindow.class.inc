@@ -29,11 +29,7 @@ abstract class AbstractWindow extends Component implements Container
         parent::__construct($label, $topLeftCorner, $dimension);
 
         //todo: type via decorators???
-        $this->type             = $type;/*
-
-        $this->style            = $style;
-
-        $this->param            = $param;*/
+        $this->type             = $type;
 
         $this->parent           = null;
 
@@ -42,8 +38,7 @@ abstract class AbstractWindow extends Component implements Container
     }
 
     public function create(Component $parent = null)
-    {$this->style = 0;
-    $this->param = 0;
+    {
         $this->controlID = wb_create_window($this->parent === null ? null : $this->parent->getControlID(),
                                                $this->type,
                                                $this->value,

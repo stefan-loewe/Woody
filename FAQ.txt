@@ -1,0 +1,10 @@
+Why uses the HTMLControl the rendering engine of Internet Explorer 7, when I have Internet Explorer 8/9 installed?
+add a DWORD with key name "php.exe" and decimal value of "9999" (hexadecimal "270F") in the registry under the path "HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION"
+
+There are also other values possible - for more information, check these links:
+-> http://www.google.de/search?q=IWebBrowser2+ie9&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:de:official&client=firefox-a
+-> http://stackoverflow.com/questions/6914664/iwebbrowser2-object-uses-ie7-version-instead-of-the-ie-version-installed-on-the
+-> http://msdn.microsoft.com/en-us/library/ee330730%28v=vs.85%29.aspx
+-> http://stackoverflow.com/questions/1786905/c-sharp-web-browser-component-is-ie7-not-ie8-how-to-change-this
+-> http://blogs.msdn.com/b/ie/archive/2009/03/10/more-ie8-extensibility-improvements.aspx
+-> http://www.codeproject.com/KB/COM/cwebpage.aspx

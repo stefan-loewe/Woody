@@ -2,9 +2,9 @@
 
 namespace Woody\Components\Controls;
 
-use Woody\Components\Component;
-use Woody\Utils\Geom\Point;
-use Woody\Utils\Geom\Dimension;
+use \Woody\Components\Component;
+use \Woody\Utils\Geom\Point;
+use \Woody\Utils\Geom\Dimension;
 
 abstract class Control extends Component
 {
@@ -29,8 +29,8 @@ abstract class Control extends Component
                                 $this->dimension->width,
                                 $this->dimension->height,
                                 $this->id,
-                                0,
-                                0,
+                                $this->style,
+                                $this->param,
                                 $this->id
                             );
     }

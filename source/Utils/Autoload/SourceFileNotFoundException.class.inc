@@ -4,12 +4,12 @@ namespace Woody\Utils\Autoload;
 
 /**
  * This exception is thrown when the autoloader is unable to locate a source file that that holds the definition of a class or interface
- * 
+ *
  */
-class SourceFileNotFoundException extends \Exception
+class SourceFileNotFoundException extends \RuntimeException
 {
     /**
-     * constructor of the exception
+     * THis method acts as the constructor of the class.
      *
      * @param string $name the name of the class/interface
      */

@@ -65,16 +65,16 @@ abstract class Component
      */
     protected $parent           = null;
 
-    // @TODO think how to handle this ... Decorator?
-    /*protected $param            = null;
-    protected $style            = null;*/
+    // @TODO how to handle param and style ?!?!this ... Decorator?
+    protected $param            = 0;
+    protected $style            = 0;
 
     /**
-     * static internal integer, that is used as id generator for creating components, starting at 1025 not to interfer with special control ids (e.g. 8 is window close)
+     * static internal integer, that is used as id generator for creating components, starting at 1024 not to interfer with special control ids (e.g. 8 is window close)
      *
      * @var int
      */
-    private static $IDENTIFIER  = 1025;
+    private static $IDENTIFIER  = 1024;
 
     public function __construct($value, Point $topLeftCorner, Dimension $dimension)
     {
@@ -89,7 +89,7 @@ abstract class Component
 
     public static function getUniqueID()
     {
-        return self::$IDENTIFIER++;
+        return ++self::$IDENTIFIER;
     }
 
     /**

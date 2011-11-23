@@ -7,9 +7,6 @@ use \Woody\Utils\Geom\Dimension;
 
 class EditBox extends Control
 {
-    // decorator ?!?!?!?!
-    const NUMBERS_ONLY = WBC_NUMBER;
-
     /**
      * This method acts as the constructor of the class.
      *
@@ -17,7 +14,7 @@ class EditBox extends Control
      * @param Point $topLeftCorner the top left corner of the edit box
      * @param Dimension $dimension the dimension of the edit box
      */
-    public function __construct($value, Point $topLeftCorner, Dimension $dimension/*$style = Control::DEFAULT_STYLE, $param = 0, $tabIndex = 0*/)
+    public function __construct($value, Point $topLeftCorner, Dimension $dimension)
     {
         parent::__construct($value, $topLeftCorner, $dimension);
 
