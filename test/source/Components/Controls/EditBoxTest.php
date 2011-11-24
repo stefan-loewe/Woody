@@ -16,10 +16,15 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase
     /**
      * the edit box to test
      *
-     * @var Woody\Components\Controls\EditBox
+     * @var \Woody\Components\Controls\EditBox
      */
     private $editBox        = null;
 
+    /**
+     * the test application
+     *
+     * @var \Woody\App\TestApplication
+     */
     private $application    = false;
 
     /**
@@ -46,7 +51,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase
     /**
      * This method tests retrieving the value from the editbox.
      *
-     * @covers Woody\Components\Controls\EditBox::getValue
+     * @covers \Woody\Components\Controls\EditBox::getValue
      */
     public function testGetValue()
     {
@@ -66,7 +71,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase
     /**
      * This method tests retrieving the trimmed value from the editbox.
      *
-     * @covers Woody\Components\Controls\EditBox::getValue
+     * @covers \Woody\Components\Controls\EditBox::getValue
      */
     public function testGetValueTrimmed()
     {
@@ -87,7 +92,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase
     /**
      * This method tests retrieving the non-trimmed value from the editbox.
      *
-     * @covers Woody\Components\Controls\EditBox::getValue
+     * @covers \Woody\Components\Controls\EditBox::getValue
      */
     public function testGetValueNotTrimmed()
     {
@@ -108,7 +113,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase
     /**
      * This method tests setting a text value for the editbox.
      *
-     * @covers Woody\Components\Controls\EditBox::setValue
+     * @covers \Woody\Components\Controls\EditBox::setValue
      */
     public function testSetValueText()
     {
@@ -129,7 +134,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase
     /**
      * This method tests setting a integer value for the editbox.
      *
-     * @covers Woody\Components\Controls\EditBox::setValue
+     * @covers \Woody\Components\Controls\EditBox::setValue
      */
     public function testSetValueInteger()
     {return;
@@ -150,7 +155,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase
     /**
      * This method tests setting a decimal value for the editbox.
      *
-     * @covers Woody\Components\Controls\EditBox::setValue
+     * @covers \Woody\Components\Controls\EditBox::setValue
      */
     public function testSetValueDecimal()
     {return;

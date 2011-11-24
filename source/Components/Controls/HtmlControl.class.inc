@@ -6,7 +6,7 @@ use \Woody\Components\Component;
 use \Woody\Utils\Geom\Point;
 use \Woody\Utils\Geom\Dimension;
 
-class HTMLControl extends Control
+class HtmlControl extends Control
 {
     public function __construct($url, Point $topLeftCorner, Dimension $dimension/*$style = Control::DEFAULT_STYLE, $param = 0, $tabIndex = 0*/)
     {
@@ -20,7 +20,7 @@ class HTMLControl extends Control
         //FotoImportApplication::getHTMLControlServer()->unregister($this);
     }
 
-    public function create(Component $parent)
+    protected function create(Component $parent)
     {
         parent::create($parent);
 

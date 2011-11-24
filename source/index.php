@@ -17,26 +17,26 @@ while(!feof($fh))
 {
     echo fread($fh, 128);
 }*/
-
+/*
 $desc = array(0 => array('file', 'D:/r.txt', 'a'), 1 => array('file', 'D:/w.txt', 'a'), 2 => array('file', 'D:/e.txt', 'a'));
 $pipes = array();
 
 chdir("C:/Program Files/PHP54/");
 proc_open('"C:/Program Files/PHP54/php.exe" -S 127.0.0.1:8008', $desc, $pipes);
 
-die;
+die;*/
 var_dump(phpversion());
 
 $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
 $win->create();
-$box1 = new EditBox("abc", new Point(20, 20), new Dimension(720, 18));
-$win->add($box1);
-//var_dump('starting ...');
-//$handle = po$winen('"C:/Program Files/PHP54/php.exe" -S localhost:8008', 'r');
+//$box1 = new EditBox("abc", new Point(20, 20), new Dimension(720, 18));
+//$win->add($box1);
 
 
-//$htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 400));
-//$win->add($htmlControl);
+
+$htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 400));
+$win->add($htmlControl);
+$htmlControl->setUrl("www.web.de");
 
 $win->startEventHandler();
 /*
