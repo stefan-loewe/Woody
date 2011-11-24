@@ -36,7 +36,7 @@ $win->create();
 
 $htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 400));
 $win->add($htmlControl);
-$htmlControl->setUrl("www.web.de");
+$htmlControl->setUrl("www.wieistmeineip.de");
 
 $win->startEventHandler();
 /*
