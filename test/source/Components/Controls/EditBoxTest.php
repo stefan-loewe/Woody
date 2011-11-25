@@ -137,7 +137,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase
      * @covers \Woody\Components\Controls\EditBox::setValue
      */
     public function testSetValueInteger()
-    {return;
+    {
         $this->timer = new Timer(function()
                         {
                             $value = 123;
@@ -158,7 +158,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase
      * @covers \Woody\Components\Controls\EditBox::setValue
      */
     public function testSetValueDecimal()
-    {return;
+    {
         $this->timer = new Timer(function()
                         {
                             $value = 123.99;

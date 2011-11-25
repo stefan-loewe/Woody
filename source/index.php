@@ -34,10 +34,14 @@ $win->create();
 
 
 
-$htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 400));
-$win->add($htmlControl);
-$htmlControl->setUrl("www.wieistmeineip.de");
+//$htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 400));
+//$win->add($htmlControl);
+//$htmlControl->setUrl("www.wieistmeineip.de");
 
+$calendar = new Woody\Components\Controls\Calendar(new Point(50, 50), new Dimension(300, 400));
+
+$win->add($calendar);
+//$calendar->setTimestamp(0);
 $win->startEventHandler();
 /*
 $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
