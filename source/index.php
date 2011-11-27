@@ -32,11 +32,11 @@ $win->create();
 
 $server = new \Woody\Utils\Sockets\HTMLControlServer(8008);
 
-$timer = new Timer(function() use ($server){}
+$timer = new Timer(function() use ($server){echo 'var_dumping ...'; $server->loopOnce();}
     , $win, 1000);
 
 $htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 400));
 $win->add($htmlControl);
-$htmlControl->setUrl("www.wieistmeineip.de");
 
+$timer->start();
 $win->startEventHandler();
