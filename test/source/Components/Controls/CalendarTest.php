@@ -57,9 +57,10 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
     {
         $this->timer = new Timer(function()
                         {
-                            $this->assertEquals(mktime(0, 0, 0, date('m', time()), date('d', time()), date('Y', time())), $this->calendar->getTimestamp());
+                            $today = new \DateTime();
+                            $this->assertEquals($today->format('d.m.Y'), $this->calendar->getDate()->format('d.m.Y'));
+                            var_dump($today->format('d.m.Y').' - '.$this->calendar->getDate()->format('d.m.Y'));
                             $this->timer->destroy();
-
                             $this->application->stop();
                         }, $this->application->getWindow(), 100);
 
@@ -77,8 +78,13 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
     {
         $this->timer = new Timer(function()
                         {
-                            $this->calendar->setTimestamp(1);
-                            //$this->assertEquals(1, $this->calendar->getTimestamp());
+                            $date = \DateTime::createFromFormat('d.m.Y H:i:s', '1.1.2011 00:00:00');
+                            for($i = 0; $i <= 1000; ++$i)
+                            {
+                                $date = $date->add(new \DateInterval('P1D'));
+                                $this->calendar->setDate($date);
+                                $this->assertEquals($date->format('d.m.Y'), $this->calendar->getDate()->format('d.m.Y'));
+                            }
                             $this->timer->destroy();
 
                             $this->application->stop();

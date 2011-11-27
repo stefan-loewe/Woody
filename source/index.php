@@ -41,7 +41,11 @@ $win->create();
 $calendar = new Woody\Components\Controls\Calendar(new Point(50, 50), new Dimension(300, 400));
 
 $win->add($calendar);
-//$calendar->setTimestamp(0);
+
+$date = DateTime::createFromFormat('Y-m-d H:i:s', "2012-03-28 00:00:00");
+var_dump('1. $date '.$date->format('Y-m-d H:i:s'));
+$calendar->setDate($date);
+var_dump('2. $date '.$calendar->getDate()->format('Y-m-d H:i:s'));
 $win->startEventHandler();
 /*
 $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
