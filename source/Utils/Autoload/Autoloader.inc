@@ -5,7 +5,7 @@ namespace Woody\Utils\Autoload;
 /**
 * exceptions thrown during autoload need to be linked statically
 */
-require_once 'SourceFileNotFoundException.class.inc';
+require_once 'SourceFileNotFoundException.inc';
 
 class Autoloader
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Utils\Sockets;
+namespace Woody\Utils\Sockets;
 
 /**
  * This class implements a callback server for WinBinder HTMLControls.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Utils\Sockets;
+namespace Woody\Utils\Sockets;
 
 use Utils\Logging\Logger;
 use Utils\Http\HttpRequestFactory;
