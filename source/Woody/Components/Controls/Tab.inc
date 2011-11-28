@@ -2,10 +2,10 @@
 
 namespace Woody\Components\Controls;
 
-use Woody\Components\Component;
-use Woody\Components\Container;
-use Woody\Utils\Geom\Point;
-use Woody\Utils\Geom\Dimension;
+use \Woody\Components\Component;
+use \Woody\Components\Container;
+use \Utils\Geom\Point;
+use \Utils\Geom\Dimension;
 
 class Tab extends Control implements Container
 {

@@ -4,8 +4,8 @@ namespace Woody\Components\Controls;
 
 use \Woody\App\TestApplication;
 use \Woody\Components\Timer\Timer;
-use \Woody\Utils\Geom\Point;
-use \Woody\Utils\Geom\Dimension;
+use \Utils\Geom\Point;
+use \Utils\Geom\Dimension;
 
 /**
  * Test class for EditBox.

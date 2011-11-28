@@ -3,8 +3,8 @@
 namespace Woody\Components\Windows;
 
 use Woody\Components\Windows\AbstractWindow;
-use Woody\Utils\Geom\Point;
-use Woody\Utils\Geom\Dimension;
+use \Utils\Geom\Point;
+use \Utils\Geom\Dimension;
 
 class MainWindow extends AbstractWindow
 {

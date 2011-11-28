@@ -4,8 +4,8 @@ namespace Woody\Components;
 
 use Woody\Components\Windows\AbstractWindow;
 
-use Woody\Utils\Geom\Point;
-use Woody\Utils\Geom\Dimension;
+use \Utils\Geom\Point;
+use \Utils\Geom\Dimension;
 
 use Woody\System\System;
 

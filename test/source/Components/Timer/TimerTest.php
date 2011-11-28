@@ -3,8 +3,8 @@
 namespace Woody\Components\Timer;
 
 use \Woody\Components\Windows\MainWindow;
-use \Woody\Utils\Geom\Point;
-use \Woody\Utils\Geom\Dimension;
+use \Utils\Geom\Point;
+use \Utils\Geom\Dimension;
 
 use \Woody\Components\Timer\TimerAlreadyRunningException;
 use \Woody\Components\Timer\TimerNotRunningException;
@@ -42,7 +42,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->window = new MainWindow('timer test', new Point(50, 50), new Dimension(300, 200));
-
+        
         $this->window->create(null);
 
         $this->counter = 0;

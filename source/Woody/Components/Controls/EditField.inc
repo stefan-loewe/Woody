@@ -2,8 +2,8 @@
 
 namespace Woody\Components\Controls;
 
-use \Woody\Utils\Geom\Point;
-use \Woody\Utils\Geom\Dimension;
+use \Utils\Geom\Point;
+use \Utils\Geom\Dimension;
 
 abstract class EditField extends Control
 {

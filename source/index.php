@@ -1,7 +1,7 @@
 <?php
 
-use \Woody\Utils\Geom\Point;
-use \Woody\Utils\Geom\Dimension;
+use \Utils\Geom\Point;
+use \Utils\Geom\Dimension;
 use \Woody\Components\Windows\MainWindow;
 use \Woody\App\TestApplication;
 
@@ -30,7 +30,7 @@ var_dump(phpversion());
 $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
 $win->create();
 
-$server = new \Woody\Utils\Sockets\HTMLControlServer(8008);
+$server = new \Utils\Sockets\HTMLControlServer(8008);
 
 $timer = new Timer(function() use ($server){echo 'var_dumping ...'; $server->loopOnce();}
     , $win, 1000);

@@ -1,9 +1,9 @@
 <?php
 namespace Woody\Components\Windows;
 
-use Woody\Utils\Geom\Point;
-use Woody\Utils\Geom\Dimension;
-use Woody\System\System;
+use \Utils\Geom\Point;
+use \Utils\Geom\Dimension;
+use \Woody\System\System;
 
 /**
  * Test class for AbstractWindow.
@@ -91,23 +91,23 @@ usleep($this->delay);
         $this->assertEquals($this->object->getDimension()->width, 300);
         $this->assertEquals($this->object->getDimension()->height, 200);
 usleep($this->delay);
-        $this->object->resizeBy(100, 200);
+        $this->object->resizeBy(new Dimension(100, 200));
         $this->assertEquals($this->object->getDimension()->width, 400);
         $this->assertEquals($this->object->getDimension()->height, 400);
 usleep($this->delay);
-        $this->object->resizeBy(500, 600);
+        $this->object->resizeBy(new Dimension(500, 600));
         $this->assertEquals($this->object->getDimension()->width, 900);
         $this->assertEquals($this->object->getDimension()->height, 1000);
 usleep($this->delay);
-        $this->object->resizeBy(-878, -966);
+        $this->object->resizeBy(new Dimension(-878, -966));
         $this->assertEquals($this->object->getDimension()->width, System::WIN_MIN_WIDTH);
         $this->assertEquals($this->object->getDimension()->height, System::WIN_MIN_HEIGHT);
 usleep($this->delay);
-        $this->object->resizeBy(-200, -100);
+        $this->object->resizeBy(new Dimension(-200, -100));
         $this->assertEquals($this->object->getDimension()->width, System::WIN_MIN_WIDTH);
         $this->assertEquals($this->object->getDimension()->height, System::WIN_MIN_HEIGHT);
 usleep($this->delay);
-        $this->object->resizeBy(177, 166);
+        $this->object->resizeBy(new Dimension(177, 166));
         $this->assertEquals($this->object->getDimension()->width, 300);
         $this->assertEquals(204, $this->object->getDimension()->height);
     }
