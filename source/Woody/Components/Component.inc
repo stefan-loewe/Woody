@@ -143,13 +143,14 @@ abstract class Component
     }
 
     /**
-     * This method moves component by the given offset.
+     * This method moves the component by an offset, given as dimension.
      *
+     * @param \Utils\Geom\Dimension $dimension the dimension by which this point shall be moved by
      * @return Component $this
      */
-    public function moveBy($xOffset, $yOffset)
+    public function moveBy(Dimension $dimension)
     {
-        return $this->move($this->topLeftCorner->moveBy($xOffset, $yOffset));
+        return $this->move($this->topLeftCorner->moveBy($dimension));
     }
 
     /**
@@ -183,15 +184,14 @@ abstract class Component
     }
 
     /**
-     * This method resizes the component by the given offset.
+     * This method resizes the component by the offset given as a dimension.
      *
-     * @param int $xOffset the offset in x-direction
-     * @param int $yOffset the offset in y-direction
+     * @param Dimension $dimension the offset by which the component has to be resized
      * @return Component $this
      */
-    public function resizeBy($xOffset, $yOffset)
+    public function resizeBy(Dimension $dimension)
     {
-        return $this->resize($this->dimension->resizeBy($xOffset, $yOffset));
+        return $this->resize($this->dimension->resizeBy($dimension));
     }
 
     /**
