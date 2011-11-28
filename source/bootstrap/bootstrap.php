@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL | E_STRICT);
+
 define('INSTALLATION_FOLDER', str_replace('\\', '/', realpath(__DIR__.'/../..')));
 define('SOURCE_FOLDER', INSTALLATION_FOLDER.'/source');
 
