@@ -30,13 +30,18 @@ var_dump(phpversion());
 $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
 $win->create();
 
-$server = new \Utils\Sockets\HTMLControlServer(8008);
+$server = new \Woody\Server\HtmlControlServer($win, 8008);
 
-$timer = new Timer(function() use ($server){echo 'var_dumping ...'; $server->loopOnce();}
-    , $win, 1000);
+$server->run(100);
 
-$htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 400));
+$htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 100));
 $win->add($htmlControl);
+$htmlControl2 = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=4', new Point(50, 200), new Dimension(600, 100));
+$win->add($htmlControl2);
+var_dump('$htmlControl1-> '.$htmlControl->getID());
+var_dump('$htmlControl2-> '.$htmlControl2->getID());
+Woody\Event\EventHandler::addEventHandler($htmlControl2, function($control, $param1, $param2){if($param2->getKeyValuePairs()['id'] == 3)return;$param1->write('<a href="?id='.($param2->getKeyValuePairs()['id'] - 1).'">-</a><b style="color:red;">goodbye '.$param2->getKeyValuePairs()['id'].'</b><a href="?id='.($param2->getKeyValuePairs()['id'] + 1).'">+</a>');});
 
-$timer->start();
+$server->register($htmlControl2);
+
 $win->startEventHandler();

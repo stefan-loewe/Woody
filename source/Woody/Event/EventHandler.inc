@@ -23,6 +23,8 @@ class EventHandler
     public static function addEventHandler($control, $handler)
     {
        self::$controls[$control->getID()] = array($control, $handler);
+
+       var_dump('adding handler for control '.$control->getID());
     }
 
     public static function removeEventHandler($control)
@@ -49,6 +51,12 @@ class EventHandler
 
             return;
         }
+
+        $pair = self::$controls[$id];
+        $control    = $pair[0];
+var_dump($pair[0]);
+        $callback   = $pair[1];
+        $callback->__invoke($control, $param1, $param2);
 return;
         $pair = self::$controls[$controlID];
 
