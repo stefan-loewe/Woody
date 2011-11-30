@@ -13,6 +13,8 @@ class EventHandler
      */
     private static $controls = array();
 
+    private static $previousEvent = null;
+
     /**
      * This method acts as the constructor of the class - as it is a static class, no instantiation is possible.
      */
@@ -32,17 +34,24 @@ class EventHandler
        unset(self::$controls[$control->getID()]);
     }
 
-    public static function handleEvent($windowID, $id, $controlID, $param1, $param2)
+    public static function handleEvent(Event $event)
     {
-        if($id === IDCLOSE)
+        if(!self::isValidEvent($event))
+            return;
+
+        self::$previousEvent = $event;
+
+        var_dump('calling handleEvent firing event ('.  microtime(TRUE).') ...');
+        echo ($event);
+        if($event->id === IDCLOSE)
         {
-            wb_destroy_window($windowID);
+            wb_destroy_window($event->windowID);
             return;
         }
 
-        if(self::isTimerEvent($windowID, $controlID))
+        if(self::isTimerEvent($event->windowID, $event->controlID))
         {
-            $pair = self::$controls[$id];
+            $pair = self::$controls[$event->id];
 
             $control    = $pair[0];
             $callback   = $pair[1];
@@ -52,13 +61,17 @@ class EventHandler
             return;
         }
 
-        $pair = self::$controls[$id];
+        $pair = self::$controls[$event->id];
         $control    = $pair[0];
-var_dump($pair[0]);
+//var_dump($pair[0]);
         $callback   = $pair[1];
-        $callback->__invoke($control, $param1, $param2);
+
+        if($callback === null)
+            return;
+
+        $callback->__invoke($control, $event->param1, $event->param2);
 return;
-        $pair = self::$controls[$controlID];
+        $pair = self::$controls[$event->controlID];
 
         if($pair === null)
         {
@@ -76,5 +89,17 @@ return;
     private static function isTimerEvent($windowID, $controlID)
     {
         return $windowID == $controlID;
+    }
+
+    private static function isValidEvent($event)
+    {
+        if(self::$previousEvent === null)
+            return TRUE;
+
+        var_dump('diff = '.($event->time - self::$previousEvent->time));
+
+        // selecting a new entry in a ListView fires three identical events
+        // this tries to filter out these
+        return ($event->time - self::$previousEvent->time) > 0.1;
     }
 }

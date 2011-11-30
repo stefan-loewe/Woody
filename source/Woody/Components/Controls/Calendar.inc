@@ -5,9 +5,6 @@ namespace Woody\Components\Controls;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-/**
- * @todo maybe interfaces should use \DateTime class
- */
 class Calendar extends Control
 {
     /**
