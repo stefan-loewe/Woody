@@ -36,6 +36,19 @@ class EventHandler
 
     public static function handleEvent(Event $event)
     {
+        if(self::isTimerEvent($event->windowID, $event->controlID))
+        {
+            $pair = self::$controls[$event->id];
+
+            $control    = $pair[0];
+            $callback   = $pair[1];
+
+            $callback->__invoke($control);
+
+            return;
+        }
+
+        return;
         if(!self::isValidEvent($event))
             return;
 
@@ -49,17 +62,7 @@ class EventHandler
             return;
         }
 
-        if(self::isTimerEvent($event->windowID, $event->controlID))
-        {
-            $pair = self::$controls[$event->id];
 
-            $control    = $pair[0];
-            $callback   = $pair[1];
-
-            $callback->__invoke($control);
-
-            return;
-        }
 
         $pair = self::$controls[$event->id];
         $control    = $pair[0];
