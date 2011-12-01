@@ -88,6 +88,7 @@ else if(TRUE)
     $data[] = 2;
     $data[] = 'zwei';
     $data[] = 1.2;
+    $data[] = new Woody\Event\Event(1, 2, 3, 4, 5);
 
     $comboControl->setModel($model = new \Woody\Model\ListModel($data));
     $listControl->setModel($model);

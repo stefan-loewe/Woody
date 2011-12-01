@@ -13,14 +13,14 @@ abstract class ListControl extends Control implements \SplObserver
      *
      * @var ListModel
      */
-    protected $model	= null;
+    protected $model        = null;
 
     /**
-     * the mapping of the list control, used to customize the output of each list control entry
+     * the cell rederer of the list control
      *
-     * @var \Closure
-    protected $mapping	= null;
+     * @var \Callable
      */
+    protected $cellRenderer = null;
 
     const EDITABLE      = 0x00000000;
 
@@ -30,7 +30,20 @@ abstract class ListControl extends Control implements \SplObserver
     {
         parent::__construct(null, $topLeftCorner, $dimension);
 
-        //$this->mapping = static::getDefaultMapping();
+        $this->cellRenderer = static::getDefaultCellRenderer();
+    }
+
+    public static function getDefaultCellRenderer()
+    {
+        $callback = function($element) {
+                        if(is_callable(array($element, '__toString'), FALSE)) {
+                            return $element->__toString()."BBB";
+                        } else {
+                            return $element."AAA";
+                        }
+                    };
+
+        return $callback;
     }
 
     public function getModel()
@@ -45,14 +58,9 @@ abstract class ListControl extends Control implements \SplObserver
         return $this;
     }
 
-    public function getMapping()
+    public function setCellRenderer( $cellRenderer)
     {
-        return $this->mapping;
-    }
-
-    public function setMapping($mapping)
-    {
-        $this->mapping = $mapping;
+        $this->cellRenderer = $cellRenderer;
 
         return $this;
     }
@@ -63,17 +71,9 @@ abstract class ListControl extends Control implements \SplObserver
 
         $currentIndex	= max(0, $this->getSelectedIndex());
 
-        if($listModel->count() > 0)
-        {
-            $iterator = $listModel->getIterator();
-
-            while($iterator->valid())
-            {
-                //if(($value = $this->mapping->__invoke($iterator->current())) !== null)
-                    //$options[] = $value;
-                $options[] = $iterator->current();
-
-                $iterator->next();
+        if(($count = $listModel->count()) > 0) {
+            for($i = 0; $i < $count; $i++) {
+                $options[] = $this->cellRenderer->__invoke($listModel->getElementAt($i));
             }
         }
 
@@ -96,7 +96,7 @@ abstract class ListControl extends Control implements \SplObserver
         return $this;
     }
 
-    public function getValue()
+    public function getSelectedValue()
     {
         $value = null;
 

@@ -2,7 +2,7 @@
 
 namespace Woody\Model;
 
-class ListModel implements \SplSubject, \IteratorAggregate
+class ListModel implements \SplSubject
 {
     /**
      * the data of the model
@@ -149,13 +149,18 @@ class ListModel implements \SplSubject, \IteratorAggregate
     }
 
     // Removes an item at a specific index.
-    public function removeElementAt($index)
-    {
-        if($index > -1)
-        {
+    public function removeElementAt($index) {
+        $count = $this->count();
+
+        if($count === 0) {
+            return $this;
+        }
+
+        if($index > -1) {
             // starting from the element right after the index to be deleted, move every following element up by one position ...
-            for($i = $index; $i < $this->count() - 1; ++$i)
+            for($i = $index; $i < $count - 1; ++$i) {
                 $this->data[$i] = $this->data[$i + 1];
+            }
 
             // ... and finally, delete the last element
             unset($this->data[$this->count() - 1]);
@@ -166,31 +171,23 @@ class ListModel implements \SplSubject, \IteratorAggregate
         return $this;
     }
 
-    public function getIterator()
-    {
-        return $this->data->getIterator();
-    }
-
-    public function attach(\SplObserver $observer)
-    {
+    public function attach(\SplObserver $observer) {
         $this->observers->attach($observer);
 
         return $this;
     }
 
-    public function detach(\SplObserver $observer)
-    {
+    public function detach(\SplObserver $observer) {
         $this->observers->detach($observer);
 
         return $this;
     }
 
-    public function notify()
-    {
-        if(!$this->isAdjusting)
-        {
-            foreach($this->observers as $observer)
+    public function notify() {
+        if(!$this->isAdjusting) {
+            foreach($this->observers as $observer) {
                 $observer->update($this);
+            }
         }
 
         return $this;

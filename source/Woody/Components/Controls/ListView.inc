@@ -20,10 +20,10 @@ class ListView extends ListControl
 
         $this->type = ListView;
 
-        $this->mapping = self::getDefaultMapping();
+        $this->cellRenderer = self::getDefaultCellRenderer();
     }
 
-    public static function getDefaultMapping()
+    public static function getDefaultCellRenderer()
     {
         $callback = function($element)
                     {
@@ -70,16 +70,9 @@ class ListView extends ListControl
                 $this->deleteRow($this->count() - 1);
         }
 
-        if($listModel->count() > 0)
-        {
-            $iterator = $listModel->getIterator();
-            $currentRow = 0;
-
-            while($iterator->valid())
-            {
-                $this->updateRow($this->mapping->__invoke($iterator->current()), $currentRow++);
-
-                $iterator->next();
+        if(($count = $listModel->count()) > 0) {
+            for($i = 0; $i < $count; $i++) {
+                $this->updateRow($this->cellRenderer->__invoke($listModel->getElementAt($i)), $i);
             }
         }
 
