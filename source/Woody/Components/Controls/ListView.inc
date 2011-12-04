@@ -6,16 +6,15 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 use \Woody\Model\ListModel;
 
-class ListView extends ListControl
-{
-    const DEFAULT_HEIGHT        = 100;
+class ListView extends ListControl {
 
-    const AUTO_WIDTH            = -2;
-
-    const COLUMN_BORDER_WIDTH   = 2;
-
-    public function __construct(Point $topLeftCorner, Dimension $dimension)
-    {
+    /**
+     * This method acts as the constructor of the class.
+     *
+     * @param Point $topLeftCorner the top left corner of the list view
+     * @param Dimension $dimension the dimension of the list view
+     */
+    public function __construct(Point $topLeftCorner, Dimension $dimension) {
         parent::__construct($topLeftCorner, $dimension);
 
         $this->type = ListView;
@@ -23,51 +22,52 @@ class ListView extends ListControl
         $this->cellRenderer = self::getDefaultCellRenderer();
     }
 
-    public static function getDefaultCellRenderer()
-    {
-        $callback = function($element)
-                    {
-                        return array("1", "2", "3");
+    /**
+     * This method returns the default cell renderer for the list view, which actually creates an empty row.
+     *
+     * @return \Callable
+     */
+    protected static function getDefaultCellRenderer() {
+        return function($element) {
+                        return array();
                     };
-
-        return $callback;
     }
 
     /**
      * This method sets the headers of the list view. This is a mandatory step, otherwise no data entries maybe inserted.
      *
      * @param array $columns the tiltes of the header as array of strings
-     * @return $this
+     * @return \Woody\Components\Controls\ListView $this
+     * @todo pass a ListViewRenderer or somethig like that in, which defines headers, and width
      */
-    public function setColumns(array $columns)
-    {
-        wb_set_text($this->controlID, $columns);
+    public function setColumns(array $columns) {
+        $columnWidth = floor($this->dimension->width / count($columns));
 
-        if(true/*$this->width == ListView::AUTO_WIDTH*/)
-        {
-            $width = 0;
-            foreach($columns as $column)
-                $width = $width + $column[1] + ListView::COLUMN_BORDER_WIDTH;
-
-            //$this->resizeTo(new Dimension($width, $this->dimension->height));
+        foreach($columns as $index => $columnHeader) {
+            $columns[$index] = array($columnHeader, $columnWidth - (($index == count($columns) - 1) ? 1 : 2));
         }
+        wb_set_text($this->controlID, $columns);
 
         return $this;
     }
 
-    public function update(\SplSubject $listModel)
-    {
-        // elements were added => add the respective number of rows to the end of the list
-        if(($rowCountDifference = $listModel->count() - $this->count()) > 0)
-        {
-            for($i = 0; $i < $rowCountDifference; ++$i)
+    /**
+     * This method updates the
+     *
+     * @param \SplSubject $listModel
+     * @return \Woody\Components\Controls\ListView $this
+     */
+    public function update(\SplSubject $listModel) {
+        // elements were added => add the respective number of blank rows to the end of the list
+        if(($rowCountDifference = $listModel->count() - $this->count()) > 0) {
+            for($i = 0; $i < $rowCountDifference; ++$i) {
                 $this->addRow(array(null));
-        }
-        else
-        {
+            }
+        } else {
             // elements were deleted => delete the respective number of rows from the end of the list
-            for($i = $rowCountDifference; $i < 0; ++$i)
+            for($i = $rowCountDifference; $i < 0; ++$i) {
                 $this->deleteRow($this->count() - 1);
+            }
         }
 
         if(($count = $listModel->count()) > 0) {
@@ -83,10 +83,9 @@ class ListView extends ListControl
      * This method adds a new row, containing the passed data.
      *
      * @param array data the data of the new row - passing array(null) creates an empty row
-     * @return void
+     * @return \Woody\Components\Controls\ListView $this
      */
-    private function addRow(array $data)
-    {
+    private function addRow(array $data) {
         wb_create_items($this->getControlID(), $data);
 
         return $this;
@@ -97,10 +96,9 @@ class ListView extends ListControl
      *
      * @param array data the data of the row - passing array(null) creates an empty row
      * @param int index the index of the row to be updated
-     * @return void
+     * @return \Woody\Components\Controls\ListView $this
      */
-    private function updateRow(array $data, $index)
-    {
+    private function updateRow(array $data, $index) {
         wb_set_text($this->getControlID(), $data, $index);
 
         return $this;
@@ -110,10 +108,9 @@ class ListView extends ListControl
      * This method delete a row.
      *
      * @param int index the index of the row to be deleted
-     * @return void
+     * @return \Woody\Components\Controls\ListView $this
      */
-    private function deleteRow($index)
-    {
+    private function deleteRow($index) {
         wb_delete_items($this->getControlID(), $index);
 
         return $this;
@@ -126,8 +123,7 @@ class ListView extends ListControl
      *
      * @return int the numer of element in the list
      */
-    private function count()
-    {
+    private function count() {
         return wb_get_item_count($this->getControlID());
     }
 }

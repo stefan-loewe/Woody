@@ -54,7 +54,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase
      * @covers \Woody\Components\Controls\Checkbox::isChecked
      */
     public function testIsChecked()
-    {return;
+    {
         $this->timer = new Timer(function()
                         {
                             $this->assertEquals(FALSE, $this->checkbox->isChecked());
@@ -81,11 +81,11 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase
      * @covers \Woody\Components\Controls\Checkbox::isChecked
      */
     public function testSetChecked()
-    {return;
+    {
         $this->timer = new Timer(function()
                         {
                             $this->assertEquals(FALSE, $this->checkbox->isChecked());
-
+                            usleep(10000);
                             $this->checkbox->setChecked(TRUE);
                             $this->assertEquals(TRUE, $this->checkbox->isChecked());
 

@@ -2,8 +2,8 @@
 
 namespace Woody\Model;
 
-class ListModel implements \SplSubject
-{
+class ListModel implements \SplSubject {
+
     /**
      * the data of the model
      *
@@ -25,22 +25,31 @@ class ListModel implements \SplSubject
      */
     protected $isAdjusting  = FALSE;
 
-    public function __construct(\Traversable $data = null)
-    {
+    /**
+     * This method acts as the constructor of the class.
+     *
+     * @param \Traversable $data the data of the model
+     */
+    public function __construct(\Traversable $data = null) {
         $this->observers = new \SplObjectStorage();
 
         $this->setData($data);
     }
 
-    public function setData(\Traversable $data = null)
-    {
+    /**
+     * This method exchanges the data in the current model with the one given.
+     *
+     * @param \Traversable $data the new data of the model
+     * @return \Woody\Model\ListModel $this
+     */
+    public function setData(\Traversable $data = null) {
         $this->data = new \ArrayObject();
 
         // make sure the collection is indexed linearly
-        if($data != null)
-        {
-            foreach($data as $dataItem)
+        if($data != null) {
+            foreach($data as $dataItem) {
                 $this->data[] = $dataItem;
+            }
         }
 
         $this->notify();
@@ -48,9 +57,14 @@ class ListModel implements \SplSubject
         return $this;
     }
 
-    // Adds an item at the end of the model.
-    public function addElement($item)
-    {
+
+    /**
+     * This method adds an item as the last element of the model.
+     *
+     * @param mixed $item the element to add
+     * @return \Woody\Model\ListModel $this
+     */
+    public function addElement($item) {
         // $this->data[] = $item; did not work when adding elements after having deleted some, as appending was done at previous max index
 
         $this->data[$this->count()] = $item;
@@ -60,13 +74,18 @@ class ListModel implements \SplSubject
         return $this;
     }
 
-    // Adds an item at the end of the model.
-    public function addElements(\ArrayAccess $items)
-    {
+    /**
+     * This method adds multiple items as the last elements of the model.
+     *
+     * @param \Traversable $items the collection of elements to add
+     * @return \Woody\Model\ListModel $this
+     */
+    public function addElements(\Traversable $items) {
         $this->isAdjusting = TRUE;
 
-        foreach($items as $item)
+        foreach($items as $item) {
             $this->addElement($item);
+        }
 
         $this->isAdjusting = FALSE;
 
@@ -75,25 +94,33 @@ class ListModel implements \SplSubject
         return $this;
     }
 
-    // Returns the value at the specified index.
-    public function getElementAt($index)
-    {
-        if($this->data->offsetExists($index))
+    /**
+     * This method returns the element at the specified index.
+     *
+     * @param int $index the index from where to get the element
+     * @return mixed the element at the specified index, or null if non exists at that index
+     */
+    public function getElementAt($index) {
+        if($this->data->offsetExists($index)) {
             return $this->data[$index];
-
-        else
+        } else {
             return null;
+        }
     }
 
-    // Returns the index-position of the specified object in the list.
-    public function getIndexOf($element)
-    {
+    /**
+     * This method returns the index-position of the specified object in the model.
+     *
+     * @param mixed $element the element for which to get the index
+     * @return int the index of the element
+     */
+    public function getIndexOf($element) {
         $currentIndex = 0;
 
-        foreach($this->data as $key => $currentElement)
-        {
-            if($currentElement == $element)
+        foreach($this->data as $key => $currentElement) {
+            if($currentElement == $element) {
                 return $currentIndex;
+            }
 
             ++$currentIndex;
         }
@@ -101,21 +128,30 @@ class ListModel implements \SplSubject
         return -1;
     }
 
-    // Returns the length of the list.
-    public function count()
-    {
+    /**
+     * This method returns the length of the model.
+     *
+     * @return int the size of the model
+     */
+    public function count() {
         return $this->data->count();
     }
 
-    // Adds an item at a specific index.
-    public function insertElementAt($element, $index)
-    {
+    /**
+     * This method adds an item at a specific index.
+     *
+     * @param mixed $element the element to add
+     * @param int $index the index where to add the element
+     * @return \Woody\Model\ListModel $this
+     */
+    public function insertElementAt($element, $index) {
         // the index of the new element may not exeed the index after the currenly last element
         $index = min($index, $this->count());
 
         // starting from end, move every element positioned after the index where to insert up by one position ...
-        for($i = $this->count() - 1; $i >= $index; --$i)
+        for($i = $this->count() - 1; $i >= $index; --$i) {
             $this->data[$i + 1] = $this->data[$i];
+        }
 
         // .. and add the new element at the freed slot
         $this->data[$index] = $element;
@@ -125,11 +161,15 @@ class ListModel implements \SplSubject
         return $this;
     }
 
-    // Empties the list.
-    public function removeAllElements()
-    {
-        foreach($this->data as $index => $entry)
+    /**
+     * This method clears the model of all elements.
+     *
+     * @return \Woody\Model\ListModel $this
+     */
+    public function removeAllElements() {
+        foreach($this->data as $index => $entry) {
             unset($entry);
+        }
 
         unset($this->data);
 
@@ -140,15 +180,24 @@ class ListModel implements \SplSubject
         return $this;
     }
 
-    // Removes an item from the model.
-    public function removeElement($element)
-    {
+    /**
+     * This method removed the given element from the model.
+     *
+     * @param mixed $element the element to remove
+     * @return \Woody\Model\ListModel $this
+     */
+    public function removeElement($element) {
         $this->removeElementAt($this->getIndexOf($element));
 
         return $this;
     }
 
-    // Removes an item at a specific index.
+    /**
+     * This method removes the item at a specific index.
+     *
+     * @param int $index the index of the item to remove
+     * @return \Woody\Model\ListModel $this
+     */
     public function removeElementAt($index) {
         $count = $this->count();
 
@@ -171,18 +220,35 @@ class ListModel implements \SplSubject
         return $this;
     }
 
+    /**
+     * This method adds an observer to the model.
+     *
+     * @param \SplObserver $observer the observer to add
+     * @return \Woody\Model\ListModel $this
+     */
     public function attach(\SplObserver $observer) {
         $this->observers->attach($observer);
 
         return $this;
     }
 
+    /**
+     * This method removes an observer to the model.
+     *
+     * @param \SplObserver $observer the observer to remove
+     * @return \Woody\Model\ListModel $this
+     */
     public function detach(\SplObserver $observer) {
         $this->observers->detach($observer);
 
         return $this;
     }
 
+    /**
+     * This method notifies all observer of the model to update themselves.
+     *
+     * @return \Woody\Model\ListModel $this
+     */
     public function notify() {
         if(!$this->isAdjusting) {
             foreach($this->observers as $observer) {
