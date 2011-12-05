@@ -6,6 +6,7 @@ use \Woody\App\TestApplication;
 use \Woody\Components\Timer\Timer;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
+use \Woody\Model\ListModel;
 
 /**
  * Test class for ComboBox.
@@ -18,7 +19,7 @@ class ComboBoxTest extends \PHPUnit_Framework_TestCase {
      *
      * @var \Woody\Components\Controls\ComboBox
      */
-    private $combobox = null;
+    private $combobox       = null;
 
     /**
      * the test application
@@ -47,4 +48,242 @@ class ComboBoxTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    /**
+     * @covers \Woody\Components\Controls\Combobox::getModel
+     */
+    public function testGetModel() {
+        $this->timer = new Timer(function() {
+                            $this->assertNull($this->combobox->getModel());
+
+                            $stubModel = $this->getMockBuilder('\Woody\Model\ListModel')
+                                ->disableOriginalConstructor()
+                                ->getMock();
+                            $this->combobox->setModel($stubModel);
+                            $this->assertNotNull($this->combobox->getModel());
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
+    }
+
+    /**
+     * @covers \Woody\Components\Controls\Combobox::setModel
+     */
+    public function testSetModel() {
+        $this->timer = new Timer(function() {
+                            $this->assertNull($this->combobox->getModel());
+
+                            $stubModel = $this->getMockBuilder('\Woody\Model\ListModel')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
+                            $this->combobox->setModel($stubModel);
+                            $this->assertNotNull($this->combobox->getModel());
+                            $this->assertSame($stubModel, $this->combobox->getModel());
+
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
+    }
+
+    /**
+     * @covers \Woody\Components\Controls\Combobox::update
+     */
+    public function testUpdate() {
+        $this->timer = new Timer(function() {
+                            $this->combobox->setModel($model = new ListModel(new \ArrayObject()));
+
+                            $model->attach($this->combobox);
+                            $model->addElement('1');
+
+                            $this->combobox->setSelectedIndex(0);
+
+                            $this->assertEquals('1', $this->combobox->getSelectedElement());
+
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
+    }
+
+    /**
+     * @covers \Woody\Components\Controls\Combobox::getSelectedIndex
+     */
+    public function testGetSelectedIndex() {
+        $this->timer = new Timer(function() {
+                            $this->assertEquals(-1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(10);
+                            $this->assertEquals(-1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setModel($model = new ListModel(new \ArrayObject()));
+
+                            $model->attach($this->combobox);
+                            $model->addElement('one');
+                            $model->addElement('two');
+
+                            $this->assertEquals(0, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals(1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals(1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(2);
+                            $this->assertEquals(1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(-1);
+                            $this->assertEquals(-1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals(1, $this->combobox->getSelectedIndex());
+
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
+    }
+
+    /**
+     * @covers \Woody\Components\Controls\Combobox::setSelectedIndex
+     */
+    public function testSetSelectedIndex() {
+        $this->timer = new Timer(function() {
+                            $this->assertEquals(-1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(10);
+                            $this->assertEquals(-1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setModel($model = new ListModel(new \ArrayObject()));
+
+                            $model->attach($this->combobox);
+                            $model->addElement('one');
+                            $model->addElement('two');
+
+                            $this->assertEquals(0, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals(1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(2);
+                            $this->assertEquals(1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(-1);
+                            $this->assertEquals(-1, $this->combobox->getSelectedIndex());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals(1, $this->combobox->getSelectedIndex());
+
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
+    }
+
+    /**
+     * @covers \Woody\Components\Controls\Combobox::getSelectedElement
+     */
+    public function testGetSelectedElement() {
+        $this->timer = new Timer(function() {
+                            $this->assertEquals(null, $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(10);
+                            $this->assertEquals(null, $this->combobox->getSelectedElement());
+
+                            $this->combobox->setModel($model = new ListModel(new \ArrayObject()));
+
+                            $model->attach($this->combobox);
+                            $model->addElement('one');
+                            $model->addElement('two');
+
+                            $this->assertEquals('one', $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals('two', $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals('two', $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(2);
+                            $this->assertEquals('two', $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(-1);
+                            $this->assertEquals(null, $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals('two', $this->combobox->getSelectedElement());
+
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
+    }
+
+    /**
+     * @covers \Woody\Components\Controls\Combobox::setSelectedElement
+     */
+    public function testSetSelectedElement() {
+        $this->timer = new Timer(function() {
+                            $this->assertEquals(null, $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(10);
+                            $this->assertEquals(null, $this->combobox->getSelectedElement());
+
+                            $this->combobox->setModel($model = new ListModel(new \ArrayObject()));
+
+                            $model->attach($this->combobox);
+                            $model->addElement('one');
+                            $model->addElement('two');
+
+                            $this->assertEquals('one', $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals('two', $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals('two', $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(2);
+                            $this->assertEquals('two', $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(-1);
+                            $this->assertEquals(null, $this->combobox->getSelectedElement());
+
+                            $this->combobox->setSelectedIndex(1);
+                            $this->assertEquals('two', $this->combobox->getSelectedElement());
+
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
+    }
 }

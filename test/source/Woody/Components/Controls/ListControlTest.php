@@ -16,7 +16,7 @@ class ListControlTest extends \PHPUnit_Framework_TestCase {
     /**
      * @var \Woody\Components\Controls\ListControl
      */
-    protected $listControl;
+    protected $listControl = null;
 
     /**
      * Sets up the fixture, for example, opens a network connection.

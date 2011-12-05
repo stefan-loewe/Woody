@@ -97,6 +97,7 @@ abstract class ListControl extends Control implements \SplObserver {
     public function update(\SplSubject $listModel) {
         $selectedIndex  = max(0, $this->getSelectedIndex());
         $options        = array();
+
         if(($count = $listModel->count()) > 0) {
             for($i = 0; $i < $count; $i++) {
                 $options[] = $this->cellRenderer->__invoke($listModel->getElementAt($i));
