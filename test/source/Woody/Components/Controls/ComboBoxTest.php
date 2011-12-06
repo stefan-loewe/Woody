@@ -33,9 +33,9 @@ class ComboBoxTest extends \PHPUnit_Framework_TestCase {
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $this->application = new TestApplication();
+        $this->application  = new TestApplication();
 
-        $this->combobox = new ComboBox(new Point(20, 20), new Dimension(80, 200));
+        $this->combobox     = new ComboBox(new Point(20, 20), new Dimension(80, 200));
 
         $this->application->getWindow()->add($this->combobox);
     }
