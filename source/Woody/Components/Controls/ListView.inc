@@ -7,7 +7,8 @@ use \Utils\Geom\Dimension;
 use \Woody\Model\ListModel;
 
 class ListView extends ListControl {
-
+call this Table, and add a TableModel, similar as Java does
+remove it from the ListControl inheritance
     /**
      * This method acts as the constructor of the class.
      *
@@ -162,3 +163,16 @@ class CheckableListView extends ListView
     }
 }
 */
+
+class ListViewHeader {
+
+    private $columns = null;
+
+    public function __construct() {
+        $this->columns = new \ArrayObject();
+    }
+
+    public function addColumn($columnName, $columnWidth) {
+        $this->columns[$columnName] = $columnWidth;
+    }
+}

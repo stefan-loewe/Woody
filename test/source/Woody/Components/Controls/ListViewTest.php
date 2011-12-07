@@ -16,18 +16,18 @@ use \Woody\Model\ListModel;
 class ListViewTest extends \PHPUnit_Framework_TestCase {
 
     /**
-     * the listbox under test
+     * the list view under test
      *
      * @var \Woody\Components\Controls\ListView
      */
-    private $combobox       = null;
+    private $listview       = null;
 
     /**
      * the test application
      *
      * @var \Woody\App\TestApplication
      */
-    private $application    = false;
+    private $application    = null;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -36,7 +36,7 @@ class ListViewTest extends \PHPUnit_Framework_TestCase {
     protected function setUp() {
         $this->application = new TestApplication();
 
-        $this->combobox = new ListBox(new Point(20, 20), new Dimension(80, 200));
+        $this->combobox = new ListView(new Point(20, 20), new Dimension(80, 200));
 
         $this->application->getWindow()->add($this->combobox);
     }
