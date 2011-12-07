@@ -6,9 +6,8 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 use \Woody\Model\ListModel;
 
-class ListView extends ListControl {
-call this Table, and add a TableModel, similar as Java does
-remove it from the ListControl inheritance
+class Table {
+
     /**
      * This method acts as the constructor of the class.
      *
@@ -16,22 +15,9 @@ remove it from the ListControl inheritance
      * @param Dimension $dimension the dimension of the list view
      */
     public function __construct(Point $topLeftCorner, Dimension $dimension) {
-        parent::__construct($topLeftCorner, $dimension);
-
         $this->type = ListView;
 
         $this->cellRenderer = self::getDefaultCellRenderer();
-    }
-
-    /**
-     * This method returns the default cell renderer for the list view, which actually creates an empty row.
-     *
-     * @return \Callable
-     */
-    protected static function getDefaultCellRenderer() {
-        return function($element) {
-                        return array();
-                    };
     }
 
     /**

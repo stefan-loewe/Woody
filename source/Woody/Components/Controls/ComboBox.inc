@@ -5,7 +5,7 @@ namespace Woody\Components\Controls;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class ComboBox extends SelectBox {
+class ComboBox extends ListControl {
 
     /**
      * This method acts as the constructor of the class.
