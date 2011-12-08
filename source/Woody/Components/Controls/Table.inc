@@ -6,6 +6,10 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 use \Woody\Model\ListModel;
 
+class TableModel {
+    
+}
+
 class Table {
 
     /**

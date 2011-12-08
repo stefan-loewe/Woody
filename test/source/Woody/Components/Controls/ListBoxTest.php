@@ -8,7 +8,7 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 use \Woody\Model\ListModel;
 
-require_once 'ListControlTestFunctional.php';
+require_once 'ListControlTest.php';
 
 /**
  * Test class for ListBox.
