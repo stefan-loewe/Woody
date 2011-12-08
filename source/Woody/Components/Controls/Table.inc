@@ -2,15 +2,84 @@
 
 namespace Woody\Components\Controls;
 
+use \Woody\Components\Component;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
-use \Woody\Model\ListModel;
 
-class TableModel {
-    
+abstract class TableModel {
+
+    protected $data           = null;
+
+    protected $observers    = null;
+
+    protected $headers      = null;
+
+    public function __construct(\Traversable $data = null) {
+        $this->data = $data;
+
+
+    }
+
+    abstract function getRowCount();
+
+    abstract function getColumnCount();
+
+    abstract function getEntry($row, $column);
+
+    public function getColumnHeader() {
+
+    }
+
+    public static function initializeColumnHeaders($columnCount) {
+        //$columnCount = $this->getColumnCount();
+
+        $counter = 1;
+        $name = '';
+        $columnCount = $columnCount;
+        while(true) {
+           $digit = $columnCount % 26;
+           $columnCount = ceil($columnCount / 26);
+
+           $name = chr(65 + $digit).$name;
+
+           if($columnCount == 1)
+               break;
+        }
+
+        //$this->headers = array();
+        return $name;
+    }
 }
 
-class Table {
+class DefaultTableModel extends TableModel {
+
+    public function __construct(array $t) {
+        $this->data = $t;
+    }
+
+    public function getEntry($row, $column) {
+        return $data[$row][$column];
+    }
+
+    public function getRowCount() {
+        return count($data);
+    }
+
+    public function getColumnCount() {
+        $columnCount = 0;
+
+        foreach($this->data as $row) {
+            $counter = 0;
+            foreach($row as $cell) {
+                $columnCount = max($columnCount, ++$counter);
+            }
+        }
+
+        return $columnCount;
+    }
+}
+
+class Table extends Control {
 
     /**
      * This method acts as the constructor of the class.
@@ -19,9 +88,9 @@ class Table {
      * @param Dimension $dimension the dimension of the list view
      */
     public function __construct(Point $topLeftCorner, Dimension $dimension) {
-        $this->type = ListView;
+        parent::__construct(null, $topLeftCorner, $dimension);
 
-        $this->cellRenderer = self::getDefaultCellRenderer();
+        $this->type = ListView;
     }
 
     /**

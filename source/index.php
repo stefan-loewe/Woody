@@ -66,7 +66,7 @@ if(!TRUE)
     $server->register($htmlControl2);
 }
 
-else if(TRUE)
+else if(!TRUE)
 {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
     $win->create();
@@ -108,6 +108,15 @@ else if(TRUE)
 
     $button = new \Woody\Components\Controls\PushButton("click me", new Point(440, 140), new Dimension(100, 20));
     $win->add($button);
-}
+} else if(TRUE) {
+    $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
+    $win->create();
 
-$win->startEventHandler();
+    $table = new Woody\Components\Controls\Table(new Point(10, 10), new Dimension(100, 300));
+new \Woody\Components\Controls\DefaultTableModel(array(array(1, 2, 3, 4), array(10, 20, 30, 40)));
+    $win->add($table);
+    $table->setColumns(array('a', 'b', 'c', 'd'));
+    $n = \Woody\Components\Controls\DefaultTableModel::initializeColumnHeaders(26);
+    echo $n;
+}
+//$win->startEventHandler();
