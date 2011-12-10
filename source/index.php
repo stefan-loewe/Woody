@@ -113,10 +113,8 @@ else if(!TRUE)
     $win->create();
 
     $table = new Woody\Components\Controls\Table(new Point(10, 10), new Dimension(100, 300));
-new \Woody\Components\Controls\DefaultTableModel(array(array(1, 2, 3, 4), array(10, 20, 30, 40)));
+    $model = new \Woody\Components\Controls\DefaultTableModel(array(array(1, 2, 3, 4), array(10, 20, 30, 40)));
     $win->add($table);
-    $table->setColumns(array('a', 'b', 'c', 'd'));
-    $n = \Woody\Components\Controls\DefaultTableModel::initializeColumnHeaders(26);
-    echo $n;
+    $table->setModel($model);
 }
-//$win->startEventHandler();
+$win->startEventHandler();

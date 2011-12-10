@@ -71,9 +71,7 @@ abstract class ListControl extends Control implements \SplObserver {
      * @return \Woody\Components\Controls\ListControl $this
      */
     public function setModel(ListModel $model) {
-        $this->model = $model;
-
-        return $this;
+        return $this->update($model);
     }
 
     /**
@@ -95,12 +93,14 @@ abstract class ListControl extends Control implements \SplObserver {
      * @return \Woody\Components\Controls\ListControl $this
      */
     public function update(\SplSubject $listModel) {
+        $this->model    = $listModel;
+
         $selectedIndex  = max(0, $this->getSelectedIndex());
         $options        = array();
 
-        if(($count = $listModel->count()) > 0) {
+        if(($count = $this->model->count()) > 0) {
             for($i = 0; $i < $count; $i++) {
-                $options[] = $this->cellRenderer->__invoke($listModel->getElementAt($i));
+                $options[] = $this->cellRenderer->__invoke($this->model->getElementAt($i));
             }
         }
 

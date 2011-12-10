@@ -6,18 +6,18 @@ use \Woody\Components\Component;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-abstract class TableModel {
+abstract class TableModel implements \SplSubject {
 
-    protected $data           = null;
+    protected $data         = null;
 
     protected $observers    = null;
 
     protected $headers      = null;
 
-    public function __construct(\Traversable $data = null) {
+    public function __construct($data) {
         $this->data = $data;
 
-
+        $this->initializeColumnHeaders();
     }
 
     abstract function getRowCount();
@@ -26,53 +26,91 @@ abstract class TableModel {
 
     abstract function getEntry($row, $column);
 
-    public function getColumnHeader() {
-
+    public function getColumnName($columnIndex) {
+        return $this->headers[$columnIndex];
     }
 
-    public static function initializeColumnHeaders($columnCount) {
-        //$columnCount = $this->getColumnCount();
+    private function initializeColumnHeaders() {
+        $columnCount = $this->getColumnCount();
 
-        $counter = 1;
-        $name = '';
-        $columnCount = $columnCount;
-        while(true) {
-           $digit = $columnCount % 26;
-           $columnCount = ceil($columnCount / 26);
+        for($i = 0; $i < $columnCount; $i++) {
+            $this->headers[] = $this->toBase26($i);
+        }
+    }
 
-           $name = chr(65 + $digit).$name;
+    private function toBase26($i) {
+        $result = '';
 
-           if($columnCount == 1)
-               break;
+        do {
+            $digit = $i % 26;
+            $i = floor($i / 26) - 1;
+
+            $result = chr(65 + $digit).$result;
+
+        } while($i >= 0);
+
+        return $result;
+    }
+
+        /**
+     * This method adds an observer to the model.
+     *
+     * @param \SplObserver $observer the observer to add
+     * @return \Woody\Model\TableModel $this
+     */
+    public function attach(\SplObserver $observer) {
+        $this->observers->attach($observer);
+
+        return $this;
+    }
+
+    /**
+     * This method removes an observer to the model.
+     *
+     * @param \SplObserver $observer the observer to remove
+     * @return \Woody\Model\TableModel $this
+     */
+    public function detach(\SplObserver $observer) {
+        $this->observers->detach($observer);
+
+        return $this;
+    }
+
+    /**
+     * This method notifies all observer of the model to update themselves.
+     *
+     * @return \Woody\Model\TableModel $this
+     */
+    public function notify() {
+        /*if(!$this->isAdjusting)*/ {
+            foreach($this->observers as $observer) {
+                $observer->update($this);
+            }
         }
 
-        //$this->headers = array();
-        return $name;
+        return $this;
     }
 }
 
 class DefaultTableModel extends TableModel {
 
-    public function __construct(array $t) {
-        $this->data = $t;
+    public function __construct(array $data) {
+        parent::__construct($data);
     }
 
     public function getEntry($row, $column) {
-        return $data[$row][$column];
+        return $this->data[$row][$column];
     }
 
     public function getRowCount() {
-        return count($data);
+        return count($this->data);
     }
 
     public function getColumnCount() {
         $columnCount = 0;
 
         foreach($this->data as $row) {
-            $counter = 0;
-            foreach($row as $cell) {
-                $columnCount = max($columnCount, ++$counter);
-            }
+            $columnCount = max($columnCount, count($row));
         }
 
         return $columnCount;
@@ -81,6 +119,7 @@ class DefaultTableModel extends TableModel {
 
 class Table extends Control {
 
+    protected $model = null;
     /**
      * This method acts as the constructor of the class.
      *
@@ -94,116 +133,89 @@ class Table extends Control {
     }
 
     /**
-     * This method sets the headers of the list view. This is a mandatory step, otherwise no data entries maybe inserted.
+     * This method sets the table model of the table.
      *
-     * @param array $columns the tiltes of the header as array of strings
-     * @return \Woody\Components\Controls\ListView $this
-     * @todo pass a ListViewRenderer or somethig like that in, which defines headers, and width
+     * @param \Woody\Model\TableModel $model the model to set
+     * @return \Woody\Components\Controls\Table $this
      */
-    public function setColumns(array $columns) {
-        $columnWidth = floor($this->dimension->width / count($columns));
-
-        foreach($columns as $index => $columnHeader) {
-            $columns[$index] = array($columnHeader, $columnWidth - (($index == count($columns) - 1) ? 1 : 2));
-        }
-        wb_set_text($this->controlID, $columns);
-
-        return $this;
+    public function setModel(TableModel $model) {
+        return $this->update($model);
     }
 
     /**
      * This method updates the
      *
-     * @param \SplSubject $listModel
-     * @return \Woody\Components\Controls\ListView $this
+     * @param \SplSubject $tableModel
+     * @return \Woody\Components\Controls\Table $this
      */
-    public function update(\SplSubject $listModel) {
-        // elements were added => add the respective number of blank rows to the end of the list
-        if(($rowCountDifference = $listModel->count() - $this->count()) > 0) {
-            for($i = 0; $i < $rowCountDifference; ++$i) {
-                $this->addRow(array(null));
-            }
-        } else {
-            // elements were deleted => delete the respective number of rows from the end of the list
-            for($i = $rowCountDifference; $i < 0; ++$i) {
-                $this->deleteRow($this->count() - 1);
-            }
-        }
+    public function update(\SplSubject $tableModel) {
+        $this->model = $tableModel;
 
-        if(($count = $listModel->count()) > 0) {
-            for($i = 0; $i < $count; $i++) {
-                $this->updateRow($this->cellRenderer->__invoke($listModel->getElementAt($i)), $i);
-            }
-        }
+        $this->clear();
+        $this->setHeader();
+        $this->setData();
+
+        return $this;
+    }
+
+    private function clear() {
+        wb_create_items($this->getControlID(), null, TRUE);
 
         return $this;
     }
 
     /**
-     * This method adds a new row, containing the passed data.
+     * This method sets the header of the table. This is a mandatory step before being able to insert any data.
      *
-     * @param array data the data of the new row - passing array(null) creates an empty row
-     * @return \Woody\Components\Controls\ListView $this
+     * @return \Woody\Components\Controls\Table $this
      */
-    private function addRow(array $data) {
+    private function setHeader() {
+        $headers        = new \ArrayObject();
+        $columnCount    = $this->model->getColumnCount();
+
+        for($columnIndex = 0; $columnIndex < $columnCount; $columnIndex++) {
+            $headers[] = $this->model->getColumnName($columnIndex);
+        }
+
+        wb_set_text($this->controlID, $headers->getArrayCopy());
+
+        return $this;
+    }
+
+    private function setData() {
+        $data           = array();
+
+        $rowCount       = $this->model->getRowCount();
+        $columnCount    = $this->model->getColumnCount();
+
+        for($rowIndex = 0; $rowIndex < $rowCount; $rowIndex++) {
+            $data[$rowIndex] = array();
+            for($columnIndex = 0; $columnIndex < $columnCount; $columnIndex++) {
+                $data[$rowIndex][$columnIndex] = $this->model->getEntry($rowIndex, $columnIndex);
+            }
+        }
         wb_create_items($this->getControlID(), $data);
 
         return $this;
     }
-
-    /**
-     * This method updates the contents of a row.
-     *
-     * @param array data the data of the row - passing array(null) creates an empty row
-     * @param int index the index of the row to be updated
-     * @return \Woody\Components\Controls\ListView $this
-     */
-    private function updateRow(array $data, $index) {
-        wb_set_text($this->getControlID(), $data, $index);
-
-        return $this;
-    }
-
-    /**
-     * This method delete a row.
-     *
-     * @param int index the index of the row to be deleted
-     * @return \Woody\Components\Controls\ListView $this
-     */
-    private function deleteRow($index) {
-        wb_delete_items($this->getControlID(), $index);
-
-        return $this;
-    }
-
-    /**
-     * This method returns the number of elements currently available in the list.
-     *
-     * This is not neccessarily the same as the count of the list model, as the list model may be updated, while the list view still holds the items of the list model before the respectice update.
-     *
-     * @return int the numer of element in the list
-     */
-    private function count() {
-        return wb_get_item_count($this->getControlID());
-    }
 }
 /*
-class CheckableListView extends ListView
+class CheckableTable extends Table
 {
-    public function __construct(ListView $listView)
+    public function __construct(Table $Table)
     {
-        $this->style = $listView->style | WBC_CHECKBOXES;
+        $this->style = $Table->style | WBC_CHECKBOXES;
 
-        $this->parentControl    = $listView->parentControl;
-        $this->id               = $listView->id;
-        $this->type             = $listView->type;
-        $this->value            = $listView->value;
-        $this->xPos             = $listView->xPos;
-        $this->yPos             = $listView->yPos;
-        $this->width            = $listView->width;
-        $this->height           = $listView->height;
-        $this->param            = $listView->param;
-        $this->tabIndex         = $listView->tabIndex;
+        $this->parentControl    = $Table->parentControl;
+        $this->id               = $Table->id;
+        $this->type             = $Table->type;
+        $this->value            = $Table->value;
+        $this->xPos             = $Table->xPos;
+        $this->yPos             = $Table->yPos;
+        $this->width            = $Table->width;
+        $this->height           = $Table->height;
+        $this->param            = $Table->param;
+        $this->tabIndex         = $Table->tabIndex;
     }
 
     public function getCheckedValues()
@@ -223,7 +235,7 @@ class CheckableListView extends ListView
 }
 */
 
-class ListViewHeader {
+class TableHeader {
 
     private $columns = null;
 
