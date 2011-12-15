@@ -26,6 +26,8 @@ abstract class ListControl extends Control implements \SplObserver {
 
     const NON_EDITABLE	= 0x00000040;
 
+    const NO_SELECTION  = -1;
+
     /**
      * This method acts as the constructor of the class.
      *
@@ -95,7 +97,7 @@ abstract class ListControl extends Control implements \SplObserver {
     public function update(\SplSubject $listModel) {
         $this->model    = $listModel;
 
-        $selectedIndex  = max(0, $this->getSelectedIndex());
+        $selectedIndex  = /*max(0, */$this->getSelectedIndex()/*)*/;
         $options        = array();
 
         if(($count = $this->model->count()) > 0) {
@@ -127,7 +129,45 @@ abstract class ListControl extends Control implements \SplObserver {
      * @return \Woody\Components\Controls\ListControl $this
      */
     public function setSelectedIndex($index) {
+
+        if(!$this->isValidIndex($index))
+            $index = self::NO_SELECTION;
+
         wb_set_selected($this->controlID, $index);
+
+        return $this;
+    }
+
+    /**
+     * This method checks if the given index is valid for the list control, with the current model.
+     *
+     * @param int $index the index to verify
+     * @return boolean true, if the index is valid, else false
+     */
+    private function isValidIndex($index) {
+        if($index === self::NO_SELECTION) {
+            return true;
+        }
+        else if($index < self::NO_SELECTION) {
+            return false;
+        }
+        else if($this->model == null) {
+            return false;
+        }
+        else if($index >= $this->model->count()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * This method clears the selection, i.e. afterwards, no entry is selected
+     *
+     * @return \Woody\Components\Controls\ListControl $this
+     */
+    public function clearSelection() {
+        wb_set_selected($this->controlID, self::NO_SELECTION);
 
         return $this;
     }
@@ -154,8 +194,10 @@ abstract class ListControl extends Control implements \SplObserver {
      * @return \Woody\Components\Controls\ListControl $this
      */
     public function setSelectedElement($selectedElement) {
-       wb_set_selected($this->controlID, $this->model->getIndexOf($selectedElement));
+        if($this->model !== null) {
+            wb_set_selected($this->controlID, $this->model->getIndexOf($selectedElement));
+        }
 
-       return $this;
+        return $this;
     }
 }

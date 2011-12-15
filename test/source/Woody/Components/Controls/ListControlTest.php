@@ -19,7 +19,7 @@ abstract class ListControlTestFunctional extends \PHPUnit_Framework_TestCase {
      *
      * @var \Woody\Components\Controls\ListControl
      */
-    protected $listControl        = null;
+    protected $listControl      = null;
 
     /**
      * the test application
@@ -50,40 +50,19 @@ abstract class ListControlTestFunctional extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers \Woody\Components\Controls\ListControl::getModel
-     */
-    public function testGetModel() {
-        $this->timer = new Timer(function() {
-                            $this->assertNull($this->listControl->getModel());
-
-                            $stubModel = $this->getMockBuilder('\Woody\Model\ListModel')
-                                ->disableOriginalConstructor()
-                                ->getMock();
-                            $this->listControl->setModel($stubModel);
-                            $this->assertNotNull($this->listControl->getModel());
-
-                            $this->timer->destroy();
-                            $this->application->stop();
-                        }, $this->application->getWindow(), 100);
-
-        $this->timer->start($this->application->getWindow());
-
-        $this->application->start();
-    }
-
-    /**
      * @covers \Woody\Components\Controls\ListControl::setModel
      */
-    public function testSetModel() {
+    public function testGetSetModel() {
         $this->timer = new Timer(function() {
                             $this->assertNull($this->listControl->getModel());
 
-                            $stubModel = $this->getMockBuilder('\Woody\Model\ListModel')
+                            $model = $this->getMockBuilder('\Woody\Model\ListModel')
                                  ->disableOriginalConstructor()
                                  ->getMock();
-                            $this->listControl->setModel($stubModel);
-                            $this->assertNotNull($this->listControl->getModel());
-                            $this->assertSame($stubModel, $this->listControl->getModel());
 
+                            $this->listControl->setModel($model);
+                            $this->assertNotNull($this->listControl->getModel());
+                            $this->assertSame($model, $this->listControl->getModel());
 
                             $this->timer->destroy();
                             $this->application->stop();
@@ -99,15 +78,39 @@ abstract class ListControlTestFunctional extends \PHPUnit_Framework_TestCase {
      */
     public function testUpdate() {
         $this->timer = new Timer(function() {
-                            $this->listControl->setModel($model = new ListModel(new \ArrayObject()));
+                            $this->assertEquals(-1, $this->listControl->getSelectedIndex());
 
+                            $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
+                            // ... returning 'A' on each call to getElementAt
+                            $model->expects($this->any())
+                                ->method('getElementAt')
+                                ->will($this->returnValue('A'));
+                            $model->expects($this->any())
+                                ->method('count')
+                                ->will($this->returnValue(1));
+
+                            $this->listControl->setModel($model);
                             $model->attach($this->listControl);
-                            $model->addElement('1');
+                            $this->assertEquals(-1, $this->listControl->getSelectedIndex());
 
                             $this->listControl->setSelectedIndex(0);
+                            $this->assertEquals('A', $this->listControl->getSelectedElement());
 
-                            $this->assertEquals('1', $this->listControl->getSelectedElement());
+                            $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
+                            $model->expects($this->any())
+                                ->method('getElementAt')
+                                ->will($this->returnValue('B'));
+                            $model->expects($this->any())
+                                ->method('count')
+                                ->will($this->returnValue(2));
 
+                            $this->listControl->setModel($model);
+                            $this->listControl->setSelectedIndex(1);
+                            $this->assertEquals('B', $this->listControl->getSelectedElement());
 
                             $this->timer->destroy();
                             $this->application->stop();
@@ -120,69 +123,44 @@ abstract class ListControlTestFunctional extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers \Woody\Components\Controls\ListControl::getSelectedIndex
-     */
-    public function testGetSelectedIndex() {
-        $this->timer = new Timer(function() {
-                            $this->assertEquals(-1, $this->listControl->getSelectedIndex());
-
-                            $this->listControl->setSelectedIndex(10);
-                            $this->assertEquals(-1, $this->listControl->getSelectedIndex());
-
-                            $this->listControl->setModel($model = new ListModel(new \ArrayObject()));
-
-                            $model->attach($this->listControl);
-                            $model->addElement('one');
-                            $model->addElement('two');
-
-                            $this->assertEquals(0, $this->listControl->getSelectedIndex());
-
-                            $this->listControl->setSelectedIndex(1);
-                            $this->assertEquals(1, $this->listControl->getSelectedIndex());
-
-                            $this->listControl->setSelectedIndex(1);
-                            $this->assertEquals(1, $this->listControl->getSelectedIndex());
-
-                            $this->listControl->setSelectedIndex(2);
-                            $this->assertEquals(1, $this->listControl->getSelectedIndex());
-
-                            $this->listControl->setSelectedIndex(-1);
-                            $this->assertEquals(-1, $this->listControl->getSelectedIndex());
-
-                            $this->listControl->setSelectedIndex(1);
-                            $this->assertEquals(1, $this->listControl->getSelectedIndex());
-
-
-                            $this->timer->destroy();
-                            $this->application->stop();
-                        }, $this->application->getWindow(), 100);
-
-        $this->timer->start($this->application->getWindow());
-
-        $this->application->start();
-    }
-
-    /**
      * @covers \Woody\Components\Controls\ListControl::setSelectedIndex
      */
-    public function testSetSelectedIndex() {
+    public function testGetSetSelectedIndex() {
         $this->timer = new Timer(function() {
                             $this->assertEquals(-1, $this->listControl->getSelectedIndex());
 
                             $this->listControl->setSelectedIndex(10);
                             $this->assertEquals(-1, $this->listControl->getSelectedIndex());
 
-                            $this->listControl->setModel($model = new ListModel(new \ArrayObject()));
+                            // get a mock for the model ...
+                            $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
+                            // ... returning 'A' on each call to getElementAt
+                            $model->expects($this->any())
+                                ->method('getElementAt')
+                                ->will($this->returnValue('A'));
+                            $model->expects($this->any())
+                                ->method('count')
+                                ->will($this->returnValue(2));
 
                             $model->attach($this->listControl);
-                            $model->addElement('one');
-                            $model->addElement('two');
+                            $this->listControl->setModel($model);
+                            $this->assertEquals(-1, $this->listControl->getSelectedIndex());
 
+                            $this->listControl->setSelectedIndex(0);
                             $this->assertEquals(0, $this->listControl->getSelectedIndex());
 
                             $this->listControl->setSelectedIndex(1);
                             $this->assertEquals(1, $this->listControl->getSelectedIndex());
 
+                            $this->listControl->setSelectedIndex(1);
+                            $this->assertEquals(1, $this->listControl->getSelectedIndex());
+
                             $this->listControl->setSelectedIndex(2);
+                            $this->assertEquals(-1, $this->listControl->getSelectedIndex());
+
+                            $this->listControl->setSelectedIndex(1);
                             $this->assertEquals(1, $this->listControl->getSelectedIndex());
 
                             $this->listControl->setSelectedIndex(-1);
@@ -190,7 +168,6 @@ abstract class ListControlTestFunctional extends \PHPUnit_Framework_TestCase {
 
                             $this->listControl->setSelectedIndex(1);
                             $this->assertEquals(1, $this->listControl->getSelectedIndex());
-
 
                             $this->timer->destroy();
                             $this->application->stop();
@@ -206,7 +183,88 @@ abstract class ListControlTestFunctional extends \PHPUnit_Framework_TestCase {
      */
     public function testGetSelectedElement() {
         $this->timer = new Timer(function() {
-                            $this->selectingElements();
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedIndex(10);
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            // get a mock for the model ...
+                            $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
+                            // ... returning 'A' on each call to getElementAt
+                            $model->expects($this->any())
+                                ->method('getElementAt')
+                                ->will($this->returnValueMap(array(array(0, 'A'), array(1, 'B'))));
+                            $model->expects($this->any())
+                                ->method('count')
+                                ->will($this->returnValue(2));
+
+                            $model->attach($this->listControl);
+                            $this->listControl->setModel($model);
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedIndex(1);
+                            $this->assertEquals('B', $this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedIndex(2);
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedIndex(1);
+                            $this->assertEquals('B', $this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedIndex(-1);
+                            $this->assertEquals(null, $this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedIndex(1);
+                            $this->assertEquals('B', $this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedIndex(0);
+                            $this->assertEquals('A', $this->listControl->getSelectedElement());
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
+    }
+
+    /**
+     * @covers \Woody\Components\Controls\ListControl::clearSelection
+     */
+    public function testClearSelection() {
+        $this->timer = new Timer(function() {
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            $this->listControl->clearSelection();
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            // get a mock for the model ...
+                            $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
+                            // ... returning 'A' on each call to getElementAt
+                            $model->expects($this->any())
+                                ->method('getElementAt')
+                                ->will($this->returnValueMap(array(array(0, 'A'), array(1, 'B'))));
+                            $model->expects($this->any())
+                                ->method('count')
+                                ->will($this->returnValue(2));
+
+                            $model->attach($this->listControl);
+                            $this->listControl->setModel($model);
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedIndex(0);
+                            $this->assertEquals('A', $this->listControl->getSelectedElement());
+
+                            $this->listControl->clearSelection();
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            $this->listControl->clearSelection();
+                            $this->assertNull($this->listControl->getSelectedElement());
 
                             $this->timer->destroy();
                             $this->application->stop();
@@ -222,7 +280,41 @@ abstract class ListControlTestFunctional extends \PHPUnit_Framework_TestCase {
      */
     public function testSetSelectedElement() {
         $this->timer = new Timer(function() {
-                            $this->selectingElements();
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedElement(null);
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedElement(2);
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            // get a mock for the model ...
+                            $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                                 ->disableOriginalConstructor()
+                                 ->getMock();
+                            // ... returning 'A' on each call to getElementAt
+                            $model->expects($this->any())
+                                ->method('getElementAt')
+                                ->will($this->returnValueMap(array(array(0, 'A'), array(1, 'B'))));
+                            $model->expects($this->any())
+                                ->method('getIndexOf')
+                                ->will($this->returnValueMap(array(array('A', 0), array('B', 1), array('C', -1))));
+                            $model->expects($this->any())
+                                ->method('count')
+                                ->will($this->returnValue(2));
+
+                            $model->attach($this->listControl);
+                            $this->listControl->setModel($model);
+                            $this->assertNull($this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedElement('A');
+                            $this->assertEquals('A', $this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedElement('B');
+                            $this->assertEquals('B', $this->listControl->getSelectedElement());
+
+                            $this->listControl->setSelectedElement('C');
+                            $this->assertNull($this->listControl->getSelectedElement());
 
                             $this->timer->destroy();
                             $this->application->stop();
@@ -231,35 +323,5 @@ abstract class ListControlTestFunctional extends \PHPUnit_Framework_TestCase {
         $this->timer->start($this->application->getWindow());
 
         $this->application->start();
-    }
-
-    private function selectingElements() {
-        $this->assertEquals(null, $this->listControl->getSelectedElement());
-
-        $this->listControl->setSelectedIndex(10);
-        $this->assertEquals(null, $this->listControl->getSelectedElement());
-
-        $this->listControl->setModel($model = new ListModel(new \ArrayObject()));
-
-        $model->attach($this->listControl);
-        $model->addElement('one');
-        $model->addElement('two');
-
-        $this->assertEquals('one', $this->listControl->getSelectedElement());
-
-        $this->listControl->setSelectedIndex(1);
-        $this->assertEquals('two', $this->listControl->getSelectedElement());
-
-        $this->listControl->setSelectedIndex(1);
-        $this->assertEquals('two', $this->listControl->getSelectedElement());
-
-        $this->listControl->setSelectedIndex(2);
-        $this->assertEquals('two', $this->listControl->getSelectedElement());
-
-        $this->listControl->setSelectedIndex(-1);
-        $this->assertEquals(null, $this->listControl->getSelectedElement());
-
-        $this->listControl->setSelectedIndex(1);
-        $this->assertEquals('two', $this->listControl->getSelectedElement());
     }
 }

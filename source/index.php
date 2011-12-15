@@ -66,7 +66,7 @@ if(!TRUE)
     $server->register($htmlControl2);
 }
 
-else if(!TRUE)
+else if(TRUE)
 {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
     $win->create();
@@ -76,11 +76,6 @@ else if(!TRUE)
 
     $comboControl = new Woody\Components\Controls\ComboBox(new Point(120, 10), new Dimension(100, 300));
     $win->add($comboControl);
-
-    $listView = new Woody\Components\Controls\ListView(new Point(120, 50), new Dimension(300, 400));
-
-    $win->add($listView);
-    $listView->setColumns(array('1', '2', '4'));
 
     $data = new ArrayObject();
     $data[] = 1;
@@ -92,19 +87,9 @@ else if(!TRUE)
 
     $comboControl->setModel($model = new \Woody\Model\ListModel($data));
     $listControl->setModel($model);
-    $listView->setModel($model);
     $model->attach($comboControl);
     $model->attach($listControl);
-    $model->attach($listView);
     $model->notify();
-
-    Woody\Event\EventHandler::addEventHandler($listView,
-            function(Woody\Components\Controls\ListView $control, $param1, $param2)
-            {
-                var_dump('addElement(777)');
-                $control->getModel()->addElement(777);
-                $control->getModel()->notify();
-            });
 
     $button = new \Woody\Components\Controls\PushButton("click me", new Point(440, 140), new Dimension(100, 20));
     $win->add($button);
@@ -113,8 +98,11 @@ else if(!TRUE)
     $win->create();
 
     $table = new Woody\Components\Controls\Table(new Point(10, 10), new Dimension(100, 300));
-    $model = new \Woody\Components\Controls\DefaultTableModel(array(array(1, 2, 3, 4), array(10, 20, 30, 40)));
+
+    $model = new \Woody\Model\DefaultTableModel(array(array(100, 200, 300, 400), array(10, 20, 30, 40)));
     $win->add($table);
     $table->setModel($model);
+
+
 }
 $win->startEventHandler();
