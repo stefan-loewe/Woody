@@ -66,7 +66,7 @@ if(!TRUE)
     $server->register($htmlControl2);
 }
 
-else if(TRUE)
+else if(!TRUE)
 {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
     $win->create();
@@ -93,7 +93,7 @@ else if(TRUE)
 
     $button = new \Woody\Components\Controls\PushButton("click me", new Point(440, 140), new Dimension(100, 20));
     $win->add($button);
-} else if(TRUE) {
+} else if(!TRUE) {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
     $win->create();
 
@@ -102,7 +102,12 @@ else if(TRUE)
     $model = new \Woody\Model\DefaultTableModel(array(array(100, 200, 300, 400), array(10, 20, 30, 40)));
     $win->add($table);
     $table->setModel($model);
+} else if(TRUE) {
+    $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
+    $win->create();
 
-
+$gauge = wb_create_control($win->getControlID(), Gauge, "Update", 230, 245, 310, 15, 287525);
+var_dump(wb_set_value($gauge, 50));
+var_dump(wb_get_value($gauge, 50));
 }
 $win->startEventHandler();

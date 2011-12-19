@@ -6,41 +6,34 @@ use \Woody\Components\Component;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class HtmlControl extends Control
-{
-    public function __construct($url, Point $topLeftCorner, Dimension $dimension/*$style = Control::DEFAULT_STYLE, $param = 0, $tabIndex = 0*/)
-    {
+class HtmlControl extends Control {
+    public function __construct($url, Point $topLeftCorner, Dimension $dimension/*$style = Control::DEFAULT_STYLE, $param = 0, $tabIndex = 0*/) {
         parent::__construct($url, $topLeftCorner, $dimension);
 
         $this->type = HTMLControl;
     }
 
-    public function destroy()
-    {
+    public function destroy() {
         //FotoImportApplication::getHTMLControlServer()->unregister($this);
     }
 
-    protected function create(Component $parent)
-    {
+    protected function create(Component $parent) {
         parent::create($parent);
 
         $this->setUrl($this->value);
     }
 
-    public function getUrl()
-    {
+    public function getUrl() {
         return $this->value;
     }
 
-    public function setUrl($url)
-    {
+    public function setUrl($url) {
         $this->value = $url;
 
         wb_set_location($this->controlID, $this->value);
     }
 
-    public function setEventHandler($callback)
-    {
-    //FotoImportApplication::getHTMLControlServer()->register($this, $callback);
+    public function setEventHandler($callback) {
+        //FotoImportApplication::getHTMLControlServer()->register($this, $callback);
     }
 }

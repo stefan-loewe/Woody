@@ -16,8 +16,7 @@ class Frame extends Control implements Container
      */
     protected $children = null;
 
-    public function __construct($label, Point $topLeftCorner, Dimension $dimension)
-    {
+    public function __construct($label, Point $topLeftCorner, Dimension $dimension) {
         parent::__construct($label, $topLeftCorner, $dimension);
 
         $this->type     = Frame;
@@ -34,10 +33,10 @@ class Frame extends Control implements Container
      * @param Component $control
      * @return Frame
      */
-    public function add(Component $control)
-    {
-        if($control->parent !== null)
+    public function add(Component $control) {
+        if($control->parent !== null) {
             $this->remove($control);
+        }
 
         $control->create($this);
 
@@ -51,10 +50,8 @@ class Frame extends Control implements Container
      *
      * @param Component $control
      */
-    public function remove(Component $control)
-    {
-        if($this->children->offsetExists($control))
-        {
+    public function remove(Component $control) {
+        if($this->children->offsetExists($control)) {
             $this->children->offsetUnset($control);
 
             wb_destroy_control($control->controlID);

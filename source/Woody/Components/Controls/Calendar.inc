@@ -5,8 +5,7 @@ namespace Woody\Components\Controls;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class Calendar extends Control
-{
+class Calendar extends Control {
     /**
      * This method acts as the constructor of the class.
      *
@@ -15,8 +14,7 @@ class Calendar extends Control
      * @param Point $topLeftCorner the top left corner of the calendar
      * @param Dimension $dimension the dimension of the calendar
      */
-    public function __construct(Point $topLeftCorner, Dimension $dimension)
-    {
+    public function __construct(Point $topLeftCorner, Dimension $dimension) {
         parent::__construct(null, $topLeftCorner, $dimension);
 
         $this->type = Calendar;
@@ -27,8 +25,7 @@ class Calendar extends Control
      *
      * @return \DateTime the date of the calendar
      */
-    public function getDate()
-    {
+    public function getDate() {
         // wb_get_value($this->controlID) returns wrong dates, e.g. on 2010_11_ 01, maybe because of DST !?!?
         //return wb_get_value($this->controlID);
 
@@ -47,8 +44,7 @@ class Calendar extends Control
      *
      * @param \DateTime the date of the calendar
      */
-    public function setDate(\DateTime $date)
-    {
+    public function setDate(\DateTime $date) {
         $timestamp = $date->getTimestamp();
 
         wb_set_value($this->controlID, $timestamp);
@@ -63,7 +59,7 @@ class Calendar extends Control
         // ... there is a difference between the expecte and the actual value, add the diference to the timestamp
         if(($difference = $timestamp - $actual) != 0)
             wb_set_value($this->controlID, $date->getTimestamp() + $difference);
-var_dump($difference);
+
         //$data = pack('v8', '2012', '11', '', '28', '00', '00', '00', '00');
         //wb_send_message($this->controlID, 0x1002, 0, wb_get_address($data));
     }

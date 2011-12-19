@@ -5,8 +5,7 @@ namespace Woody\Components\Controls;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class EditArea extends EditField
-{
+class EditArea extends EditField {
     /**
      * This method acts as the constructor of the class.
      *
@@ -14,10 +13,9 @@ class EditArea extends EditField
      * @param Point $topLeftCorner the top left corner of the edit area
      * @param Dimension $dimension the dimension of the edit area
      */
-    public function __construct($value, Point $topLeftCorner, Dimension $dimension)
-    {
+    public function __construct($value, Point $topLeftCorner, Dimension $dimension) {
         parent::__construct($value, $topLeftCorner, $dimension);
 
-        $this->style    = $this->style | WBC_MULTILINE;
+        $this->style = $this->style | WBC_MULTILINE;
     }
 }
