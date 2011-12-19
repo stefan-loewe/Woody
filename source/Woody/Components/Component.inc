@@ -14,8 +14,7 @@ use Woody\System\System;
  *
  * @author Stefan
  */
-abstract class Component
-{
+abstract class Component implements IComponent {
     /**
      * the internal winbinder control id of this component
      *
@@ -76,8 +75,7 @@ abstract class Component
      */
     private static $IDENTIFIER  = 1024;
 
-    public function __construct($value, Point $topLeftCorner, Dimension $dimension)
-    {
+    public function __construct($value, Point $topLeftCorner, Dimension $dimension) {
         $this->id               = self::getUniqueID();
 
         $this->value            = $value;
@@ -87,8 +85,12 @@ abstract class Component
         $this->dimension        = new Dimension($dimension->width, $dimension->height);
     }
 
-    public static function getUniqueID()
-    {
+    /**
+     * This method return an unique identifier for each control
+     *
+     * @return int
+     */
+    protected static function getUniqueID() {
         return ++self::$IDENTIFIER;
     }
 
@@ -107,8 +109,7 @@ abstract class Component
      *
      * @return int
      */
-    public function getControlID()
-    {
+    public function getControlID() {
         return $this->controlID;
     }
 
@@ -117,8 +118,7 @@ abstract class Component
      *
      * @return int
      */
-    public function getID()
-    {
+    public function getID() {
         return $this->id;
     }
 
@@ -127,8 +127,7 @@ abstract class Component
      *
      * @return Woody\Utils\Geom\Point the top left corner of the component.
      */
-    public function getPosition()
-    {
+    public function getPosition() {
         return new Point($this->topLeftCorner->x, $this->topLeftCorner->y);
     }
 
@@ -137,8 +136,7 @@ abstract class Component
      *
      * @return Woody\Utils\Geom\Dimension the dimension of the control
      */
-    public function getDimension()
-    {
+    public function getDimension() {
         return new Dimension($this->dimension->width, $this->dimension->height);
     }
 
@@ -148,8 +146,7 @@ abstract class Component
      * @param \Utils\Geom\Dimension $dimension the dimension by which this point shall be moved by
      * @return Component $this
      */
-    public function moveBy(Dimension $dimension)
-    {
+    public function moveBy(Dimension $dimension) {
         return $this->move($this->topLeftCorner->moveBy($dimension));
     }
 
@@ -159,8 +156,7 @@ abstract class Component
      * @param Point $topLeftCorner the new point of the top left corner
      * @return Component $this
      */
-    public function moveTo(Point $topLeftCorner)
-    {
+    public function moveTo(Point $topLeftCorner) {
         return $this->move($topLeftCorner);
     }
 
@@ -171,8 +167,7 @@ abstract class Component
      * @return Component $this
      * @todo this is different for windows & controls
      */
-    protected function move(Point $topLeftCorner)
-    {
+    protected function move(Point $topLeftCorner) {
         $x = max(System::WIN_MIN_TOP, $topLeftCorner->x);
         $y = max(System::WIN_MIN_LEFT, $topLeftCorner->y);
 
@@ -189,8 +184,7 @@ abstract class Component
      * @param Dimension $dimension the offset by which the component has to be resized
      * @return Component $this
      */
-    public function resizeBy(Dimension $dimension)
-    {
+    public function resizeBy(Dimension $dimension) {
         return $this->resize($this->dimension->resizeBy($dimension));
     }
 
@@ -200,8 +194,7 @@ abstract class Component
      * @param Dimension $dimension the new dimension of the component.
      * @return Component $this
      */
-    public function resizeTo(Dimension $dimension)
-    {
+    public function resizeTo(Dimension $dimension) {
         return $this->resize($dimension);
     }
 
@@ -211,8 +204,7 @@ abstract class Component
      * @param Dimension $dimension the new dimension of the component.
      * @return Component $this
      */
-    protected function resize(Dimension $dimension)
-    {
+    protected function resize(Dimension $dimension) {
         $width  = (max(System::WIN_MIN_WIDTH, $dimension->width));
         $height = (max(System::WIN_MIN_HEIGHT, $dimension->height));
 
@@ -228,14 +220,13 @@ abstract class Component
      *
      * @return AbstractWindow the window to which this component is attached to
      */
-    protected function getWindow()
-    {
+    protected function getWindow() {
         $currentParent = $this;
 
-        while($currentParent != null)
-        {
-            if($currentParent instanceof AbstractWindow)
+        while($currentParent != null) {
+            if($currentParent instanceof AbstractWindow) {
                 return $currentParent;
+            }
 
             $currentParent = $currentParent->parent;
         }

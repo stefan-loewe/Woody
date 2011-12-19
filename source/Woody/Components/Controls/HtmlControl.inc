@@ -7,7 +7,14 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
 class HtmlControl extends Control {
-    public function __construct($url, Point $topLeftCorner, Dimension $dimension/*$style = Control::DEFAULT_STYLE, $param = 0, $tabIndex = 0*/) {
+    /**
+     * This method acts as the constructor of the class.
+     *
+     * @param string $url the url where the html control points to
+     * @param Point $topLeftCorner the top left corner of the html control
+     * @param Dimension $dimension the dimension of the html control
+     */
+    public function __construct($url, Point $topLeftCorner, Dimension $dimension) {
         parent::__construct($url, $topLeftCorner, $dimension);
 
         $this->type = HTMLControl;
@@ -17,6 +24,11 @@ class HtmlControl extends Control {
         //FotoImportApplication::getHTMLControlServer()->unregister($this);
     }
 
+    /**
+     * This method creates the control and loads the url afterwards.
+     *
+     * @param Component $parent the parent component of the control
+     */
     protected function create(Component $parent) {
         parent::create($parent);
 

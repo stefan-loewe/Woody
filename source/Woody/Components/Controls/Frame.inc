@@ -7,8 +7,7 @@ use \Woody\Components\Container;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class Frame extends Control implements Container
-{
+class Frame extends Control implements Container {
     /**
      * the child controls of this frame
      *
@@ -16,6 +15,13 @@ class Frame extends Control implements Container
      */
     protected $children = null;
 
+    /**
+     * This method acts as the constructor of the class.
+     *
+     * @param string $label the label of the frame
+     * @param Point $topLeftCorner the top left corner of the frame
+     * @param Dimension $dimension the dimension of the frame
+     */
     public function __construct($label, Point $topLeftCorner, Dimension $dimension) {
         parent::__construct($label, $topLeftCorner, $dimension);
 

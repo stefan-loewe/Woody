@@ -5,8 +5,7 @@ namespace Woody\Components\Controls;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class Checkbox extends Control
-{
+class Checkbox extends Control {
     /**
      * This method acts as the constructor of the class.
      *
@@ -14,8 +13,7 @@ class Checkbox extends Control
      * @param Point $topLeftCorner the top left corner of the checkbox
      * @param Dimension $dimension the dimension of the checkbox
      */
-    public function __construct($value, Point $topLeftCorner, Dimension $dimension)
-    {
+    public function __construct($value, Point $topLeftCorner, Dimension $dimension) {
         parent::__construct($value, $topLeftCorner, $dimension);
 
         $this->type = CheckBox;
@@ -26,8 +24,7 @@ class Checkbox extends Control
      *
      * @return boolean true, if the checkbox is checked, else false
      */
-    public function isChecked()
-    {
+    public function isChecked() {
         // comparison with === 1 fails for checked checkbox
         return wb_get_value($this->controlID) == 1;
     }
@@ -38,8 +35,7 @@ class Checkbox extends Control
      * @param boolean $isChecked a flag whether to check or uncheck the checkbox
      * @return Checkbox $this
      */
-    public function setChecked($isChecked)
-    {
+    public function setChecked($isChecked) {
         wb_set_value($this->controlID, $isChecked);
 
         return $this;

@@ -6,42 +6,55 @@ use \Woody\Components\Component;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-abstract class Control extends Component
-{
-    public function __construct($label, Point $topLeftCorner, Dimension $dimension)
-    {
-        parent::__construct($label, $topLeftCorner, $dimension);
+abstract class Control extends Component {
+    /**
+     * This method acts as the constructor of the class.
+     *
+     * @param mixed $value the value associated with the control
+     * @param Point $topLeftCorner the top left corner of the control
+     * @param Dimension $dimension the dimension of the control
+     */
+    public function __construct($value, Point $topLeftCorner, Dimension $dimension) {
+        parent::__construct($value, $topLeftCorner, $dimension);
     }
 
-    protected function create(Component $parent)
-    {
-        $this->parent = $parent;
+    /**
+     * This method creates the actual control as winbinder resource, and binds it to its parent control.
+     *
+     * @param Component $parent the parent component of the control
+     */
+    protected function create(Component $parent) {
+        $this->parent           = $parent;
 
-        $absoluteTopLeftCorner = $this->calculateAbsoluteTopLeftCorner();
+        $absoluteTopLeftCorner  = $this->calculateAbsoluteTopLeftCorner();
 
-        $this->controlID    = wb_create_control
-                            (
-                                $parent->getWindow()->getControlID(),
-                                $this->type,
-                                $this->value,
-                                $absoluteTopLeftCorner->x,
-                                $absoluteTopLeftCorner->y,
-                                $this->dimension->width,
-                                $this->dimension->height,
-                                $this->id,
-                                $this->style,
-                                $this->param,
-                                $this->id
-                            );
+        $this->controlID        = wb_create_control (
+                                    $parent->getWindow()->getControlID(),
+                                    $this->type,
+                                    $this->value,
+                                    $absoluteTopLeftCorner->x,
+                                    $absoluteTopLeftCorner->y,
+                                    $this->dimension->width,
+                                    $this->dimension->height,
+                                    $this->id,
+                                    $this->style,
+                                    $this->param,
+                                    $this->id
+                                );
     }
 
-    private function calculateAbsoluteTopLeftCorner()
-    {
+    /**
+     * This method calculates the absolute position of the control.
+     *
+     * This is necessarry, as any control is not really bound to its parent control, but to the window if belongs to. This is done, as some controls do not fire events properly when being bound to a frame instead of a window. However, if the control is positioned, it has to be positioned relative to its logical parent, therefore, the offset has to be taken into account.
+     *
+     * @return Point the actual top left corner of the control
+     */
+    private function calculateAbsoluteTopLeftCorner() {
         $absTopLeftCorner = $this->topLeftCorner;
 
         $parent = $this;
-        while(($parent = $parent->parent) != null)
-        {
+        while(($parent = $parent->parent) != null) {
             if($parent instanceof Frame)
                 $absTopLeftCorner = $absTopLeftCorner->moveBy($parent->topLeftCorner->x, $parent->topLeftCorner->y);
         }
