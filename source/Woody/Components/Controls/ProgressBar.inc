@@ -6,6 +6,16 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
 class ProgressBar extends Control {
+
+    /**
+     * the identifier of the message for getting a value from a progress bar
+     *
+     * PBM_GETPOS = (WM_USER + 8) = 400 + 8 = 408
+     *
+     * @var int
+     */
+    private static $PBM_GETPOS = 0x408;
+
     /**
      * This method acts as the constructor of the class.
      *
@@ -22,10 +32,10 @@ class ProgressBar extends Control {
      * This method gets the current value of the progress bar.
      *
      * @return int the current value of the progress bar
-     * @todo this seems to return 0 always
      */
     public function getProgress() {
-        return wb_get_value($this->controlID);
+        // wb_get_value always returns 0 for a gauge, so get the value with a low-level call
+        return wb_send_message($this->controlID, self::$PBM_GETPOS);
     }
 
     /**

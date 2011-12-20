@@ -88,9 +88,11 @@ abstract class Component implements IComponent {
     /**
      * This method return an unique identifier for each control
      *
+     * The fact that this method is public is an implementation detail - the Timer class needs this functionality, too. Do not cal this method.
+     *
      * @return int
      */
-    protected static function getUniqueID() {
+    public static function getUniqueID() {
         return ++self::$IDENTIFIER;
     }
 

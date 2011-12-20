@@ -7,8 +7,7 @@ use \Woody\Components\Component;
 use \Woody\Components\Windows\AbstractWindow;
 use \Woody\Event\EventHandler;
 
-class Timer
-{
+class Timer {
     /**
      * the id of the timer
      *
@@ -51,8 +50,7 @@ class Timer
      * @param \Woody\Components\Windows\AbstractWindow $window the window to which the timer is bound to.
      * @param int $interval the number of milliseconds that pass between each call to the callback of the timer
      */
-    public function __construct(\Closure $callback, AbstractWindow $window, $interval)
-    {
+    public function __construct(\Closure $callback, AbstractWindow $window, $interval) {
         $this->id       = Component::getUniqueID();
 
         $this->callback = $callback;
@@ -67,8 +65,7 @@ class Timer
      *
      * @return Woody\Components\Timer\Timer $this
      */
-    public function start()
-    {
+    public function start() {
         if($this->isRunning)
             throw new TimerAlreadyRunningException($this);
 
@@ -89,8 +86,7 @@ class Timer
      *
      * @return void
      */
-    public function run()
-    {
+    public function run() {
         if(!$this->isRunning)
             throw new TimerNotRunningException($this);
 
@@ -102,8 +98,7 @@ class Timer
      *
      * @return Woody\Components\Timer\Timer $this
      */
-    public function destroy()
-    {
+    public function destroy() {
         if(!$this->isRunning)
             throw new TimerNotRunningException($this);
 
@@ -122,8 +117,7 @@ class Timer
      *
      * @return int
      */
-    public function getID()
-    {
+    public function getID() {
         return $this->id;
     }
 }

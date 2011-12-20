@@ -23,7 +23,7 @@ class ScrollBar extends Control {
      *
      * @return int the current value of the scroll bar
      */
-    public function getScrollOffset() {
+    public function getOffset() {
         return wb_get_value($this->controlID);
     }
 
@@ -33,7 +33,7 @@ class ScrollBar extends Control {
      * @param $value the new value of the scroll bar
      * @return \Woody\Components\Controls\ScrollBar $this
      */
-    public function setScrollOffset($value) {
+    public function setOffset($value) {
         wb_set_value($this->controlID, $value);
 
         return $this;
