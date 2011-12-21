@@ -13,7 +13,7 @@ class Slider extends Control {
      * @param Dimension $dimension the dimension of the slider
      */
     public function __construct(Point $topLeftCorner, Dimension $dimension) {
-        parent::__construct('', $topLeftCorner, $dimension);
+        parent::__construct(null, $topLeftCorner, $dimension);
 
         $this->type = Slider;
     }

@@ -2,11 +2,11 @@
 
 namespace Woody\Components\Windows;
 
-use Woody\Components\Component;
-use Woody\Components\Container;
+use \Woody\Components\Component;
+use \Woody\Components\Container;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
-use Woody\System\System;
+use \Woody\System\System;
 
 abstract class AbstractWindow extends Component implements Container
 {

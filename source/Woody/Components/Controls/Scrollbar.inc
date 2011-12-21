@@ -13,7 +13,7 @@ class ScrollBar extends Control {
      * @param Dimension $dimension the dimension of the scroll bar
      */
     public function __construct(Point $topLeftCorner, Dimension $dimension) {
-        parent::__construct('', $topLeftCorner, $dimension);
+        parent::__construct(null, $topLeftCorner, $dimension);
 
         $this->type = ScrollBar;
     }
