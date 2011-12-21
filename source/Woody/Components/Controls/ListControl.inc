@@ -18,7 +18,7 @@ abstract class ListControl extends Control implements \SplObserver {
     /**
      * the cell rederer of the list control
      *
-     * @var \Callable
+     * @var \callable
      */
     protected $cellRenderer = null;
 
@@ -41,9 +41,9 @@ abstract class ListControl extends Control implements \SplObserver {
     }
 
     /**
-     * This method returns the default cell renderer for the list control, which returns the result of __toString for objects implementing it and the the passed in element if not.
+     * This method returns the default cell item for the tree view, which returns the result of __toString for objects implementing it and the plain passed in element if not.
      *
-     * @return \Callable
+     * @return \Callable the default cell renderer
      */
     protected static function getDefaultCellRenderer() {
         $callback = function($element) {

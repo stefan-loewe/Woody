@@ -2,10 +2,11 @@
 
 namespace Woody\Components\Controls;
 
+use \Woody\Model\ITreeModel;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class TreeView extends Control implements SplObserver {
+class TreeView extends Control implements \SplObserver {
     /**
      * the model of the tree view
      *
@@ -14,11 +15,11 @@ class TreeView extends Control implements SplObserver {
     protected $model        = null;
 
     /**
-     * the mapping of the tree view, used to customize the output of each tree view node
+     * the item rederer of the tree view
      *
-     * @var Closure
+     * @var callable
      */
-    protected $mapping      = null;
+    protected $itemRenderer      = null;
 
     /**
      * the array of winbinder tree view node controls
@@ -38,13 +39,26 @@ class TreeView extends Control implements SplObserver {
      * @param Point $topLeftCorner the top left corner of the list control
      * @param Dimension $dimension the dimension of the list control
      */
-    public function __construct($id, $xPos, $yPos, $width, $height, $style = Control::DEFAULT_STYLE, $param = 0, $tabIndex = 0) {
-        parent::__construct(TreeView, $id, '', $xPos, $yPos, $width, $height, $style, $param, $tabIndex);$this->mapping = self::getDefaultMapping();
+    public function __construct(Point $topLeftCorner, Dimension $dimension) {
+        parent::__construct(null, $topLeftCorner, $dimension);
+
+        $this->type = TreeView;
+
+        $this->itemRenderer = static::getDefaultItemRenderer();
     }
 
-    public static function getDefaultMapping() {
+    /**
+     * This method returns the default cell item for the tree view, which returns the result of __toString for objects implementing it and the plain passed in element if not.
+     *
+     * @return \Callable the default cell renderer
+     */
+    protected static function getDefaultItemRenderer() {
         $callback = function($element) {
-                        return $element;
+                        if(is_callable(array($element, '__toString'), FALSE)) {
+                            return $element->__toString();
+                        } else {
+                            return $element;
+                        }
                     };
 
         return $callback;
@@ -57,7 +71,7 @@ class TreeView extends Control implements SplObserver {
         while(count($todo) > 0) {
             $currentNode = array_shift($todo);
 
-            if($nodeHash == $currentNode->getHash()) {
+            if($nodeHash == spl_object_hash($currentNode)) {
                 return $currentNode;
             } else {
                 for($i = 0, $count = $this->model->getChildCount($currentNode); $i < $count; $i++) {
@@ -96,27 +110,40 @@ class TreeView extends Control implements SplObserver {
         return $this;
     }
 
+    /**
+     * This method returns the tree model of the tree view.
+     *
+     * @return \Woody\Model\ITreeModel
+     */
     public function getModel() {
         return $this->model;
     }
 
+    /**
+     * This method sets the tree model of the tree view.
+     *
+     * @param \Woody\Model\ITreeModel $model the model to set
+     * @return \Woody\Components\Controls\ListControl $this
+     */
     public function setModel(ITreeModel $model) {
-        $this->model = $model;
+        return $this->update($model);
+    }
+
+    /**
+     * This method sets the cell renderer of the tree view.
+     *
+     * @param \Callable $itemRenderer
+     * @return \Woody\Components\Controls\TreeView $this
+     */
+    public function setItemRenderer(callable $itemRenderer) {
+        $this->itemRenderer = $itemRenderer;
 
         return $this;
     }
 
-    public function getMapping() {
-        return $this->mapping;
-    }
+    public function update(\SplSubject $treeModel) {
+        $this->model = $treeModel;
 
-    public function setMapping($mapping) {
-        $this->mapping = $mapping;
-
-        return $this;
-    }
-
-    public function update(SplSubject $treeModel) {
         $selectedItem = $this->getValue();
 
         $this->clear();
@@ -132,7 +159,7 @@ class TreeView extends Control implements SplObserver {
             for($i = 0, $count = $this->model->getChildCount($currentNode); $i < $count; $i++) {
                 $todo[] = ($node = $this->model->getChild($currentNode, $i));
 
-                $this->addNode($node, $this->controlNodes[$currentNode->getHash()]);
+                $this->addNode($node, $this->controlNodes[spl_object_hash($currentNode)]);
             }
         }
 
@@ -144,13 +171,13 @@ class TreeView extends Control implements SplObserver {
     }
 
     protected function addNode($newNode, $parentControlID) {
-        $value = $this->mapping->__invoke($newNode);
+        $value = $this->itemRenderer->__invoke($newNode);
 
         if($value !== null) {
             $data = array (
                         array (
                             $value,
-                            $newNode->getHash(),
+                            spl_object_hash($newNode),
                             $parentControlID,
                             0,
                             0,
@@ -158,7 +185,7 @@ class TreeView extends Control implements SplObserver {
                         )
                     );
 
-            $this->controlNodes[$newNode->getHash()] = wb_create_items($this->controlID, $data);
+            $this->controlNodes[spl_object_hash($newNode)] = wb_create_items($this->controlID, $data);
         }
 
         return $this;
@@ -184,7 +211,7 @@ class TreeView extends Control implements SplObserver {
         return $this;
     }
 
-    protected function clear() {
+    final protected function clear() {
         wb_delete_items($this->controlID, null);
     }
 }

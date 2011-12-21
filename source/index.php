@@ -102,12 +102,22 @@ else if(!TRUE)
     $model = new \Woody\Model\DefaultTableModel(array(array(100, 200, 300, 400), array(10, 20, 30, 40)));
     $win->add($table);
     $table->setModel($model);
+} else if(!TRUE) {
+    $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
+    $win->create();
+
+    $gauge = wb_create_control($win->getControlID(), Gauge, "Update", 230, 245, 310, 15, 287525);
+    var_dump(wb_set_value($gauge, 50));
+    var_dump(wb_get_value($gauge, 50));
 } else if(TRUE) {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
     $win->create();
 
-$gauge = wb_create_control($win->getControlID(), Gauge, "Update", 230, 245, 310, 15, 287525);
-var_dump(wb_set_value($gauge, 50));
-var_dump(wb_get_value($gauge, 50));
+    $treeView = new \Woody\Components\Controls\TreeView(new Point(10, 10), new Dimension(300, 400));
+    $win->add($treeView);
+    $root = new Utils\Tree\TreeNode('test1');
+    $root->populateRandomly(100, 50);
+    $treeView->setModel(new \Woody\Model\TreeNodeTreeModel($root));
 }
+var_dump($root);
 $win->startEventHandler();
