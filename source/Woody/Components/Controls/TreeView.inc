@@ -15,11 +15,11 @@ class TreeView extends Control implements \SplObserver {
     protected $model        = null;
 
     /**
-     * the item rederer of the tree view
+     * the node renderer of the tree view
      *
      * @var callable
      */
-    protected $itemRenderer      = null;
+    protected $nodeRenderer      = null;
 
     /**
      * the array of winbinder tree view node controls
@@ -42,17 +42,18 @@ class TreeView extends Control implements \SplObserver {
     public function __construct(Point $topLeftCorner, Dimension $dimension) {
         parent::__construct(null, $topLeftCorner, $dimension);
 
-        $this->type = TreeView;
+        $this->type         = TreeView;
 
-        $this->itemRenderer = static::getDefaultItemRenderer();
+        $this->nodeRenderer = static::getDefaultNodeRenderer();
     }
 
     /**
-     * This method returns the default cell item for the tree view, which returns the result of __toString for objects implementing it and the plain passed in element if not.
+     * This method returns the default item renderer for the tree view, which returns the result of __toString for objects implementing it and the plain passed in element if not.
      *
+     * @todo copied from list model
      * @return \Callable the default cell renderer
      */
-    protected static function getDefaultItemRenderer() {
+    protected static function getDefaultNodeRenderer() {
         $callback = function($element) {
                         if(is_callable(array($element, '__toString'), FALSE)) {
                             return $element->__toString();
@@ -100,12 +101,12 @@ class TreeView extends Control implements \SplObserver {
      *
      * @return Object
      */
-    public function getValue() {
+    public function getSelectedItem() {
         return $this->findNode(wb_get_value($this->controlID));
     }
 
-    public function setValue($newValue) {
-        wb_set_selected($this->controlID, $this->controlNodes[$newValue->getHash()]);
+    public function setSelectedItem($newValue) {
+        wb_set_selected($this->controlID, $this->controlNodes[spl_object_hash($newValue)]);
 
         return $this;
     }
@@ -132,11 +133,11 @@ class TreeView extends Control implements \SplObserver {
     /**
      * This method sets the cell renderer of the tree view.
      *
-     * @param \Callable $itemRenderer
+     * @param \Callable $nodeRenderer
      * @return \Woody\Components\Controls\TreeView $this
      */
-    public function setItemRenderer(callable $itemRenderer) {
-        $this->itemRenderer = $itemRenderer;
+    public function setNodeRenderer(callable $nodeRenderer) {
+        $this->nodeRenderer = $nodeRenderer;
 
         return $this;
     }
@@ -171,7 +172,7 @@ class TreeView extends Control implements \SplObserver {
     }
 
     protected function addNode($newNode, $parentControlID) {
-        $value = $this->itemRenderer->__invoke($newNode);
+        $value = $this->nodeRenderer->__invoke($newNode);
 
         if($value !== null) {
             $data = array (
@@ -192,8 +193,11 @@ class TreeView extends Control implements \SplObserver {
     }
 
     public function expandNode($value) {
-        if(isset($this->controlNodes[$value->getHash()])) {
-            $currentNodeID = $this->controlNodes[$value->getHash()];
+        $hash = spl_object_hash($value);
+
+        if(isset($this->controlNodes[$hash])) {
+            $currentNodeID = $this->controlNodes[$hash];
+
             while($currentNodeID != 0) {
                 wb_set_state($this->controlID, $currentNodeID, TRUE);
                 $currentNodeID = wb_get_parent($this->controlID, $currentNodeID);
@@ -204,8 +208,10 @@ class TreeView extends Control implements \SplObserver {
     }
 
     public function collapseNode($value) {
-        if(isset($this->controlNodes[$value->getHash()])) {
-            wb_set_state($this->controlID, $this->controlNodes[$value->getHash()], FALSE);
+        $hash = spl_object_hash($value);
+
+        if(isset($this->controlNodes[$hash])) {
+            wb_set_state($this->controlID, $this->controlNodes[$hash], FALSE);
         }
 
         return $this;
