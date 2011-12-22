@@ -11,7 +11,7 @@ class TreeNodeTreeModel extends TreeModel implements \SplSubject {
      *
      * @var \SplObjectStorage
      */
-    protected $observers    = null;
+    protected $observers = null;
 
     /**
      * This method acts as the constructor of the TreeNodeTreeModel.
