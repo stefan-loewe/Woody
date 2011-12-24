@@ -2,10 +2,12 @@
 
 namespace Woody\Model;
 
+use \Utils\Model\TreeModel;
+
 /**
- * This class acts as a full TreeModel implementation for the TreeNode class (@see Lib\TreeNode), so this can be used with ReingoldTilford algorithm.
+ * This class acts as a full TreeModel implementation for the tree view.
  */
-class TreeNodeTreeModel extends TreeModel implements \SplSubject {
+class DefaultTreeModel extends TreeModel implements \SplSubject {
     /**
      * the set of observers
      *
@@ -14,12 +16,11 @@ class TreeNodeTreeModel extends TreeModel implements \SplSubject {
     protected $observers = null;
 
     /**
-     * This method acts as the constructor of the TreeNodeTreeModel.
+     * This method acts as the constructor of the class.
      *
      * @param object $root the root of the tree
      */
-    public function __construct($root)
-    {
+    public function __construct($root) {
         parent::__construct($root);
 
         $this->observers = new \SplObjectStorage();
@@ -31,8 +32,7 @@ class TreeNodeTreeModel extends TreeModel implements \SplSubject {
      * @param object $parent the parent node
      * @param int $index the index
      */
-    public function getChild($parent, $index)
-    {
+    public function getChild($parent, $index) {
         return $parent->getChildAtIndex($index);
     }
 
@@ -42,8 +42,7 @@ class TreeNodeTreeModel extends TreeModel implements \SplSubject {
      * @param object $parent the parent node
      * @return int the number of children of the given parent
      */
-    public function getChildCount($parent)
-    {
+    public function getChildCount($parent) {
         return $parent->getDegree();
     }
 
@@ -54,8 +53,7 @@ class TreeNodeTreeModel extends TreeModel implements \SplSubject {
      * @param object $child the cild node
      * @return int the index of the given child in the given parent
      */
-    public function getIndexOfChild($parent, $child)
-    {
+    public function getIndexOfChild($parent, $child) {
         return $parent->getIndexOfChild($child);
     }
 
@@ -65,8 +63,7 @@ class TreeNodeTreeModel extends TreeModel implements \SplSubject {
      * @param object $node the node
      * @return boolean true, if the the node is a leaf, else false
      */
-    public function isLeaf($node)
-    {
+    public function isLeaf($node) {
         return $node->isLeaf();
     }
 

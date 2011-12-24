@@ -80,7 +80,7 @@ class TreeView extends Control implements \SplObserver {
      * @return \Woody\Components\Controls\TreeView $this
      */
     public function setSelectedItem($item) {
-        wb_set_selected($this->controlID, $this->controlNodes[spl_object_hash($item)]);
+        wb_set_selected($this->controlID, $this->controlNodes[self::getHash($item)]);
 
         return $this;
     }
@@ -123,7 +123,7 @@ class TreeView extends Control implements \SplObserver {
      * @return \Woody\Components\Controls\TreeView $this
      */
     public function expandNode($item) {
-        $hash = spl_object_hash($item);
+        $hash = self::getHash($item);
 
         if(isset($this->controlNodes[$hash])) {
             $currentNodeID = $this->controlNodes[$hash];
@@ -144,7 +144,7 @@ class TreeView extends Control implements \SplObserver {
      * @return \Woody\Components\Controls\TreeView $this
      */
     public function collapseNode($item) {
-        $hash = spl_object_hash($item);
+        $hash = self::getHash($item);
 
         if(isset($this->controlNodes[$hash])) {
             wb_set_state($this->controlID, $this->controlNodes[$hash], FALSE);
@@ -165,9 +165,9 @@ class TreeView extends Control implements \SplObserver {
 
         $this->clear()->rebuild();
 
-        if($selectedItem !== null) {
-            $this->setSelectedItem($selectedItem);
-        }
+        //if($selectedItem !== null) {
+            //$this->setSelectedItem($selectedItem);
+        //}
 
         return $this;
     }
@@ -235,20 +235,21 @@ class TreeView extends Control implements \SplObserver {
      */
     protected function addNode($node, $parent) {
         $value = $this->nodeRenderer->__invoke($node);
-
+var_dump($value);
+$value = 'A';
         if($value !== null) {
             $data = array (
                         array (
                             $value,
-                            spl_object_hash($node),
-                            $this->controlNodes[spl_object_hash($parent)],
+                            self::getHash($node),
+                            $this->controlNodes[self::getHash($parent)],
                             0,
                             0,
                             2
                         )
                     );
 
-            $this->controlNodes[spl_object_hash($node)] = wb_create_items($this->controlID, $data);
+            $this->controlNodes[self::getHash($node)] = wb_create_items($this->controlID, $data);
         }
 
         return $this;
@@ -267,7 +268,7 @@ class TreeView extends Control implements \SplObserver {
         while(count($todo) > 0) {
             $currentNode = array_shift($todo);
 
-            if($nodeHash == spl_object_hash($currentNode)) {
+            if($nodeHash == self::getHash($currentNode)) {
                 return $currentNode;
             } else {
                 for($i = 0, $count = $this->model->getChildCount($currentNode); $i < $count; $i++) {
@@ -277,5 +278,9 @@ class TreeView extends Control implements \SplObserver {
         }
 
         return null;
+    }
+
+    private static function getHash($node) {
+        return spl_object_hash((object)$node);
     }
 }
