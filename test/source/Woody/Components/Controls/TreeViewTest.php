@@ -2,6 +2,7 @@
 
 namespace Woody\Components\Controls;
 
+use \Woody\Model\TreeNodeTreeModel;
 use \Woody\App\TestApplication;
 use \Woody\Components\Timer\Timer;
 use \Utils\Geom\Point;
@@ -34,10 +35,9 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
     protected function setUp() {
         $this->application  = new TestApplication();
 
-        $this->treeView    = new TreeView(new Point(20, 20), new Dimension(260, 130));
+        $this->treeView     = new TreeView(new Point(20, 20), new Dimension(260, 130));
 
         $this->application->getWindow()->add($this->treeView);
-        sleep(2);
     }
 
     /**
@@ -49,104 +49,88 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers {className}::{origMethodName}
-     * @todo Implement testGetSelectedItem().
+     * @covers \Woody\Components\Controls\TreeView::getSelectedItem
+     * @covers \Woody\Components\Controls\TreeView::setSelectedItem
      */
-    public function testGetSelectedItem() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+    public function testGetSetSelectedItem() {
+        $this->timer = new Timer(function() {
+                            $model = $this->getMockBuilder('\Woody\Model\TreeNodeTreeModel')
+                                        ->disableOriginalConstructor()
+                                        ->getMock();
+                            $model->expects($this->any())
+                                ->method('getChildCount')
+                                ->will($this->onConsecutiveCalls(2, 0, 0, 0));
+
+                            $model->expects($this->any())
+                                ->method('getChild')
+                                ->will($this->returnValueMap(array(array(0, 'A'), array(1, 'B'))));
+make tree model mock manually - otherwise too complex
+move ItreeModel and TreeModel to utils
+extend WoodyTreeModel of it, or wrap it, then make new MockTreeModel class locally, here
+                            $this->treeView->setModel($model);
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
     }
 
     /**
-     * @covers {className}::{origMethodName}
+     * @covers \Woody\Components\Controls\TreeView::
      * @todo Implement testGetParentItem().
      */
-    public function testGetParentItem() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+    public function AtestGetParentItem() {
+        $this->timer = new Timer(function() {
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
     }
 
     /**
-     * @covers {className}::{origMethodName}
-     * @todo Implement testSetSelectedItem().
-     */
-    public function testSetSelectedItem() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers {className}::{origMethodName}
+     * @covers \Woody\Components\Controls\TreeView::getModel
+     * @covers \Woody\Components\Controls\TreeView::setModel
      * @todo Implement testGetModel().
      */
-    public function testGetModel() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+    public function DonetestGetSetModel() {
+        $this->timer = new Timer(function() {
+                            $this->assertNull($this->treeView->getModel());
+
+                            $model = $this->getMockBuilder('\Woody\Model\TreeNodeTreeModel')
+                                        ->disableOriginalConstructor()
+                                        ->getMock();
+
+                            $this->treeView->setModel($model);
+                            $this->assertNotNull($this->treeView->getModel());
+                            $this->assertSame($model, $this->treeView->getModel());
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
     }
 
     /**
-     * @covers {className}::{origMethodName}
-     * @todo Implement testSetModel().
-     */
-    public function testSetModel() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers {className}::{origMethodName}
-     * @todo Implement testSetNodeRenderer().
-     */
-    public function testSetNodeRenderer() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers {className}::{origMethodName}
-     * @todo Implement testExpandNode().
-     */
-    public function testExpandNode() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers {className}::{origMethodName}
-     * @todo Implement testCollapseNode().
-     */
-    public function testCollapseNode() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers {className}::{origMethodName}
+     * @covers \Woody\Components\Controls\TreeView::
      * @todo Implement testUpdate().
      */
-    public function testUpdate() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+    public function AtestUpdate() {
+        $this->timer = new Timer(function() {
+
+                            $this->timer->destroy();
+                            $this->application->stop();
+                        }, $this->application->getWindow(), 100);
+
+        $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
     }
-
 }
-
-?>
