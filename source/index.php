@@ -117,7 +117,7 @@ else if(!TRUE)
     $win->add($treeView);
     $root = new Utils\Tree\TreeNode('test1');
     $root->populateRandomly(100, 50);
-    $treeView->setModel(new \Woody\Model\TreeNodeTreeModel($root));
+    $treeView->setModel(new \Woody\Model\DefaultTreeModel($root));
 }
-var_dump($root);
+
 $win->startEventHandler();

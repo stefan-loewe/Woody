@@ -18,7 +18,7 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
     /**
      * This method acts as the constructor of the class.
      *
-     * @param object $root the root of the tree
+     * @param \Utils\Tree\TreeNode $root the root of the tree
      */
     public function __construct($root) {
         parent::__construct($root);
@@ -29,8 +29,10 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
     /**
      * This method returns the child of the given parent at the given index.
      *
-     * @param object $parent the parent node
+     * @param \Utils\Tree\TreeNode $parent the parent node
      * @param int $index the index
+     *
+     * @return \Utils\Tree\TreeNode the tree node at the given index
      */
     public function getChild($parent, $index) {
         return $parent->getChildAtIndex($index);
@@ -39,7 +41,7 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
     /**
      * This method returns the number of children of the given parent.
      *
-     * @param object $parent the parent node
+     * @param \Utils\Tree\TreeNode $parent the parent node
      * @return int the number of children of the given parent
      */
     public function getChildCount($parent) {
@@ -49,8 +51,8 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
     /**
      * This method returns the index of the given child in the given parent.
      *
-     * @param object $parent the parent node
-     * @param object $child the cild node
+     * @param \Utils\Tree\TreeNode $parent the parent node
+     * @param \Utils\Tree\TreeNode $child the cild node
      * @return int the index of the given child in the given parent
      */
     public function getIndexOfChild($parent, $child) {
@@ -60,11 +62,19 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
     /**
      * This method returns true if the given node is a leaf.
      *
-     * @param object $node the node
+     * @param \Utils\Tree\TreeNode $node the node
      * @return boolean true, if the the node is a leaf, else false
      */
     public function isLeaf($node) {
         return $node->isLeaf();
+    }
+
+    public function appendChild($parent, $child) {
+        $parent->appendChild($child);
+
+        $this->notify();
+
+        return $this;
     }
 
     /**

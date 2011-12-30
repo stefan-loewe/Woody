@@ -2,9 +2,10 @@
 
 namespace Woody\Components\Controls;
 
-use \Woody\Model\TreeNodeTreeModel;
+use \Woody\Model\DefaultTreeModel;
 use \Woody\App\TestApplication;
 use \Woody\Components\Timer\Timer;
+use \Utils\Tree\TreeNode;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
@@ -54,20 +55,15 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetSetSelectedItem() {
         $this->timer = new Timer(function() {
-                            $model = $this->getMockBuilder('\Woody\Model\TreeNodeTreeModel')
-                                        ->disableOriginalConstructor()
-                                        ->getMock();
-                            $model->expects($this->any())
-                                ->method('getChildCount')
-                                ->will($this->onConsecutiveCalls(2, 0, 0, 0));
-
-                            $model->expects($this->any())
-                                ->method('getChild')
-                                ->will($this->returnValueMap(array(array(0, 'A'), array(1, 'B'))));
-make tree model mock manually - otherwise too complex
-move ItreeModel and TreeModel to utils
-extend WoodyTreeModel of it, or wrap it, then make new MockTreeModel class locally, here
+                            $model = $this->getDefaultMock();
                             $this->treeView->setModel($model);
+                            $this->assertNull($this->treeView->getSelectedItem());
+
+                            $this->treeView->setSelectedItem($model->getRoot());
+                            $this->assertSame($model->getRoot(), $this->treeView->getSelectedItem());
+
+                            $this->treeView->setSelectedItem($model->getRoot()->getChildAtIndex(1));
+                            $this->assertSame($model->getRoot()->getChildAtIndex(1), $this->treeView->getSelectedItem());
 
                             $this->timer->destroy();
                             $this->application->stop();
@@ -79,29 +75,38 @@ extend WoodyTreeModel of it, or wrap it, then make new MockTreeModel class local
     }
 
     /**
-     * @covers \Woody\Components\Controls\TreeView::
-     * @todo Implement testGetParentItem().
+     * @covers \Woody\Components\Controls\TreeView::getParentItem
      */
-    public function AtestGetParentItem() {
+    public function testGetParentItem() {
         $this->timer = new Timer(function() {
+                            $model = $this->getDefaultMock();
+                            $this->treeView->setModel($model);
+                            $this->assertNull($this->treeView->getParentItem());
+
+                            $this->treeView->setSelectedItem($model->getRoot());
+                            $this->assertNull($this->treeView->getParentItem());
+
+                            $this->treeView->setSelectedItem($model->getRoot()->getChildAtIndex(1));
+                            $this->assertSame($model->getRoot(), $this->treeView->getParentItem());
 
                             $this->timer->destroy();
                             $this->application->stop();
                         }, $this->application->getWindow(), 100);
 
         $this->timer->start($this->application->getWindow());
+
+        $this->application->start();
     }
 
     /**
      * @covers \Woody\Components\Controls\TreeView::getModel
      * @covers \Woody\Components\Controls\TreeView::setModel
-     * @todo Implement testGetModel().
      */
-    public function DonetestGetSetModel() {
+    public function testGetSetModel() {
         $this->timer = new Timer(function() {
                             $this->assertNull($this->treeView->getModel());
 
-                            $model = $this->getMockBuilder('\Woody\Model\TreeNodeTreeModel')
+                            $model = $this->getMockBuilder('\Woody\Model\DefaultTreeModel')
                                         ->disableOriginalConstructor()
                                         ->getMock();
 
@@ -119,11 +124,24 @@ extend WoodyTreeModel of it, or wrap it, then make new MockTreeModel class local
     }
 
     /**
-     * @covers \Woody\Components\Controls\TreeView::
-     * @todo Implement testUpdate().
+     * @covers \Woody\Components\Controls\TreeView::update
      */
-    public function AtestUpdate() {
+    public function testUpdate() {
         $this->timer = new Timer(function() {
+                            $model = $this->getDefaultMock();
+                            $this->treeView->setModel($model);
+                            $model->attach($this->treeView);
+                            $this->assertNull($this->treeView->getSelectedItem());
+
+                            $itemB = $model->getRoot()->getChildAtIndex(1);
+                            $this->treeView->setSelectedItem($itemB);
+                            $this->assertSame($itemB, $this->treeView->getSelectedItem());
+
+                            $model->appendChild($itemB, $itemC = new TreeNode('C'));
+                            $this->assertSame($itemB, $this->treeView->getSelectedItem());
+
+                            $this->treeView->setSelectedItem($itemC);
+                            $this->assertSame($itemC, $this->treeView->getSelectedItem());
 
                             $this->timer->destroy();
                             $this->application->stop();
@@ -132,5 +150,19 @@ extend WoodyTreeModel of it, or wrap it, then make new MockTreeModel class local
         $this->timer->start($this->application->getWindow());
 
         $this->application->start();
+    }
+
+    /**
+     * This method returns the default mock object for testing this class.
+     *
+     * @return \Woody\Model\DefaultTreeModel
+     */
+    private function getDefaultMock() {
+        $root = new TreeNode('root');
+
+        $root->appendChild(new TreeNode('A'));
+        $root->appendChild(new TreeNode('B'));
+
+        return new DefaultTreeModel($root);
     }
 }

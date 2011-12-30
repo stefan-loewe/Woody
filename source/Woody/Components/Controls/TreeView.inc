@@ -2,7 +2,7 @@
 
 namespace Woody\Components\Controls;
 
-use \Woody\Model\ITreeModel;
+use \Utils\Model\ITreeModel;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
@@ -165,9 +165,9 @@ class TreeView extends Control implements \SplObserver {
 
         $this->clear()->rebuild();
 
-        //if($selectedItem !== null) {
-            //$this->setSelectedItem($selectedItem);
-        //}
+        if($selectedItem !== null) {
+            $this->setSelectedItem($selectedItem);
+        }
 
         return $this;
     }
@@ -235,14 +235,18 @@ class TreeView extends Control implements \SplObserver {
      */
     protected function addNode($node, $parent) {
         $value = $this->nodeRenderer->__invoke($node);
-var_dump($value);
-$value = 'A';
+
         if($value !== null) {
+            if(isset($this->controlNodes[self::getHash($parent)]))
+                $parentID = $this->controlNodes[self::getHash($parent)];
+            else
+                $parentID = 0;
+
             $data = array (
                         array (
                             $value,
                             self::getHash($node),
-                            $this->controlNodes[self::getHash($parent)],
+                            $parentID,
                             0,
                             0,
                             2
@@ -280,6 +284,12 @@ $value = 'A';
         return null;
     }
 
+    /**
+     * This method calculates the hash for a given node in the tree view.
+     *
+     * @param object $node the tree node to get the hash for
+     * @return int the hash for the tree node
+     */
     private static function getHash($node) {
         return spl_object_hash((object)$node);
     }
