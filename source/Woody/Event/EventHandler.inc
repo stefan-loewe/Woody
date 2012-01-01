@@ -34,20 +34,24 @@ class EventHandler
        unset(self::$controls[$control->getID()]);
     }
 
-    public static function handleEvent(Event $event)
-    {
-        if(self::isTimerEvent($event->windowID, $event->controlID))
-        {
-            $pair = self::$controls[$event->id];
+    public static function handleEvent(Event $event) {
+        echo ($event);
+        if(self::isWindowEvent($event)) {
+            if(self::isDefaultWindowEvent($event)) {
+                // anything todo?
+            } else if(self::isWindowExitEvent($event)) {
+                wb_destroy_window($event->windowID);
+            } else if(self::isWindowTimerEvent($event)) {
+                $pair = self::$controls[$event->id];
 
-            $control    = $pair[0];
-            $callback   = $pair[1];
+                $control    = $pair[0];
+                $callback   = $pair[1];
 
-            $callback->__invoke($control);
+                $callback->__invoke($control);
 
-            return;
+                return;
+            }
         }
-
         return;
         if(!self::isValidEvent($event))
             return;
@@ -89,13 +93,23 @@ return;
         }
     }
 
-    private static function isTimerEvent($windowID, $controlID)
-    {
-        return $windowID == $controlID;
+    private static function isWindowEvent(Event $event) {
+        return $event->windowID == $event->controlID;
     }
 
-    private static function isValidEvent($event)
-    {
+    private static function isDefaultWindowEvent(Event $event) {
+        return self::isWindowEvent($event) && $event->id == 0;
+    }
+
+    private static function isWindowExitEvent(Event $event) {
+        return self::isWindowEvent($event) && $event->id == IDCLOSE;
+    }
+
+    private static function isWindowTimerEvent(Event $event) {
+        return self::isWindowEvent($event) && $event->id != 0 && $event->id != IDCLOSE;
+    }
+
+    private static function isValidEvent($event) {
         if(self::$previousEvent === null)
             return TRUE;
 

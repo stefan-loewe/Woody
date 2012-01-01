@@ -2,44 +2,40 @@
 
 namespace Woody\Components\Controls;
 
-use \Woody\Components\IComponent;
+use \Woody\Components\Component;
+use \Woody\Util\ImageResource;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class ImageButton implements IComponent {
+class ImageButton extends Button {
     /**
-     * the file name of the image of the image button
+     * the image resource the image button is associated with
      *
-     * @var string
+     * @var \Woody\Utils\ImageResource
      */
-    private $imageFileName  = null;
-
-    /**
-     *
-     * @var \Woody\Components\Controls\PushButton
-     */
-    private $button         = null;
+    private $imageResource = null;
 
     /**
      * This method acts as the constructor of the class.
      *
-     * @param \Woody\Components\Controls\PushButton the button that should be decorated by an image
-     * @param string $imageFileName the image source file of image button
+     * @param \Woody\Utils\ImageResource $imageResource the image resource the image button is associated with
+     * @param Point $topLeftCorner the top left corner of the image
+     * @param Dimension $dimension the dimension of the image
      */
-    public function __construct(PushButton $button, $imageFileName) {
-        $this->button           = $button;
+    public function __construct(ImageResource $imageResource, Point $topLeftCorner, Dimension $dimension) {
+        parent::__construct(null, $topLeftCorner, $dimension);
 
-        $this->imageFileName    = $imageFileName;
+        $this->imageResource    = $imageResource;
     }
 
     /**
-     * This method creates the iage button and sets the image afterwards.
+     * This method creates the image button and sets the image afterwards.
      *
      * @param Component $parent the parent component of the control
      */
     protected function create(Component $parent) {
         parent::create($parent);
-this won't work, create is protected, and that's good, actually
+
         $this->setImage();
     }
 
@@ -49,105 +45,11 @@ this won't work, create is protected, and that's good, actually
      * @return \Woody\Components\Controls\ImageButton $this
      */
     private function setImage() {
-        $dib = FreeImage_Load(self::isJpeg() ? FIF_JPEG : FIF_BMP, $this->imageFileName, 0);
+        $bitmap = $this->imageResource->getBitmap();
 
-        $bmp = wb_create_image($this->dimension->width,
-                                $this->dimension->height,
-                                FreeImage_GetInfoHeader($dib),
-                                FreeImage_GetBits($dib));
-
-        wb_set_image($this->controlID, $bmp);
-
-        // clean up
-        FreeImage_Unload($dib);
-        wb_destroy_image($bmp);
+        wb_set_image($this->controlID, $bitmap);
+        wb_destroy_image($bitmap);
 
         return $this;
     }
-
-    /**
-     * This method determines if the image is a jpeg or not.
-     *
-     * @return boolean true, if the image is a jpeg, else false
-     */
-    private static function isJpeg() {
-        return substr($this->imageFileName, -4) === '.jpg';
-    }
-
-    /**
-     * This method returns the winbinder control id of the component.
-     *
-     * @return int
-     */
-    public function getControlID() {
-        return $this->button->getControlID();
-    }
-
-    /**
-     * This method returns the id of the component.
-     *
-     * @return int
-     */
-    public function getID() {
-        return $this->button->getID();
-    }
-
-    /**
-     * This method returns the top left corner of the component.
-     *
-     * @return Woody\Utils\Geom\Point the top left corner of the component.
-     */
-    public function getPosition() {
-        return $this->button->getPosition();
-    }
-
-    /**
-     * This method returns the dimension of the top left corner of the component.
-     *
-     * @return Woody\Utils\Geom\Dimension the dimension of the control
-     */
-    public function getDimension() {
-        return $this->button->getDimension();
-    }
-
-    /**
-     * This method moves the component by an offset, given as dimension.
-     *
-     * @param \Utils\Geom\Dimension $dimension the dimension by which this point shall be moved by
-     * @return Component $this
-     */
-    public function moveBy(Dimension $dimension) {
-        return $this->button->move($this->button->getPosition()->moveBy($dimension));
-    }
-
-    /**
-     * This method moves the top left corner of the component to the given point.
-     *
-     * @param Point $topLeftCorner the new point of the top left corner
-     * @return Component $this
-     */
-    public function moveTo(Point $topLeftCorner) {
-        return $this->button->move($topLeftCorner);
-    }
-
-    /**
-     * This method resizes the component by the offset given as a dimension.
-     *
-     * @param Dimension $dimension the offset by which the component has to be resized
-     * @return Component $this
-     */
-    public function resizeBy(Dimension $dimension) {
-        return $this->button->resize($this->button->getDimension()->resizeBy($dimension));
-    }
-
-    /**
-     * This method resizes the component to the given dimension.
-     *
-     * @param Dimension $dimension the new dimension of the component.
-     * @return Component $this
-     */
-    public function resizeTo(Dimension $dimension) {
-        return $this->button->resize($dimension);
-    }
-
 }

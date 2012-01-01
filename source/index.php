@@ -11,6 +11,8 @@ use \Woody\Components\Controls\Frame;
 use \Woody\Components\Controls\EditBox;
 use \Woody\Components\Controls\Checkbox;
 
+use \Woody\Util\ImageResource;
+
 use \Utils\Http\HttpRequest;
 use \Utils\Sockets\ServerSocket;
 
@@ -109,7 +111,7 @@ else if(!TRUE)
     $gauge = wb_create_control($win->getControlID(), Gauge, "Update", 230, 245, 310, 15, 287525);
     var_dump(wb_set_value($gauge, 50));
     var_dump(wb_get_value($gauge, 50));
-} else if(TRUE) {
+} else if(!TRUE) {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
     $win->create();
 
@@ -118,6 +120,33 @@ else if(!TRUE)
     $root = new Utils\Tree\TreeNode('test1');
     $root->populateRandomly(100, 50);
     $treeView->setModel(new \Woody\Model\DefaultTreeModel($root));
+} else if(!TRUE) {
+    $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
+    $win->create();
+
+    $tab = new \Woody\Components\Controls\Tab(new Point(10, 10), new Dimension(300, 400));
+    $win->add($tab);
+    $tab->addPage('title1');
+    $tab->addPage('title2');
+} else if(TRUE) {
+    $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
+    $win->create();
+
+    $imageFileName = 'D:/workspace/programming/PHP/woody/paypal.jpg';
+    $dimension  = getimagesize($imageFileName);
+    $dimension  = new Dimension($dimension[0] * 1, $dimension[1] * 1);
+    $resource   = new ImageResource($imageFileName);
+
+    $img = new \Woody\Components\Controls\Image($resource, new Point(10, 10), new Dimension(300, 400));
+    $win->add($img);
+
+    $d = new \Woody\Dialog\MessageDialog(WBC_OK, 'OK?', 'really ok');
+    $d->open();
+    print_r('state = '.$d->getState());
+
+    $d = new \Woody\Dialog\MessageDialog(WBC_STOP, 'Stop?', 'really stop');
+    $d->open();
+    print_r('state = '.$d->getState());
 }
 
 $win->startEventHandler();

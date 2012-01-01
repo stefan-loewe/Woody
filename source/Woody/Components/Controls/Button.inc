@@ -5,7 +5,7 @@ namespace Woody\Components\Controls;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class PushButton extends Button {
+abstract class Button extends Control {
     /**
      * This method acts as the constructor of the class.
      *
@@ -17,26 +17,5 @@ class PushButton extends Button {
         parent::__construct($label, $topLeftCorner, $dimension);
 
         $this->type = PushButton;
-    }
-
-    /**
-     * This method returns the label of the button.
-     *
-     * @return string the label of the button
-     */
-    public function getLabel() {
-        return wb_get_text($this->controlID);
-    }
-
-    /**
-     * This method sets the label of the button.
-     *
-     * @param string $label the label to set
-     * @return \Woody\Components\Controls\PushButton
-     */
-    public function setLabel($label) {
-        wb_set_text($this->controlID, $label);
-
-        return $this;
     }
 }
