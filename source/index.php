@@ -140,13 +140,21 @@ else if(!TRUE)
     $img = new \Woody\Components\Controls\Image($resource, new Point(10, 10), new Dimension(300, 400));
     $win->add($img);
 
-    $d = new \Woody\Dialog\MessageDialog(WBC_OK, 'OK?', 'really ok');
+    $d = new \Woody\Dialog\PopUp\YesNoCancelConfirmationDialog('OK?', 'really ok');
     $d->open();
-    print_r('state = '.$d->getState());
-
-    $d = new \Woody\Dialog\MessageDialog(WBC_STOP, 'Stop?', 'really stop');
+    var_dump($d->yes());
+    var_dump($d->no());
+    var_dump($d->cancel());
+    $d = new \Woody\Dialog\PopUp\YesNoConfirmationDialog('OK?', 'really ok');
     $d->open();
-    print_r('state = '.$d->getState());
+    var_dump(" ");
+    var_dump($d->yes());
+    var_dump($d->no());
+    $d = new \Woody\Dialog\PopUp\OkCancelConfirmationDialog('OK?', 'really ok');
+    $d->open();
+    var_dump(" ");
+    var_dump($d->ok());
+    var_dump($d->cancel());
 }
 
 $win->startEventHandler();
