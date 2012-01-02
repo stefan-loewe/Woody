@@ -4,7 +4,7 @@ namespace Woody\Dialog;
 
 use \Woody\Components\Windows\AbstractWindow;
 
-abstract class MessageDialog extends PopUpDialog {
+abstract class ConfirmationDialog extends PopUpDialog {
 
     /**
      * This method acts as the constructor of the class.

@@ -26,7 +26,7 @@ class EventHandler
     {
        self::$controls[$control->getID()] = array($control, $handler);
 
-       var_dump('adding handler for control '.$control->getID());
+       //var_dump('adding handler for control '.$control->getID());
     }
 
     public static function removeEventHandler($control)
@@ -35,7 +35,7 @@ class EventHandler
     }
 
     public static function handleEvent(Event $event) {
-        echo ($event);
+        //echo ($event);
         if(self::isWindowEvent($event)) {
             if(self::isDefaultWindowEvent($event)) {
                 // anything todo?
