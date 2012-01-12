@@ -18,24 +18,21 @@ class EventHandler
     /**
      * This method acts as the constructor of the class - as it is a static class, no instantiation is possible.
      */
-    private function __construct()
-    {
+    private function __construct() {
     }
 
-    public static function addEventHandler($control, $handler)
-    {
+    public static function addEventHandler($control, $handler) {
        self::$controls[$control->getID()] = array($control, $handler);
 
        //var_dump('adding handler for control '.$control->getID());
     }
 
-    public static function removeEventHandler($control)
-    {
+    public static function removeEventHandler($control) {
        unset(self::$controls[$control->getID()]);
     }
 
     public static function handleEvent(Event $event) {
-        //echo ($event);
+        echo ($event);
         if(self::isWindowEvent($event)) {
             if(self::isDefaultWindowEvent($event)) {
                 // anything todo?
@@ -60,8 +57,7 @@ class EventHandler
 
         var_dump('calling handleEvent firing event ('.  microtime(TRUE).') ...');
         echo ($event);
-        if($event->id === IDCLOSE)
-        {
+        if($event->id === IDCLOSE) {
             wb_destroy_window($event->windowID);
             return;
         }
@@ -80,12 +76,10 @@ class EventHandler
 return;
         $pair = self::$controls[$event->controlID];
 
-        if($pair === null)
-        {
+        if($pair === null) {
             var_dump("no callback defined, nothing to handle");
         }
-        else
-        {
+        else {
         /*    $control    = $pair[0];
             $callback   = $pair[1];
 

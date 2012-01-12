@@ -107,4 +107,11 @@ class WindowConstraints {
 
         return $this;
     }
+
+    public function sanatize(Dimension $dimension) {
+        $width  = min($this->maxWidth, max($this->minWidth, $dimension->width));
+        $height = min($this->maxHeight, max($this->minHeight, $dimension->height));
+
+        return new Dimension($width, $height);
+    }
 }

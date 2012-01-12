@@ -207,10 +207,8 @@ abstract class Component implements IComponent {
      * @return Component $this
      */
     protected function resize(Dimension $dimension) {
-        something like ....
-        \Woody\System\WindowConstraints::getInstance()->sanatizeDimension($dimension);
-        $width  = (max(System::WIN_MIN_WIDTH, $dimension->width));
-        $height = (max(System::WIN_MIN_HEIGHT, $dimension->height));
+        $width  = $dimension->width;
+        $height = $dimension->height;
 
         wb_set_size($this->controlID, $width, $height);
 

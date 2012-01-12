@@ -44,21 +44,47 @@ abstract class AbstractWindow extends Component implements Container {
                                                $this->dimension->width,
                                                $this->dimension->height,
                                                $this->style | WBC_TASKBAR | WBC_NOTIFY,
-                                               $this->param | WBC_MOUSEDOWN | WBC_MOUSEUP | WBC_DBLCLICK /*| WBC_MOUSEMOVE*/ | WBC_KEYDOWN | WBC_KEYUP | WBC_GETFOCUS | WBC_CUSTOMDRAW | WBC_REDRAW | WBC_RESIZE | WBC_HEADERSEL);
+                                               $this->param | WBC_MOUSEDOWN | WBC_MOUSEUP | WBC_DBLCLICK | WBC_MOUSEMOVE | WBC_KEYDOWN | WBC_KEYUP | WBC_GETFOCUS | WBC_CUSTOMDRAW | WBC_REDRAW | WBC_RESIZE | WBC_HEADERSEL);
 
         $this->children = new \SplObjectStorage();
 
         return $this;
     }
 
+    /**
+     * This method destroys a window.
+     *
+     * @return AbstractWindow $this
+     */
     public function destroy() {
         wb_destroy_window($this->controlID);
+
+        return $this;
     }
 
+    /**
+     * This method starts the main loop of the window.
+     *
+     * @return AbstractWindow $this
+     */
     public function startEventHandler() {
         wb_set_handler($this->controlID, 'globalWinBinderEventHandler');
 
         wb_main_loop();
+
+        return $this;
+    }
+
+    protected function resize(Dimension $dimension) {
+        $dimension  = \Woody\System\WindowConstraints::getInstance()->sanatize($dimension);
+        $width      = $dimension->width;
+        $height     = $dimension->height;
+
+        wb_set_size($this->controlID, $width, $height);
+
+        $this->dimension = new Dimension($width, $height);
+
+        return $this;
     }
 
     /**

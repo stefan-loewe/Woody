@@ -31,11 +31,7 @@ chdir("C:/Program Files/PHP54/");
 proc_open('"C:/Program Files/PHP54/php.exe" -S 127.0.0.1:8008', $desc, $pipes);
 
 die;*/
-var_dump(phpversion());
-$c = \Woody\System\WindowConstraints::getInstance();
-var_dump($c->minWidth);
 
-die;
 if(!TRUE)
 {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
