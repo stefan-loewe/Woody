@@ -8,8 +8,7 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 use \Woody\System\System;
 
-abstract class AbstractWindow extends Component implements Container
-{
+abstract class AbstractWindow extends Component implements Container {
     /**
      * the child controls of this window
      *
@@ -24,8 +23,7 @@ abstract class AbstractWindow extends Component implements Container
 
     const BORDER_WIDTH          = 2;
 */
-    public function __construct($type, $label, Point $topLeftCorner, Dimension $dimension)
-    {
+    public function __construct($type, $label, Point $topLeftCorner, Dimension $dimension) {
         parent::__construct($label, $topLeftCorner, $dimension);
 
         //todo: type via decorators???
@@ -37,8 +35,7 @@ abstract class AbstractWindow extends Component implements Container
         //$this->setEventHandler(self::getDefaultCallback());
     }
 
-    public function create(Component $parent = null)
-    {
+    public function create(Component $parent = null) {
         $this->controlID = wb_create_window($this->parent === null ? null : $this->parent->getControlID(),
                                                $this->type,
                                                $this->value,
@@ -54,13 +51,11 @@ abstract class AbstractWindow extends Component implements Container
         return $this;
     }
 
-    public function destroy()
-    {
+    public function destroy() {
         wb_destroy_window($this->controlID);
     }
 
-    public function startEventHandler()
-    {
+    public function startEventHandler() {
         wb_set_handler($this->controlID, 'globalWinBinderEventHandler');
 
         wb_main_loop();
@@ -72,8 +67,7 @@ abstract class AbstractWindow extends Component implements Container
      * @param Component $control
      * @return Frame
      */
-    public function add(Component $control)
-    {
+    public function add(Component $control) {
         if($control->parent !== null)
             $this->remove($control);
 
@@ -89,8 +83,7 @@ abstract class AbstractWindow extends Component implements Container
      *
      * @param Component $control
      */
-    public function remove(Component $control)
-    {
+    public function remove(Component $control) {
         if($this->children->offsetExists($control))
         {
             $this->children->offsetUnset($control);

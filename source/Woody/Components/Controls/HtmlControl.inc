@@ -24,25 +24,33 @@ class HtmlControl extends Control {
         //FotoImportApplication::getHTMLControlServer()->unregister($this);
     }
 
-    /**
-     * This method creates the control and loads the url afterwards.
-     *
-     * @param Component $parent the parent component of the control
-     */
     protected function create(Component $parent) {
         parent::create($parent);
 
         $this->setUrl($this->value);
     }
 
+    /**
+     * This method returns the URL to which the control currently points.
+     *
+     * @return string the URL to which the control currently points
+     */
     public function getUrl() {
         return $this->value;
     }
 
+    /**
+     * This method sets the URL to which the control should point.
+     *
+     * @param string $url the URL to which the control should point
+     * @return HtmlControl $this
+     */
     public function setUrl($url) {
         $this->value = $url;
 
         wb_set_location($this->controlID, $this->value);
+
+        return $this;
     }
 
     public function setEventHandler($callback) {

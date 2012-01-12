@@ -8,7 +8,6 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
 class Image extends Control {
-
     /**
      * the image resource the image control is associated with
      *
@@ -32,11 +31,6 @@ class Image extends Control {
         $this->imageResource    = $imageResource;
     }
 
-    /**
-     * This method creates the image and sets the image afterwards.
-     *
-     * @param Component $parent the parent component of the control
-     */
     protected function create(Component $parent) {
         parent::create($parent);
 

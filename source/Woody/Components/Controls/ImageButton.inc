@@ -28,11 +28,6 @@ class ImageButton extends Button {
         $this->imageResource    = $imageResource;
     }
 
-    /**
-     * This method creates the image button and sets the image afterwards.
-     *
-     * @param Component $parent the parent component of the control
-     */
     protected function create(Component $parent) {
         parent::create($parent);
 
