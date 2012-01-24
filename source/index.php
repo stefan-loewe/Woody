@@ -31,7 +31,11 @@ chdir("C:/Program Files/PHP54/");
 proc_open('"C:/Program Files/PHP54/php.exe" -S 127.0.0.1:8008', $desc, $pipes);
 
 die;*/
-
+class Handler implements Woody\Event\ActionListener {
+    public function actionPerformed($actionEvent) {
+        echo PHP_EOL.'hey, you triggered an action on the field with the value '.$this->value;
+    }
+}
 if(!TRUE)
 {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
@@ -127,7 +131,7 @@ else if(!TRUE)
     $win->add($tab);
     $tab->addPage('title1');
     $tab->addPage('title2');
-} else if(TRUE) {
+} else if(!TRUE) {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
     $win->create();
 
@@ -154,6 +158,16 @@ else if(!TRUE)
     var_dump(" ");
     var_dump($d->ok());
     var_dump($d->cancel());
+} else if(TRUE) {
+    $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(400, 300));
+    $win->create();
+
+    $box1 = new \Woody\Components\Controls\EditBox('', new Point(10, 10), new Dimension(300, 22));
+    $win->add($box1);
+    $box2 = new \Woody\Components\Controls\EditBox('', new Point(10, 35), new Dimension(300, 22));
+    $win->add($box2);
+    $box1->addActionListener(new Handler());
 }
 
 $win->startEventHandler();
+

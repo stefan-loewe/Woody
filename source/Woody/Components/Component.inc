@@ -68,6 +68,8 @@ abstract class Component implements IComponent {
     protected $param            = 0;
     protected $style            = 0;
 
+    protected static $controls    = array();
+
     /**
      * static internal integer, that is used as id generator for creating components, starting at 1024 not to interfer with special control ids (e.g. 8 is window close)
      *
@@ -94,6 +96,10 @@ abstract class Component implements IComponent {
      */
     public static function getUniqueID() {
         return ++self::$IDENTIFIER;
+    }
+
+    public static function getControlByID($id) {
+        return self::$controls[$id];
     }
 
     /**

@@ -41,6 +41,8 @@ abstract class Control extends Component {
                                     $this->param,
                                     $this->id
                                 );
+
+        static::$controls[$this->controlID] = $this;
     }
 
     /**

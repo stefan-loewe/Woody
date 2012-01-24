@@ -5,7 +5,7 @@ namespace Woody\Event;
 class EventHandler
 {
     /**
-     * the collection of controls fow which even handlers are registerd
+     * the collection of controls fow which event handlers are registerd
      *
      * This is a primitive array, as a an object is cumbersome to initialize for a static class
      *
