@@ -42,7 +42,7 @@ abstract class Control extends Component {
                                     $this->id
                                 );
 
-        static::$controls[$this->controlID] = $this;
+        static::$components[$this->controlID] = $this;
     }
 
     /**

@@ -46,7 +46,7 @@ abstract class AbstractWindow extends Component implements Container {
                                                $this->style | WBC_TASKBAR | WBC_NOTIFY,
                                                $this->param | WBC_MOUSEDOWN | WBC_MOUSEUP | WBC_DBLCLICK | /*WBC_MOUSEMOVE |*/ WBC_KEYDOWN | WBC_KEYUP | WBC_GETFOCUS | WBC_CUSTOMDRAW | WBC_REDRAW | WBC_RESIZE | WBC_HEADERSEL);
 
-        static::$controls[$this->controlID] = $this;
+        static::$components[$this->controlID] = $this;
 
         $this->children = new \SplObjectStorage();
 

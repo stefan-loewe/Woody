@@ -2,7 +2,12 @@
 
 namespace Woody\Components;
 
-use Woody\Components\Windows\AbstractWindow;
+use \Woody\Components\Windows\AbstractWindow;
+
+use \Woody\Event\ActionListener;
+use \Woody\Event\FocusListener;
+use \Woody\Event\KeyListener;
+use \Woody\Event\MouseEvent;
 
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
@@ -20,55 +25,83 @@ abstract class Component implements IComponent {
      *
      * @var int
      */
-    protected $controlID        = null;
+    protected $controlID            = null;
 
     /**
-     * the logical id of this component
+     * the logical id of this component, i.e the woody id
      *
      * @var int
      */
-    protected $id               = null;
+    protected $id                   = null;
 
     /**
      * the type of the component, i.e. the winbinder constant representing the control type
      *
      * @var int
      */
-    protected $type             = null;
+    protected $type                 = null;
 
     /**
      * the top left corner of the component
      *
      * @var Woody\Utils\Misc\Point
      */
-    protected $topLeftCorner    = null;
+    protected $topLeftCorner        = null;
 
     /**
      * the dimension of the component
      *
      * @var Woody\Utils\Misc\Dimension
      */
-    protected $dimension        = null;
+    protected $dimension            = null;
 
     /**
      * the value (e.g. value of an EditBox, the label of a Frame, the selection of a ListBox) of the control
      *
      * @var string
      */
-    protected $value            = null;
+    protected $value                = null;
 
     /**
      * the parent container of this window
      *
      * @var Container (to-be-defined interface)
      */
-    protected $parent           = null;
+    protected $parent               = null;
+
+    /**
+     * the collection of action listeners registered for the component
+     *
+     * @var \SplObjectStorage
+     */
+    public $actionListeners         = null;
+
+    /**
+     * the collection of mouse listeners registered for the component
+     *
+     * @var \SplObjectStorage
+     */
+    public $mouseListeners          = null;
+
+    /**
+     * the collection of action listeners registered for the component
+     *
+     * @var \SplObjectStorage
+     */
+    public $keyListeners            = null;
+
+    /**
+     * the collection of focus listeners registered for the component
+     *
+     * @var \SplObjectStorage
+     */
+    public $focusListeners          = null;
 
     // @TODO how to handle param and style ?!?!this ... Decorator?
-    protected $param            = 0;
-    protected $style            = 0;
+    protected $param                = 0;
+    protected $style                = 0;
 
-    protected static $controls    = array();
+    protected static $components    = array();
 
     /**
      * static internal integer, that is used as id generator for creating components, starting at 1024 not to interfer with special control ids (e.g. 8 is window close)
@@ -98,8 +131,17 @@ abstract class Component implements IComponent {
         return ++self::$IDENTIFIER;
     }
 
-    public static function getControlByID($id) {
-        return self::$controls[$id];
+    /**
+     * This method returns the component having the given winbinder id.
+     *
+     * Normally, it should not be neccassary to call this method, but rather manage references to the respective controls within the dialog class. This is currently only needed internally for event handling.
+     * Note that a component has to be created first (@see Component::create) to be returned by this method.
+     *
+     * @param int $id the winbinder id of the component
+     * @return Component the component with the respective winbinder id
+     */
+    public static function getComponentByID($id) {
+        return self::$components[$id];
     }
 
     /**
@@ -122,7 +164,7 @@ abstract class Component implements IComponent {
     }
 
     /**
-     * This method returns the id of the component.
+     * This method returns the woody id of the component.
      *
      * @return int
      */
@@ -240,5 +282,77 @@ abstract class Component implements IComponent {
         }
 
         return null;
+    }
+
+    public function addActionListener(ActionListener $actionListener) {
+        if($this->actionListeners == null) {
+            $this->actionListeners = new \SplObjectStorage();
+        }
+
+        $this->actionListeners[$actionListener] = true;
+    }
+
+    public function getActionListeners() {
+        return ($this->actionListeners == null) ? new \SplObjectStorage() : $this->actionListeners;
+    }
+
+    public function removeActionListener(ActionListener $actionListener) {
+        if($this->actionListeners != null) {
+            $this->actionListeners->detach($actionListener);
+        }
+    }
+
+    public function addFocusListener(FocusListener $focusListener) {
+        if($this->focusListeners == null) {
+            $this->focusListeners = new \SplObjectStorage();
+        }
+
+        $this->focusListeners[$focusListener] = true;
+    }
+
+    public function getFocusListeners() {
+        return ($this->focusListeners == null) ? new \SplObjectStorage() : $this->focusListeners;
+    }
+
+    public function removeFocusListener(FocusListener $focusListener) {
+        if($this->focusListeners != null) {
+            $this->focusListeners->detach($focusListener);
+        }
+    }
+
+    public function addKeyListener(KeyListener $keyListener) {
+        if($this->keyListeners == null) {
+            $this->keyListeners = new \SplObjectStorage();
+        }
+
+        $this->keyListeners[$keyListener] = true;
+    }
+
+    public function getKeyListeners() {
+        return ($this->keyListeners == null) ? new \SplObjectStorage() : $this->keyListeners;
+    }
+
+    public function removeKeyListener(KeyListener $keyListener) {
+        if($this->keyListeners != null) {
+            $this->keyListeners->detach($keyListener);
+        }
+    }
+
+    public function addMouseListener(MouseListener $mouseListener) {
+        if($this->mouseListeners == null) {
+            $this->mouseListeners = new \SplObjectStorage();
+        }
+
+        $this->mouseListeners[$mouseListener] = true;
+    }
+
+    public function getMouseListeners() {
+        return ($this->mouseListeners == null) ? new \SplObjectStorage() : $this->mouseListeners;
+    }
+
+    public function removeMouseListener(MouseListener $mouseListener) {
+        if($this->mouseListeners != null) {
+            $this->mouseListeners->detach($mouseListener);
+        }
     }
 }

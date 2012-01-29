@@ -100,7 +100,7 @@ abstract class Event {
      * @return string the string representation of the event
      */
     public function __toString() {
-        return PHP_EOL.'--------------------'.PHP_EOL.
+        return PHP_EOL.'------- '.str_replace('Woody\\Event\\', '', get_class($this)).' -------------'.PHP_EOL.
             'windowID = '.$this->windowID.PHP_EOL.
             'id = '.$this->id.PHP_EOL.
             'controlID = '.$this->controlID.PHP_EOL.

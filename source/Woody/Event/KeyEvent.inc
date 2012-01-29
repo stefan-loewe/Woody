@@ -25,7 +25,7 @@ class KeyEvent extends Event {
      * @return string the key which was pressed
      */
     public function getPressedKey() {
-        return $this->properties;
+        return chr($this->property);
     }
 
     /**

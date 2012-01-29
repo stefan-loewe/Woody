@@ -36,6 +36,43 @@ class Handler implements Woody\Event\ActionListener {
         echo PHP_EOL.'hey, you triggered an action on the field with the value '.$this->value;
     }
 }
+
+class FocusHandler implements Woody\Event\FocusListener {
+    public function focusGained(/*FocusEvent*/ $event) {
+        echo PHP_EOL.'hey, you focus the field with the value '.$event->getFocusGainedComponent()->getValue();
+    }
+}
+
+class KeyHandler implements Woody\Event\KeyListener {
+    public function keyPressed(\Woody\Event\KeyEvent $event) {
+        var_dump($event);
+        echo PHP_EOL.'hey, you pressed key '.$event->getPressedKey().' on field with value '.Woody\Components\Component::getControlByID($event->controlID)->getValue();
+    }
+
+    public function keyReleased(\Woody\Event\KeyEvent $event) {
+        echo PHP_EOL.'hey, you released key '.$event->getPressedKey().' on field with value '.Woody\Components\Component::getControlByID($event->controlID)->getValue();
+    }
+}
+
+class KeyAdapter implements Woody\Event\KeyListener {
+    private $onKeyPressed = null;
+    private $onKeyReleased = null;
+
+    public function __construct(callable $onKeyPressed = null, callable $onKeyReleased = null) {
+        $this->onKeyPressed     = $onKeyPressed;
+        $this->onKeyReleased    = $onKeyReleased;
+    }
+
+    public function keyPressed(\Woody\Event\KeyEvent $event) {
+        if($this->onKeyPressed != null)
+            $this->onKeyPressed->__invoke($event);
+    }
+
+    public function keyReleased(\Woody\Event\KeyEvent $event) {
+        if($this->onKeyReleased != null)
+            $this->onKeyReleased->__invoke($event);
+    }
+}
 if(!TRUE)
 {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
@@ -166,7 +203,10 @@ else if(!TRUE)
     $win->add($box1);
     $box2 = new \Woody\Components\Controls\EditBox('', new Point(10, 35), new Dimension(300, 22));
     $win->add($box2);
-    $box1->addActionListener(new Handler());
+    //$box1->addActionListener(new Handler());
+//    $box1->addFocusListener(new FocusHandler());
+    //$box1->addKeyListener(new KeyHandler());
+    $box1->addKeyListener(new KeyAdapter(function($ev) {var_dump('KEY PRESSED: '.$ev);}, function($ev) {var_dump('KEY RELEASED: '.$ev);}));
 }
 
 $win->startEventHandler();
