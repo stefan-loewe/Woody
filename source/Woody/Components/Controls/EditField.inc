@@ -64,7 +64,21 @@ abstract class EditField extends Control {
      */
     public function setReadOnly($isReadonly) {
         // still in doubt about the last parameter !?!? 1 seems to work
+        // 0x00CF = EM_SETREADONLY
         wb_send_message($this->controlID, 0x00CF, $isReadonly, 1);
+
+        return $this;
+    }
+
+    /**
+     * This method sets the cursor of the edit field to the specified index.
+     *
+     * @param int $index the index to set the cursor to
+     * @return EditField $this
+     */
+    public function setCursor($index) {
+        // 0x00B1 = EM_SETSEL
+        wb_send_message($this->controlID, 0x00B1, $index, $index);
 
         return $this;
     }

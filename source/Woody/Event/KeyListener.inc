@@ -4,6 +4,6 @@ namespace Woody\Event;
 
 
 interface KeyListener {
-    public function keyPressed(KeyEvent $event);
-    public function keyReleased(KeyEvent $event);
+    function keyPressed(KeyEvent $event);
+    function keyReleased(KeyEvent $event);
 }

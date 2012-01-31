@@ -67,6 +67,10 @@ abstract class Event {
         return $this->$memberName;
     }
 
+    public function getSource() {
+        return \Woody\Components\Component::getComponentByID($this->controlID);
+    }
+
     /**
      * This method determines if the Alt key was pressed when the event occurred.
      *

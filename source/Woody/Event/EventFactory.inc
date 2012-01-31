@@ -35,15 +35,23 @@ class EventFactory {
             }
         }
 
-        if(self::isKeyEvent($typeID) && isset($source->actionListeners) && $source->actionListeners != null)
-            $source->actionListeners[0]->actionPerformed($event);
-        if(self::isFocusEvent($typeID) && isset($source->focusListeners) && $source->focusListeners != null)
-            $source->focusListeners[0]->focusGained($event);
-        if(self::isKeyEvent($typeID) && isset($source->keyListeners) && $source->keyListeners != null) {
-            if($typeID === WBC_KEYDOWN)
-                $source->keyListeners[0]->keyPressed($event);
-            else
-                $source->keyListeners[0]->keyReleased($event);
+        if(self::isKeyEvent($typeID)) {
+            foreach($source->getActionListeners() as $actionListener) {
+                $actionListener->actionPerformed($event);
+            }
+        }
+        if(self::isFocusEvent($typeID)) {
+            foreach($source->getFocusListeners() as $focusListener) {
+                $focusListener->focusGained($event);
+            }
+        }
+        if(self::isKeyEvent($typeID)) {
+            foreach($source->getKeyListeners() as $keyListener) {
+                ($typeID === WBC_KEYDOWN)
+                    ? $keyListener->keyPressed($event)
+                    : $keyListener->keyReleased($event);
+            }
+
         }
 
     }

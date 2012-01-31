@@ -74,28 +74,28 @@ abstract class Component implements IComponent {
      *
      * @var \SplObjectStorage
      */
-    public $actionListeners         = null;
+    private $actionListeners         = null;
 
     /**
      * the collection of mouse listeners registered for the component
      *
      * @var \SplObjectStorage
      */
-    public $mouseListeners          = null;
+    private $mouseListeners          = null;
 
     /**
      * the collection of action listeners registered for the component
      *
      * @var \SplObjectStorage
      */
-    public $keyListeners            = null;
+    private $keyListeners            = null;
 
     /**
      * the collection of focus listeners registered for the component
      *
      * @var \SplObjectStorage
      */
-    public $focusListeners          = null;
+    private $focusListeners          = null;
 
     // @TODO how to handle param and style ?!?!this ... Decorator?
     protected $param                = 0;
@@ -284,75 +284,159 @@ abstract class Component implements IComponent {
         return null;
     }
 
+    /**
+     * This method adds an action listener to the component.
+     *
+     * @param ActionListener $actionListener the action listener to add
+     * @return Component $this
+     */
     public function addActionListener(ActionListener $actionListener) {
         if($this->actionListeners == null) {
             $this->actionListeners = new \SplObjectStorage();
         }
 
         $this->actionListeners[$actionListener] = true;
+
+        return $this;
     }
 
+    /**
+     * This method returns the collection of action listeners registered for the component.
+     *
+     * @return \SplObjectStorage the collection of action listeners registered for the component
+     */
     public function getActionListeners() {
         return ($this->actionListeners == null) ? new \SplObjectStorage() : $this->actionListeners;
     }
 
+    /**
+     * This method removes an action listener from the component.
+     *
+     * @param ActionListener $actionListener the action listener to remove
+     * @return Component $this
+     */
     public function removeActionListener(ActionListener $actionListener) {
         if($this->actionListeners != null) {
             $this->actionListeners->detach($actionListener);
         }
+
+        return $this;
     }
 
+    /**
+     * This method adds a focus listener to the component.
+     *
+     * @param FocusListener $focusListener the focus listener to add
+     * @return Component $this
+     */
     public function addFocusListener(FocusListener $focusListener) {
         if($this->focusListeners == null) {
             $this->focusListeners = new \SplObjectStorage();
         }
 
         $this->focusListeners[$focusListener] = true;
+
+        return $this;
     }
 
+    /**
+     * This method returns the collection of focus listeners registered for the component.
+     *
+     * @return \SplObjectStorage the collection of focus listeners registered for the component
+     */
     public function getFocusListeners() {
         return ($this->focusListeners == null) ? new \SplObjectStorage() : $this->focusListeners;
     }
 
+    /**
+     * This method removes a focus listener from the component.
+     *
+     * @param FocusListener $focusListener the focus listener to remove
+     * @return Component $this
+     */
     public function removeFocusListener(FocusListener $focusListener) {
         if($this->focusListeners != null) {
             $this->focusListeners->detach($focusListener);
         }
+
+        return $this;
     }
 
+    /**
+     * This method adds a key listener to the component.
+     *
+     * @param KeyListener $keyListener the key listener to add
+     * @return Component $this
+     */
     public function addKeyListener(KeyListener $keyListener) {
         if($this->keyListeners == null) {
             $this->keyListeners = new \SplObjectStorage();
         }
 
         $this->keyListeners[$keyListener] = true;
+
+        return $this;
     }
 
+    /**
+     * This method returns the collection of key listeners registered for the component.
+     *
+     * @return \SplObjectStorage the collection of key listeners registered for the component
+     */
     public function getKeyListeners() {
         return ($this->keyListeners == null) ? new \SplObjectStorage() : $this->keyListeners;
     }
 
+    /**
+     * This method removes a key listener from the component.
+     *
+     * @param KeyListener $keyListener the key listener to remove
+     * @return Component $this
+     */
     public function removeKeyListener(KeyListener $keyListener) {
         if($this->keyListeners != null) {
             $this->keyListeners->detach($keyListener);
         }
+
+        return $this;
     }
 
+    /**
+     * This method adds a mouse listener to the component.
+     *
+     * @param MouseListener $mouseListener the mouse listener to add
+     * @return Component $this
+     */
     public function addMouseListener(MouseListener $mouseListener) {
         if($this->mouseListeners == null) {
             $this->mouseListeners = new \SplObjectStorage();
         }
 
         $this->mouseListeners[$mouseListener] = true;
+
+        return $this;
     }
 
+    /**
+     * This method returns the collection of mouse listeners registered for the component.
+     *
+     * @return \SplObjectStorage the collection of mouse listeners registered for the component
+     */
     public function getMouseListeners() {
         return ($this->mouseListeners == null) ? new \SplObjectStorage() : $this->mouseListeners;
     }
 
+    /**
+     * This method removes a mouse listener from the component.
+     *
+     * @param mouseListener $mouseListener the mouse listener to remove
+     * @return Component $this
+     */
     public function removeMouseListener(MouseListener $mouseListener) {
         if($this->mouseListeners != null) {
             $this->mouseListeners->detach($mouseListener);
         }
+
+        return $this;
     }
 }

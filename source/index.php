@@ -38,7 +38,7 @@ class Handler implements Woody\Event\ActionListener {
 }
 
 class FocusHandler implements Woody\Event\FocusListener {
-    public function focusGained(/*FocusEvent*/ $event) {
+    public function focusGained(\Woody\Event\FocusEvent $event) {
         echo PHP_EOL.'hey, you focus the field with the value '.$event->getFocusGainedComponent()->getValue();
     }
 }
@@ -206,7 +206,16 @@ else if(!TRUE)
     //$box1->addActionListener(new Handler());
 //    $box1->addFocusListener(new FocusHandler());
     //$box1->addKeyListener(new KeyHandler());
-    $box1->addKeyListener(new KeyAdapter(function($ev) {var_dump('KEY PRESSED: '.$ev);}, function($ev) {var_dump('KEY RELEASED: '.$ev);}));
+    $box1->addKeyListener(
+            new KeyAdapter(
+                    null, function($ev) {
+                        $currentValue = $ev->getSource()->getValue();
+                        if(strlen($currentValue) > 3) {
+                            $ev->getSource()
+                                    ->setValue(substr($currentValue, 0, 3))
+                                    ->setCursor(3);
+                        }
+                    }));
 }
 
 $win->startEventHandler();

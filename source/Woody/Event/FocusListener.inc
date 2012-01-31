@@ -4,5 +4,5 @@ namespace Woody\Event;
 
 
 interface FocusListener {
-    public function focusGained(/*FocusEvent*/ $event);
+    function focusGained(FocusEvent $event);
 }
