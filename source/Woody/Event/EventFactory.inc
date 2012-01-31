@@ -9,17 +9,31 @@ class EventFactory {
     private static $previousFocusedControl = null;
 
     public static function createEvent($windowID, $id, $controlID, $typeID, $propertyID) {
+echo '\ncreate event ..';
         $source = \Woody\Components\Component::getComponentByID($controlID);
 
         // window close button does not have a control, so create a window close event
         if(self::isWindowCloseEvent($id)) {
             $source->destroy();
+            $event = 'WindowCloseEvent';
         }
+
+        else if(self::isTimerEvent($windowID, $controlID, $id)) {
+            \Woody\Components\Timer\Timer::getTimerByID($id)->run();
+            $event = 'TimerEvent';
+        }
+
         else if(self::isMouseEvent($typeID)) {
             $event = new MouseEvent($windowID, $id, $controlID, $typeID, $propertyID);
         }
         else if(self::isKeyEvent($typeID)) {
             $event = new KeyEvent($windowID, $id, $controlID, $typeID, $propertyID);
+
+            foreach($source->getKeyListeners() as $keyListener) {
+                ($typeID === WBC_KEYDOWN)
+                    ? $keyListener->keyPressed($event)
+                    : $keyListener->keyReleased($event);
+            }
         }
         else if(self::isFocusEvent($typeID)) {
             if(is_a($source, '\Woody\Components\Windows\AbstractWindow')) {
@@ -33,27 +47,16 @@ class EventFactory {
                 $event = new FocusEvent($windowID, $id, $controlID, $typeID, $propertyID, self::$previousFocusedControl);
                 self::$previousFocusedControl = $source;
             }
-        }
 
-        if(self::isKeyEvent($typeID)) {
-            foreach($source->getActionListeners() as $actionListener) {
-                $actionListener->actionPerformed($event);
-            }
-        }
-        if(self::isFocusEvent($typeID)) {
             foreach($source->getFocusListeners() as $focusListener) {
                 $focusListener->focusGained($event);
             }
         }
-        if(self::isKeyEvent($typeID)) {
-            foreach($source->getKeyListeners() as $keyListener) {
-                ($typeID === WBC_KEYDOWN)
-                    ? $keyListener->keyPressed($event)
-                    : $keyListener->keyReleased($event);
-            }
 
-        }
-
+        if(isset($event))
+            echo $event;
+        else
+            echo '\nno event';
     }
 
     private static function isWindowCloseEvent($id) {
@@ -70,5 +73,13 @@ class EventFactory {
 
     private static function isFocusEvent($typeID) {
         return $typeID === WBC_GETFOCUS;
+    }
+
+    private static function isTimerEvent($windowID, $controlID, $id) {
+        return self::isWindowEvent($windowID, $controlID) && $id != 0 && $id != IDCLOSE;
+    }
+
+    private static function isWindowEvent($windowID, $controlID) {
+        return $windowID == $controlID;
     }
 }

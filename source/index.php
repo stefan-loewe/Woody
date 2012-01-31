@@ -39,7 +39,8 @@ class Handler implements Woody\Event\ActionListener {
 
 class FocusHandler implements Woody\Event\FocusListener {
     public function focusGained(\Woody\Event\FocusEvent $event) {
-        echo PHP_EOL.'hey, you focus the field with the value '.$event->getFocusGainedComponent()->getValue();
+        //echo PHP_EOL.'hey, you focus the field with the value '.$event->getFocusGainedComponent()->getValue();
+        $event->getFocusGainedComponent()->setValue('focused');
     }
 }
 
@@ -204,7 +205,7 @@ else if(!TRUE)
     $box2 = new \Woody\Components\Controls\EditBox('', new Point(10, 35), new Dimension(300, 22));
     $win->add($box2);
     //$box1->addActionListener(new Handler());
-//    $box1->addFocusListener(new FocusHandler());
+    $box1->addFocusListener(new FocusHandler());
     //$box1->addKeyListener(new KeyHandler());
     $box1->addKeyListener(
             new KeyAdapter(

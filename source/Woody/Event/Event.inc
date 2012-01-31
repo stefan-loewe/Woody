@@ -2,6 +2,8 @@
 
 namespace Woody\Event;
 
+use \Woody\Components\Component;
+
 abstract class Event {
     /**
      * the winbinder identifier for the window or origin
@@ -68,7 +70,7 @@ abstract class Event {
     }
 
     public function getSource() {
-        return \Woody\Components\Component::getComponentByID($this->controlID);
+        return Component::getComponentByID($this->controlID);
     }
 
     /**

@@ -43,6 +43,8 @@ class Timer {
      */
     private $isRunning      = false;
 
+    private static $timers  = array();
+
     /**
      * This method acts as the constructor of the timer.
      *
@@ -58,6 +60,12 @@ class Timer {
         $this->window   = $window;
 
         $this->interval = $interval;
+
+        self::$timers[$this->id] = $this;
+    }
+
+    public static function getTimerByID($timerID) {
+        return self::$timers[$timerID];
     }
 
     /**
@@ -73,8 +81,6 @@ class Timer {
             throw new WinBinderException('Unable to create winbinder timer object for timer with id '.$this->id);
 
         $this->isRunning = true;
-
-        EventHandler::addEventHandler($this, $this->callback);
 
         return $this;
     }

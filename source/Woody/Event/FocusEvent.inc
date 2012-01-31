@@ -32,7 +32,7 @@ class FocusEvent extends Event {
      * @return Component the component which gained focus
      */
     public function getFocusGainedComponent() {
-        return Component::getControlByID($this->controlID);
+        return Component::getComponentByID($this->controlID);
     }
 
     /**
