@@ -1,0 +1,26 @@
+
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /server271.phpuri: /dsgsgdsgsd.php
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /test.php?id=2
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /test.php?id=2uri: /tesdsfdlsn.cgi
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /tesdsfdlsn.cgiuri: /te7uri: /000
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /001uri: /002
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /002uri: /002%C2%A7
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /test.phpuri: /tes2t.phpuri: /tese2t.phpuri: /000000
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /fdgffdgd
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /fdgffdgd
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /fdgffdgduri: /ffffffffffffuri: /fffffff000uri: /fffffff000000000000000
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /fffffff000000000000000uri: /fffffff000000000000000434234uri: /fffffff000000000000000434234uri: /fffffff
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 
+uri: /fffffffabcuri: /fffffffabcd
+D:\workspace\programming\PHP\woody\source>"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" 

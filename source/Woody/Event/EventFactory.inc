@@ -26,6 +26,7 @@ echo '\ncreate event ..';
         else if(self::isMouseEvent($typeID)) {
             $event = new MouseEvent($windowID, $id, $controlID, $typeID, $propertyID);
         }
+
         else if(self::isKeyEvent($typeID)) {
             $event = new KeyEvent($windowID, $id, $controlID, $typeID, $propertyID);
 
@@ -35,6 +36,7 @@ echo '\ncreate event ..';
                     : $keyListener->keyReleased($event);
             }
         }
+
         else if(self::isFocusEvent($typeID)) {
             if(is_a($source, '\Woody\Components\Windows\AbstractWindow')) {
                 if(self::$previousFocusedWindow != null)
