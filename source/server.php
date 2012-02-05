@@ -11,9 +11,7 @@ if(file_exists('result.html'))
 $fp = fopen('php://stdout', 'w');
 fputs($fp, 'uri: '.$_SERVER['REQUEST_URI']);
 
-while(!file_exists('result.html'))
-    sleep(1);
+//while(!file_exists('result.html'))
+  //  sleep(1);
 
 echo file_get_contents('result.html');
-
-return TRUE;

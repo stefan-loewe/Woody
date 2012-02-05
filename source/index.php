@@ -18,7 +18,7 @@ use \Utils\Sockets\ServerSocket;
 
 require_once(realpath(__DIR__.'/bootstrap/bootstrap.php'));
 
-//$fh = popen('D:\\workspace\\programming\\PHP\\woody\\source\\run_server.bat', 'r');
+$fh = popen('"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" > server_log.txt', 'r');
 //stream_set_blocking($fh, 0);
 //$fh = popen('start "srv" D:\\workspace\\programming\\PHP\\woody\\source\\run_server.bat', 'r');
 //while(!feof($fh))
@@ -26,14 +26,14 @@ require_once(realpath(__DIR__.'/bootstrap/bootstrap.php'));
   //echo fread($fh, 128);
 //}
 
-$desc = array(1 => array('file', 'server_log.txt', 'a'));
+//$desc = array(1 => array('file', 'server_log.txt', 'a'));
 //$desc = array(
 //   1 => array("pipe", "w")  // STDOUT ist eine Pipe, in die das Child schreibt
 //);
-$pipes = array();
+//$pipes = array();
 
 //$proc = proc_open('D:\\workspace\\programming\\PHP\\woody\\source\\run_server.bat', $desc, $pipes);
-$proc = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:8009 D:\\workspace\\programming\\PHP\\woody\\source\\server.php', $desc, $pipes);
+//$proc = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:8009 D:\\workspace\\programming\\PHP\\woody\\source\\server.php', $desc, $pipes);
 
 //$options = array('bypass_shell' => true);
 //proc_open('start "srv" D:\\workspace\\programming\\PHP\\woody\\source\\run_server.bat', $desc, $pipes);
@@ -230,24 +230,22 @@ else if(!TRUE)
                     }));
 }
 
-$log = fopen('server_log.txt', 'r');
-$timer = new Timer(function() use ($proc, $log) {
+$timer = new Timer(function() {
     //echo 'time: '.microtime(true);
     //echo fread($fh, 128);
     //echo "\n";
 
-    echo 'time: '.microtime(true);
+    $log = fopen('server_log.txt', 'r');
+    //echo 'time: '.microtime(true);
     stream_set_blocking($log, 0);
     $result = fread($log, 128);
-
-    echo "\n";
-
-    if(strpos($result, '000000') !== FALSE)
-    {
-        file_put_contents('result.html', microtime(true).' -> '.$result);
-    }
+    fclose($log);
+    if(strlen(trim($result)) > 0)
+        echo $result."\n";
 
     file_put_contents('result.html', microtime(true).' -> '.$result);
+
+
 }, $win, 1000);
 
 $timer->start();
@@ -255,5 +253,5 @@ var_dump('start app');
 $win->startEventHandler();
 var_dump('stopp app');
 
-proc_close($proc);
+pclose($fh);
 var_dump('stopp server');

@@ -9,7 +9,7 @@ class EventFactory {
     private static $previousFocusedControl = null;
 
     public static function createEvent($windowID, $id, $controlID, $typeID, $propertyID) {
-echo '\ncreate event ..';
+//echo "\ncreate event ..";
         $source = \Woody\Components\Component::getComponentByID($controlID);
 
         // window close button does not have a control, so create a window close event
@@ -56,7 +56,7 @@ echo '\ncreate event ..';
         }
 
         if(isset($event))
-            echo $event;
+            ;//echo $event;
         else
             echo '\nno event';
     }
