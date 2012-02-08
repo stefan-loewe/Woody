@@ -1,17 +1,30 @@
 <?php
 
-echo 'uri: '.$_SERVER['REQUEST_URI'];
+require_once('bootstrap/bootstrap.php');
 
-if(file_exists('result.html'))
-    unlink('result.html');
-//$id = 0xff3;
-//shmop_open($id, "c", 0666, 1024);
-//shmop_write($id, $_SERVER['REQUEST_URI'], 0);
+deleteBuffer();
 
-$fp = fopen('php://stdout', 'w');
-fputs($fp, 'uri: '.$_SERVER['REQUEST_URI']);
+printCurrentUrl();
 
-//while(!file_exists('result.html'))
-  //  sleep(1);
+printBuffer();
 
-echo file_get_contents('result.html');
+function printBuffer() {
+    while(!file_exists(WEB_SERVER_BUFFER)) {
+        sleep(1);
+    }
+
+    echo file_get_contents(WEB_SERVER_BUFFER);
+}
+
+
+function deleteBuffer() {
+    if(file_exists(WEB_SERVER_BUFFER)) {
+        unlink(WEB_SERVER_BUFFER);
+    }
+}
+
+function printCurrentUrl() {
+    $fh = fopen('php://stdout', 'w');
+    fputs($fh, $_SERVER['REQUEST_URI']);
+    fclose($fh);
+}

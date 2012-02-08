@@ -18,30 +18,6 @@ use \Utils\Sockets\ServerSocket;
 
 require_once(realpath(__DIR__.'/bootstrap/bootstrap.php'));
 
-$fh = popen('"C:\Program Files\PHP54\php.exe" -S 127.0.0.1:8009 "D:\workspace\programming\PHP\woody\source\server.php" > server_log.txt', 'r');
-//stream_set_blocking($fh, 0);
-//$fh = popen('start "srv" D:\\workspace\\programming\\PHP\\woody\\source\\run_server.bat', 'r');
-//while(!feof($fh))
-//{
-  //echo fread($fh, 128);
-//}
-
-//$desc = array(1 => array('file', 'server_log.txt', 'a'));
-//$desc = array(
-//   1 => array("pipe", "w")  // STDOUT ist eine Pipe, in die das Child schreibt
-//);
-//$pipes = array();
-
-//$proc = proc_open('D:\\workspace\\programming\\PHP\\woody\\source\\run_server.bat', $desc, $pipes);
-//$proc = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:8009 D:\\workspace\\programming\\PHP\\woody\\source\\server.php', $desc, $pipes);
-
-//$options = array('bypass_shell' => true);
-//proc_open('start "srv" D:\\workspace\\programming\\PHP\\woody\\source\\run_server.bat', $desc, $pipes);
-
-//$id = 0xff3;
-//$data = shmop_read($id, 0, 1024);
-//var_dump($data);
-
 class Handler implements Woody\Event\ActionListener {
     public function actionPerformed($actionEvent) {
         echo PHP_EOL.'hey, you triggered an action on the field with the value '.$this->value;
@@ -85,24 +61,30 @@ class KeyAdapter implements Woody\Event\KeyListener {
             $this->onKeyReleased->__invoke($event);
     }
 }
-if(!TRUE)
+if(TRUE)
 {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
     $win->create();
+    if(TRUE) {
+        $builtInServer = new \Woody\Server\BuiltInWebServer($win, 8009);
+        $builtInServer->run();
 
-    $server = new \Woody\Server\HtmlControlServer($win, 8008);
+        $htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8009?id=3', new Point(50, 50), new Dimension(700, 500));
+        $win->add($htmlControl);
+    } else {
+        $server = new \Woody\Server\HtmlControlServer($win, 8008);
 
-    $server->run(100);
+        $server->run(100);
 
-    $check = new Checkbox(TRUE, new Point(10, 10), new Dimension(20, 20));
-    $win->add($check);
+        $check = new Checkbox(TRUE, new Point(10, 10), new Dimension(20, 20));
+        $win->add($check);
 
-    $htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 100));
-    $win->add($htmlControl);
-    $htmlControl2 = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=4', new Point(50, 200), new Dimension(600, 100));
-    $win->add($htmlControl2);
+        $htmlControl = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=3', new Point(50, 50), new Dimension(600, 100));
+        $win->add($htmlControl);
+        $htmlControl2 = new Woody\Components\Controls\HTMLControl('http://localhost:8008?id=4', new Point(50, 200), new Dimension(600, 100));
+        $win->add($htmlControl2);
 
-    Woody\Event\EventHandler::addEventHandler($htmlControl2,
+        Woody\Event\EventHandler::addEventHandler($htmlControl2,
         function($control, ServerSocket $clientSocket, HttpRequest $httpRequest)
         {
             $keyValuePairs = $httpRequest->getKeyValuePairs();
@@ -117,7 +99,8 @@ if(!TRUE)
                         .($keyValuePairs['id'] + 1).'">+</a>');
         });
 
-    $server->register($htmlControl2);
+        $server->register($htmlControl2);
+    }
 }
 
 else if(!TRUE)
@@ -207,7 +190,7 @@ else if(!TRUE)
     var_dump(" ");
     var_dump($d->ok());
     var_dump($d->cancel());
-} else if(TRUE) {
+} else if(!TRUE) {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(400, 300));
     $win->create();
 
@@ -230,28 +213,7 @@ else if(!TRUE)
                     }));
 }
 
-$timer = new Timer(function() {
-    //echo 'time: '.microtime(true);
-    //echo fread($fh, 128);
-    //echo "\n";
-
-    $log = fopen('server_log.txt', 'r');
-    //echo 'time: '.microtime(true);
-    stream_set_blocking($log, 0);
-    $result = fread($log, 128);
-    fclose($log);
-    if(strlen(trim($result)) > 0)
-        echo $result."\n";
-
-    file_put_contents('result.html', microtime(true).' -> '.$result);
 
 
-}, $win, 1000);
-
-$timer->start();
-var_dump('start app');
 $win->startEventHandler();
-var_dump('stopp app');
-
-pclose($fh);
-var_dump('stopp server');
+$builtInServer->shutdown();
