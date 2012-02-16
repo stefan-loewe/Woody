@@ -18,8 +18,8 @@ spl_autoload_register(array($autoloader, 'autoload'));
 
 function globalWinBinderEventHandler($windowID, $id, $controlID = 0, $type = 0, $property = 0)
 {
-    //var_dump(date('H:i:s').': calling globalWinBinderEventHandler in '.__FILE__.' at line '.__LINE__);
-    //var_dump($windowID.', '.$id.', '.$controlID.', '.$type.', '.$property);
+    var_dump(date('H:i:s').': calling globalWinBinderEventHandler in '.__FILE__.' at line '.__LINE__);
+    var_dump($windowID.', '.$id.', '.$controlID.', '.$type.', '.$property);
 
 
     \Woody\Event\EventFactory::createEvent($windowID, $id, $controlID, $type, $property);

@@ -4,5 +4,5 @@ namespace Woody\Event;
 
 
 interface ActionListener {
-    function actionPerformed($actionEvent);
+    function actionPerformed(ActionEvent $actionEvent);
 }

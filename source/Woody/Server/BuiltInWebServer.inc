@@ -37,7 +37,7 @@ class BuiltInWebServer {
         $pipes       = array();
 
         // bypass_shell is true, so that process can be terminated, and is not "embedded" in cmd.exe process
-        $this->process = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:8009 D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
+        $this->process = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:'.$this->port.' D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
                             $descriptors,
                             $pipes,
                             null,

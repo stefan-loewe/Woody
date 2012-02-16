@@ -19,48 +19,17 @@ use \Utils\Sockets\ServerSocket;
 require_once(realpath(__DIR__.'/bootstrap/bootstrap.php'));
 
 class Handler implements Woody\Event\ActionListener {
-    public function actionPerformed($actionEvent) {
+    public function actionPerformed(Woody\Event\ActionEvent $actionEvent) {
         echo PHP_EOL.'hey, you triggered an action on the field with the value '.$this->value;
     }
 }
 
 class FocusHandler implements Woody\Event\FocusListener {
     public function focusGained(\Woody\Event\FocusEvent $event) {
-        //echo PHP_EOL.'hey, you focus the field with the value '.$event->getFocusGainedComponent()->getValue();
-        $event->getFocusGainedComponent()->setValue('focused');
+        echo PHP_EOL.'hey, you focus the field with the value '.$event->getFocusGainedComponent()->getLabel();
     }
 }
 
-class KeyHandler implements Woody\Event\KeyListener {
-    public function keyPressed(\Woody\Event\KeyEvent $event) {
-        var_dump($event);
-        echo PHP_EOL.'hey, you pressed key '.$event->getPressedKey().' on field with value '.Woody\Components\Component::getControlByID($event->controlID)->getValue();
-    }
-
-    public function keyReleased(\Woody\Event\KeyEvent $event) {
-        echo PHP_EOL.'hey, you released key '.$event->getPressedKey().' on field with value '.Woody\Components\Component::getControlByID($event->controlID)->getValue();
-    }
-}
-
-class KeyAdapter implements Woody\Event\KeyListener {
-    private $onKeyPressed = null;
-    private $onKeyReleased = null;
-
-    public function __construct(callable $onKeyPressed = null, callable $onKeyReleased = null) {
-        $this->onKeyPressed     = $onKeyPressed;
-        $this->onKeyReleased    = $onKeyReleased;
-    }
-
-    public function keyPressed(\Woody\Event\KeyEvent $event) {
-        if($this->onKeyPressed != null)
-            $this->onKeyPressed->__invoke($event);
-    }
-
-    public function keyReleased(\Woody\Event\KeyEvent $event) {
-        if($this->onKeyReleased != null)
-            $this->onKeyReleased->__invoke($event);
-    }
-}
 if(TRUE)
 {
     $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
@@ -200,10 +169,46 @@ else if(!TRUE)
     $win->add($box2);
     //$box1->addActionListener(new Handler());
     $box1->addFocusListener(new FocusHandler());
-    //$box1->addKeyListener(new KeyHandler());
+
     $box1->addKeyListener(
-            new KeyAdapter(
+            new \Woody\Event\KeyAdapter(
                     null, function($ev) {
+                        $currentValue = $ev->getSource()->getValue();
+                        if(strlen($currentValue) > 3) {
+                            $ev->getSource()
+                                    ->setValue(substr($currentValue, 0, 3))
+                                    ->setCursor(3);
+                        }
+                    }));
+}else if(!TRUE) {
+    $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(400, 300));
+    $win->create();
+
+    $button = new Woody\Components\Controls\PushButton('lbl', new Point(10, 35), new Dimension(300, 22));
+    $win->add($button);
+    //$box1->addActionListener(new Handler());
+    $button->addFocusListener(new Woody\Event\FocusAdapter(function(){
+                                                var_dump("FOCUS!!!");}));
+
+
+    $button->addMouseListener(new \Woody\Event\MouseAdapter(function(){
+                                                var_dump("down");}, function(){
+                                                var_dump("up");}));
+
+    $button->addActionListener(new \Woody\Event\ActionAdapter(function(){
+                                                var_dump("ACTION!!!");}));
+
+    $button->addKeyListener(
+            new Woody\Event\KeyAdapter(
+                    function($ev) {
+                        $currentValue = $ev->getSource()->getValue();
+                        if(strlen($currentValue) > 3) {
+                            $ev->getSource()
+                                    ->setValue(substr($currentValue, 0, 3))
+                                    ->setCursor(3);
+                        }
+                    }
+                    , function($ev) {
                         $currentValue = $ev->getSource()->getValue();
                         if(strlen($currentValue) > 3) {
                             $ev->getSource()
@@ -216,4 +221,4 @@ else if(!TRUE)
 
 
 $win->startEventHandler();
-$builtInServer->shutdown();
+//$builtInServer->shutdown();

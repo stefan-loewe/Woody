@@ -8,6 +8,20 @@ class EventFactory {
     private static $previousFocusedWindow = null;
     private static $previousFocusedControl = null;
 
+    /**
+     * identifier for a focus event (WBC_GETFOCUS)
+     *
+     * @var int
+     */
+    private static $FOCUS_EVENT = 0x00001000;
+
+    /**
+     * identifier for a key-up event (WBC_KEYUP)
+     *
+     * @var int
+     */
+    private static $KEY_UP_EVENT = 0x00000800;
+
     public static function createEvent($windowID, $id, $controlID, $typeID, $propertyID) {
 //echo "\ncreate event ..";
         $source = \Woody\Components\Component::getComponentByID($controlID);
@@ -23,8 +37,24 @@ class EventFactory {
             $event = 'TimerEvent';
         }
 
+        else if(self::isFocusEvent($typeID)) {
+            $event = new FocusEvent($windowID, $id, $controlID, $typeID, $propertyID, self::$previousFocusedControl);
+            self::$previousFocusedControl = $source;
+
+            foreach($source->getFocusListeners() as $focusListener) {
+                $focusListener->focusGained($event);
+            }
+        }
+
+
         else if(self::isMouseEvent($typeID)) {
             $event = new MouseEvent($windowID, $id, $controlID, $typeID, $propertyID);
+
+            foreach($source->getMouseListeners() as $mouseListener) {
+                ($typeID === WBC_MOUSEDOWN)
+                    ? $mouseListener->keyPressed($event)
+                    : $mouseListener->keyReleased($event);
+            }
         }
 
         else if(self::isKeyEvent($typeID)) {
@@ -37,28 +67,24 @@ class EventFactory {
             }
         }
 
-        else if(self::isFocusEvent($typeID)) {
-            if(is_a($source, '\Woody\Components\Windows\AbstractWindow')) {
-                if(self::$previousFocusedWindow != null)
-                    echo PHP_EOL.PHP_EOL.'create new kill_focus event for window';
+        // additionally, fire a ActionEvent if appropriate
+        if(self::isControlEvent($id)) {
+            $actionEvent = null;
 
-                echo PHP_EOL.PHP_EOL.'create new focus event for window';
-                self::$previousFocusedWindow = $source;
-            }
-            else if(is_a($source, '\Woody\Components\Controls\Control')) {
-                $event = new FocusEvent($windowID, $id, $controlID, $typeID, $propertyID, self::$previousFocusedControl);
-                self::$previousFocusedControl = $source;
-            }
+            // handled before
+            if(!self::isFocusEvent($typeID))  {
 
-            foreach($source->getFocusListeners() as $focusListener) {
-                $focusListener->focusGained($event);
+                if(/*self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\PushButton) {
+                    $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
+                }
+
+                if($actionEvent !== null) {
+                    foreach($source->getActionListeners() as $actionListener) {
+                        $actionListener->actionPerformed($actionEvent);
+                    }
+                }
             }
         }
-
-        if(isset($event))
-            ;//echo $event;
-        else
-            echo '\nno event';
     }
 
     private static function isWindowCloseEvent($id) {
@@ -73,8 +99,12 @@ class EventFactory {
         return ($typeID === WBC_KEYDOWN) || ($typeID === WBC_KEYUP);
     }
 
+    private static function isKeyUpEvent($typeID) {
+        return ($typeID === self::$KEY_UP_EVENT);
+    }
+
     private static function isFocusEvent($typeID) {
-        return $typeID === WBC_GETFOCUS;
+        return ($typeID === self::$FOCUS_EVENT);
     }
 
     private static function isTimerEvent($windowID, $controlID, $id) {
@@ -83,5 +113,9 @@ class EventFactory {
 
     private static function isWindowEvent($windowID, $controlID) {
         return $windowID == $controlID;
+    }
+
+    private static function isControlEvent($id) {
+        return $id !== 0;
     }
 }

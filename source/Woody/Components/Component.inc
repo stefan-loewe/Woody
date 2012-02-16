@@ -7,7 +7,7 @@ use \Woody\Components\Windows\AbstractWindow;
 use \Woody\Event\ActionListener;
 use \Woody\Event\FocusListener;
 use \Woody\Event\KeyListener;
-use \Woody\Event\MouseEvent;
+use \Woody\Event\MouseListener;
 
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
