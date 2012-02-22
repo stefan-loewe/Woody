@@ -20,10 +20,6 @@ class HtmlControl extends Control {
         $this->type = HTMLControl;
     }
 
-    public function destroy() {
-        //FotoImportApplication::getHTMLControlServer()->unregister($this);
-    }
-
     protected function create(Component $parent) {
         parent::create($parent);
 
@@ -51,9 +47,5 @@ class HtmlControl extends Control {
         wb_set_location($this->controlID, $this->value);
 
         return $this;
-    }
-
-    public function setEventHandler($callback) {
-        //FotoImportApplication::getHTMLControlServer()->register($this, $callback);
     }
 }

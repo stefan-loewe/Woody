@@ -76,7 +76,7 @@ class HtmlControlServer extends Server
     /**
      * @inheritdoc
      *
-     * It reads upto 2048 bytes, packs it into a respective HTTPRequest object, and calls EventHandler::handleEvent().
+     * It reads upto 2048 bytes, packs it into a respective HTTPRequest object, and routes it to all registered HtmlControls.
      */
     protected function processClient(ServerSocket $clientSocket)
     {
@@ -84,12 +84,15 @@ class HtmlControlServer extends Server
 
         Logger::log(Logger::DEBUG, 'client said: '.$message);
 
-        foreach($this->htmlControls as $htmlControl)
-            EventHandler::handleEvent(null,//$htmlControl->getWindow()->getControlID(),
+        foreach($this->htmlControls as $htmlControl) {
+            \Woody\Event\EventFactory::createEvent(
+                    //not public $htmlControl->getWindow()->getControlID(),
+                    null,
                     $htmlControl->getID(),
                     $htmlControl->getControlID(),
                     $clientSocket,
                     $request = HttpRequestFactory::createRequest($message));
+        }
 
         $this->disconnectClient($clientSocket);
     }

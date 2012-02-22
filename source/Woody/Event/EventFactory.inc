@@ -78,6 +78,10 @@ class EventFactory {
                     $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
                 }
 
+                else if (is_a($propertyID, 'Utils\Http\HttpGetRequest')) {
+                    $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
+                }
+
                 if($actionEvent !== null) {
                     foreach($source->getActionListeners() as $actionListener) {
                         $actionListener->actionPerformed($actionEvent);
