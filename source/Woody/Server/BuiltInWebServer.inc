@@ -4,6 +4,7 @@ namespace Woody\Server;
 
 use \Woody\Components\Windows\AbstractWindow;
 use \Woody\Components\Timer\Timer;
+use \Woody\Components\Controls\HtmlControl;
 
 class BuiltInWebServer {
 
@@ -15,11 +16,15 @@ class BuiltInWebServer {
 
     private $timer      = null;
 
+    private $htmlControls   = null;
+
     private static $log = 'server_log.txt';
 
     public function __construct(AbstractWindow $window, $port) {
         $this->window = $window;
         $this->port = $port;
+
+        $this->htmlControls = new \SplObjectStorage();
     }
 
     public function run() {
@@ -66,6 +71,16 @@ class BuiltInWebServer {
                 $src = 'D:\workspace\programming\PHP\woody\source\self.html';
 
             file_put_contents(WEB_SERVER_BUFFER, file_get_contents($src));
+
+            foreach($this->htmlControls as $htmlControl) {
+                \Woody\Event\EventFactory::createEvent(
+                        //not public $htmlControl->getWindow()->getControlID(),
+                        null,
+                        $htmlControl->getID(),
+                        $htmlControl->getControlID(),
+                        $clientSocket,
+                        $request = HttpRequestFactory::createRequest($message));
+            }
         }
     }
 
@@ -79,5 +94,17 @@ class BuiltInWebServer {
         fclose($fileHandle);
 
         return $result;
+    }
+
+    public function register(HtmlControl $control) {
+        $this->htmlControls[$control] = TRUE;
+
+        return $this;
+    }
+
+    public function unregister(HtmlControl $control) {
+        $this->htmlControls->detach($control);
+
+        return $this;
     }
 }
