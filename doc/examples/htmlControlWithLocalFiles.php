@@ -37,57 +37,17 @@ $win->add($htmlControl);
 
 $file = new stdClass();
 $file->name = null;
+$file->content = null;
 
 $cb = function($event) use ($win, $file) {
-
-        $contents = time();
         if($file->name != null)
-            $contents = file_get_contents ($file->name);
+            $file->content = file_get_contents($file->name);
 /*adapt listener to work with built in server
-actually, better write complete new example
-
-maybe try this with AJAX approach !?!?!*/
-
-        $time = '1';
-        $event->type->write(str_repeat($time, 1024));
-
-        /*$event->type->write('HTTP/1.1 200 OK
-Date: Sun, 26 Feb 2012 17:04:30 GMT
-Server: 127.0.0.1:8008
-Content-Type: text/html
-Last-Modified: Tue, 10 Jun 2008 20:10:20 GMT
-ETag: "0:6r0x:484edfac:9b7"
-Accept-Ranges: bytes
-Connection: Keep-Alive
-Content-Length: 2487
-
-<html>
-<head>
-<title>Welcome to Nanoweb !</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-</head>
-<body bgcolor="#608A8E" text="#000000" link="#204A4E" vlink="#204A4E" alink="#204A4E">
-<table bgcolor="#FFFFFF" width="980" align="center" cellspacing="0" cellpadding="0">
-<tr>
-<td width="14"></td>
-<td>
-
-<table width="950" border="0" cellspacing="0" cellpadding="0" align="center">
-<tr><td valign="top"><table align="center" cellspacing="0" cellpadding="0" width="100%">
-<tr><td width="100%" align="left" valign="top">
-</td></tr></table>
-</td></tr></table>
-</td>
-<td width="14"></td>
-</tr>
-<tr height="14">
-<td width="14"></td>
-<td></td>
-<td width="14"></td>
-</tr>
-</table>
-</body>
-</html>');*/
+actually, better write complete new example*/
+$file->content = str_repeat('<img src="test.png">', 1);
+        $event->type->write($file->content);
+/*adapt listener to work with built in server
+actually, better write complete new example*/
     };
 $htmlControl->addActionListener(new \Woody\Event\ActionAdapter($cb));
 
