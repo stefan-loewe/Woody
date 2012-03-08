@@ -40,11 +40,14 @@ $file->name = null;
 $file->content = null;
 
 $cb = function($event) use ($win, $file) {
-        if($file->name != null)
-            $file->content = file_get_contents($file->name);
+        if(strpos($event->property, 'test.png') !== FALSE)
+            $file->content = file_get_contents('D:\workspace\programming\PHP\woody\paypal.jpg');
+        else
+            $file->content = str_repeat('<img src="test.png">', 1);
+
 /*adapt listener to work with built in server
 actually, better write complete new example*/
-$file->content = str_repeat('<img src="test.png">', 1);
+
         $event->type->write($file->content);
 /*adapt listener to work with built in server
 actually, better write complete new example*/

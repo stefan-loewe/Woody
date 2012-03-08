@@ -85,6 +85,15 @@ class HtmlControlServer extends Server
         Logger::log(Logger::DEBUG, 'client said: '.$message);
 
         foreach($this->htmlControls as $htmlControl) {
+            $i = 0;
+            echo "\n".$i++;
+            var_dump($htmlControl->getID());
+            echo "\n".$i++;
+            var_dump($htmlControl->getControlID());
+            echo "\n".$i++;
+            var_dump($clientSocket);
+            echo "\n".$i++;
+            var_dump(HttpRequestFactory::createRequest($message));
             \Woody\Event\EventFactory::createEvent(
                     //not public $htmlControl->getWindow()->getControlID(),
                     null,

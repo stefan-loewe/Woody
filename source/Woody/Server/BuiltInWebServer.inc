@@ -14,23 +14,17 @@ class BuiltInWebServer {
 
     private $window     = null;
 
-    private $timer      = null;
-
-    private $htmlControls   = null;
-
-    private static $log = 'server_log.txt';
+    private $htmlServer = null;
 
     public function __construct(AbstractWindow $window, $port) {
         $this->window = $window;
         $this->port = $port;
-
-        $this->htmlControls = new \SplObjectStorage();
     }
 
     public function run() {
-        $this->startWebServerProcess();
+        //$this->startWebServerProcess();
 
-        $this->startTimer();
+        $this->startHtmlReplyServer();
     }
 
     public function shutdown() {
@@ -38,11 +32,11 @@ class BuiltInWebServer {
     }
 
     private function startWebServerProcess() {
-        $descriptors = array(1 => array('file', self::$log, 'w'));
+        $descriptors = array();
         $pipes       = array();
 
         // bypass_shell is true, so that process can be terminated, and is not "embedded" in cmd.exe process
-        $this->process = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:'.$this->port.' D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
+        $this->process = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:'.$this->port.' -t "C:\\Program Files\\Console" D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
                             $descriptors,
                             $pipes,
                             null,
@@ -50,61 +44,29 @@ class BuiltInWebServer {
                             array('bypass_shell' => true));
     }
 
-    private function startTimer() {
-        $this->timer = new Timer(function() {
-            $this->processClient();
-        }, $this->window, 1000);
-
-        $this->timer->start();
-    }
-
-    private function processClient() {
-        $uri = $this->readLog();
-
-        if(strlen(trim($uri)) > 0) {
-            $uri = trim(str_replace('uri: /?site=', '', $uri));
-
-            exec('"C:\\Program Files\\PHP54\\php.exe" D:\\workspace\\programming\\PHP\\ReingoldTilford\\trunk\\bin\\example_directory_tree_dynamic.php > rt_result.html');
-
-            $src = 'D:\workspace\programming\PHP\woody\source\rt_result.html';
-            //if(mt_rand() % 2 === 1)
-                $src = 'D:\workspace\programming\PHP\woody\source\self.html';
-
-            file_put_contents(WEB_SERVER_BUFFER, file_get_contents($src));
-
-            foreach($this->htmlControls as $htmlControl) {
-                \Woody\Event\EventFactory::createEvent(
-                        //not public $htmlControl->getWindow()->getControlID(),
-                        null,
-                        $htmlControl->getID(),
-                        $htmlControl->getControlID(),
-                        $clientSocket,
-                        $request = HttpRequestFactory::createRequest($message));
-            }
-        }
-    }
-
-    private function readLog() {
-        $fileHandle = fopen(self::$log, 'r');
-        stream_set_blocking($fileHandle, 0);
-        $result = fread($fileHandle, 128);
-        fclose($fileHandle);
-
-        $fileHandle = fopen(self::$log, 'w');
-        fclose($fileHandle);
-
-        return $result;
-    }
-
-    public function register(HtmlControl $control) {
-        $this->htmlControls[$control] = TRUE;
+    public function register(HtmlControl $control)
+    {
+        $this->htmlServer->register($control);
 
         return $this;
     }
 
-    public function unregister(HtmlControl $control) {
-        $this->htmlControls->detach($control);
+    /**
+     * This method unregisters the given HtmlControl.
+     *
+     * @param HtmlControl $control the HtmlControl to be removed
+     * @return HtmlControlServer $this
+     */
+    public function unregister(HtmlControl $control)
+    {
+        $this->htmlServer->unregister($control);
 
         return $this;
+    }
+
+    private function startHtmlReplyServer() {
+        $this->htmlServer = new HtmlControlServer($this->window, 1234);
+
+        $this->htmlServer->run(1000);
     }
 }
