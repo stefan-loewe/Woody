@@ -23,7 +23,7 @@ class EventFactory {
     private static $KEY_UP_EVENT = 0x00000800;
 
     public static function createEvent($windowID, $id, $controlID, $typeID, $propertyID) {
-//echo "\ncreate event ..";
+
         $source = \Woody\Components\Component::getComponentByID($controlID);
 
         // window close button does not have a control, so create a window close event
@@ -45,7 +45,6 @@ class EventFactory {
                 $focusListener->focusGained($event);
             }
         }
-
 
         else if(self::isMouseEvent($typeID)) {
             $event = new MouseEvent($windowID, $id, $controlID, $typeID, $propertyID);
@@ -96,19 +95,21 @@ class EventFactory {
     }
 
     private static function isMouseEvent($typeID) {
-        return ($typeID & WBC_MOUSEDOWN) || ($typeID & WBC_MOUSEUP) || ($typeID === WBC_DBLCLICK);
+        return is_int($typeID)
+            && (($typeID & WBC_MOUSEDOWN) || ($typeID & WBC_MOUSEUP) || ($typeID === WBC_DBLCLICK));
     }
 
     private static function isKeyEvent($typeID) {
-        return ($typeID === WBC_KEYDOWN) || ($typeID === WBC_KEYUP);
+        return is_int($typeID)
+            && (($typeID === WBC_KEYDOWN) || ($typeID === WBC_KEYUP));
     }
 
     private static function isKeyUpEvent($typeID) {
-        return ($typeID === self::$KEY_UP_EVENT);
+        return is_int($typeID) && ($typeID === self::$KEY_UP_EVENT);
     }
 
     private static function isFocusEvent($typeID) {
-        return ($typeID === self::$FOCUS_EVENT);
+        return is_int($typeID) && ($typeID === self::$FOCUS_EVENT);
     }
 
     private static function isTimerEvent($windowID, $controlID, $id) {

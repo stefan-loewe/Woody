@@ -1,51 +1,81 @@
 <?php
 
+use \Woody\App\Application;
+use \Woody\Components\Windows\MainWindow;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
-use \Woody\Components\Windows\MainWindow;
-use \Woody\App\TestApplication;
-
-use \Woody\Components\Timer\Timer;
-
-use \Woody\Components\Controls\Frame;
-use \Woody\Components\Controls\EditBox;
-use \Woody\Components\Controls\Checkbox;
-
-use \Woody\Util\ImageResource;
-
-use \Utils\Http\HttpRequest;
-use \Utils\Sockets\ServerSocket;
+use \Woody\Event\ActionEvent;
+use \Woody\Components\Controls\HTMLControl;
+use \Woody\Event\ActionAdapter;
+use \Woody\Components\Controls\PushButton;
+use \Woody\Server\BuiltInWebServer;
 
 require_once(realpath(__DIR__.'../../../source/bootstrap/bootstrap.php'));
 
-$win = new MainWindow('built-in-webserver', new Point(50, 50), new Dimension(800, 500));
-$win->create();
+class HTMLControlDemoBuiltInWebServer extends Application {
 
+    /**
+     * the BuiltInWebServer this application uses to server and interact with content
+     *
+     * @var BuiltInWebServer
+     */
+    private $server = null;
 
-$server = new \Woody\Server\BuiltInWebServer($win, 5555);
-$server->run();
+    private $port   = null;
 
-$htmlControl = new Woody\Components\Controls\HTMLControl('http://127.0.0.1:5555', new Point(50, 50), new Dimension(600, 300));
-$server->register($htmlControl);
-$win->add($htmlControl);
+    public function __construct($port) {
+        parent::__construct();
 
-$file = new stdClass();
-$file->name = null;
-$file->content = null;
-$cb = function($event) use ($win, $file) {
-        $file->content = str_repeat('<h1>header, large</h1>
-            <br>followed by an image ...
-            <br><img src="A1.png">', 1);
-        $event->type->write($file->content);
-    };
-$htmlControl->addActionListener(new \Woody\Event\ActionAdapter($cb));
+        Utils\Logging\Logger::setLogLevel(Utils\Logging\Logger::OFF);
 
-$bntRefresh = new \Woody\Components\Controls\PushButton("refresh", new Point(170, 370), new Dimension(100, 22));
-$bntRefresh->addActionListener(new \Woody\Event\ActionAdapter(function() use ($htmlControl) {
-    $htmlControl->setUrl('http://127.0.0.1:5555/jsdbdljbjsdfs.php?t='.time());
-}));
-$win->add($bntRefresh);
+        $this->port         = $port;
 
-$win->startEventHandler();
+        $this->window       = new MainWindow('built-in-webserver', new Point(50, 50), new Dimension(800, 500));
+        $this->window->create();
 
-$server->shutdown();
+        $this->htmlControl  = new HTMLControl('http://127.0.0.1:'.$this->port, new Point(50, 50), new Dimension(600, 300));
+        $this->htmlControl->addActionListener(new ActionAdapter($this->getHtmlControlCallback()));
+        $this->window->add($this->htmlControl);
+
+        $this->btnRefresh   = new PushButton("refresh", new Point(170, 370), new Dimension(100, 22));
+        $this->btnRefresh->addActionListener(new ActionAdapter($this->getBtnRefreshCallback()));
+        $this->window->add($this->btnRefresh);
+    }
+
+    private function getHtmlControlCallback() {
+        return function(ActionEvent $event) {
+
+                    $keyValuePairs = $event->property->getKeyValuePairs();
+
+                    $content = '<h1>header, large</h1>
+                                <br>time = '.$keyValuePairs['time'].'
+                                <br>followed by an image ...
+                                <br><img src="A1.png">';
+                    $event->type->write($content);
+                };
+    }
+
+    private function getBtnRefreshCallback() {
+        return function() {
+            $this->htmlControl->setUrl('http://127.0.0.1:'.$this->port.'?time='.time());
+        };
+    }
+
+    public function start() {
+        $this->server = new BuiltInWebServer($this->window,
+                                                            $this->port,
+                                                            __DIR__.'\\www');
+        $this->server->start()
+                     ->register($this->htmlControl);
+
+        $this->window->startEventHandler();
+    }
+
+    public function stop() {
+        $this->server->stop();
+    }
+}
+
+$app = new HTMLControlDemoBuiltInWebServer(5555);
+$app->start();
+$app->stop();

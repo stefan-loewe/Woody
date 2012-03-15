@@ -2,8 +2,7 @@
 
 namespace Woody\App;
 
-class Application
-{
+abstract class Application {
     /**
      * the main window of the application
      *
@@ -11,7 +10,10 @@ class Application
      */
     protected $window = null;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
+
+    abstract public function start();
+
+    abstract public function stop();
 }

@@ -7,8 +7,7 @@ use \Woody\Components\Timer\Timer;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class TestApplication extends Application
-{
+class TestApplication extends Application {
     /**
      * the interval for the shutdown timer
      */
@@ -31,14 +30,11 @@ class TestApplication extends Application
     /**
      * This method acts as the constructor of the class.
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->window           = new MainWindow('TestApp', new Point(50, 50), new Dimension(300, 200));
 
-        $this->shutdownTimer    = new Timer(function()
-                                    {
-                                        if(!$this->isRunning)
-                                        {
+        $this->shutdownTimer    = new Timer(function() {
+                                        if(!$this->isRunning) {
                                             $this->shutdownTimer->destroy();
 
                                             $this->window->destroy();
@@ -55,8 +51,7 @@ class TestApplication extends Application
      *
      * @return \Woody\Components\Windows\AbstractWindow
      */
-    public function getWindow()
-    {
+    public function getWindow() {
         return $this->window;
     }
 
@@ -65,8 +60,7 @@ class TestApplication extends Application
      *
      * @return \Woody\App\TestApplication $this
      */
-    public function start()
-    {
+    public function start() {
         $this->isRunning = TRUE;
 
         $this->window->startEventHandler();
@@ -81,8 +75,7 @@ class TestApplication extends Application
      *
      * @return \Woody\App\TestApplication $this
      */
-    public function stop()
-    {
+    public function stop() {
         $this->isRunning = FALSE;
     }
 }

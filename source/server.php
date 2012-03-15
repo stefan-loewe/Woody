@@ -4,9 +4,9 @@ require_once('bootstrap/bootstrap.php');
 
 $requestUri = $_SERVER["REQUEST_URI"];
 
-$fh = fopen('php://stdout', 'w');
-fputs($fh, "\n\nrequest to: ".$requestUri);
-fclose($fh);
+//$fh = fopen('php://stdout', 'w');
+//fputs($fh, "\n\nrequest to: ".$requestUri);
+//fclose($fh);
 
 // serve the requested resource as-is
 if(preg_match('/\.(?:png|jpg|jpeg|gif)$/', $requestUri)) {

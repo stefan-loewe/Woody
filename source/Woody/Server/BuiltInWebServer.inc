@@ -7,28 +7,34 @@ use \Woody\Components\Timer\Timer;
 use \Woody\Components\Controls\HtmlControl;
 
 class BuiltInWebServer {
+    private $window         = null;
 
-    private $port       = 0;
+    private $port           = 0;
 
-    private $process    = null;
+    private $htmlServer     = null;
 
-    private $window     = null;
+    private $process        = null;
 
-    private $htmlServer = null;
+    private $documentRoot   = null;
 
-    public function __construct(AbstractWindow $window, $port) {
-        $this->window = $window;
-        $this->port = $port;
+    public function __construct(AbstractWindow $window, $port, $documentRoot) {
+        $this->window       = $window;
+        $this->port         = $port;
+        $this->documentRoot = $documentRoot;
     }
 
-    public function run() {
-        //$this->startWebServerProcess();
+    public function start() {
+        $this->startWebServerProcess();
 
         $this->startHtmlReplyServer();
+
+        return $this;
     }
 
-    public function shutdown() {
+    public function stop() {
         proc_terminate($this->process);
+
+        return $this;
     }
 
     private function startWebServerProcess() {
@@ -36,7 +42,7 @@ class BuiltInWebServer {
         $pipes       = array();
 
         // bypass_shell is true, so that process can be terminated, and is not "embedded" in cmd.exe process
-        $this->process = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:'.$this->port.' -t "C:\\Program Files\\Console" D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
+        $this->process = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:'.$this->port.' -t "'.$this->documentRoot.'" D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
                             $descriptors,
                             $pipes,
                             null,
@@ -67,6 +73,6 @@ class BuiltInWebServer {
     private function startHtmlReplyServer() {
         $this->htmlServer = new HtmlControlServer($this->window, 1234);
 
-        $this->htmlServer->run(1000);
+        $this->htmlServer->start(100);
     }
 }
