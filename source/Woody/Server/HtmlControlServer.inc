@@ -80,14 +80,13 @@ class HtmlControlServer extends Server {
         Logger::log(Logger::DEBUG, 'client said: '.$message);
 
         foreach($this->htmlControls as $htmlControl) {
-            var_dump('... creating event ...');
             \Woody\Event\EventFactory::createEvent(
                     //not public $htmlControl->getWindow()->getControlID(),
                     null,
                     $htmlControl->getID(),
                     $htmlControl->getControlID(),
                     $clientSocket,
-                    $request = HttpRequestFactory::createRequest($message));
+                    HttpRequestFactory::createRequest($message));
         }
 
         $this->disconnectClient($clientSocket);

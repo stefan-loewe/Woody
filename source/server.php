@@ -13,8 +13,16 @@ if(preg_match('/\.(?:png|jpg|jpeg|gif)$/', $requestUri)) {
     return false;
 }
 
+// serve the requested resource as-is
+else if(preg_match('/\.(?:php)$/', $requestUri)) {
+    return false;
+}
+
 else if($_SERVER['REQUEST_URI'] === '/') {
-    echo "ROOT\n";
+    foreach(glob($_SERVER['DOCUMENT_ROOT'].'\*') as $entry) {
+        $filename = substr($entry, strrpos($entry, '\\') + 1);
+        echo '<br><a href="'.$filename.'">'.$filename.'</a>';
+    }
     return;
 }
 

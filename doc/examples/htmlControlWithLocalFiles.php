@@ -18,12 +18,19 @@ class HTMLControlDemo extends Application {
      *
      * @var BuiltInWebServer
      */
-    private $server = null;
+    private $server         = null;
 
     /**
      * the port on which the internal server listens
      */
-    private $port   = null;
+    private $port           = null;
+
+    /**
+     * a file name, used for demonstration purpose, only
+     *
+     * @var string
+     */
+    private $selectedFile   = null;
 
     public function __construct($port) {
         parent::__construct();
@@ -40,9 +47,13 @@ class HTMLControlDemo extends Application {
         $this->editArea     = new Woody\Components\Controls\EditArea('', new Point(450, 50), new Dimension(300, 300));
         $this->window->add($this->editArea);
 
-        $this->btnRefresh   = new PushButton("refresh", new Point(170, 370), new Dimension(100, 22));
+        $this->btnRefresh   = new PushButton("refresh", new Point(50, 370), new Dimension(150, 22));
         $this->btnRefresh->addActionListener(new ActionAdapter($this->getBtnRefreshCallback()));
         $this->window->add($this->btnRefresh);
+
+        $this->btnBrowse    = new PushButton("browse ...", new Point(220, 370), new Dimension(150, 22));
+        $this->btnBrowse->addActionListener(new ActionAdapter($this->getBtnBrowseCallback()));
+        $this->window->add($this->btnBrowse);
     }
 
     private function getHtmlControlCallback() {
@@ -86,7 +97,12 @@ class HTMLControlDemo extends Application {
                                                     <img src="woody.png" alt="woody logo"/>
                                                 </div>
                                                 <div>
-                                                    this site was generated at '.date('d.m.Y H:i:s').'
+                                                    this site was requested on '.date('d.m.Y \a\t H:i:s', isset($keyValuePairs['time']) ? $keyValuePairs['time'] : time()).'
+                                                    <br>
+                                                    this site was generated on '.date('d.m.Y \a\t H:i:s').'
+                                                    <br>
+                                                    name of selected file: '.($this->selectedFile == null ? 'none selected' : '"'.$this->selectedFile.'"').'
+                                                    <br>contents: '.($this->selectedFile == null ? 'none selected' : '<br><div style="position:relative;border:solid 1px black; overflow:scroll; width:100%; height:200px;">'.file_get_contents($this->selectedFile)).'</div>
                                                 </div>
                                             </body>
                                         </html>';
@@ -99,6 +115,14 @@ class HTMLControlDemo extends Application {
     private function getBtnRefreshCallback() {
         return function() {
             $this->htmlControl->setUrl('http://127.0.0.1:'.$this->port.'?time='.time());
+        };
+    }
+
+    private function getBtnBrowseCallback() {
+        return function() {
+            $this->selectedFile = trim(wb_sys_dlg_open($this->window->getControlID(), 'please select a file', null, __DIR__, null));
+
+            $this->htmlControl->setUrl('http://127.0.0.1:'.$this->port);
         };
     }
 
