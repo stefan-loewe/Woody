@@ -20,7 +20,7 @@ abstract class PopUpDialog {
     protected $text     = null;
 
     /**
-     * the window the dialog belongs to, maybe null
+     * the window the dialog belongs to, may be null
      *
      * @var \Woody\Components\Windows\AbstractWindow
      */

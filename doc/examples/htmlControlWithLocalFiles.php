@@ -8,6 +8,7 @@ use \Woody\Event\ActionEvent;
 use \Woody\Components\Controls\HTMLControl;
 use \Woody\Event\ActionAdapter;
 use \Woody\Components\Controls\PushButton;
+use \Woody\Dialog\FileSystem\FileOpenDialog;
 
 require_once(realpath(__DIR__.'../../../source/bootstrap/bootstrap.php'));
 
@@ -72,7 +73,8 @@ class HTMLControlDemo extends Application {
                             $this->editArea->setValue(urldecode($keyValuePairs['eventData']));
                         }
                         else {
-                            $content = '<html>
+                            $content = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+                                        <html>
                                             <head>
                                                 <title>
                                                     Woody - interactive HTMLControl
@@ -120,8 +122,17 @@ class HTMLControlDemo extends Application {
 
     private function getBtnBrowseCallback() {
         return function() {
-            $this->selectedFile = trim(wb_sys_dlg_open($this->window->getControlID(), 'please select a file', null, __DIR__, null));
-
+            mAKE THIS OOP TO HIDE THE ARAAY OF ARRAY STUFF
+            THIS IS A LIST OF KEY VALUE PAIRS ::: NOTHING ELSE
+            $file_filter = array(
+                array("PHP source code",    "*.php?"),
+                array("Web page",           "*.htm?"),
+                array("Text document",      "*.txt"),
+                array("All files",          "*.*")
+            );
+            $fileOpenDialog = new FileOpenDialog('please select a file to include', $this->window, __DIR__, $file_filter);
+            $fileOpenDialog->open();
+            $this->selectedFile = $fileOpenDialog->getSelection();
             $this->htmlControl->setUrl('http://127.0.0.1:'.$this->port);
         };
     }
@@ -144,3 +155,4 @@ class HTMLControlDemo extends Application {
 $app = new HTMLControlDemo(5556);
 $app->start();
 $app->stop();
+//add grid-layout(managers)
