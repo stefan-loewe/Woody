@@ -9,6 +9,7 @@ use \Woody\Components\Controls\HTMLControl;
 use \Woody\Event\ActionAdapter;
 use \Woody\Components\Controls\PushButton;
 use \Woody\Dialog\FileSystem\FileOpenDialog;
+use \Woody\Dialog\FileSystem\FileFilters;
 
 require_once(realpath(__DIR__.'../../../source/bootstrap/bootstrap.php'));
 
@@ -122,15 +123,13 @@ class HTMLControlDemo extends Application {
 
     private function getBtnBrowseCallback() {
         return function() {
-            mAKE THIS OOP TO HIDE THE ARAAY OF ARRAY STUFF
-            THIS IS A LIST OF KEY VALUE PAIRS ::: NOTHING ELSE
-            $file_filter = array(
-                array("PHP source code",    "*.php?"),
-                array("Web page",           "*.htm?"),
-                array("Text document",      "*.txt"),
-                array("All files",          "*.*")
-            );
-            $fileOpenDialog = new FileOpenDialog('please select a file to include', $this->window, __DIR__, $file_filter);
+            $fileFilters = new FileFilters();
+            $fileFilters->add("PHP source code", "*.php?")
+                ->add("Web page", "*.htm?")
+                ->add("Text document", "*.txt")
+                ->add("All files", "*.*");
+
+            $fileOpenDialog = new FileOpenDialog('please select a file to include', $this->window, __DIR__, $fileFilters);
             $fileOpenDialog->open();
             $this->selectedFile = $fileOpenDialog->getSelection();
             $this->htmlControl->setUrl('http://127.0.0.1:'.$this->port);

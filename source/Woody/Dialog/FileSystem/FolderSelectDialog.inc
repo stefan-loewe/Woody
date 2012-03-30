@@ -7,8 +7,6 @@ use \Woody\Components\Windows\AbstractWindow;
 class FolderSelectDialog extends FileSystemDialog {
 
     private $path       = null;
-    private $filename   = null;
-    private $filter     = null;
 
     /**
      * This method acts as the constructor of the class.

@@ -5,7 +5,9 @@ namespace Woody\Dialog\FileSystem;
 use \Woody\Components\Windows\AbstractWindow;
 
 class FileOpenDialog extends FileSystemDialog {
-
+    /**
+     * the default path which to open
+     */
     private $path       = null;
 
     /**
@@ -14,20 +16,17 @@ class FileOpenDialog extends FileSystemDialog {
     public function __construct($title,
                                 AbstractWindow $parentWindow = null,
                                 $path = null,
-                                $filename = null,
-                                $filter = array()) {
+                                FileFilters $filters = null) {
         parent::__construct($title, $parentWindow);
         $this->path     = $path;
-        $this->filename = $filename;
-        $this->filter   = $filter;
+        $this->filters  = $filters;
     }
 
     function open() {
         $this->selection = wb_sys_dlg_open($this->window->getControlID(),
                                             $this->title,
-                                            $this->filter,
-                                            $this->path,
-                                            $this->filename);
+                                            $this->filters === null ? '' : $this->filters->toArray(),
+                                            $this->path);
     }
 
     function getSelection() {
