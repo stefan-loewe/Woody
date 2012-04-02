@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Dialog\PopUp;
+namespace Woody\Dialog\Notification;
 
 use \Woody\Components\Windows\AbstractWindow;
 
