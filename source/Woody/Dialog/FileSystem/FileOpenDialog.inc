@@ -6,9 +6,11 @@ use \Woody\Components\Windows\AbstractWindow;
 
 class FileOpenDialog extends FileSystemDialog {
     /**
-     * the default path which to open
+     * the collection of file filters for this dialog
+     *
+     * @var \Woody\Dialog\FileSystem\FileFilters
      */
-    private $path       = null;
+    protected $filters = null;
 
     /**
      * This method acts as the constructor of the class.
@@ -17,21 +19,16 @@ class FileOpenDialog extends FileSystemDialog {
                                 AbstractWindow $parentWindow = null,
                                 $path = null,
                                 FileFilters $filters = null) {
-        parent::__construct($title, $parentWindow);
-        $this->path     = $path;
-        $this->filters  = $filters;
+        parent::__construct($title, $parentWindow, $path);
+        $this->filters = $filters;
     }
 
     function open() {
-        $this->selection = wb_sys_dlg_open($this->window->getControlID(),
-                                            $this->title,
-                                            $this->filters === null ? '' : $this->filters->toArray(),
-                                            $this->path);
-    }
-
-    function getSelection() {
-        $this->selection = trim($this->selection);
-
-        return (strlen($this->selection) === 0) ? null : $this->selection;
+        $this->selection[0] = wb_sys_dlg_open($this->window === null ? null : $this->window->getControlID(),
+                                                $this->title,
+                                                $this->filters === null ? '' : $this->filters->toArray(),
+                                                $this->path,
+                                                null,
+                                                null);
     }
 }

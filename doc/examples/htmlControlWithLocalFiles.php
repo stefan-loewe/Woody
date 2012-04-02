@@ -9,6 +9,7 @@ use \Woody\Components\Controls\HTMLControl;
 use \Woody\Event\ActionAdapter;
 use \Woody\Components\Controls\PushButton;
 use \Woody\Dialog\FileSystem\FileOpenDialog;
+use \Woody\Dialog\FileSystem\MultiFileOpenDialog;
 use \Woody\Dialog\FileSystem\FileFilters;
 
 require_once(realpath(__DIR__.'../../../source/bootstrap/bootstrap.php'));
@@ -129,7 +130,9 @@ class HTMLControlDemo extends Application {
                 ->add("Text document", "*.txt")
                 ->add("All files", "*.*");
 
-            $fileOpenDialog = new FileOpenDialog('please select a file to include', $this->window, __DIR__, $fileFilters);
+            $fileOpenDialog = new MultiFileOpenDialog();
+            //$fileOpenDialog = new FileOpenDialog('please select a file to include', $this->window, __DIR__.'\\', $fileFilters);
+
             $fileOpenDialog->open();
             $this->selectedFile = $fileOpenDialog->getSelection();
             $this->htmlControl->setUrl('http://127.0.0.1:'.$this->port);
