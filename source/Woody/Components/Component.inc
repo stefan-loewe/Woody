@@ -12,7 +12,7 @@ use \Woody\Event\MouseListener;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-use Woody\System\System;
+use Woody\System\WindowConstraints;
 
 /**
  * Description of Component
@@ -218,8 +218,8 @@ abstract class Component implements IComponent {
      * @todo this is different for windows & controls
      */
     protected function move(Point $topLeftCorner) {
-        $x = max(System::WIN_MIN_TOP, $topLeftCorner->x);
-        $y = max(System::WIN_MIN_LEFT, $topLeftCorner->y);
+        $x = max(WindowConstraints::WIN_MIN_TOP, $topLeftCorner->x);
+        $y = max(WindowConstraints::WIN_MIN_LEFT, $topLeftCorner->y);
 
         wb_set_position($this->controlID, $x, $y);
 
