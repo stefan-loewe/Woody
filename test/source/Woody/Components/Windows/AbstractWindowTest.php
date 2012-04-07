@@ -101,7 +101,7 @@ usleep($this->delay);
         $this->assertEquals(WindowConstraints::getInstance()->minWidth, $this->object->getDimension()->width);
         $this->assertEquals(WindowConstraints::getInstance()->minHeight, $this->object->getDimension()->height);
 usleep($this->delay);
-        $this->object->resizeBy(new Dimension(177, 166));
+        $this->object->resizeBy(new Dimension(168, 166));
         $this->assertEquals(300, $this->object->getDimension()->width);
         $this->assertEquals(204, $this->object->getDimension()->height);
     }
