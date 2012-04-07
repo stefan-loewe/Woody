@@ -6,7 +6,7 @@ use \Woody\Components\Component;
 use \Woody\Components\Container;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
-use \Woody\System\System;
+use \Woody\System\WindowConstraints;
 
 abstract class AbstractWindow extends Component implements Container {
     /**
@@ -78,7 +78,7 @@ abstract class AbstractWindow extends Component implements Container {
     }
 
     protected function resize(Dimension $dimension) {
-        $dimension  = \Woody\System\WindowConstraints::getInstance()->sanatize($dimension);
+        $dimension  = WindowConstraints::getInstance()->sanatize($dimension);
         $width      = $dimension->width;
         $height     = $dimension->height;
 
