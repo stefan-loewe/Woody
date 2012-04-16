@@ -61,6 +61,8 @@
   <exec executable="phploc.bat">
    <arg value="--log-csv" />
    <arg value="${basedir}/build/logs/phploc.csv" />
+   <arg value="--suffixes" />
+   <arg value="php,inc" />
    <arg path="${basedir}/source" />
   </exec>
  </target>
@@ -71,6 +73,7 @@
    <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
    <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
    <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
+   <arg value="--suffix=php,inc" />
    <arg path="${basedir}/source" />
   </exec>
  </target>
@@ -81,6 +84,8 @@
    <arg path="${basedir}/source" />
    <arg value="text" />
    <arg value="${basedir}/build/phpmd.xml" />
+   <arg value="--suffixes" />
+   <arg value="php,inc" />
   </exec>
  </target>
 
@@ -92,6 +97,8 @@
    <arg value="${basedir}/build/phpmd.xml" />
    <arg value="--reportfile" />
    <arg value="${basedir}/build/logs/pmd.xml" />
+   <arg value="--suffixes" />
+   <arg value="php,inc" />
   </exec>
  </target>
 
