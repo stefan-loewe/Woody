@@ -52,7 +52,7 @@ class HtmlControlTest extends \PHPUnit_Framework_TestCase {
     /**
      * This method tests getting the URL of the html control.
      *
-     * @covers \Woody\Components\Controls\Timer::setUrl
+     * @covers \Woody\Components\Controls\HtmlControl::getUrl
      */
     public function testGetUrl()
     {
@@ -72,7 +72,7 @@ class HtmlControlTest extends \PHPUnit_Framework_TestCase {
     /**
      * This method tests setting the URL of the html control.
      *
-     * @covers \Woody\Components\Controls\Timer::setUrl
+     * @covers \Woody\Components\Controls\HtmlControl::setUrl
      */
     public function testSetUrl() {
         $this->timer = new Timer(function()

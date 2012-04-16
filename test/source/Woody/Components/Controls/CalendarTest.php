@@ -51,7 +51,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
     /**
      * This method tests retrieving the timestamp from the calendar.
      *
-     * @covers \Woody\Components\Controls\Calendar::getTimestamp
+     * @covers \Woody\Components\Controls\Calendar::getDate
      */
     public function testGetTimestamp()
     {
@@ -72,7 +72,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase
     /**
      * This method tests setting the timestamp from the calendar.
      *
-     * @covers \Woody\Components\Controls\Calendar::setTimestamp
+     * @covers \Woody\Components\Controls\Calendar::setDate
      */
     public function testSetTimestamp()
     {

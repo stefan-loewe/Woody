@@ -48,8 +48,8 @@ class ScrollBarTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers \Woody\Components\Controls\Slider::getOffset
-     * @covers \Woody\Components\Controls\Slider::setOffset
+     * @covers \Woody\Components\Controls\ScrollBar::getOffset
+     * @covers \Woody\Components\Controls\ScrollBar::setOffset
      */
     public function testGetSetScrollOffset() {
         $this->timer = new Timer(function() {
