@@ -83,7 +83,7 @@
   <exec executable="phpmd.bat">
    <arg path="${basedir}/source" />
    <arg value="text" />
-   <arg value="${basedir}/build/phpmd.xml" />
+   <arg value="${basedir}/phpmd.xml" />
    <arg value="--suffixes" />
    <arg value="php,inc" />
   </exec>
@@ -94,7 +94,7 @@
   <exec executable="phpmd.bat">
    <arg path="${basedir}/source" />
    <arg value="xml" />
-   <arg value="${basedir}/build/phpmd.xml" />
+   <arg value="${basedir}/phpmd.xml" />
    <arg value="--reportfile" />
    <arg value="${basedir}/build/logs/pmd.xml" />
    <arg value="--suffixes" />
@@ -104,8 +104,8 @@
 
  <target name="phpcs"
          description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
-  <exec executable="phpcs">
-   <arg value="--standard=${basedir}/build/phpcs.xml" />
+  <exec executable="phpcs.bat">
+   <arg value="--standard=${basedir}/phpcs.xml" />
    <arg path="${basedir}/source" />
   </exec>
  </target>
@@ -115,7 +115,7 @@
   <exec executable="phpcs.bat" output="nul">
    <arg value="--report=checkstyle" />
    <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
-   <arg value="--standard=${basedir}/build/phpcs.xml" />
+   <arg value="--standard=${basedir}/phpcs.xml" />
    <arg path="${basedir}/source" />
   </exec>
  </target>
@@ -132,7 +132,7 @@
 
  <target name="phpdoc"
          description="Generate API documentation using PHPDocumentor">
-  <exec executable="phpdoc">
+  <exec executable="docblox.bat">
    <arg value="--directory" />
    <arg path="${basedir}/source" />
    <arg value="--target" />
