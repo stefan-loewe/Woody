@@ -42,7 +42,7 @@
   <apply executable="php" failonerror="true">
    <arg value="-l" />
 
-   <fileset dir="${basedir}/source">
+   <fileset dir="${basedir}/source/Woody">
     <include name="**/*.inc" />
     <modified />
    </fileset>
@@ -60,7 +60,7 @@
    <arg value="${basedir}/build/logs/phploc.csv" />
    <arg value="--suffixes" />
    <arg value="php,inc" />
-   <arg path="${basedir}/source" />
+   <arg path="${basedir}/source/Woody" />
   </exec>
  </target>
 
@@ -71,14 +71,14 @@
    <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
    <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
    <arg value="--suffix=php,inc" />
-   <arg path="${basedir}/source" />
+   <arg path="${basedir}/source/Woody" />
   </exec>
  </target>
 
  <target name="phpmd"
          description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="phpmd.bat">
-   <arg path="${basedir}/source" />
+   <arg path="${basedir}/source/Woody" />
    <arg value="text" />
    <arg value="${basedir}/phpmd.xml" />
    <arg value="--suffixes" />
@@ -89,7 +89,7 @@
  <target name="phpmd-ci"
          description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
   <exec executable="phpmd.bat">
-   <arg path="${basedir}/source" />
+   <arg path="${basedir}/source/Woody" />
    <arg value="xml" />
    <arg value="${basedir}/phpmd.xml" />
    <arg value="--reportfile" />
@@ -103,7 +103,7 @@
          description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="phpcs.bat">
    <arg value="--standard=${basedir}/phpcs.xml" />
-   <arg path="${basedir}/source" />
+   <arg path="${basedir}/source/Woody" />
   </exec>
  </target>
 
@@ -113,7 +113,7 @@
    <arg value="--report=checkstyle" />
    <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
    <arg value="--standard=${basedir}/phpcs.xml" />
-   <arg path="${basedir}/source" />
+   <arg path="${basedir}/source/Woody" />
   </exec>
  </target>
 
@@ -123,7 +123,7 @@
    <arg value="${basedir}/build/logs/pmd-cpd.xml" />
    <arg value="--suffixes" />
    <arg value="php,inc" />
-   <arg path="${basedir}/source" />
+   <arg path="${basedir}/source/Woody" />
   </exec>
  </target>
 
@@ -131,7 +131,7 @@
          description="Generate API documentation using PHPDocumentor">
   <exec executable="docblox.bat">
    <arg value="--directory" />
-   <arg path="${basedir}/source" />
+   <arg path="${basedir}/source/Woody" />
    <arg value="--target" />
    <arg path="${basedir}/build/api" />
   </exec>
@@ -147,7 +147,7 @@
    <arg value="--log" />
    <arg path="${basedir}/build/logs" />
    <arg value="--source" />
-   <arg path="${basedir}/source" />
+   <arg path="${basedir}/source/Woody" />
    <arg value="--output" />
    <arg path="${basedir}/build/code-browser" />
   </exec>
