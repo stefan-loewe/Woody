@@ -46,6 +46,11 @@ class Timer {
     private static $timers  = array();
 
     /**
+     * timeout used for scheduling callbacks for unit tests
+     */
+    const TEST_TIMEOUT      = 100;
+
+    /**
      * This method acts as the constructor of the timer.
      *
      * @param \Closure $callback the callback that is executed once the timer is activated

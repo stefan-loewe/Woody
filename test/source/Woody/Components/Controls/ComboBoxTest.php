@@ -16,12 +16,12 @@ require_once 'ListControlTest.php';
  */
 class ComboBoxTest extends ListControlTest {
 
-    /**
-     * This method returns the object under test to be used in the parent test case class.
-     *
-     * @return ComboBox the object under test
-     */
-    protected function getObjectUnderTest() {
-        return new ComboBox(new Point(20, 20), new Dimension(80, 200));
-    }
+  /**
+   * This method returns the object under test to be used in the parent test case class.
+   *
+   * @return ComboBox the object under test
+   */
+  protected function getObjectUnderTest() {
+    return new ComboBox(new Point(20, 20), new Dimension(80, 200));
+  }
 }

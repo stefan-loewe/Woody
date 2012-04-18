@@ -13,57 +13,57 @@ use \Utils\Geom\Dimension;
  */
 class PushButtonTest extends \PHPUnit_Framework_TestCase {
 
-    /**
-     * the push button to test
-     *
-     * @var \Woody\Components\Controls\PushButton
-     */
-    private $pushButton     = null;
+  /**
+   * the push button to test
+   *
+   * @var \Woody\Components\Controls\PushButton
+   */
+  private $pushButton = null;
 
-    /**
-     * the test application
-     *
-     * @var \Woody\App\TestApplication
-     */
-    private $application    = false;
+  /**
+   * the test application
+   *
+   * @var \Woody\App\TestApplication
+   */
+  private $application = false;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp() {
-        $this->application  = new TestApplication();
+  /**
+   * Sets up the fixture, for example, opens a network connection.
+   * This method is called before a test is executed.
+   */
+  protected function setUp() {
+    $this->application = new TestApplication();
 
-        $this->pushButton   = new PushButton('buttonLabel', new Point(20, 20), new Dimension(80, 20));
+    $this->pushButton = new PushButton('buttonLabel', new Point(20, 20), new Dimension(80, 20));
 
-        $this->application->getWindow()->add($this->pushButton);
-    }
+    $this->application->getWindow()->add($this->pushButton);
+  }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown() {
+  /**
+   * Tears down the fixture, for example, closes a network connection.
+   * This method is called after a test is executed.
+   */
+  protected function tearDown() {
 
-    }
+  }
 
-    /**
-     * @covers \Woody\Components\Controls\PushButton::getLabel
-     * @covers \Woody\Components\Controls\PushButton::setLabel
-     */
-    public function testGetSetLabel() {
-        $this->timer = new Timer(function() {
-                            $this->assertEquals('buttonLabel', $this->pushButton->getLabel());
+  /**
+   * @covers \Woody\Components\Controls\PushButton::getLabel
+   * @covers \Woody\Components\Controls\PushButton::setLabel
+   */
+  public function testGetSetLabel() {
+    $this->timer = new Timer(function() {
+                              $this->assertEquals('buttonLabel', $this->pushButton->getLabel());
 
-                            $this->pushButton->setLabel('pushButtonNew');
-                            $this->assertEquals('pushButtonNew', $this->pushButton->getLabel());
+                              $this->pushButton->setLabel('pushButtonNew');
+                              $this->assertEquals('pushButtonNew', $this->pushButton->getLabel());
 
-                            $this->timer->destroy();
-                            $this->application->stop();
-                        }, $this->application->getWindow(), 100);
+                              $this->timer->destroy();
+                              $this->application->stop();
+                            }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-        $this->timer->start($this->application->getWindow());
+    $this->timer->start($this->application->getWindow());
 
-        $this->application->start();
-    }
+    $this->application->start();
+  }
 }

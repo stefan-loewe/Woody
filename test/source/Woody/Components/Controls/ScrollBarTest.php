@@ -13,77 +13,77 @@ use \Utils\Geom\Dimension;
  */
 class ScrollBarTest extends \PHPUnit_Framework_TestCase {
 
-    /**
-     * the progress bar to test
-     *
-     * @var \Woody\Components\Controls\ScrollBar
-     */
-    private $scrollBar     = null;
+  /**
+   * the progress bar to test
+   *
+   * @var \Woody\Components\Controls\ScrollBar
+   */
+  private $scrollBar = null;
 
-    /**
-     * the test application
-     *
-     * @var \Woody\App\TestApplication
-     */
-    private $application    = false;
+  /**
+   * the test application
+   *
+   * @var \Woody\App\TestApplication
+   */
+  private $application = false;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp() {
-        $this->application  = new TestApplication();
+  /**
+   * Sets up the fixture, for example, opens a network connection.
+   * This method is called before a test is executed.
+   */
+  protected function setUp() {
+    $this->application = new TestApplication();
 
-        $this->scrollBar    = new ScrollBar(new Point(20, 20), new Dimension(20, 100));
+    $this->scrollBar = new ScrollBar(new Point(20, 20), new Dimension(20, Timer::TEST_TIMEOUT));
 
-        $this->application->getWindow()->add($this->scrollBar);
-    }
+    $this->application->getWindow()->add($this->scrollBar);
+  }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown() {
+  /**
+   * Tears down the fixture, for example, closes a network connection.
+   * This method is called after a test is executed.
+   */
+  protected function tearDown() {
 
-    }
+  }
 
-    /**
-     * @covers \Woody\Components\Controls\ScrollBar::getOffset
-     * @covers \Woody\Components\Controls\ScrollBar::setOffset
-     */
-    public function testGetSetScrollOffset() {
-        $this->timer = new Timer(function() {
-                            $this->assertEquals(0, $this->scrollBar->getOffset());
+  /**
+   * @covers \Woody\Components\Controls\ScrollBar::getOffset
+   * @covers \Woody\Components\Controls\ScrollBar::setOffset
+   */
+  public function testGetSetScrollOffset() {
+    $this->timer = new Timer(function() {
+                              $this->assertEquals(0, $this->scrollBar->getOffset());
 
-                            $this->scrollBar->setOffset(100);
-                            $this->assertEquals(100, $this->scrollBar->getOffset());
+                              $this->scrollBar->setOffset(100);
+                              $this->assertEquals(100, $this->scrollBar->getOffset());
 
-                            $this->timer->destroy();
-                            $this->application->stop();
-                        }, $this->application->getWindow(), 100);
+                              $this->timer->destroy();
+                              $this->application->stop();
+                            }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-        $this->timer->start($this->application->getWindow());
+    $this->timer->start($this->application->getWindow());
 
-        $this->application->start();
-    }
+    $this->application->start();
+  }
 
-    /**
-     * @covers \Woody\Components\Controls\Slider::setRange
-     */
-    public function testSetRange() {
-        $this->timer = new Timer(function() {
-                            $this->assertEquals(0, $this->scrollBar->getOffset());
+  /**
+   * @covers \Woody\Components\Controls\Slider::setRange
+   */
+  public function testSetRange() {
+    $this->timer = new Timer(function() {
+                              $this->assertEquals(0, $this->scrollBar->getOffset());
 
-                            $this->scrollBar->setRange(0, 1000);
-                            $this->scrollBar->setOffset(100);
-                            $this->assertEquals(100, $this->scrollBar->getOffset());
+                              $this->scrollBar->setRange(0, Timer::TEST_TIMEOUT);
+                              $this->scrollBar->setOffset(100);
+                              $this->assertEquals(100, $this->scrollBar->getOffset());
 
-                            $this->timer->destroy();
-                            $this->application->stop();
-                        }, $this->application->getWindow(), 100);
+                              $this->timer->destroy();
+                              $this->application->stop();
+                            }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-        $this->timer->start($this->application->getWindow());
+    $this->timer->start($this->application->getWindow());
 
-        $this->application->start();
-    }
+    $this->application->start();
+  }
 }

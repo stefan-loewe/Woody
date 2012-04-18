@@ -15,154 +15,154 @@ use \Utils\Geom\Dimension;
  */
 class TreeViewTest extends \PHPUnit_Framework_TestCase {
 
-    /**
-     * the tree view to test
-     *
-     * @var \Woody\Components\Controls\Treeview
-     */
-    private $treeView       = null;
+  /**
+   * the tree view to test
+   *
+   * @var \Woody\Components\Controls\Treeview
+   */
+  private $treeView = null;
 
-    /**
-     * the test application
-     *
-     * @var \Woody\App\TestApplication
-     */
-    private $application    = false;
+  /**
+   * the test application
+   *
+   * @var \Woody\App\TestApplication
+   */
+  private $application = false;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp() {
-        $this->application  = new TestApplication();
+  /**
+   * Sets up the fixture, for example, opens a network connection.
+   * This method is called before a test is executed.
+   */
+  protected function setUp() {
+    $this->application = new TestApplication();
 
-        $this->treeView     = new TreeView(new Point(20, 20), new Dimension(260, 130));
+    $this->treeView = new TreeView(new Point(20, 20), new Dimension(260, 130));
 
-        $this->application->getWindow()->add($this->treeView);
-    }
+    $this->application->getWindow()->add($this->treeView);
+  }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown() {
+  /**
+   * Tears down the fixture, for example, closes a network connection.
+   * This method is called after a test is executed.
+   */
+  protected function tearDown() {
 
-    }
+  }
 
-    /**
-     * @covers \Woody\Components\Controls\TreeView::getSelectedItem
-     * @covers \Woody\Components\Controls\TreeView::setSelectedItem
-     */
-    public function testGetSetSelectedItem() {
-        $this->timer = new Timer(function() {
-                            $model = $this->getDefaultMock();
-                            $this->treeView->setModel($model);
-                            $this->assertNull($this->treeView->getSelectedItem());
+  /**
+   * @covers \Woody\Components\Controls\TreeView::getSelectedItem
+   * @covers \Woody\Components\Controls\TreeView::setSelectedItem
+   */
+  public function testGetSetSelectedItem() {
+    $this->timer = new Timer(function() {
+                              $model = $this->getDefaultMock();
+                              $this->treeView->setModel($model);
+                              $this->assertNull($this->treeView->getSelectedItem());
 
-                            $this->treeView->setSelectedItem($model->getRoot());
-                            $this->assertSame($model->getRoot(), $this->treeView->getSelectedItem());
+                              $this->treeView->setSelectedItem($model->getRoot());
+                              $this->assertSame($model->getRoot(), $this->treeView->getSelectedItem());
 
-                            $this->treeView->setSelectedItem($model->getRoot()->getChildAtIndex(1));
-                            $this->assertSame($model->getRoot()->getChildAtIndex(1), $this->treeView->getSelectedItem());
+                              $this->treeView->setSelectedItem($model->getRoot()->getChildAtIndex(1));
+                              $this->assertSame($model->getRoot()->getChildAtIndex(1), $this->treeView->getSelectedItem());
 
-                            $this->timer->destroy();
-                            $this->application->stop();
-                        }, $this->application->getWindow(), 100);
+                              $this->timer->destroy();
+                              $this->application->stop();
+                            }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-        $this->timer->start($this->application->getWindow());
+    $this->timer->start($this->application->getWindow());
 
-        $this->application->start();
-    }
+    $this->application->start();
+  }
 
-    /**
-     * @covers \Woody\Components\Controls\TreeView::getParentItem
-     */
-    public function testGetParentItem() {
-        $this->timer = new Timer(function() {
-                            $model = $this->getDefaultMock();
-                            $this->treeView->setModel($model);
-                            $this->assertNull($this->treeView->getParentItem());
+  /**
+   * @covers \Woody\Components\Controls\TreeView::getParentItem
+   */
+  public function testGetParentItem() {
+    $this->timer = new Timer(function() {
+                              $model = $this->getDefaultMock();
+                              $this->treeView->setModel($model);
+                              $this->assertNull($this->treeView->getParentItem());
 
-                            $this->treeView->setSelectedItem($model->getRoot());
-                            $this->assertNull($this->treeView->getParentItem());
+                              $this->treeView->setSelectedItem($model->getRoot());
+                              $this->assertNull($this->treeView->getParentItem());
 
-                            $this->treeView->setSelectedItem($model->getRoot()->getChildAtIndex(1));
-                            $this->assertSame($model->getRoot(), $this->treeView->getParentItem());
+                              $this->treeView->setSelectedItem($model->getRoot()->getChildAtIndex(1));
+                              $this->assertSame($model->getRoot(), $this->treeView->getParentItem());
 
-                            $this->timer->destroy();
-                            $this->application->stop();
-                        }, $this->application->getWindow(), 100);
+                              $this->timer->destroy();
+                              $this->application->stop();
+                            }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-        $this->timer->start($this->application->getWindow());
+    $this->timer->start($this->application->getWindow());
 
-        $this->application->start();
-    }
+    $this->application->start();
+  }
 
-    /**
-     * @covers \Woody\Components\Controls\TreeView::getModel
-     * @covers \Woody\Components\Controls\TreeView::setModel
-     */
-    public function testGetSetModel() {
-        $this->timer = new Timer(function() {
-                            $this->assertNull($this->treeView->getModel());
+  /**
+   * @covers \Woody\Components\Controls\TreeView::getModel
+   * @covers \Woody\Components\Controls\TreeView::setModel
+   */
+  public function testGetSetModel() {
+    $this->timer = new Timer(function() {
+                              $this->assertNull($this->treeView->getModel());
 
-                            $model = $this->getMockBuilder('\Woody\Model\DefaultTreeModel')
-                                        ->disableOriginalConstructor()
-                                        ->getMock();
+                              $model = $this->getMockBuilder('\Woody\Model\DefaultTreeModel')
+                                      ->disableOriginalConstructor()
+                                      ->getMock();
 
-                            $this->treeView->setModel($model);
-                            $this->assertNotNull($this->treeView->getModel());
-                            $this->assertSame($model, $this->treeView->getModel());
+                              $this->treeView->setModel($model);
+                              $this->assertNotNull($this->treeView->getModel());
+                              $this->assertSame($model, $this->treeView->getModel());
 
-                            $this->timer->destroy();
-                            $this->application->stop();
-                        }, $this->application->getWindow(), 100);
+                              $this->timer->destroy();
+                              $this->application->stop();
+                            }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-        $this->timer->start($this->application->getWindow());
+    $this->timer->start($this->application->getWindow());
 
-        $this->application->start();
-    }
+    $this->application->start();
+  }
 
-    /**
-     * @covers \Woody\Components\Controls\TreeView::update
-     */
-    public function testUpdate() {
-        $this->timer = new Timer(function() {
-                            $model = $this->getDefaultMock();
-                            $this->treeView->setModel($model);
-                            $model->attach($this->treeView);
-                            $this->assertNull($this->treeView->getSelectedItem());
+  /**
+   * @covers \Woody\Components\Controls\TreeView::update
+   */
+  public function testUpdate() {
+    $this->timer = new Timer(function() {
+                              $model = $this->getDefaultMock();
+                              $this->treeView->setModel($model);
+                              $model->attach($this->treeView);
+                              $this->assertNull($this->treeView->getSelectedItem());
 
-                            $itemB = $model->getRoot()->getChildAtIndex(1);
-                            $this->treeView->setSelectedItem($itemB);
-                            $this->assertSame($itemB, $this->treeView->getSelectedItem());
+                              $itemB = $model->getRoot()->getChildAtIndex(1);
+                              $this->treeView->setSelectedItem($itemB);
+                              $this->assertSame($itemB, $this->treeView->getSelectedItem());
 
-                            $model->appendChild($itemB, $itemC = new TreeNode('C'));
-                            $this->assertSame($itemB, $this->treeView->getSelectedItem());
+                              $model->appendChild($itemB, $itemC = new TreeNode('C'));
+                              $this->assertSame($itemB, $this->treeView->getSelectedItem());
 
-                            $this->treeView->setSelectedItem($itemC);
-                            $this->assertSame($itemC, $this->treeView->getSelectedItem());
+                              $this->treeView->setSelectedItem($itemC);
+                              $this->assertSame($itemC, $this->treeView->getSelectedItem());
 
-                            $this->timer->destroy();
-                            $this->application->stop();
-                        }, $this->application->getWindow(), 100);
+                              $this->timer->destroy();
+                              $this->application->stop();
+                            }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-        $this->timer->start($this->application->getWindow());
+    $this->timer->start($this->application->getWindow());
 
-        $this->application->start();
-    }
+    $this->application->start();
+  }
 
-    /**
-     * This method returns the default mock object for testing this class.
-     *
-     * @return \Woody\Model\DefaultTreeModel
-     */
-    private function getDefaultMock() {
-        $root = new TreeNode('root');
+  /**
+   * This method returns the default mock object for testing this class.
+   *
+   * @return \Woody\Model\DefaultTreeModel
+   */
+  private function getDefaultMock() {
+    $root = new TreeNode('root');
 
-        $root->appendChild(new TreeNode('A'));
-        $root->appendChild(new TreeNode('B'));
+    $root->appendChild(new TreeNode('A'));
+    $root->appendChild(new TreeNode('B'));
 
-        return new DefaultTreeModel($root);
-    }
+    return new DefaultTreeModel($root);
+  }
 }
