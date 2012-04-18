@@ -131,9 +131,11 @@
          description="Generate API documentation using PHPDocumentor">
   <exec executable="docblox.bat">
    <arg value="--directory" />
-   <arg path="${basedir}/source/Woody" />
+   <arg path="${basedir}/source/Woody/" />
    <arg value="--target" />
    <arg path="${basedir}/build/api" />
+   <arg value="--extensions" />
+   <arg value="inc,php" />
   </exec>
  </target>
 
