@@ -4,7 +4,7 @@
 
  <!-- Include some sniffs from all around the place -->
  <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
- <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchieSniff"/>
+ <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
  <rule ref="Woody.Classes.ClassDeclaration"/>
