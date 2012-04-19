@@ -4,10 +4,10 @@
 
  <!-- Include some sniffs from all around the place -->
  <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
- <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
+ <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchieSniff"/>
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
- <rule ref="PEAR.Classes.ClassDeclaration"/>
+ <rule ref="Woody.Classes.ClassDeclaration"/>
  <rule ref="PEAR.ControlStructures.ControlSignature"/>
  <rule ref="PEAR.Functions.FunctionCallSignature"/>
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
