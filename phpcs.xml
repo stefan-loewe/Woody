@@ -14,11 +14,11 @@
  <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
  <rule ref="Squiz.Functions.GlobalFunction"/>
 
- <!-- Lines can be 80 chars long, show errors at 120 chars -->
+ <!-- Lines can be 120 chars long, show errors at 150 chars -->
  <rule ref="Generic.Files.LineLength">
   <properties>
-   <property name="lineLimit" value="80"/>
-   <property name="absoluteLineLimit" value="120"/>
+   <property name="lineLimit" value="120"/>
+   <property name="absoluteLineLimit" value="150"/>
   </properties>
  </rule>
 
