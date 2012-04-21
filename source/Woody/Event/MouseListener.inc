@@ -3,7 +3,7 @@
 namespace Woody\Event;
 
 interface MouseListener {
-    function mousePressed(MouseEvent $event);
+  function mousePressed(MouseEvent $event);
 
-    function mouseReleased(MouseEvent $event);
+  function mouseReleased(MouseEvent $event);
 }

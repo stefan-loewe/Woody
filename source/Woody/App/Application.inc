@@ -3,17 +3,26 @@
 namespace Woody\App;
 
 abstract class Application {
-    /**
-     * the main window of the application
-     *
-     * @var \Woody\Components\Windows\AbstractWindow
-     */
-    protected $window = null;
+  /**
+   * the main window of the application
+   *
+   * @var \Woody\Components\Windows\AbstractWindow
+   */
+  protected $window = null;
 
-    public function __construct() {
-    }
+  /**
+   * This method acts as the constructor of the class.
+   */
+  public function __construct() {
+  }
 
-    abstract public function start();
+  /**
+   * This method starts the application.
+   */
+  abstract public function start();
 
-    abstract public function stop();
+  /**
+   * This method stops the application.
+   */
+  abstract public function stop();
 }

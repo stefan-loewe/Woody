@@ -6,19 +6,19 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
 class ListBox extends ListControl {
+  /**
+   * This method acts as the constructor of the class.
+   *
+   * @param Point $topLeftCorner the top left corner of the list box
+   * @param Dimension $dimension the dimension of the list box
+   */
+  public function __construct(Point $topLeftCorner, Dimension $dimension) {
+    parent::__construct($topLeftCorner, $dimension);
 
-    /**
-     * This method acts as the constructor of the class.
-     *
-     * @param Point $topLeftCorner the top left corner of the list box
-     * @param Dimension $dimension the dimension of the list box
-     */
-    public function __construct(Point $topLeftCorner, Dimension $dimension) {
-        parent::__construct($topLeftCorner, $dimension);
-
-        $this->type = ListBox;
-    }
+    $this->type = ListBox;
+  }
 }
+
 /*
 class MultiSelectListBox extends ListBox
 {

@@ -7,72 +7,118 @@ use \Woody\Components\Timer\Timer;
 use \Woody\Components\Controls\HtmlControl;
 
 class BuiltInWebServer {
-    private $window         = null;
+  /**
+   * the window associated with the server, normally the main window of the appication
+   *
+   * @var AbstractWindow
+   */
+  private $window = null;
 
-    private $port           = 0;
+  /**
+   *
+   * @var type the port on which the server listens
+   */
+  private $port = 0;
 
-    private $htmlServer     = null;
+  /**
+   * the server used to communicate with the router script of the built-in php web server
+   *
+   * @var HtmlControlServer
+   */
+  private $htmlServer = null;
 
-    private $process        = null;
+  /**
+   * the php process running the built-in php web server
+   *
+   * @var resource
+   */
+  private $process = null;
 
-    private $documentRoot   = null;
+  /**
+   * the folder representing the document root
+   *
+   * @var string
+   */
+  private $documentRoot = null;
 
-    public function __construct(AbstractWindow $window, $port, $documentRoot) {
-        $this->window       = $window;
-        $this->port         = $port;
-        $this->documentRoot = $documentRoot;
-    }
+  /**
+   * This method acts as the constructor of the class.
+   *
+   * @param AbstractWindow $window the window associated with the server, normally the main window of the application
+   * @param int $port the port on which the server listens
+   * @param string $documentRoot the document root of the server
+   */
+  public function __construct(AbstractWindow $window, $port, $documentRoot) {
+    $this->window       = $window;
+    $this->port         = $port;
+    $this->documentRoot = $documentRoot;
+  }
 
-    public function start() {
-        $this->startWebServerProcess();
+  /**
+   * This method starts the web server.
+   *
+   * @return BuiltInWebServer $this
+   */
+  public function start() {
+    $this->startWebServerProcess();
 
-        $this->startHtmlReplyServer();
+    $this->startHtmlReplyServer();
 
-        return $this;
-    }
+    return $this;
+  }
 
-    public function stop() {
-        proc_terminate($this->process);
+  /**
+   * This method stops the web server.
+   *
+   * @return BuiltInWebServer $this
+   */
+  public function stop() {
+    proc_terminate($this->process);
 
-        return $this;
-    }
+    return $this;
+  }
 
-    private function startWebServerProcess() {
-        $descriptors = array();
-        $pipes       = array();
+  /**
+   * This method starts the web server process.
+   */
+  private function startWebServerProcess() {
+    $descriptors = array();
+    $pipes = array();
 
-        // bypass_shell is true, so that process can be terminated, and is not "embedded" in cmd.exe process
-        $this->process = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:'.$this->port.' -t "'.$this->documentRoot.'" D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
-                            $descriptors,
-                            $pipes,
-                            null,
-                            null,
-                            array('bypass_shell' => true));
-    }
+    // bypass_shell is true, so that process can be terminated, and is not "embedded" in cmd.exe process
+    $this->process = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:'.$this->port.' -t "'.$this->documentRoot.'" D:\\workspace\\programming\\PHP\\woody\\source\\server.php', $descriptors, $pipes, null, null, array('bypass_shell' => true));
+  }
 
-    public function register(HtmlControl $control)
-    {
-        $this->htmlServer->register($control);
+  /**
+   * This method registers a HtmlControl for this server, so that the HtmlControl is notified when new data is available.
+   *
+   * @param HtmlControl $control the HtmlControl to register
+   * @return BuiltInWebServer $this
+   */
+  public function register(HtmlControl $control) {
+    $this->htmlServer->register($control);
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * This method unregisters the given HtmlControl.
-     *
-     * @param HtmlControl $control the HtmlControl to be removed
-     * @return HtmlControlServer $this
-     */
-    public function unregister(HtmlControl $control)
-    {
-        $this->htmlServer->unregister($control);
+  /**
+   * This method unregisters the given HtmlControl.
+   *
+   * @param HtmlControl $control the HtmlControl to be removed
+   * @return HtmlControlServer $this
+   */
+  public function unregister(HtmlControl $control) {
+    $this->htmlServer->unregister($control);
 
-        return $this;
-    }
+    return $this;
+  }
 
-    private function startHtmlReplyServer() {
-        $this->htmlServer = new HtmlControlServer($this->window, 1234);
+  /**
+   * This method starts the HtmlControlServer which processes messages from the router script of the built-in php web server.
+   */
+  private function startHtmlReplyServer() {
+    $this->htmlServer = new HtmlControlServer($this->window, 1234);
 
-        $this->htmlServer->start(100);
-    }
+    $this->htmlServer->start(100);
+  }
 }
