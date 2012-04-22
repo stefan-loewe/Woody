@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="Zend">
- <description>A coding standard based on an early Zend Framework coding standard. Note that this standard is out of date.</description>
+<ruleset name="Woody">
+ <description>A coding standard based on an early Zend Framework coding standard, changed to fit the Woody style.</description>
 
  <!-- Include some sniffs from all around the place -->
  <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
@@ -8,8 +8,8 @@
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
  <rule ref="Woody.Classes.ClassDeclaration"/>
- <rule ref="PEAR.ControlStructures.ControlSignature"/>
- <rule ref="PEAR.Functions.FunctionCallSignature"/>
+ <rule ref="Woody.ControlStructures.ControlSignature"/>
+ <rule ref="Woody.Functions.FunctionCallSignature"/>
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
  <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
  <rule ref="Squiz.Functions.GlobalFunction"/>
