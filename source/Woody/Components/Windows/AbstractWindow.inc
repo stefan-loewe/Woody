@@ -37,16 +37,17 @@ abstract class AbstractWindow extends Component implements Container {
   }
 
   public function create(Component $parent = null) {
-    $this->controlID = wb_create_window($this->parent === null ? null : $this->parent->getControlID(),
-            $this->type,
-            $this->value,
-            $this->topLeftCorner->x,
-            $this->topLeftCorner->y,
-            $this->dimension->width,
-            $this->dimension->height,
-            $this->style | WBC_TASKBAR | WBC_NOTIFY,
-            $this->param | WBC_MOUSEDOWN | WBC_MOUSEUP | WBC_DBLCLICK| /* WBC_MOUSEMOVE | */ WBC_KEYDOWN
-              | WBC_KEYUP | WBC_GETFOCUS | WBC_CUSTOMDRAW | WBC_REDRAW | WBC_RESIZE | WBC_HEADERSEL);
+    $this->controlID = wb_create_window(
+      $this->parent === null ? null : $this->parent->getControlID(),
+      $this->type,
+      $this->value,
+      $this->topLeftCorner->x,
+      $this->topLeftCorner->y,
+      $this->dimension->width,
+      $this->dimension->height,
+      $this->style | WBC_TASKBAR | WBC_NOTIFY,
+      $this->getParamters()
+    );
 
     static::$components[$this->controlID] = $this;
 
@@ -80,9 +81,9 @@ abstract class AbstractWindow extends Component implements Container {
   }
 
   protected function resize(Dimension $dimension) {
-    $dimension = WindowConstraints::getInstance()->sanatize($dimension);
-    $width = $dimension->width;
-    $height = $dimension->height;
+    $dimension  = WindowConstraints::getInstance()->sanatize($dimension);
+    $width      = $dimension->width;
+    $height     = $dimension->height;
 
     wb_set_size($this->controlID, $width, $height);
 
@@ -120,5 +121,25 @@ abstract class AbstractWindow extends Component implements Container {
     }
 
     return $this;
+  }
+
+  /**
+   * This method is a helper for getting the event parameters
+   *
+   * @return int
+   */
+  private function getParamters() {
+    return $this->param
+      | WBC_MOUSEDOWN
+      | WBC_MOUSEUP
+      | WBC_DBLCLICK
+      /*| WBC_MOUSEMOVE */
+      | WBC_KEYDOWN
+      | WBC_KEYUP
+      | WBC_GETFOCUS
+      | WBC_CUSTOMDRAW
+      | WBC_REDRAW
+      | WBC_RESIZE
+      | WBC_HEADERSEL;
   }
 }

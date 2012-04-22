@@ -81,12 +81,13 @@ class HtmlControlServer extends Server {
 
     foreach($this->htmlControls as $htmlControl) {
       \Woody\Event\EventFactory::createEvent(
-              //not public $htmlControl->getWindow()->getControlID(),
-              null,
-              $htmlControl->getID(),
-              $htmlControl->getControlID(),
-              $clientSocket,
-              HttpRequestFactory::createRequest($message));
+        //not public $htmlControl->getWindow()->getControlID(),
+        null,
+        $htmlControl->getID(),
+        $htmlControl->getControlID(),
+        $clientSocket,
+        HttpRequestFactory::createRequest($message)
+      );
     }
 
     $this->disconnectClient($clientSocket);
@@ -95,9 +96,13 @@ class HtmlControlServer extends Server {
   public function start($interval = 1000) {
     $this->isRunning = TRUE;
 
-    $timer = new Timer(function() {
-                      $this->loopOnce();
-                    }, $this->window, $interval);
+    $timer = new Timer(
+      function() {
+        $this->loopOnce();
+      },
+      $this->window,
+      $interval
+    );
 
     $timer->start();
 
