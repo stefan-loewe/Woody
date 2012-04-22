@@ -2,7 +2,7 @@
 
 namespace Woody\Components\Windows;
 
-use Woody\Components\Windows\AbstractWindow;
+use \Woody\Components\Windows\AbstractWindow;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 

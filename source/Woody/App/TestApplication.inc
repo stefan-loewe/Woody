@@ -41,7 +41,7 @@ class TestApplication extends Application {
       }
     };
 
-    $this->shutdownTimer = new Timer($callback , $this->window, self::$SHUT_DOWN_TIMER_INTERAL);
+    $this->shutdownTimer = new Timer($callback, $this->window, self::$SHUT_DOWN_TIMER_INTERAL);
 
     $this->window->create(null);
 

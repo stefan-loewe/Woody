@@ -206,7 +206,7 @@ class ListModel implements \SplSubject {
     }
 
     if($index > -1) {
-      // starting from the element right after the index to be deleted, move every following element up by one position ...
+      // move every element after the element to be deleted up by one
       for($i = $index; $i < $count - 1; ++$i) {
         $this->data[$i] = $this->data[$i + 1];
       }

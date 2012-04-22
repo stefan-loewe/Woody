@@ -9,7 +9,9 @@
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
  <rule ref="Woody.Classes.ClassDeclaration"/>
  <rule ref="Woody.ControlStructures.ControlSignature"/>
+ <rule ref="Woody.ControlStructures.ElseIfAfterLineBreak"/>
  <rule ref="Woody.Functions.FunctionCallSignature"/>
+ <rule ref="Woody.Namespaces.LeadingNamespaceSeperator"/>
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
  <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
  <rule ref="Squiz.Functions.GlobalFunction"/>

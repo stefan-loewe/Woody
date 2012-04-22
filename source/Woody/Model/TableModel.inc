@@ -61,8 +61,8 @@ abstract class TableModel implements \SplSubject {
   }
 
   /**
-   * This method transforms an decimal integer to its represenation to the base
-   * of 26, represented with charachters between A and Z.
+   * This method transforms an decimal integer to its represenation to the base of 26, represented with charachters
+   * between A and Z.
    *
    * @param int $i the integer to convert
    * @return string the representation to the base of 26 of the given integer

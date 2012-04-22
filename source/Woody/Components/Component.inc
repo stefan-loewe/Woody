@@ -130,8 +130,9 @@ abstract class Component implements IComponent {
   /**
    * This method returns the component having the given winbinder id.
    *
-   * Normally, it should not be neccassary to call this method, but rather manage references to the respective controls within the dialog class. This is currently only needed internally for event handling.
-   * Note that a component has to be created first (@see Component::create) to be returned by this method.
+   * Normally, it should not be neccassary to call this method, but rather manage references to the respective controls
+   * within the dialog class. This is currently only needed internally for event handling. Note that a component has to
+   * be created first (@see Component::create) to be returned by this method.
    *
    * @param int $id the winbinder id of the component
    * @return Component the component with the respective winbinder id

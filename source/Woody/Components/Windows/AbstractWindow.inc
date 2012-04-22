@@ -103,6 +103,9 @@ abstract class AbstractWindow extends Component implements Container {
     if($control->parent !== null) {
       $this->remove($control);
     }
+    else {
+
+    }
 
     $control->create($this);
 

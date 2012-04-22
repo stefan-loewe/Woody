@@ -53,7 +53,8 @@ class WindowConstraints {
    * This method acts as the constructor of the class.
    */
   private function __construct() {
-    $this->window = wb_create_window(NULL,
+    $this->window = wb_create_window(
+      NULL,
       AppWindow,
       'initializing ...',
       WBC_CENTER,
