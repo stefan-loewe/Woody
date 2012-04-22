@@ -132,11 +132,11 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
     $this->listModel->setData(new \ArrayObject(array()));
     $this->assertEquals(0, $this->listModel->count());
 
-    $array = array();
+    $data = array();
     for($i = 0; $i < 5; $i++) {
-      $array[mt_rand(100, 1000)] = 'c';
+      $data[] = 'c';
     }
-    $this->listModel->setData(new \ArrayObject($array));
+    $this->listModel->setData(new \ArrayObject($data));
     $this->assertEquals(5, $this->listModel->count());
   }
 
