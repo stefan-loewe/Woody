@@ -59,8 +59,8 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
                               $this->checkbox->setChecked(TRUE);
                               $this->assertEquals(TRUE, $this->checkbox->isChecked());
 
-                              $this->checkbox->setChecked(!TRUE);
-                              $this->assertEquals(!TRUE, $this->checkbox->isChecked());
+                              $this->checkbox->setChecked(FALSE);
+                              $this->assertEquals(FALSE, $this->checkbox->isChecked());
 
                               $this->timer->destroy();
 
@@ -75,7 +75,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting the value of the checkbox.
    *
-   * @covers \Woody\Components\Controls\Checkbox::isChecked
+   * @covers \Woody\Components\Controls\Checkbox::setChecked
    */
   public function testSetChecked() {
     $this->timer = new Timer(function() {
@@ -84,8 +84,11 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
                               $this->checkbox->setChecked(TRUE);
                               $this->assertEquals(TRUE, $this->checkbox->isChecked());
 
-                              $this->checkbox->setChecked(!TRUE);
-                              $this->assertEquals(!TRUE, $this->checkbox->isChecked());
+                              $this->checkbox->setChecked(FALSE);
+                              $this->assertEquals(FALSE, $this->checkbox->isChecked());
+
+                              $this->checkbox->setChecked(TRUE);
+                              $this->assertEquals(TRUE, $this->checkbox->isChecked());
 
                               $this->timer->destroy();
 
