@@ -29,17 +29,17 @@ abstract class Control extends Component {
     $absoluteTopLeftCorner = $this->calculateAbsoluteTopLeftCorner();
 
     $this->controlID = wb_create_control(
-            $parent->getWindow()->getControlID(),
-            $this->type,
-            $this->value,
-            $absoluteTopLeftCorner->x,
-            $absoluteTopLeftCorner->y,
-            $this->dimension->width,
-            $this->dimension->height,
-            $this->id,
-            $this->style,
-            $this->param,
-            $this->id
+      $parent->getWindow()->getControlID(),
+      $this->type,
+      $this->value,
+      $absoluteTopLeftCorner->x,
+      $absoluteTopLeftCorner->y,
+      $this->dimension->width,
+      $this->dimension->height,
+      $this->id,
+      $this->style,
+      $this->param,
+      $this->id
     );
 
     static::$components[$this->controlID] = $this;
@@ -48,7 +48,10 @@ abstract class Control extends Component {
   /**
    * This method calculates the absolute position of the control.
    *
-   * This is necessarry, as any control is not really bound to its parent control, but to the window if belongs to. This is done, as some controls do not fire events properly when being bound to a frame instead of a window. However, if the control is positioned, it has to be positioned relative to its logical parent, therefore, the offset has to be taken into account.
+   * This is necessarry, as any control is not really bound to its parent control, but to the window if belongs to.
+   * This is done, as some controls do not fire events properly when being bound to a frame instead of a window.
+   * However, if the control is positioned, it has to be positioned relative to its logical parent, therefore, the
+   * offset has to be taken into account.
    *
    * @return Point the actual top left corner of the control
    */

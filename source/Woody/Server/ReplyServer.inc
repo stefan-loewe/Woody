@@ -14,7 +14,8 @@ use \Utils\Logging\Logger;
 
 class ReplyServer extends Server {
   /**
-   * the window this server is associated with, normally this would be the main window of the application
+   * the window this server is associated with, normally this would be the main
+   * window of the application
    *
    * @var \Woody\Components\Windows\AbstractWindow
    */
@@ -34,7 +35,8 @@ class ReplyServer extends Server {
   /**
    * @inheritdoc
    *
-   * It reads upto 2048 bytes, packs it into a respective HTTPRequest object, and routes it to all registered HtmlControls.
+   * It reads upto 2048 bytes, packs it into a respective HTTPRequest object,
+   * and routes it to all registered HtmlControls.
    */
   protected function processClient(ServerSocket $clientSocket) {
     $message = trim($clientSocket->read(2048));
@@ -42,7 +44,7 @@ class ReplyServer extends Server {
     Logger::log(Logger::DEBUG, 'client said: '.$message);
 
     $answer = $this->operation($message);
-    $answer = '<html><h1>HI, huge text</h1><br>followed by an image ... <br><img src="A1.png"></html>';
+    $answer = '<html><h1>Hello Visitor</h1><br><img src="A1.png"></html>';
     $clientSocket->write($answer);
 
     Logger::log(Logger::DEBUG, 'server replied '.$answer);
@@ -51,7 +53,8 @@ class ReplyServer extends Server {
   }
 
   /**
-   * This is just a dummy operation for demonstration purposes, reversing the input string and returning it.
+   * This is just a dummy operation for demonstration purposes, reversing the
+   * input string and returning it.
    *
    * @param string $input the input string
    * @return string the input string reversed
@@ -63,15 +66,19 @@ class ReplyServer extends Server {
   public function start($interval = 1000) {
     $this->isRunning = TRUE;
 
-    $timer = new Timer(function() {
-                      $this->loopOnce();
-                    }, $this->window, $interval);
+    $callback = function() {
+      $this->loopOnce();
+    };
+
+    $timer = new Timer($callback, $this->window, $interval);
 
     $timer->start();
   }
 
   /**
-   * This method performs the client-socket selection exactly once, instead of doing it constantly in a loop as in Server::run(). This allows any client code to model the client-socket selection as prefered.
+   * This method performs the client-socket selection exactly once, instead of
+   * doing it constantly in a loop as in Server::run(). This allows any client
+   * code to model the client-socket selection as prefered.
    */
   private function loopOnce() {
     $this->select();

@@ -93,7 +93,8 @@ abstract class AbstractWindow extends Component implements Container {
   }
 
   /**
-   * This method adds a control to the window. Calling this method twice with the same object behaves like moving the control from one parent to the other.
+   * This method adds a control to the window. Calling this method twice with the same object behaves like moving the
+   * control from one parent to the other.
    *
    * @param Component $control
    * @return Frame

@@ -10,7 +10,10 @@ class FolderSelectDialog extends FileSystemDialog {
   }
 
   function open() {
-    $this->selection[0] = wb_sys_dlg_path($this->window === null ? null : $this->window->getControlID(), $this->title, $this->path);
+    $this->selection[0] = wb_sys_dlg_path(
+      $this->window === null ? null : $this->window->getControlID(),
+      $this->title,
+      $this->path);
   }
 
   function getSelection() {

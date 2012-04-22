@@ -20,8 +20,10 @@ class MouseAdapter implements MouseListener {
   /**
    * This method acts as the constructor of the class.
    *
-   * @param callable $onMousePressed the callback to be executed for the mouse-pressed event, if null, no callback for this event type will be executed
-   * @param callable $onMouseReleased the callback to be executed for the mouse-released event, if null, no callback for this event type will be executed
+   * @param callable $onMousePressed the callback to be executed for the mouse-pressed event, if null, no callback for
+   * this event type will be executed
+   * @param callable $onMouseReleased the callback to be executed for the mouse-released event, if null, no callback for
+   * this event type will be executed
    */
   public function __construct(callable $onMousePressed = null, callable $onMouseReleased = null) {
     $this->onMousePressed = $onMousePressed;

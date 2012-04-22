@@ -21,10 +21,12 @@ class FileOpenDialog extends FileSystemDialog {
   }
 
   function open() {
-    $this->selection[0] = wb_sys_dlg_open($this->window === null ? null : $this->window->getControlID(),
-            $this->title, $this->filters === null ? '' : $this->filters->toArray(),
-            $this->path,
-            null,
-            null);
+    $this->selection[0] = wb_sys_dlg_open(
+      $this->window === null ? null : $this->window->getControlID(),
+      $this->title, $this->filters === null ? '' : $this->filters->toArray(),
+      $this->path,
+      null,
+      null
+    );
   }
 }

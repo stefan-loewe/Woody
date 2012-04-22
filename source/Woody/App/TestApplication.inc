@@ -33,13 +33,15 @@ class TestApplication extends Application {
   public function __construct() {
     $this->window = new MainWindow('TestApp', new Point(50, 50), new Dimension(300, 200));
 
-    $this->shutdownTimer = new Timer(function() {
-                      if(!$this->isRunning) {
-                        $this->shutdownTimer->destroy();
+    // the callback that actually closes the window
+    $callback = function() {
+      if(!$this->isRunning) {
+        $this->shutdownTimer->destroy();
+        $this->window->destroy();
+      }
+    };
 
-                        $this->window->destroy();
-                      }
-                    }, $this->window, self::$SHUT_DOWN_TIMER_INTERAL);
+    $this->shutdownTimer = new Timer($callback , $this->window, self::$SHUT_DOWN_TIMER_INTERAL);
 
     $this->window->create(null);
 
@@ -71,7 +73,8 @@ class TestApplication extends Application {
   /**
    * This method stops the test application.
    *
-   * The stopping is delayed for up to the length of the interval of self::$SHUT_DOWN_TIMER_INTERAL, as this is the interval in which the shutdown timer is executed.
+   * The stopping is delayed for up to the length of the interval of self::$SHUT_DOWN_TIMER_INTERAL, as this is the
+   * interval in which the shutdown timer is executed.
    *
    * @return \Woody\App\TestApplication $this
    */

@@ -10,12 +10,14 @@ class MultiFileOpenDialog extends FileOpenDialog {
   }
 
   function open() {
-    $this->selection = wb_sys_dlg_open($this->window === null ? null : $this->window->getControlID(),
-            $this->title,
-            $this->filters === null ? '' : $this->filters->toArray(),
-            $this->path,
-            null,
-            WBC_MULTISELECT);
+    $this->selection = wb_sys_dlg_open(
+      $this->window === null ? null : $this->window->getControlID(),
+      $this->title,
+      $this->filters === null ? '' : $this->filters->toArray(),
+      $this->path,
+      null,
+      WBC_MULTISELECT
+    );
   }
 
   function getSelection() {

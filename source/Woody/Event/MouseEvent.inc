@@ -50,7 +50,8 @@ class MouseEvent extends Event {
   /**
    * This method returns which mouse button was pressed.
    *
-   * @return int the mouse button which was pressed, either one of MouseEvent:NO_BUTTON, MouseEvent::BUTTON1, MouseEvent::BUTTON2, MouseEvent::BUTTON3
+   * @return int the mouse button which was pressed, either one of MouseEvent:NO_BUTTON, MouseEvent::BUTTON1,
+   * MouseEvent::BUTTON2 or MouseEvent::BUTTON3
    */
   public function getPressedButton() {
     $button = self::NO_BUTTON;
@@ -68,7 +69,8 @@ class MouseEvent extends Event {
   }
 
   public function getClickCount() {
-    // TODO: get, thru a system call, the maximal duration between two consequtive clicks, so that the 2nd click is still considered a double-click
+    // TODO: get, thru a system call, the maximal duration between two consequtive clicks, so that the 2nd click is
+    // still considered a double-click
   }
 
   /**
@@ -78,8 +80,10 @@ class MouseEvent extends Event {
    */
   public function __toString() {
     return parent::__toString().PHP_EOL.
-            'button = '.$this->getPressedButton().PHP_EOL.
-            'position = '.$this->getPosition().PHP_EOL.
-            'A/C/S = '.$this->isAltKeyPressed().'/'.$this->isCtrlKeyPressed().'/'.$this->isShiftKeyPressed();
+      'button = '.$this->getPressedButton().PHP_EOL.
+      'position = '.$this->getPosition().PHP_EOL.
+      'A/C/S = '.$this->isAltKeyPressed()
+      .'/'.$this->isCtrlKeyPressed()
+      .'/'.$this->isShiftKeyPressed();
   }
 }

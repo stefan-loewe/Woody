@@ -85,12 +85,23 @@ class BuiltInWebServer {
     $descriptors = array();
     $pipes = array();
 
+    $executeable  = '"C:\\Program Files\\PHP54\\php.exe"';
+    $routerScript = 'D:\\workspace\\programming\\PHP\\woody\\source\\server.php';
+
     // bypass_shell is true, so that process can be terminated, and is not "embedded" in cmd.exe process
-    $this->process = proc_open('"C:\\Program Files\\PHP54\\php.exe" -S 127.0.0.1:'.$this->port.' -t "'.$this->documentRoot.'" D:\\workspace\\programming\\PHP\\woody\\source\\server.php', $descriptors, $pipes, null, null, array('bypass_shell' => true));
+    $this->process = proc_open(
+      $executeable.' -S 127.0.0.1:'.$this->port.' -t "'.$this->documentRoot.'" '.$routerScript,
+      $descriptors,
+      $pipes,
+      null,
+      null,
+      array('bypass_shell' => true)
+    );
   }
 
   /**
-   * This method registers a HtmlControl for this server, so that the HtmlControl is notified when new data is available.
+   * This method registers a HtmlControl for this server, so that the HtmlControl is notified when new data is
+   * available.
    *
    * @param HtmlControl $control the HtmlControl to register
    * @return BuiltInWebServer $this
@@ -114,7 +125,8 @@ class BuiltInWebServer {
   }
 
   /**
-   * This method starts the HtmlControlServer which processes messages from the router script of the built-in php web server.
+   * This method starts the HtmlControlServer which processes messages from the router script of the built-in php web
+   * server.
    */
   private function startHtmlReplyServer() {
     $this->htmlServer = new HtmlControlServer($this->window, 1234);

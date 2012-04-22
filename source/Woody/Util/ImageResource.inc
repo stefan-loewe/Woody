@@ -38,7 +38,11 @@ class ImageResource {
   public function getBitmap() {
     $dib = FreeImage_Load(self::isJpeg($this->imageFileName) ? FIF_JPEG : FIF_BMP, $this->imageFileName, 0);
 
-    $bmp = wb_create_image($this->dimension->width, $this->dimension->height, FreeImage_GetInfoHeader($dib), FreeImage_GetBits($dib));
+    $bmp = wb_create_image(
+      $this->dimension->width,
+      $this->dimension->height,
+      FreeImage_GetInfoHeader($dib), FreeImage_GetBits($dib)
+    );
 
     FreeImage_Unload($dib);
 
@@ -49,6 +53,7 @@ class ImageResource {
    * This method determines if the given image is a jpeg or not.
    *
    * @param string $imageFileName the file name of the image file to determine its file type
+   *
    * @return boolean true, if the image is a jpeg, else false
    * @todo copied from ImageButton - extract image resource as class !?!?!
    */

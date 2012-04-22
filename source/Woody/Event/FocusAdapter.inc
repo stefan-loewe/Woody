@@ -13,7 +13,8 @@ class FocusAdapter implements FocusListener {
   /**
    * This method acts as the constructor of the class.
    *
-   * @param callable $onFocusGained the callback to be executed for the focus-gained event, if null, no callback for this event type will be executed
+   * @param callable $onFocusGained the callback to be executed for the focus-gained event, if null, no callback for
+   * this event type will be executed
    */
   public function __construct(callable $onFocusGained) {
     $this->onFocusGained = $onFocusGained;

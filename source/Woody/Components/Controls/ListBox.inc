@@ -46,7 +46,8 @@ class MultiSelectListBox extends ListBox
 
         if(($maxCount = $this->getSelectionCount()) > 0)
         {
-            //$str = str_repeat("\0", 4 * $maxCount); lead to "zend_mm_heap corrupted" when selecting values in multi-select listbox and then selecting a vlue from combobox !?!?!?!
+            //$str = str_repeat("\0", 4 * $maxCount); lead to "zend_mm_heap corrupted" when selecting values in
+ * multi-select listbox and then selecting a vlue from combobox !?!?!?!
             $str = str_repeat(' ', 4 * $maxCount);
 
             $strPtr = wb_get_address($str);

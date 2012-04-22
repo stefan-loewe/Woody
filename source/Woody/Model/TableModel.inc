@@ -48,7 +48,7 @@ abstract class TableModel implements \SplSubject {
   /**
    * This method returns the name of the column at the specified column index.
    *
-   * @param int $columnIndex the column index of the column of which to get the name
+   * @param int $columnIndex the column index to get the the name for
    * @return string the name of the column
    */
   public function getColumnName($columnIndex) {
@@ -61,7 +61,8 @@ abstract class TableModel implements \SplSubject {
   }
 
   /**
-   * This method transforms an decimal integer to its represenation to the base of 26, represented with charachters between A and Z.
+   * This method transforms an decimal integer to its represenation to the base
+   * of 26, represented with charachters between A and Z.
    *
    * @param int $i the integer to convert
    * @return string the representation to the base of 26 of the given integer

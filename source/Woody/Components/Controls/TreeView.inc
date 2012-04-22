@@ -173,20 +173,21 @@ class TreeView extends Control implements \SplObserver {
   }
 
   /**
-   * This method returns the default item renderer for the tree view, which returns the result of __toString for objects implementing it and the plain passed in element if not.
+   * This method returns the default item renderer for the tree view, which returns the result of __toString for objects
+   * implementing it and the plain passed in element if not.
    *
    * @todo copied from list model
    * @return \Callable the default cell renderer
    */
   protected static function getDefaultNodeRenderer() {
     $callback = function($element) {
-              if(is_callable(array($element, '__toString'), FALSE)) {
-                return $element->__toString();
-              }
-              else {
-                return $element;
-              }
-            };
+      if(is_callable(array($element, '__toString'), FALSE)) {
+        return $element->__toString();
+      }
+      else {
+        return $element;
+      }
+    };
 
     return $callback;
   }

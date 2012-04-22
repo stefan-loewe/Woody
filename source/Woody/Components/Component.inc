@@ -98,7 +98,8 @@ abstract class Component implements IComponent {
   protected static $components = array();
 
   /**
-   * static internal integer, that is used as id generator for creating components, starting at 1024 not to interfer with special control ids (e.g. 8 is window close)
+   * static internal integer, that is used as id generator for creating components, starting at 1024 not to interfer
+   * with special control ids (e.g. 8 is window close)
    *
    * @var int
    */
@@ -117,7 +118,8 @@ abstract class Component implements IComponent {
   /**
    * This method return an unique identifier for each control
    *
-   * The fact that this method is public is an implementation detail - the Timer class needs this functionality, too. Do not cal this method.
+   * The fact that this method is public is an implementation detail - the Timer class needs this functionality, too.
+   * Do not cal this method.
    *
    * @return int
    */
@@ -141,7 +143,8 @@ abstract class Component implements IComponent {
   /**
    * This method creates a component physically as a winbinder control.
    *
-   * Do not call this method manually, it is called by Woody\Components\Container::add only. It is an implementation sid-effect that it is public.
+   * Do not call this method manually, it is called by Woody\Components\Container::add only. It is an implementation
+   * side-effect that it is public.
    *
    * @param Component $parent the parent component of this component
    * @return $this

@@ -9,7 +9,8 @@ class Calendar extends Control {
   /**
    * This method acts as the constructor of the class.
    *
-   * The date of the calendar is always the current date. In order to set a new date, you need to call setTimestamp after having added the calendar to its container control.
+   * The date of the calendar is always the current date. In order to set a new date, you need to call setTimestamp
+   * after having added the calendar to its container control.
    *
    * @param Point $topLeftCorner the top left corner of the calendar
    * @param Dimension $dimension the dimension of the calendar

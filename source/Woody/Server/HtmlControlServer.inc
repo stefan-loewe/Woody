@@ -15,11 +15,17 @@ use \Utils\Logging\Logger;
 /**
  * This class implements a HTTP server for WinBinder HtmlControl.
  *
- * This class implements a HTTP server for WinBinder HtmlControl. As WinBinder HtmlControl cannot interact with the main application in the ordinar way, they have to communicate with the main application through a socket connection. To achieve this, the main application starts an instance of this class, registers the HtmlControls, which are notified when a new HTTP request read.
+ * This class implements a HTTP server for WinBinder HtmlControl. As WinBinder
+ * HtmlControl cannot interact with the main application in the ordinar way,
+ * they have to communicate with the main application through a socket
+ * connection. To achieve this, the main application starts an instance of this
+ * class, registers the HtmlControls, which are notified when a new HTTP
+ * request read.
  */
 class HtmlControlServer extends Server {
   /**
-   * the window this server is associated with, normally this would be the main window of the application
+   * the window this server is associated with, normally this would be the main
+   * window of the application
    *
    * @var \Woody\Components\Windows\AbstractWindow
    */
@@ -48,7 +54,9 @@ class HtmlControlServer extends Server {
   /**
    * This method registers a given HtmlControl.
    *
-   * @param \Woody\Components\Controls\HtmlControl $control the HtmlControl to be registered
+   * @param \Woody\Components\Controls\HtmlControl $control the HtmlControl to
+   * be registered
+   *
    * @return HtmlControlServer $this
    */
   public function register(HtmlControl $control) {
@@ -72,7 +80,8 @@ class HtmlControlServer extends Server {
   /**
    * @inheritdoc
    *
-   * It reads upto 2048 bytes, packs it into a respective HTTPRequest object, and routes it to all registered HtmlControls.
+   * It reads upto 2048 bytes, packs it into a respective HTTPRequest object,
+   * and routes it to all registered HtmlControls.
    */
   protected function processClient(ServerSocket $clientSocket) {
     $message = trim($clientSocket->read(2048));
@@ -110,7 +119,9 @@ class HtmlControlServer extends Server {
   }
 
   /**
-   * This method performs the client-socket selection exactly once, instead of doing it constantly in a loop as in Server::run(). This allows any client code to model the client-socket selection as prefered.
+   * This method performs the client-socket selection exactly once, instead of
+   * doing it constantly in a loop as in Server::run(). This allows any client
+   * code to model the client-socket selection as prefered.
    */
   private function loopOnce() {
     $this->select();

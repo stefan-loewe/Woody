@@ -63,7 +63,8 @@ class ListModel implements \SplSubject {
    * @return \Woody\Model\ListModel $this
    */
   public function addElement($item) {
-    // $this->data[] = $item; did not work when adding elements after having deleted some, as appending was done at previous max index
+    // $this->data[] = $item; did not work when adding elements after having
+    // deleted some, as appending was done at previous max index
 
     $this->data[$this->count()] = $item;
 
@@ -96,7 +97,8 @@ class ListModel implements \SplSubject {
    * This method returns the element at the specified index.
    *
    * @param int $index the index from where to get the element
-   * @return mixed the element at the specified index, or null if non exists at that index
+   * @return mixed the element at the specified index, or null if none exists
+   * at that index
    */
   public function getElementAt($index) {
     if($this->data->offsetExists($index)) {

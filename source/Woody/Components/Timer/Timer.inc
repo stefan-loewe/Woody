@@ -89,7 +89,8 @@ class Timer {
   }
 
   /**
-   * This method starts the timer. If it was already started before without being destroyed since, an exception is thrown.
+   * This method starts the timer. If it was already started before without being destroyed since, an exception is
+   * thrown.
    *
    * @return Woody\Components\Timer\Timer $this
    */

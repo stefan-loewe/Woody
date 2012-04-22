@@ -34,7 +34,9 @@ class KeyEvent extends Event {
    */
   public function __toString() {
     return parent::__toString().PHP_EOL.
-            'key = '.$this->getPressedKey().PHP_EOL.
-            'A/C/S = '.$this->isAltKeyPressed().'/'.$this->isCtrlKeyPressed().'/'.$this->isShiftKeyPressed();
+      'key = '.$this->getPressedKey().PHP_EOL.
+      'A/C/S = '.$this->isAltKeyPressed()
+      .'/'.$this->isCtrlKeyPressed()
+      .'/'.$this->isShiftKeyPressed();
   }
 }

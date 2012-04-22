@@ -31,10 +31,13 @@ class Frame extends Control implements Container {
   }
 
   /**
-   * This method adds a control to the frame. Calling this method twice with the same object behaves like moving the control from one parent to the other.
+   * This method adds a control to the frame. Calling this method twice with the same object behaves like moving the
+   * control from one parent to the other.
    *
-   * The controls are only added logically to the frame, physically, they are added to the window to which the frame belongs.
-   * Furthermore, creating of the control (in respect to winbinder) is done only here, and not in the constructor, as the parent element has to be known.
+   * The controls are only added logically to the frame, physically, they are added to the window to which the frame
+   * belongs.
+   * Furthermore, creating of the control (in respect to winbinder) is done only here, and not in the constructor, as
+   * the parent element has to be known.
    *
    * @param Component $control
    * @return Frame
