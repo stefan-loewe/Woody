@@ -55,7 +55,26 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests the starting of a timer by checking if the callback gets executed at least once after the timer has been started.
+   * This method tests the construction of a timer.
+   *
+   * @covers Woody\Components\Timer\Timer::__construct
+   */
+  public function testConstruct() {
+    $this->timer = new Timer(function() {
+                              $this->timer->destroy();
+                              $this->window->destroy();
+
+                              $this->assertEquals(1, ++$this->counter);
+                            }, $this->window, Timer::TEST_TIMEOUT);
+
+    $this->timer->start();
+
+    $this->window->startEventHandler();
+  }
+
+  /**
+   * This method tests the starting of a timer by checking if the callback gets executed at least once after the timer
+   * has been started.
    *
    * @covers Woody\Components\Timer\Timer::start
    */
@@ -138,7 +157,11 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException\TimerAlreadyRunningException is thrown, when starting an already started timer.
+   * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException\TimerAlreadyRunningException is
+   * thrown, when starting an already started timer.
+   *
+   * @covers \Woody\Components\Timer\Timer::start
+   * @covers \Woody\Components\Timer\TimerAlreadyRunningException::__construct()
    */
   public function testTimerAlreadyRunningException() {
     $this->timer = new Timer(function() {
@@ -161,9 +184,33 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException\TimerNotRunningException is thrown, when destroying an timer which was not yet started.
+   * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException\TimerNotRunningException is thrown,
+   * when destroying an timer which was not yet started.
+   *
+   * @covers Woody\Components\Timer\Timer::run
+   * @covers \Woody\Components\Timer\TimerNotRunningException::__construct()
    */
-  public function testTimerNotRunningException() {
+  public function testTimerNotRunningRunException() {
+    $this->timer = new Timer(function() {}, $this->window, Timer::TEST_TIMEOUT);
+
+    try {
+      $this->timer->run();
+    }
+    catch(TimerNotRunningException $tnre) {
+      return;
+    }
+
+    $this->fail('The expected TimerNotRunningException has not been raised.');
+  }
+
+  /**
+   * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException\TimerNotRunningException is thrown,
+   * when destroying an timer which was not yet started.
+   *
+   * @covers Woody\Components\Timer\Timer::destroy
+   * @covers \Woody\Components\Timer\TimerNotRunningException::__construct()
+   */
+  public function testTimerNotRunningDestroyException() {
     $this->timer = new Timer(function() {}, $this->window, Timer::TEST_TIMEOUT);
 
     try {
