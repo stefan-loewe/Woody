@@ -118,7 +118,7 @@ class ListModel implements \SplSubject {
   public function getIndexOf($element) {
     $currentIndex = 0;
 
-    foreach($this->data as $key => $currentElement) {
+    foreach($this->data as $currentElement) {
       if($currentElement == $element) {
         return $currentIndex;
       }
@@ -167,7 +167,7 @@ class ListModel implements \SplSubject {
    * @return \Woody\Model\ListModel $this
    */
   public function removeAllElements() {
-    foreach($this->data as $index => $entry) {
+    foreach($this->data as $entry) {
       unset($entry);
     }
 
