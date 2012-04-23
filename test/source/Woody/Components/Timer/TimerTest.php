@@ -161,7 +161,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * thrown, when starting an already started timer.
    *
    * @covers \Woody\Components\Timer\Timer::start
-   * @covers \Woody\Components\Timer\TimerAlreadyRunningException::__construct()
+   * @covers \Woody\Components\Timer\TimerAlreadyRunningException::__construct
    */
   public function testTimerAlreadyRunningException() {
     $this->timer = new Timer(function() {
@@ -188,7 +188,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * when destroying an timer which was not yet started.
    *
    * @covers Woody\Components\Timer\Timer::run
-   * @covers \Woody\Components\Timer\TimerNotRunningException::__construct()
+   * @covers \Woody\Components\Timer\TimerNotRunningException::__construct
    */
   public function testTimerNotRunningRunException() {
     $this->timer = new Timer(function() {}, $this->window, Timer::TEST_TIMEOUT);
@@ -208,7 +208,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * when destroying an timer which was not yet started.
    *
    * @covers Woody\Components\Timer\Timer::destroy
-   * @covers \Woody\Components\Timer\TimerNotRunningException::__construct()
+   * @covers \Woody\Components\Timer\TimerNotRunningException::__construct
    */
   public function testTimerNotRunningDestroyException() {
     $this->timer = new Timer(function() {}, $this->window, Timer::TEST_TIMEOUT);
