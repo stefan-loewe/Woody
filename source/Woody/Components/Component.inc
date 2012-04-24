@@ -61,7 +61,7 @@ abstract class Component implements IComponent {
   /**
    * the parent container of this window
    *
-   * @var Container (to-be-defined interface)
+   * @var Container
    */
   protected $parent = null;
 
@@ -152,58 +152,30 @@ abstract class Component implements IComponent {
    */
   abstract protected function create(Component $parent);
 
-  /**
-   * This method returns the winbinder control id of the component.
-   *
-   * @return int
-   */
   public function getControlID() {
     return $this->controlID;
   }
 
-  /**
-   * This method returns the woody id of the component.
-   *
-   * @return int
-   */
   public function getID() {
     return $this->id;
   }
 
-  /**
-   * This method returns the top left corner of the component.
-   *
-   * @return Woody\Utils\Geom\Point the top left corner of the component.
-   */
+  public function getParent() {
+    return $this->parent;
+  }
+
   public function getPosition() {
     return new Point($this->topLeftCorner->x, $this->topLeftCorner->y);
   }
 
-  /**
-   * This method returns the dimension of the top left corner of the component.
-   *
-   * @return Woody\Utils\Geom\Dimension the dimension of the control
-   */
   public function getDimension() {
     return new Dimension($this->dimension->width, $this->dimension->height);
   }
 
-  /**
-   * This method moves the component by an offset, given as dimension.
-   *
-   * @param \Utils\Geom\Dimension $dimension the dimension by which this point shall be moved by
-   * @return Component $this
-   */
   public function moveBy(Dimension $dimension) {
     return $this->move($this->topLeftCorner->moveBy($dimension));
   }
 
-  /**
-   * This method moves the top left corner of the component to the given point.
-   *
-   * @param Point $topLeftCorner the new point of the top left corner
-   * @return Component $this
-   */
   public function moveTo(Point $topLeftCorner) {
     return $this->move($topLeftCorner);
   }
@@ -227,22 +199,10 @@ abstract class Component implements IComponent {
     return $this;
   }
 
-  /**
-   * This method resizes the component by the offset given as a dimension.
-   *
-   * @param Dimension $dimension the offset by which the component has to be resized
-   * @return Component $this
-   */
   public function resizeBy(Dimension $dimension) {
     return $this->resize($this->dimension->resizeBy($dimension));
   }
-
-  /**
-   * This method resizes the component to the given dimension.
-   *
-   * @param Dimension $dimension the new dimension of the component.
-   * @return Component $this
-   */
+  
   public function resizeTo(Dimension $dimension) {
     return $this->resize($dimension);
   }

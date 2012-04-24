@@ -16,7 +16,7 @@ class TestApplication extends Application {
   /**
    * the shutdown timer of the application
    *
-   * @var \Closure
+   * @var Timer
    */
   private $shutdownTimer = null;
 
@@ -45,7 +45,7 @@ class TestApplication extends Application {
 
     $this->window->create(null);
 
-    $this->shutdownTimer->start($this->window);
+    $this->shutdownTimer->start();
   }
 
   /**

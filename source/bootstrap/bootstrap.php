@@ -22,3 +22,19 @@ function globalWinBinderEventHandler($windowID, $id, $controlID = 0, $type = 0, 
 
   \Woody\Event\EventFactory::createEvent($windowID, $id, $controlID, $type, $property);
 }
+
+$callback = function($errno, $errstr, $errfile, $errline) {
+  $errorException = new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+
+  if(strpos($errstr, 'wbIsWBObj:') === 0) {
+    throw new Woody\WinBinderErrorException(
+      'Error when using WinBinder object - original error message was "'.$errstr.'"',
+      0,
+      $errorException);
+  }
+  else {
+    throw $errorException;
+  }
+};
+
+set_error_handler($callback);

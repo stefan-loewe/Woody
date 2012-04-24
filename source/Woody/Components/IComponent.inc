@@ -24,6 +24,13 @@ interface IComponent {
   public function getID();
 
   /**
+   * This method returns the container holding the component.
+   *
+   * @return Container the container holding the component
+   */
+  public function getParent();
+
+  /**
    * This method returns the top left corner of the component.
    *
    * @return Woody\Utils\Geom\Point the top left corner of the component.

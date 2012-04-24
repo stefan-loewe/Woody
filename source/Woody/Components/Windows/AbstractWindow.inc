@@ -2,7 +2,7 @@
 
 namespace Woody\Components\Windows;
 
-use \Woody\Components\Component;
+use Woody\Components\Component;
 use \Woody\Components\Container;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
@@ -38,15 +38,9 @@ abstract class AbstractWindow extends Component implements Container {
 
   public function create(Component $parent = null) {
     $this->controlID = wb_create_window(
-      $this->parent === null ? null : $this->parent->getControlID(),
-      $this->type,
-      $this->value,
-      $this->topLeftCorner->x,
-      $this->topLeftCorner->y,
-      $this->dimension->width,
-      $this->dimension->height,
-      $this->style | WBC_TASKBAR | WBC_NOTIFY,
-      $this->getParamters()
+      $this->parent === null ? null : $this->parent->getControlID(), $this->type, $this->value, $this->topLeftCorner->x,
+      $this->topLeftCorner->y, $this->dimension->width, $this->dimension->height,
+      $this->style | WBC_TASKBAR | WBC_NOTIFY, $this->getParameters()
     );
 
     static::$components[$this->controlID] = $this;
@@ -80,16 +74,13 @@ abstract class AbstractWindow extends Component implements Container {
     return $this;
   }
 
+  /**
+   * @inheritDoc
+   *
+   * The resizing will adhere to some form of sanatizing, as windows widths/heights of e.g. "0" are not possible.
+   */
   protected function resize(Dimension $dimension) {
-    $dimension  = WindowConstraints::getInstance()->sanatize($dimension);
-    $width      = $dimension->width;
-    $height     = $dimension->height;
-
-    wb_set_size($this->controlID, $width, $height);
-
-    $this->dimension = new Dimension($width, $height);
-
-    return $this;
+    return parent::resize(WindowConstraints::getInstance()->sanatize($dimension));
   }
 
   /**
@@ -101,10 +92,7 @@ abstract class AbstractWindow extends Component implements Container {
    */
   public function add(Component $control) {
     if($control->parent !== null) {
-      $this->remove($control);
-    }
-    else {
-
+      $control->parent->remove($control);
     }
 
     $control->create($this);
@@ -118,6 +106,7 @@ abstract class AbstractWindow extends Component implements Container {
     if($this->children->offsetExists($control)) {
       $this->children->offsetUnset($control);
 
+      // removing implies destroying the winbinder resource here
       wb_destroy_control($control->controlID);
 
       $control->controlID = null;
@@ -132,12 +121,12 @@ abstract class AbstractWindow extends Component implements Container {
    *
    * @return int
    */
-  private function getParamters() {
+  private function getParameters() {
     return $this->param
       | WBC_MOUSEDOWN
       | WBC_MOUSEUP
       | WBC_DBLCLICK
-      /*| WBC_MOUSEMOVE */
+      /* | WBC_MOUSEMOVE */
       | WBC_KEYDOWN
       | WBC_KEYUP
       | WBC_GETFOCUS
