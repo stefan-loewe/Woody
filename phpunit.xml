@@ -6,7 +6,9 @@
 
 <testsuites>
    <testsuite name="woody">
-     <directory suffix="php">./test/*/*</directory>
+     <directory suffix="php">./test/source/Woody/Components/Windows*</directory>
+     <directory suffix="php">./test/source/Woody/Components/Controls*</directory>
+     <directory suffix="php">./test/source/Woody/Components/Timer*</directory>
    </testsuite>
 </testsuites>
 <logging>

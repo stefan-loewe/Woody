@@ -100,17 +100,6 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests starting the event loop of the window.
-   *
-   * @covers \Woody\Components\Windows\AbstractWindow::startEventHandler
-   */
-  public function testStartEventHandler() {
-    $this->markTestIncomplete(
-          'Implement this in isolation - otherwise too many side-effects/dependencies'
-        );
-  }
-
-  /**
    * This method tests adding components to the window.
    *
    * @covers \Woody\Components\Windows\AbstractWindow::add
