@@ -9,6 +9,8 @@
      <directory suffix="php">./test/source/Woody/Components/Windows*</directory>
      <directory suffix="php">./test/source/Woody/Components/Controls*</directory>
      <directory suffix="php">./test/source/Woody/Components/Timer*</directory>
+
+     <directory suffix="php">.test/source/Woody/Model*</directory>
    </testsuite>
 </testsuites>
 <logging>
