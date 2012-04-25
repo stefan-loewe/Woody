@@ -62,14 +62,12 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
     $this->timer = new Timer(function() {
           $this->timer->destroy();
           $this->window->destroy();
-          var_dump('3: '.microtime(true));
+
           $this->assertEquals(1, ++$this->counter);
         }, $this->window, Timer::TEST_TIMEOUT);
 
     $this->timer->start();
-    var_dump('1: '.microtime(true));
     $this->window->startEventHandler();
-    var_dump('2: '.microtime(true));
   }
 
   /**

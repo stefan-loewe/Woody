@@ -58,7 +58,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the window.
    *
-   * @covers \Woody\Components\Component::create
+   * @covers \Woody\Components\Windows\AbstractWindow::create
    * @covers \Woody\Components\Windows\AbstractWindow::getParameters
    */
   public function testCreate() {
@@ -117,16 +117,18 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    */
   public function testAdd() {
     $checkbox = new \Woody\Components\Controls\Checkbox(false, new Point(10, 10), new Dimension(10, 10));
+    $this->assertNull($checkbox->getParent());
 
     $this->window->add($checkbox);
-
     $this->assertEquals($this->window, $checkbox->getParent());
 
     $this->window2 = new MainWindow('MainWindow2', new Point(11, 22), new Dimension(555, 333));
     $this->window2->create();
     $this->window2->add($checkbox);
-
     $this->assertEquals($this->window2, $checkbox->getParent());
+
+    $this->window->add($checkbox);
+    $this->assertEquals($this->window, $checkbox->getParent());
 
     $this->window2->destroy();
   }
@@ -137,41 +139,17 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Windows\AbstractWindow::remove
    */
   public function testRemove() {
-    $this->markTestIncomplete(
-      'Implement this in isolation - otherwise too many side-effects/dependencies'
-    );
-    /*
-    $this->window333 = new MainWindow('MainWindow333', new Point(11, 22), new Dimension(555, 333));
-    $this->window333->create(null);
-    $this->timer3333 = new Timer(function() {
-          //$this->timer->destroy();
-          //$this->window333->destroy();
-          $this->window333->add($this->checkbox);
-          var_dump('3: '.microtime(true));
-          $this->assertEquals(1, 1);
-          $this->window444->startEventHandler();
-        }, $this->window333, 2000);
+    $checkbox = new \Woody\Components\Controls\Checkbox(false, new Point(10, 10), new Dimension(10, 10));
+    $this->assertNull($checkbox->getParent());
 
-    $this->window444 = new MainWindow('MainWindow444', new Point(500, 522), new Dimension(555, 333));
-    $this->window444->create(null);
-    $this->timer4444 = new Timer(function() {
-          $this->window444->add($this->checkbox);
-          //$this->timer->destroy();
-          //$this->window333->destroy();
-          var_dump('4: '.microtime(true));
-          $this->assertEquals(1, 1);
-        }, $this->window444, 2000);
+    $this->window->remove($checkbox);
+    $this->assertNull($checkbox->getParent());
 
-    $this->checkbox = new \Woody\Components\Controls\Checkbox(false, new Point(10, 10), new Dimension(10, 10));
+    $this->window->add($checkbox);
+    $this->assertEquals($this->window, $checkbox->getParent());
 
-    $this->window444->add($this->checkbox);
-
-    $this->timer3333->start();
-    sleep(1);
-    $this->timer4444->start();
-    var_dump('1: '.microtime(true));
-    $this->window333->startEventHandler();
-    var_dump('2: '.microtime(true));*/
+    $this->window->remove($checkbox);
+    $this->assertNull($checkbox->getParent());
   }
 
   /**
