@@ -48,7 +48,7 @@ abstract class Control extends Component {
   /**
    * This method calculates the absolute position of the control.
    *
-   * This is necessarry, as any control is not really bound to its parent control, but to the window if belongs to.
+   * This is necessarry, as any control is not really bound to its parent control, but to the container it belongs to.
    * This is done, as some controls do not fire events properly when being bound to a frame instead of a window.
    * However, if the control is positioned, it has to be positioned relative to its logical parent, therefore, the
    * offset has to be taken into account.
@@ -61,7 +61,7 @@ abstract class Control extends Component {
     $parent = $this;
     while(($parent = $parent->parent) != null) {
       if($parent instanceof Frame) {
-        $absTopLeftCorner = $absTopLeftCorner->moveBy($parent->topLeftCorner->x, $parent->topLeftCorner->y);
+        $absTopLeftCorner = $absTopLeftCorner->moveBy(new Dimension($parent->topLeftCorner->x, $parent->topLeftCorner->y));
       }
     }
 

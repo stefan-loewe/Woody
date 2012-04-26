@@ -12,7 +12,7 @@ class InvisibleArea extends Control {
    * @param Point $topLeftCorner the top left corner of the invisible area
    * @param Dimension $dimension the dimension of the invisible area
    */
-  public function __construct($value, Point $topLeftCorner, Dimension $dimension) {
+  public function __construct(Point $topLeftCorner, Dimension $dimension) {
     parent::__construct(null, $topLeftCorner, $dimension);
 
     $this->type = InvisibleArea;

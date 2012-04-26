@@ -68,7 +68,7 @@ class ScrollBarTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\Slider::setRange
+   * @covers \Woody\Components\Controls\ScrollBar::setRange
    */
   public function testSetRange() {
     $this->timer = new Timer(function() {

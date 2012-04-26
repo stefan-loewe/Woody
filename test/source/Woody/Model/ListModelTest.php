@@ -30,14 +30,27 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * @covers \Woody\Model\ListModel::__construct
+   */
+  public function testConstruct() {
+    $this->listModel = new ListModel(new \ArrayObject($rawData = array(1, 2, 3, 4, 5)));
+
+    $this->assertEquals(count($rawData), $this->listModel->count());
+
+    foreach($rawData as $index => $item) {
+      $this->assertEquals($item, $this->listModel->getElementAt($index));
+    }
+  }
+
+  /**
    * @covers \Woody\Model\ListModel::setData
    */
   public function testSetData() {
-    $data = new \ArrayObject($array = array(1, 2, 3, 4, 5));
+    $data = new \ArrayObject($rawData = array(1, 2, 3, 4, 5));
 
     $this->listModel->setData($data);
 
-    $this->assertEquals(count($array), $this->listModel->count());
+    $this->assertEquals(count($rawData), $this->listModel->count());
   }
 
   /**

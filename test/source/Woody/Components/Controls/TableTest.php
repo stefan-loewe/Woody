@@ -74,12 +74,27 @@ class TableTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers Woody\Components\Controls\Table::update
+   * @covers Woody\Components\Controls\Table::clear
+   * @covers Woody\Components\Controls\Table::fillColumnHeaders
+   * @covers Woody\Components\Controls\Table::fillDataCells
    */
   public function testUpdate() {
     $this->timer = new Timer(function() {
-                              $model = $this->createModel();
+                              $this->table->setSelectedIndex(1);
+                              $this->assertEquals(new \ArrayObject(), $this->table->getSelectedIndex());
+
+                              $model = $this->createModel(0, 0);
                               $model->attach($this->table);
                               $this->table->setModel($model);
+                              $this->table->setSelectedIndex(1);
+                              $this->assertEquals(new \ArrayObject(), $this->table->getSelectedIndex());
+
+                              $model = $this->createModel(5, 2);
+                              $model->attach($this->table);
+                              $this->table->setModel($model);
+                              $this->table->setSelectedIndex(1);
+                              $this->assertEquals(new \ArrayObject(array(0 => 1)), $this->table->getSelectedIndex());
+
 
                               $this->timer->destroy();
                               $this->application->stop();
@@ -101,7 +116,7 @@ class TableTest extends \PHPUnit_Framework_TestCase {
                               $this->table->setSelectedIndex(10);
                               $this->assertEquals(new \ArrayObject(), $this->table->getSelectedIndex());
 
-                              $model = $this->createModel();
+                              $model = $this->createModel(5, 2);
                               $model->attach($this->table);
                               $this->table->setModel($model);
 
@@ -131,17 +146,17 @@ class TableTest extends \PHPUnit_Framework_TestCase {
    *
    * @return \Woody\Model\TableModel the mocked model object
    */
-  private function createModel() {
+  private function createModel($columns, $rows) {
     $model = $this->getMockBuilder('\Woody\Model\TableModel')
             ->disableOriginalConstructor()
             ->getMock();
 
     $model->expects($this->any())
             ->method('getColumnCount')
-            ->will($this->returnValue($columns = 5));
+            ->will($this->returnValue($columns));
     $model->expects($this->any())
             ->method('getRowCount')
-            ->will($this->returnValue($rows = 2));
+            ->will($this->returnValue($rows));
     $model->expects($this->exactly($columns * $rows))
             ->method('getEntry')
             ->will($this->onConsecutiveCalls(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));

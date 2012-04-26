@@ -34,7 +34,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->application = new TestApplication();
 
-    $this->editBox = new EditBox('testValue', new Point(20, 20), new Dimension(100, 18));
+    $this->editBox = new EditBox('', new Point(20, 20), new Dimension(100, 18));
 
     $this->application->getWindow()->add($this->editBox);
   }
@@ -54,11 +54,19 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetValue() {
     $this->timer = new Timer(function() {
-                              $this->assertEquals('testValue', $this->editBox->getValue());
-                              $this->timer->destroy();
+          $value = 'testGetValue';
+          $this->editBox->setValue($value);
+          $this->assertEquals($value, $this->editBox->getValue());
 
-                              $this->application->stop();
-                            }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+          $this->editBox->setValue('   ');
+          $this->assertNull($this->editBox->getValue());
+
+          $this->editBox->setValue(null);
+          $this->assertNull($this->editBox->getValue());
+
+          $this->timer->destroy();
+          $this->application->stop();
+        }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
     $this->timer->start($this->application->getWindow());
 
@@ -72,10 +80,11 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetValueTrimmed() {
     $this->timer = new Timer(function() {
-                              $this->editBox->setValue('     testValue     ');
-                              $this->assertEquals('testValue', $this->editBox->getValue());
-                              $this->timer->destroy();
+                              $value = '     testGetValueTrimmed     ';
+                              $this->editBox->setValue($value);
+                              $this->assertEquals(trim($value), $this->editBox->getValue());
 
+                              $this->timer->destroy();
                               $this->application->stop();
                             }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
@@ -91,7 +100,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetValueNotTrimmed() {
     $this->timer = new Timer(function() {
-                              $value = '     testValue     ';
+                              $value = '     testGetValueNotTrimmed     ';
                               $this->editBox->setValue($value);
                               $this->assertEquals($value, $this->editBox->getValue(FALSE));
                               $this->timer->destroy();

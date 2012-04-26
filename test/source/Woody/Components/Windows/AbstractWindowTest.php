@@ -123,7 +123,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests adding components to the window.
+   * This method tests removing components from the window.
    *
    * @covers \Woody\Components\Windows\AbstractWindow::remove
    */

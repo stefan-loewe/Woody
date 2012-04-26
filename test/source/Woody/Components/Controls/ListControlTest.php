@@ -124,6 +124,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
   /**
    * @covers \Woody\Components\Controls\ListControl::getSelectedIndex
    * @covers \Woody\Components\Controls\ListControl::setSelectedIndex
+   * @covers \Woody\Components\Controls\ListControl::isValidIndex
    */
   public function testGetSetSelectedIndex() {
     $this->timer = new Timer(function() {
