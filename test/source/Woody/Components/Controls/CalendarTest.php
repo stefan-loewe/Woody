@@ -55,18 +55,19 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
   public function testGetSetDate() {
     $this->timer = new Timer(function() {
                               $date = \DateTime::createFromFormat('d.m.Y H:i:s', '1.1.2011 00:00:00');
+                              $correct = TRUE;
                               for($i = 0; $i <= 1000; ++$i) {
                                 $date = $date->add(new \DateInterval('P1D'));
                                 $this->calendar->setDate($date);
-                                $this->assertEquals($date->format('d.m.Y'), $this->calendar->getDate()->format('d.m.Y'));
+                                $correct = $correct && ($date->format('d.m.Y') === $this->calendar->getDate()->format('d.m.Y'));
                               }
-                              $this->timer->destroy();
+                              $this->assertTrue($correct);
 
+                              $this->timer->destroy();
                               $this->application->stop();
                             }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
     $this->timer->start();
-
     $this->application->start();
   }
 }

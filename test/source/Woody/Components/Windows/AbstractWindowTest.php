@@ -145,6 +145,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * This method tests moving the window by an offset.
    *
    * @covers \Woody\Components\Component::moveBy
+   * @covers \Woody\Components\Component::move
    */
   public function testMoveBy() {
     $this->window->moveBy(new Dimension(10, 10));
@@ -155,23 +156,20 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(160, $this->window->getPosition()->x);
     $this->assertEquals(360, $this->window->getPosition()->y);
 
-    $this->window->moveBy(new Dimension(-300, 300));
+    $this->window->moveBy(new Dimension(-150, -340));
+    $this->assertEquals(10, $this->window->getPosition()->x);
+    $this->assertEquals(20, $this->window->getPosition()->y);
+
+    $this->window->moveBy(new Dimension(-10, -20));
     $this->assertEquals(0, $this->window->getPosition()->x);
-    $this->assertEquals(660, $this->window->getPosition()->y);
-
-    $this->window->moveBy(new Dimension(140, -660));
-    $this->assertEquals(140, $this->window->getPosition()->x);
     $this->assertEquals(0, $this->window->getPosition()->y);
-
-    $this->window->moveBy(new Dimension(300, 200));
-    $this->assertEquals(440, $this->window->getPosition()->x);
-    $this->assertEquals(200, $this->window->getPosition()->y);
   }
 
   /**
    * This method tests moving the window to a location.
    *
    * @covers \Woody\Components\Component::moveTo
+   * @covers \Woody\Components\Component::move
    */
   public function testMoveTo() {
     $this->window->moveTo(new Point(0, 0));
@@ -182,13 +180,9 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(400, $this->window->getPosition()->x);
     $this->assertEquals(300, $this->window->getPosition()->y);
 
-    $this->window->moveTo(new Point(4000, 3000));
-    $this->assertEquals(4000, $this->window->getPosition()->x);
-    $this->assertEquals(3000, $this->window->getPosition()->y);
-
-    $this->window->moveTo(new Point(-400, -300));
-    $this->assertEquals(0, $this->window->getPosition()->x);
-    $this->assertEquals(0, $this->window->getPosition()->y);
+    $this->window->moveTo(new Point(100, 200));
+    $this->assertEquals(100, $this->window->getPosition()->x);
+    $this->assertEquals(200, $this->window->getPosition()->y);
 
     $this->window->moveTo(new Point(0, 0));
     $this->assertEquals(0, $this->window->getPosition()->x);
@@ -200,31 +194,20 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    *
    * @covers \Woody\Components\Windows\AbstractWindow::resize
    * @covers \Woody\Components\Component::resizeBy
+   * @covers \Woody\Components\Component::resize
    */
-  public function testResizeBy() {return;
+  public function testResizeBy() {
     $this->window->resizeBy(new Dimension(0, 0));
     $this->assertEquals(300, $this->window->getDimension()->width);
     $this->assertEquals(200, $this->window->getDimension()->height);
 
-    $this->window->resizeBy(new Dimension(100, 200));
-    $this->assertEquals(400, $this->window->getDimension()->width);
+    $this->window->resizeBy(new Dimension(500, 400));
+    $this->assertEquals(800, $this->window->getDimension()->width);
+    $this->assertEquals(600, $this->window->getDimension()->height);
+
+    $this->window->resizeBy(new Dimension(-100, -200));
+    $this->assertEquals(700, $this->window->getDimension()->width);
     $this->assertEquals(400, $this->window->getDimension()->height);
-
-    $this->window->resizeBy(new Dimension(500, 600));
-    $this->assertEquals(900, $this->window->getDimension()->width);
-    $this->assertEquals(1000, $this->window->getDimension()->height);
-
-    $this->window->resizeBy(new Dimension(-878, -966));
-    $this->assertEquals(WindowConstraints::getInstance()->minWidth, $this->window->getDimension()->width);
-    $this->assertEquals(WindowConstraints::getInstance()->minHeight, $this->window->getDimension()->height);
-
-    $this->window->resizeBy(new Dimension(-200, -100));
-    $this->assertEquals(WindowConstraints::getInstance()->minWidth, $this->window->getDimension()->width);
-    $this->assertEquals(WindowConstraints::getInstance()->minHeight, $this->window->getDimension()->height);
-
-    $this->window->resizeBy(new Dimension(168, 166));
-    $this->assertEquals(300, $this->window->getDimension()->width);
-    $this->assertEquals(204, $this->window->getDimension()->height);
   }
 
   /**
@@ -232,6 +215,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    *
    * @covers \Woody\Components\Windows\AbstractWindow::resize
    * @covers \Woody\Components\Component::resizeTo
+   * @covers \Woody\Components\Component::resize
    */
   public function testResizeTo() {
     $this->window->resizeTo(new Dimension(300, 200));
@@ -241,14 +225,6 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
     $this->window->resizeTo(new Dimension(600, 400));
     $this->assertEquals(600, $this->window->getDimension()->width);
     $this->assertEquals(400, $this->window->getDimension()->height);
-
-    $this->window->resizeTo(new Dimension(0, 0));
-    $this->assertEquals(WindowConstraints::getInstance()->minWidth, $this->window->getDimension()->width);
-    $this->assertEquals(WindowConstraints::getInstance()->minHeight, $this->window->getDimension()->height);
-
-    $this->window->resizeTo(new Dimension(-100, -200));
-    $this->assertEquals(WindowConstraints::getInstance()->minWidth, $this->window->getDimension()->width);
-    $this->assertEquals(WindowConstraints::getInstance()->minHeight, $this->window->getDimension()->height);
 
     $this->window->resizeTo(new Dimension(300, 200));
     $this->assertEquals(300, $this->window->getDimension()->width);

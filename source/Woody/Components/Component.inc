@@ -119,12 +119,12 @@ abstract class Component implements IComponent {
    * This method return an unique identifier for each control
    *
    * The fact that this method is public is an implementation detail - the Timer class needs this functionality, too.
-   * Do not cal this method.
+   * Do not call this method yourself.
    *
    * @return int
    */
   public static function getUniqueID() {
-    return++self::$IDENTIFIER;
+    return ++self::$IDENTIFIER;
   }
 
   /**
@@ -202,7 +202,7 @@ abstract class Component implements IComponent {
   public function resizeBy(Dimension $dimension) {
     return $this->resize($this->dimension->resizeBy($dimension));
   }
-  
+
   public function resizeTo(Dimension $dimension) {
     return $this->resize($dimension);
   }
