@@ -69,6 +69,13 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
     return $node->isLeaf();
   }
 
+  /**
+   * This method appends the given child node to the given parent.
+   *
+   * @param \TreeNode $parent the parent where to append the child on
+   * @param \TreeNode $child the child to append
+   * @return DefaultTreeModel $this
+   */
   public function appendChild($parent, $child) {
     $parent->appendChild($child);
 
