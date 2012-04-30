@@ -29,7 +29,7 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->data = [[1, 2, 3, 4], [5, 6, 7 ,8]];
+    $this->data = array(array(1, 2, 3, 4), array(5, 6, 7 ,8));
 
     $this->tableModel = new DefaultTableModel($this->data);
   }
