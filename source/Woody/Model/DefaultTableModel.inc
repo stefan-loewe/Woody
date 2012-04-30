@@ -10,6 +10,11 @@ class DefaultTableModel extends TableModel {
    */
   protected $data = null;
 
+  /**
+   * This method acts as the constructor of the class.
+   *
+   * @param array $data the data of the table model.
+   */
   public function __construct(array $data) {
     parent::__construct();
 

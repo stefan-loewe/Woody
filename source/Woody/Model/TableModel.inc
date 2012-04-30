@@ -41,7 +41,7 @@ abstract class TableModel implements \SplSubject {
    *
    * @param int $rowIndex the row index from where to get the entry
    * @param int $columnIndex the column index from where to get the entry
-   * @return minxed the entry at the specified position
+   * @return mixed the entry at the specified position
    */
   abstract function getEntry($rowIndex, $columnIndex);
 
