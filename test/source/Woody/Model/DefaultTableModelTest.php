@@ -15,12 +15,12 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
    *
    * @var DefaultTableModel
    */
-  private $tableModel  = null;
+  private $tableModel = null;
 
   /**
    * the raw data of the table model
    *
-   * @var TreeNode
+   * @var array
    */
   private $data       = null;
 
@@ -42,6 +42,8 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * This method tests that creating the table model succeeds.
+   *
    * @covers \Woody\Model\DefaultTableModel::__construct
    */
   public function testConstruct() {
@@ -52,6 +54,8 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * This method tests getting a cell entry.
+   *
    * @covers \Woody\Model\DefaultTableModel::getEntry
    */
   public function testGetEntry() {
@@ -62,8 +66,7 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method barely tests that when getChildCount is called, the call is forwarded to the tree node and returned
-   * unchanged.
+   * This method tests retrieving the current number of rows.
    *
    * @covers \Woody\Model\DefaultTableModel::getRowCount
    */
@@ -72,9 +75,28 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * This method tests retrieving the current number of columns.
+   *
    * @covers \Woody\Model\DefaultTableModel::getColumnCount
    */
   public function testGetColumnCount() {
     $this->assertEquals(4, $this->tableModel->getColumnCount());
+  }
+
+  /**
+   * This method tests setting new data.
+   *
+   * @covers \Woody\Model\DefaultTableModel::setData
+   */
+  public function testSetData() {
+    $this->assertEquals(1, $this->tableModel->getEntry(0, 0));
+
+    $this->tableModel->setData(array(array('A1', 'B1'), array('A2', 'B2'), array('A3', 'B3')));
+    $this->assertEquals('A1', $this->tableModel->getEntry(0, 0));
+    $this->assertEquals('B1', $this->tableModel->getEntry(0, 1));
+    $this->assertEquals('A2', $this->tableModel->getEntry(1, 0));
+    $this->assertEquals('B2', $this->tableModel->getEntry(1, 1));
+    $this->assertEquals('A3', $this->tableModel->getEntry(2, 0));
+    $this->assertEquals('B3', $this->tableModel->getEntry(2, 1));
   }
 }

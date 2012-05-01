@@ -110,10 +110,8 @@ abstract class TableModel implements \SplSubject {
    * @return \Woody\Model\TableModel $this
    */
   public function notify() {
-    /* if(!$this->isAdjusting) */ {
-      foreach($this->observers as $observer) {
-        $observer->update($this);
-      }
+    foreach($this->observers as $observer) {
+      $observer->update($this);
     }
 
     return $this;

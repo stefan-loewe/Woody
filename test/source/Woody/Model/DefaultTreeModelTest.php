@@ -140,6 +140,20 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * This method tests that, when attaching an observer and appending a child, update() has to be called once on the
+   * observer - called within notify() of the tree model.
+   *
+   * @covers \Woody\Model\DefaultTreeModel::notify
+   */
+  public function testNotify() {
+    $observer = $this->getObserver();
+
+    $observer->expects($this->once())->method('update');
+    $this->treeModel->attach($observer);
+    $this->treeModel->appendChild($this->root, $this->getChildNode());
+  }
+
+  /**
+   * This method tests that, when attaching an observer and appending a child, update() has to be called once on the
    * observer, but when detaching it, update() is not called anymore.
    *
    * @covers \Woody\Model\DefaultTreeModel::detach
@@ -153,20 +167,6 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
 
     $observer->expects($this->never())->method('update');
     $this->treeModel->detach($observer);
-    $this->treeModel->appendChild($this->root, $this->getChildNode());
-  }
-
-  /**
-   * This method tests that, when attaching an observer and appending a child, update() has to be called once on the
-   * observer - called within notify() of the tree model.
-   *
-   * @covers \Woody\Model\DefaultTreeModel::notify
-   */
-  public function testNotify() {
-    $observer = $this->getObserver();
-
-    $observer->expects($this->once())->method('update');
-    $this->treeModel->attach($observer);
     $this->treeModel->appendChild($this->root, $this->getChildNode());
   }
 

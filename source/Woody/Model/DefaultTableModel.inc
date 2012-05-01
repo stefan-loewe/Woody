@@ -38,4 +38,15 @@ class DefaultTableModel extends TableModel {
 
     return $columnCount;
   }
+
+  /**
+   * This method sets the data of the table model.
+   *
+   * @param array $data the data of the table model
+   */
+  public function setData(array $data) {
+    $this->data = $data;
+
+    $this->notify();
+  }
 }

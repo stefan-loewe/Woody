@@ -253,6 +253,18 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * @covers \Woody\Model\ListModel::notify
+   */
+  public function testNotify() {
+    $observer = $this->getMock('SplObserver', array('update'));
+    $observer->expects($this->once())
+            ->method('update');
+
+    $this->listModel->attach($observer);
+    $this->listModel->addElement('a');
+  }
+
+  /**
    * @covers \Woody\Model\ListModel::detach
    */
   public function testDetach() {
@@ -265,17 +277,5 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
     $this->listModel->detach($observer);
     $this->listModel->addElement('a');
     $observer->expects($this->never())->method('update');
-  }
-
-  /**
-   * @covers \Woody\Model\ListModel::notify
-   */
-  public function testNotify() {
-    $observer = $this->getMock('SplObserver', array('update'));
-    $observer->expects($this->once())
-            ->method('update');
-
-    $this->listModel->attach($observer);
-    $this->listModel->addElement('a');
   }
 }
