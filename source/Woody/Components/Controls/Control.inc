@@ -61,7 +61,8 @@ abstract class Control extends Component {
     $parent = $this;
     while(($parent = $parent->parent) != null) {
       if($parent instanceof Frame) {
-        $absTopLeftCorner = $absTopLeftCorner->moveBy(new Dimension($parent->topLeftCorner->x, $parent->topLeftCorner->y));
+        $offset = new Dimension($parent->topLeftCorner->x, $parent->topLeftCorner->y);
+        $absTopLeftCorner = $absTopLeftCorner->moveBy($offset);
       }
     }
 
