@@ -49,6 +49,8 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting and setting the timestamp from the calendar.
    *
+   * NOTE: coverage annotations fail here - coverage always at 0%, so skipped them
+   *
    * @covers \Woody\Components\Controls\Calendar::getDate
    * @covers \Woody\Components\Controls\Calendar::setDate
    */
@@ -56,7 +58,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
     $this->timer = new Timer(function() {
                               $date = \DateTime::createFromFormat('d.m.Y H:i:s', '1.1.2011 00:00:00');
                               $correct = TRUE;
-                              for($i = 0; $i <= 1000; ++$i) {
+                              for($i = 0; $i <= 366 * 4; ++$i) {
                                 $date = $date->add(new \DateInterval('P1D'));
                                 $this->calendar->setDate($date);
                                 $correct = $correct && ($date->format('d.m.Y') === $this->calendar->getDate()->format('d.m.Y'));

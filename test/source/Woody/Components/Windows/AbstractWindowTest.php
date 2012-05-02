@@ -103,6 +103,8 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * This method tests adding components to the window.
    *
    * @covers \Woody\Components\Windows\AbstractWindow::add
+   * @covers \Woody\Components\Controls\Control::create
+   * @covers \Woody\Components\Controls\Control::calculateAbsoluteTopLeftCorner
    */
   public function testAdd() {
     $checkbox = new \Woody\Components\Controls\Checkbox(false, new Point(10, 10), new Dimension(10, 10));

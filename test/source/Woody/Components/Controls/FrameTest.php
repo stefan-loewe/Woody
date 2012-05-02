@@ -51,6 +51,8 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
    *
    * @covers \Woody\Components\Component::getWindow
    * @covers \Woody\Components\Controls\Frame::add
+   * @covers \Woody\Components\Controls\Control::create
+   * @covers \Woody\Components\Controls\Control::calculateAbsoluteTopLeftCorner
    */
   public function testAdd() {
     $this->timer = new Timer(function() {

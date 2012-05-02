@@ -6,11 +6,11 @@
 
 <testsuites>
    <testsuite name="woody">
-     <directory suffix="php">./test/source/Woody/Model*</directory>
-     <file>./test/source/Woody/Components/ComponentTest.php</file>
-     <directory suffix="php">./test/source/Woody/Components/Windows*</directory>
      <directory suffix="php">./test/source/Woody/Components/Controls*</directory>
-     <directory suffix="php">./test/source/Woody/Components/Timer*</directory>
+<file>./test/source/Woody/Components/ComponentTest.php</file>
+<directory suffix="php">./test/source/Woody/Model*</directory>
+<directory suffix="php">./test/source/Woody/Components/Windows*</directory>
+<directory suffix="php">./test/source/Woody/Components/Timer*</directory>
    </testsuite>
 </testsuites>
 <logging>
