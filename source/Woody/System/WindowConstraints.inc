@@ -22,20 +22,6 @@ class WindowConstraints {
   private $minHeight = null;
 
   /**
-   * the highest width that is possible for a window on the current machine, with the current display settings
-   *
-   * @var int
-   */
-  private $maxWidth = null;
-
-  /**
-   * the highest height that is possible for a window on the current machine, with the current display settings
-   *
-   * @var int
-   */
-  private $maxHeight = null;
-
-  /**
    * the instance that this singleton encapsulates
    *
    * @var Woody\System\WindowConstraints
@@ -65,13 +51,8 @@ class WindowConstraints {
     );
 
     $this->determineMinima();
-    $this->determineMaxima();
 
     wb_destroy_window($this->window);
-  }
-
-  public function __get($memberName) {
-    return $this->$memberName;
   }
 
   /**
@@ -98,28 +79,12 @@ class WindowConstraints {
 
     $this->minWidth = $dimension[0];
     $this->minHeight = $dimension[1];
-
     return $this;
   }
 
-  /**
-   * This method calculates and sets the maximal width and height a window may have with the current display settings.
-   *
-   * @return Woody\System\WindowConstraints $this
-   */
-  private function determineMaxima() {
-    wb_set_size($this->window, 99999, 99999);
-    $dimension = wb_get_size($this->window);
-
-    $this->maxWidth = $dimension[0];
-    $this->maxHeight = $dimension[1];
-
-    return $this;
-  }
-
-  public function sanatize(Dimension $dimension) {
-    $width = min($this->maxWidth, max($this->minWidth, $dimension->width));
-    $height = min($this->maxHeight, max($this->minHeight, $dimension->height));
+  public function ensureMinimalDimension(Dimension $dimension) {
+    $width = max($this->minWidth, $dimension->width);
+    $height = max($this->minHeight, $dimension->height);
 
     return new Dimension($width, $height);
   }
