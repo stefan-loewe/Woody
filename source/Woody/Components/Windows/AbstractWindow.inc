@@ -80,7 +80,7 @@ abstract class AbstractWindow extends Component implements Container {
    * The resizing will adhere to some form of sanatizing, as windows widths/heights of e.g. "0" are not possible.
    */
   protected function resize(Dimension $dimension) {
-    return parent::resize(WindowConstraints::getInstance()->ensureMinimalDimension($dimension));
+    return parent::resize(WindowConstraints::getInstance()->enforceConstraints($dimension));
   }
 
   /**

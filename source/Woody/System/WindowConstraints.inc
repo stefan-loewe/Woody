@@ -77,13 +77,19 @@ class WindowConstraints {
     wb_set_size($this->window, 0, 0);
     $dimension = wb_get_size($this->window);
 
-    $this->minWidth = $dimension[0];
-    $this->minHeight = $dimension[1];
+    $this->minWidth   = $dimension[0];
+    $this->minHeight  = $dimension[1];
     return $this;
   }
 
-  public function ensureMinimalDimension(Dimension $dimension) {
-    $width = max($this->minWidth, $dimension->width);
+  /**
+   * This method enforces the contraints on the given dimension, and mutates it accordingly.
+   *
+   * @param Dimension $dimension the dimension to enforce the contraints on
+   * @return \Utils\Geom\Dimension the dimension with the contraints enforced
+   */
+  public function enforceConstraints(Dimension $dimension) {
+    $width  = max($this->minWidth, $dimension->width);
     $height = max($this->minHeight, $dimension->height);
 
     return new Dimension($width, $height);
