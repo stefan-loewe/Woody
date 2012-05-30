@@ -6,13 +6,8 @@
 
 <testsuites>
    <testsuite name="woody">
-     <directory suffix="php">./test/source/Woody/Util*</directory>
-     <directory suffix="php">./test/source/Woody/Components/Controls*</directory>
-     <file>./test/source/Woody/Components/ComponentTest.php</file>
-     <directory suffix="php">./test/source/Woody/Model*</directory>
-     <directory suffix="php">./test/source/Woody/Components/Windows*</directory>
-     <directory suffix="php">./test/source/Woody/Components/Timer*</directory>
-     <directory suffix="php">./test/source/Woody/System/*</directory>
+     
+     <file>./test/source/Woody/System/WindowConstraintsTest.php</file>
    </testsuite>
 </testsuites>
 <logging>

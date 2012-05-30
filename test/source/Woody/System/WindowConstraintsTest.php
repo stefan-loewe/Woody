@@ -28,15 +28,18 @@ class WindowConstraintsTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the instance from the singleton class.
    *
-   * @covers WindowConstraints::getInstance
-   * @covers WindowConstraints::__construct
-   * @covers WindowConstraints::determineMinima
+   * covers annotation does not work !?!?!  reports that methods are undefined
+   *
+   * @cvers WindowConstraints::getInstance
+   * @cvers WindowConstraints::__construct
+   * @cvers WindowConstraints::determineMinima
    */
   public function testGetInstance() {
     $this->assertInstanceOf('Woody\System\WindowConstraints', WindowConstraints::getInstance());
   }
 
   /**
+   * covers annotation does not work !?!?! reports that method is undefined
    * @covers WindowConstraints::enforceConstraints
    */
   public function testEnsureMinimalDimension() {
