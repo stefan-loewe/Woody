@@ -12,6 +12,7 @@
      <directory suffix="php">./test/source/Woody/Model*</directory>
      <directory suffix="php">./test/source/Woody/Components/Windows*</directory>
      <directory suffix="php">./test/source/Woody/Components/Timer*</directory>
+     <directory suffix="php">./test/source/Woody/System/*</directory>
    </testsuite>
 </testsuites>
 <logging>
