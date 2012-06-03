@@ -41,6 +41,7 @@ class HtmlControlServer extends Server {
   /**
    * This method acts as the constructor of the class.
    *
+   * @param AbstractWindow $window the window associated with the server, normally the main window of the application
    * @param int $port the port the server is bound to.
    */
   public function __construct(AbstractWindow $window, $port) {

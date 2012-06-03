@@ -24,6 +24,7 @@ class ReplyServer extends Server {
   /**
    * This method acts as the constructor of the class.
    *
+   * @param AbstractWindow $window the window associated with the server, normally the main window of the application
    * @param int $port the port the server is bound to.
    */
   public function __construct(AbstractWindow $window, $port) {
@@ -35,8 +36,7 @@ class ReplyServer extends Server {
   /**
    * @inheritdoc
    *
-   * It reads upto 2048 bytes, packs it into a respective HTTPRequest object,
-   * and routes it to all registered HtmlControls.
+   * In this simple example, the message of the client is reveresed and sent back.
    */
   protected function processClient(ServerSocket $clientSocket) {
     $message = trim($clientSocket->read(2048));

@@ -66,7 +66,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
                               $this->application->stop();
                             }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-    $this->timer->start($this->application->getWindow());
+    $this->timer->start();
 
     $this->application->start();
   }
@@ -94,7 +94,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
                               $this->application->stop();
                             }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-    $this->timer->start($this->application->getWindow());
+    $this->timer->start();
 
     $this->application->start();
   }
