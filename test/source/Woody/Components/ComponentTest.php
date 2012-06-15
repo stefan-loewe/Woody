@@ -60,7 +60,6 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-
   }
 
   /**

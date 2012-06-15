@@ -59,6 +59,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::__construct
    */
   public function testConstruct() {
+    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           $this->timer->destroy();
           $this->window->destroy();
@@ -77,6 +78,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::start
    */
   public function testStart() {
+    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           $this->timer->destroy();
           $this->window->destroy();
@@ -95,6 +97,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::run
    */
   public function testRun() {
+    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           if(++$this->counter > 10) {
             $this->timer->destroy();
@@ -114,6 +117,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::destroy
    */
   public function testDestroy() {
+    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           ++$this->counter;
 
@@ -134,6 +138,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::getID
    */
   public function testGetID() {
+    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           $this->assertEquals($this->window->getID() + 1, $this->timer->getID());
 
@@ -160,6 +165,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::getTimerByID
    */
   public function testGetTimerByID() {
+    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           $this->timer->destroy();
           $this->window->destroy();
@@ -185,6 +191,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Timer\TimerAlreadyRunningException::__construct
    */
   public function testTimerAlreadyRunningException() {
+    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           try {
             $this->timer->start();
@@ -212,14 +219,14 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Timer\TimerNotRunningException::__construct
    */
   public function testTimerNotRunningRunException() {
-    $this->timer = new Timer(function() {
-
-        }, $this->window, Timer::TEST_TIMEOUT);
+    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
+    $this->timer = new Timer(function(){}, $this->window, Timer::TEST_TIMEOUT);
 
     try {
       $this->timer->run();
     }
     catch(TimerNotRunningException $tnre) {
+      $this->window->destroy();
       return;
     }
 
@@ -234,14 +241,14 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Timer\TimerNotRunningException::__construct
    */
   public function testTimerNotRunningDestroyException() {
-    $this->timer = new Timer(function() {
-
-        }, $this->window, Timer::TEST_TIMEOUT);
+    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
+    $this->timer = new Timer(function(){}, $this->window, Timer::TEST_TIMEOUT);
 
     try {
       $this->timer->destroy();
     }
     catch(TimerNotRunningException $tnre) {
+      $this->window->destroy();
       return;
     }
 

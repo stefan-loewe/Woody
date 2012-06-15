@@ -43,13 +43,10 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-
   }
 
   /**
    * This method tests getting and setting the timestamp from the calendar.
-   *
-   * NOTE: coverage annotations fail here - coverage always at 0%, so skipped them
    *
    * @covers \Woody\Components\Controls\Calendar::getDate
    * @covers \Woody\Components\Controls\Calendar::setDate

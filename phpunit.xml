@@ -6,7 +6,7 @@
 
 <testsuites>
    <testsuite name="woody">
-   <testsuite name="woody">
+     <file>./test/source/Woody/Server/HtmlControlServerTest.php</file>
      <directory suffix="php">./test/source/Woody/Util*</directory>
      <directory suffix="php">./test/source/Woody/Components/Controls*</directory>
      <file>./test/source/Woody/Components/ComponentTest.php</file>
@@ -15,9 +15,6 @@
      <directory suffix="php">./test/source/Woody/Components/Timer*</directory>
      <directory suffix="php">./test/source/Woody/System/*</directory>
      <file>./test/source/Woody/System/WindowConstraintsTest.php</file>
-     <file>./test/source/Woody/Server/HtmlControlServerTest.php</file>
-   </testsuite>
-
    </testsuite>
 </testsuites>
 <logging>
@@ -28,3 +25,35 @@
  <log type="junit" target="build/logs/junit.xml" logIncompleteSkipped="false"/>
 </logging>
 </phpunit>
+
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+  backupStaticAttributes="false"
+  syntaxCheck="false"
+  bootstrap="./source/bootstrap/bootstrap.php">
+
+  <testsuites>
+    <testsuite name="woodyTimers">
+      <directory suffix="php">./test/source/Woody/Components/Timer*</directory>
+    </testsuite>
+    <testsuite name="woody1">
+      <directory suffix="php">./test/source/Woody/System/*</directory>
+      <file>./test/source/Woody/Server/HtmlControlServerTest.php</file>
+      <file>./test/source/Woody/System/WindowConstraintsTest.php</file>
+      <directory suffix="php">./test/source/Woody/Util*</directory>
+      <directory suffix="php">./test/source/Woody/Components/Controls*</directory>
+      <file>./test/source/Woody/Components/ComponentTest.php</file>
+      <directory suffix="php">./test/source/Woody/Model*</directory>
+      <directory suffix="php">./test/source/Woody/Components/Windows*</directory>
+    </testsuite>
+  </testsuites>
+  <logging>
+    <log type="coverage-html" target="build/coverage" title="woody"
+      charset="UTF-8" yui="true" highlight="true"
+      lowUpperBound="35" highLowerBound="70"/>
+    <log type="coverage-clover" target="build/logs/clover.xml"/>
+    <log type="junit" target="build/logs/junit.xml" logIncompleteSkipped="false"/>
+  </logging>
+</phpunit>
+-->

@@ -17,6 +17,9 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
    */
   private $server;
 
+  /**
+   * @var int simple counter for asserting that body of function is executed
+   */
   private $counter = 0;
 
   /**
@@ -31,14 +34,13 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-
   }
 
   /**
    * This method tests registering and untegistering HTML contols to and from the server.
    *
-   * @covers HtmlControlServer::register
-   * @covers HtmlControlServer::unregister
+   * @covers \Woody\Server\HtmlControlServer::register
+   * @covers \Woody\Server\HtmlControlServer::unregister
    */
   public function testRegisterUnregister() {
     $window = $this->getMockBuilder('\Woody\Components\Windows\AbstractWindow')
@@ -58,16 +60,16 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests starting the server, as well as receiving and processing events.
    *
-   * @covers HtmlControlServer::start
+   * @covers \Woody\Server\HtmlControlServer::start
    */
   public function testStart() {
     $this->application  = new TestApplication();
+    wb_set_text($this->application->getWindow()->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->server       = new HtmlControlServer($this->application->getWindow(), 7777);
     $this->callback     = function() {
       $this->timer->destroy();
       $this->application->stop();
       //$this->server->stop();
-
       $this->assertEquals(1, $this->counter);
     };
     $this->timer        = new Timer($this->callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
