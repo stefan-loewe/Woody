@@ -6,6 +6,8 @@
 
 <testsuites>
    <testsuite name="woody">
+     <!-- this one should be first, as it references a singleton, which otherwise gets instantiated -->
+     <file>./test/source/Woody/System/WindowConstraintsTest.php</file>
      <file>./test/source/Woody/Server/HtmlControlServerTest.php</file>
      <directory suffix="php">./test/source/Woody/Util*</directory>
      <directory suffix="php">./test/source/Woody/Components/Controls*</directory>
@@ -14,7 +16,6 @@
      <directory suffix="php">./test/source/Woody/Components/Windows*</directory>
      <directory suffix="php">./test/source/Woody/Components/Timer*</directory>
      <directory suffix="php">./test/source/Woody/System/*</directory>
-     <file>./test/source/Woody/System/WindowConstraintsTest.php</file>
    </testsuite>
 </testsuites>
 <logging>
