@@ -37,7 +37,22 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests registering and untegistering HTML contols to and from the server.
+   * This method tests constructing a new server.
+   *
+   * @covers \Woody\Server\HtmlControlServer::__construct
+   */
+  public function testConstruct() {
+    $window = $this->getMockBuilder('\Woody\Components\Windows\AbstractWindow')
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    $this->server = new HtmlControlServer($window, 9997);
+
+    $this->assertInstanceOf('Woody\Server\HtmlControlServer', $this->server);
+  }
+
+  /**
+   * This method tests registering and untegistering HTML controls to and from the server.
    *
    * @covers \Woody\Server\HtmlControlServer::register
    * @covers \Woody\Server\HtmlControlServer::unregister
@@ -47,20 +62,22 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
       ->disableOriginalConstructor()
       ->getMock();
 
-    $this->server = new HtmlControlServer($window, 9999);
+    $this->server = new HtmlControlServer($window, 9998);
 
     $htmlControl = $this->getMockBuilder('\Woody\Components\Controls\HtmlControl')
       ->disableOriginalConstructor()
       ->getMock();
 
-    $this->assertInstanceOf('Woody\Server\HtmlControlServer', $this->server->register($htmlControl));
-    $this->assertInstanceOf('Woody\Server\HtmlControlServer', $this->server->unregister($htmlControl));
+    $this->assertInstanceOf('\Woody\Server\HtmlControlServer', $this->server->register($htmlControl));
+    $this->assertInstanceOf('\Woody\Server\HtmlControlServer', $this->server->unregister($htmlControl));
   }
 
   /**
    * This method tests starting the server, as well as receiving and processing events.
    *
    * @covers \Woody\Server\HtmlControlServer::start
+   * @covers \Woody\Server\HtmlControlServer::loopOnce
+   * @covers \Woody\Server\HtmlControlServer::processClient
    */
   public function testStart() {
     $this->application  = new TestApplication();
@@ -80,7 +97,6 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
     // and also sets counter to 1
     $htmlControl->addActionListener(new \Woody\Event\ActionAdapter(function($event) {
             $this->assertEquals('writing stuff to server socket', $event->property->getRawRequest());
-
             $this->counter = 1;
           }));
 

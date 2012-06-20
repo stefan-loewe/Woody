@@ -5,6 +5,7 @@ use \Woody\Components\Windows\MainWindow;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 use \Woody\Event\ActionEvent;
+use \Woody\Server\HtmlControlServer;
 use \Woody\Components\Controls\HTMLControl;
 use \Woody\Event\ActionAdapter;
 use \Woody\Components\Controls\PushButton;
@@ -17,9 +18,9 @@ require_once(realpath(__DIR__.'../../../source/bootstrap/bootstrap.php'));
 class HTMLControlDemo extends Application {
 
     /**
-     * the BuiltInWebServer this application uses to server and interact with content
+     * the HtmlControlServer this application uses to serve and interact with content
      *
-     * @var BuiltInWebServer
+     * @var HtmlControlServer
      */
     private $server         = null;
 
@@ -40,7 +41,7 @@ class HTMLControlDemo extends Application {
 
         $this->port         = $port;
 
-        $this->window       = new MainWindow('built-in-webserver', new Point(50, 50), new Dimension(800, 500));
+        $this->window       = new MainWindow('custom webserver', new Point(50, 50), new Dimension(800, 500));
         $this->window->create();
 
         $this->htmlControl  = new HTMLControl('http://127.0.0.1:'.$this->port, new Point(50, 50), new Dimension(350, 300));
@@ -75,41 +76,46 @@ class HTMLControlDemo extends Application {
                             $this->editArea->setValue(urldecode($keyValuePairs['eventData']));
                         }
                         else {
-                            $content = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-                                        <html>
-                                            <head>
-                                                <title>
-                                                    Woody - interactive HTMLControl
-                                                </title>
-                                                <script type="text/javascript">
-                                                    function sendEventData(event) {
-                                                        data = "";
-                                                        for(prop in event)
-                                                            data = prop + ": " + event[prop] + "\n" + data;
+                            $header = 'HTTP/1.1 200 OK'."\r\n".
+                            'Connection: close'."\r\n".
+                            'Content-Type: text/html; charset=ISO-8859-1'."\r\n";
+                            $event->type->write($header);
 
-                                                        data = escape(data);
+                            $content = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
+                                        .'<html>'
+                                            .'<head>'
+                                                .'<title>'
+                                                    .'Woody - interactive HTMLControl'
+                                                .'</title>'
+                                                .'<script type="text/javascript">'
+                                                    .'function sendEventData(event) {'
+                                                        .'data = "";'
+                                                        .'for(prop in event)'
+                                                            .'data = prop + ": " + event[prop] + "\n" + data;'
 
-                                                        conn = new XMLHttpRequest();
-                                                        conn.open("GET", "http://127.0.0.1:'.$this->port.'?eventData=" + data, true);
-                                                        conn.send(null);
-                                                    }
-                                                </script>
-                                            </head>
-                                            <body onclick="sendEventData(event)">
-                                                <h1>Woody</h1>
-                                                <div>
-                                                    <img src="woody.png" alt="woody logo"/>
-                                                </div>
-                                                <div>
-                                                    this site was requested on '.date('d.m.Y \a\t H:i:s', isset($keyValuePairs['time']) ? $keyValuePairs['time'] : time()).'
-                                                    <br>
-                                                    this site was generated on '.date('d.m.Y \a\t H:i:s').'
-                                                    <br>
-                                                    name of selected file: '.($this->selectedFile == null ? 'none selected' : '"'.$this->selectedFile.'"').'
-                                                    <br>contents: '.($this->selectedFile == null ? 'none selected' : '<br><div style="position:relative;border:solid 1px black; overflow:scroll; width:100%; height:200px;">'.file_get_contents($this->selectedFile)).'</div>
-                                                </div>
-                                            </body>
-                                        </html>';
+                                                        .'data = escape(data);'
+
+                                                        .'conn = new XMLHttpRequest();'
+                                                        .'conn.open("GET", "http://127.0.0.1:'.$this->port.'?eventData=" + data, true);'
+                                                        .'conn.send(null);'
+                                                    .'}'
+                                                .'</script>'
+                                            .'</head>'
+                                            .'<body onclick="sendEventData(event)">'
+                                                .'<h1>Woody</h1>'
+                                                .'<div>'
+                                                    .'<img src="woody.png" alt="woody logo"/>'
+                                                .'</div>'
+                                                .'<div>'
+                                                    .'this site was requested on '.date('d.m.Y \a\t H:i:s', isset($keyValuePairs['time']) ? $keyValuePairs['time'] : time())
+                                                    .'<br>'
+                                                    .'this site was generated on '.date('d.m.Y \a\t H:i:s')
+                                                    .'<br>'
+                                                    .'name of selected file: '.($this->selectedFile == null ? 'none selected' : '"'.$this->selectedFile.'"')
+                                                    .'<br>contents: '.($this->selectedFile == null ? 'none selected' : '<br><div style="position:relative;border:solid 1px black; overflow:scroll; width:100%; height:200px;">'.nl2br(file_get_contents($this->selectedFile))).'</div>'
+                                                .'</div>'
+                                            .'</body>'
+                                        .'</html>';
                             $event->type->write($content);
                         }
                     }
@@ -130,21 +136,22 @@ class HTMLControlDemo extends Application {
                 ->add("Text document", "*.txt")
                 ->add("All files", "*.*");
 
-            $fileOpenDialog = new MultiFileOpenDialog();
-            //$fileOpenDialog = new FileOpenDialog('please select a file to include', $this->window, __DIR__.'\\', $fileFilters);
+            $fileOpenDialog = new FileOpenDialog(
+              'please select a file to include',
+              $this->window,
+              __DIR__.'\\',
+              $fileFilters);
 
             $fileOpenDialog->open();
+
             $this->selectedFile = $fileOpenDialog->getSelection();
             $this->htmlControl->setUrl('http://127.0.0.1:'.$this->port);
         };
     }
 
     public function start() {
-        $this->server = new \Woody\Server\HtmlControlServer($this->window,
-                                                            $this->port,
-                                                            __DIR__.'\\www');
-        $this->server->start(100)
-                     ->register($this->htmlControl);
+        $this->server = new HtmlControlServer($this->window, $this->port, __DIR__.'\\www');
+        $this->server->start(100)->register($this->htmlControl);
 
         $this->window->startEventHandler();
     }

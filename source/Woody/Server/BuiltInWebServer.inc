@@ -25,7 +25,7 @@ class BuiltInWebServer {
    *
    * @var HtmlControlServer
    */
-  private $htmlServer = null;
+  private $replyServer = null;
 
   /**
    * the php process running the built-in php web server
@@ -42,16 +42,42 @@ class BuiltInWebServer {
   private $documentRoot = null;
 
   /**
+   * the path to the PHP executable, e.g., "C:\\Program Files\\PHP54\\php.exe"
+   *
+   * @var string
+   */
+  private $pathToPhpExecutable = null;
+
+  /**
+   * the script which handles the routing for PHP's internal webserver
+   *
+   * @var string
+   */
+  private $routerScript = null;
+
+  /**
    * This method acts as the constructor of the class.
    *
    * @param AbstractWindow $window the window associated with the server, normally the main window of the application
    * @param int $port the port on which the server listens
    * @param string $documentRoot the document root of the server
+   * @param string $pathToPhpExecutable the path to the PHP executable, e.g., "C:\\Program Files\\PHP54\\php.exe"
+   * @param string $routerScript the script which handles the routing for PHP's internal webserver
+   * @param HtmlControlServer the server used to communicate with the router script of the built-in php web server
    */
-  public function __construct(AbstractWindow $window, $port, $documentRoot) {
-    $this->window       = $window;
-    $this->port         = $port;
-    $this->documentRoot = $documentRoot;
+  public function __construct(
+      AbstractWindow $window,
+      $port,
+      $documentRoot,
+      $pathToPhpExecutable,
+      $routerScript,
+      HtmlControlServer $replyServer) {
+    $this->window               = $window;
+    $this->port                 = $port;
+    $this->documentRoot         = $documentRoot;
+    $this->pathToPhpExecutable  = $pathToPhpExecutable;
+    $this->routerScript         = $routerScript;
+    $this->replyServer          = $replyServer;
   }
 
   /**
@@ -85,12 +111,9 @@ class BuiltInWebServer {
     $descriptors = array();
     $pipes = array();
 
-    $executeable  = '"C:\\Program Files\\PHP54\\php.exe"';
-    $routerScript = 'D:\\workspace\\programming\\PHP\\woody\\source\\server.php';
-
     // bypass_shell is true, so that process can be terminated, and is not "embedded" in cmd.exe process
     $this->process = proc_open(
-      $executeable.' -S 127.0.0.1:'.$this->port.' -t "'.$this->documentRoot.'" '.$routerScript,
+      $this->pathToPhpExecutable.' -S 127.0.0.1:'.$this->port.' -t "'.$this->documentRoot.'" '.$this->routerScript,
       $descriptors,
       $pipes,
       null,
@@ -107,7 +130,7 @@ class BuiltInWebServer {
    * @return BuiltInWebServer $this
    */
   public function register(HtmlControl $control) {
-    $this->htmlServer->register($control);
+    $this->replyServer->register($control);
 
     return $this;
   }
@@ -119,7 +142,7 @@ class BuiltInWebServer {
    * @return HtmlControlServer $this
    */
   public function unregister(HtmlControl $control) {
-    $this->htmlServer->unregister($control);
+    $this->replyServer->unregister($control);
 
     return $this;
   }
@@ -129,8 +152,6 @@ class BuiltInWebServer {
    * server.
    */
   private function startHtmlReplyServer() {
-    $this->htmlServer = new HtmlControlServer($this->window, 1234);
-
-    $this->htmlServer->start(100);
+    $this->replyServer->start(100);
   }
 }

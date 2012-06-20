@@ -9,6 +9,7 @@ use \Woody\Components\Controls\HTMLControl;
 use \Woody\Event\ActionAdapter;
 use \Woody\Components\Controls\PushButton;
 use \Woody\Server\BuiltInWebServer;
+use \Woody\Server\HtmlControlServer;
 
 require_once(realpath(__DIR__.'../../../source/bootstrap/bootstrap.php'));
 
@@ -21,6 +22,11 @@ class HTMLControlDemoBuiltInWebServer extends Application {
      */
     private $server = null;
 
+    /**
+     * the port on which the server is listening on.
+     *
+     * @var int
+     */
     private $port   = null;
 
     public function __construct($port) {
@@ -70,7 +76,7 @@ class HTMLControlDemoBuiltInWebServer extends Application {
 
     private function getBtnWebCallback() {
         return function() {
-            $this->htmlControl->setUrl('http://www.google.de');
+            $this->htmlControl->setUrl('http://www.google.com');
         };
     }
 
@@ -81,11 +87,15 @@ class HTMLControlDemoBuiltInWebServer extends Application {
     }
 
     public function start() {
-        $this->server = new BuiltInWebServer($this->window,
-                                            $this->port,
-                                            __DIR__.'\\www');
-        $this->server->start()
-                     ->register($this->htmlControl);
+        $this->server = new BuiltInWebServer(
+          $this->window,
+          $this->port,
+          __DIR__.'\\www',
+          '"C:\\Program Files\\PHP54\\php.exe"',
+          'D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
+          new HtmlControlServer($this->window, 1234));
+
+        $this->server->start()->register($this->htmlControl);
 
         $this->window->startEventHandler();
     }
