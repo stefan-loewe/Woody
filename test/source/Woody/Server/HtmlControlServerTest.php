@@ -4,6 +4,10 @@ namespace Woody\Server;
 
 use \Woody\App\TestApplication;
 use \Woody\Components\Timer\Timer;
+use \Utils\Geom\Dimension;
+use \Utils\Geom\Point;
+use \Woody\Components\Controls\HtmlControl;
+use \Woody\Event\ActionAdapter;
 
 /**
  * Test class for HtmlControlServer.
@@ -18,9 +22,9 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
   private $server;
 
   /**
-   * @var int simple counter for asserting that body of function is executed
+   * @var boolean simple flag to determine, if the action event of the HtmlControl was fired
    */
-  private $counter = 0;
+  private $eventFired = FALSE;
 
   /**
    * Sets up the fixture, for example, opens a network connection.
@@ -81,23 +85,26 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
    */
   public function testStart() {
     $this->application  = new TestApplication();
+
     wb_set_text($this->application->getWindow()->getControlID(), $this->getName().' in '.basename(__FILE__));
+
     $this->server       = new HtmlControlServer($this->application->getWindow(), 7777);
     $this->callback     = function() {
       $this->timer->destroy();
       $this->application->stop();
+      // @TODO: stopping fails
       //$this->server->stop();
-      $this->assertEquals(1, $this->counter);
+      $this->assertTrue($this->eventFired);
     };
     $this->timer        = new Timer($this->callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-    $htmlControl        = new \Woody\Components\Controls\HtmlControl("none", new \Utils\Geom\Point(10, 20), new \Utils\Geom\Dimension(200, 100));
+    $htmlControl        = new HtmlControl("none", new Point(10, 20), new Dimension(200, 100));
 
     // the action listener of the HTML control checks, if the received response equals the expected one,
     // and also sets counter to 1
-    $htmlControl->addActionListener(new \Woody\Event\ActionAdapter(function($event) {
+    $htmlControl->addActionListener(new ActionAdapter(function($event) {
             $this->assertEquals('writing stuff to server socket', $event->property->getRawRequest());
-            $this->counter = 1;
+            $this->eventFired = TRUE;
           }));
 
     $this->application->getWindow()->add($htmlControl);
