@@ -5,7 +5,6 @@ namespace Woody\Server;
 use \Woody\Components\Windows\AbstractWindow;
 use \Woody\Components\Controls\HtmlControl;
 use \Woody\Components\Timer\Timer;
-use \Woody\Event\EventHandler;
 use \Utils\Sockets\ServerSocket;
 use \Utils\Sockets\Server;
 use \Utils\Http\HttpRequestFactory;

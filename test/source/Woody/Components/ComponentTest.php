@@ -21,13 +21,6 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   private $component      = null;
 
   /**
-   * the test application
-   *
-   * @var \Woody\App\TestApplication
-   */
-  private $application    = false;
-
-  /**
    * the top-left corner of the component
    *
    * @var Point
@@ -60,6 +53,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
+    $this->window->destroy();
   }
 
   /**

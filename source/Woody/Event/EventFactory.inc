@@ -70,6 +70,8 @@ class EventFactory {
       }
     }
 
+    // for EditBox, an ActionEvent would be FocusLost + content changed = onChangeEvent
+
     // additionally, fire a ActionEvent if appropriate
     if(self::isControlEvent($id)) {
       $actionEvent = null;

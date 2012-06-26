@@ -26,11 +26,11 @@ class Handler implements Woody\Event\ActionListener {
 class FocusHandler implements Woody\Event\FocusListener {
 
   public function focusGained(\Woody\Event\FocusEvent $event) {
-    echo PHP_EOL.'hey, you focus the field with the value '.$event->getFocusGainedComponent()->getLabel();
+    echo PHP_EOL.'hey, you focus the field with the value '.$event->getFocusGainedComponent()->getValue();
   }
 }
 
-if(TRUE) {
+if(!TRUE) {
   $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(800, 600));
   $win->create();
   if(TRUE) {
@@ -163,7 +163,7 @@ else if(!TRUE) {
   var_dump($d->ok());
   var_dump($d->cancel());
 }
-else if(!TRUE) {
+else if(TRUE) {
   $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(400, 300));
   $win->create();
 

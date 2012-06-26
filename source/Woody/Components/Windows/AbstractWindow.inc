@@ -31,9 +31,6 @@ abstract class AbstractWindow extends Component implements Container {
     $this->type = $type;
 
     $this->parent = null;
-
-    // set the default event handler for closing the window
-    //$this->setEventHandler(self::getDefaultCallback());
   }
 
   public function create(Component $parent = null) {

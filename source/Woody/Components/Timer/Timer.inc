@@ -5,7 +5,6 @@ namespace Woody\Components\Timer;
 use \Woody\WinBinderException;
 use \Woody\Components\Component;
 use \Woody\Components\Windows\AbstractWindow;
-use \Woody\Event\EventHandler;
 
 class Timer {
   /**
@@ -134,8 +133,6 @@ class Timer {
     }
 
     $this->isRunning = false;
-
-    EventHandler::removeEventHandler($this);
 
     if(!wb_destroy_timer($this->window->getControlID(), $this->id)) {
       throw new WinBinderException('Unable to destroy winbinder timer object for timer with id '.$this->id);
