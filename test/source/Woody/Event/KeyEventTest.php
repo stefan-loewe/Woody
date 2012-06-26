@@ -8,7 +8,7 @@ namespace Woody\Event;
  */
 class KeyEventTest extends \PHPUnit_Framework_TestCase {
   /**
-   * @var KeyEvent
+   * @var KeyEvent the event to be tested
    */
   private $event = null;
 
@@ -31,6 +31,7 @@ class KeyEventTest extends \PHPUnit_Framework_TestCase {
    * This method tests creating the event.
    *
    * @covers \Woody\Event\KeyEvent::__construct
+   * @covers \Woody\Event\Event::__construct
    */
   public function testConstruct() {
     $this->assertInstanceOf('\Woody\Event\KeyEvent', $this->event);

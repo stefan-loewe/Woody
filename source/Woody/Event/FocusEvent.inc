@@ -3,7 +3,6 @@
 namespace Woody\Event;
 
 use \Woody\Components\Component;
-use \Utils\Geom\Point;
 
 class FocusEvent extends Event {
   /**
@@ -48,7 +47,7 @@ class FocusEvent extends Event {
    * @return Component the component which lost focus
    */
   public function getFocusLostComponent() {
-    return Component::getControlByID($this->controlID);
+    return $this->lostFocusComponent;
   }
 
   /**
