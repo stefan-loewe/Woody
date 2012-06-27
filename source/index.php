@@ -184,6 +184,10 @@ else if(TRUE) {
                               ->setCursor(3);
                     }
                   }));
+
+  $win->addMouseListener(new \Woody\Event\MouseAdapter(function($event) {
+    var_dump('$event->getClickCount() = '.$event->getClickCount());
+  }));
 }
 else if(!TRUE) {
   $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(400, 300));

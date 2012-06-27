@@ -69,8 +69,7 @@ class MouseEvent extends Event {
   }
 
   public function getClickCount() {
-    // TODO: get, thru a system call, the maximal duration between two consequtive clicks, so that the 2nd click is
-    // still considered a double-click
+    return EventFactory::getClickCount($this);
   }
 
   /**

@@ -26,17 +26,19 @@ class MouseAdapter implements MouseListener {
    * this event type will be executed
    */
   public function __construct(callable $onMousePressed = null, callable $onMouseReleased = null) {
-    $this->onMousePressed = $onMousePressed;
+    $this->onMousePressed  = $onMousePressed;
     $this->onMouseReleased = $onMouseReleased;
   }
 
   public function mousePressed(MouseEvent $event) {
-    if($this->onMousePressed != null)
+    if($this->onMousePressed != null) {
       $this->onMousePressed->__invoke($event);
+    }
   }
 
   public function mouseReleased(MouseEvent $event) {
-    if($this->onMouseReleased != null)
+    if($this->onMouseReleased != null) {
       $this->onMouseReleased->__invoke($event);
+    }
   }
 }

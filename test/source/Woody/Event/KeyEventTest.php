@@ -50,6 +50,7 @@ class KeyEventTest extends \PHPUnit_Framework_TestCase {
    * This method tests the string representation of the key event.
    *
    * @covers \Woody\Event\KeyEvent::__toString
+   * @covers \Woody\Event\Event::__toString
    */
   public function testToString() {
     $this->assertNotNull($this->event->__toString());

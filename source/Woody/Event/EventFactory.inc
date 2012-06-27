@@ -34,7 +34,12 @@ class EventFactory {
    */
   private static $KEY_UP_EVENT = 0x00000800;
 
+  private static $eventBuffer = null;
+
   public static function createEvent($windowID, $id, $controlID, $typeID, $propertyID) {
+    if(self::$eventBuffer === null) {
+      self::$eventBuffer = new RingBuffer(10);
+    }
 
     $source = \Woody\Components\Component::getComponentByID($controlID);
 
@@ -59,7 +64,15 @@ class EventFactory {
       $event = new MouseEvent($windowID, $id, $controlID, $typeID, $propertyID);
 
       foreach($source->getMouseListeners() as $mouseListener) {
-        ($typeID === WBC_MOUSEDOWN) ? $mouseListener->keyPressed($event) : $mouseListener->keyReleased($event);
+        if(($typeID & WBC_MOUSEDOWN) === WBC_MOUSEDOWN) {
+          if($event->getPressedButton() !== MouseEvent::NO_BUTTON) {
+            self::$eventBuffer->add($event);
+          }
+          $mouseListener->mousePressed($event);
+        }
+        else {
+          $mouseListener->mouseReleased($event);
+        }
       }
     }
     else if(self::isKeyEvent($typeID)) {
@@ -127,5 +140,74 @@ class EventFactory {
 
   private static function isControlEvent($id) {
     return $id !== 0;
+  }
+
+  public static function getClickCount(MouseEvent $event) {
+
+    if(self::$eventBuffer === null) {
+      self::$eventBuffer = new RingBuffer(10);
+    }
+
+    $libUser  = wb_load_library('USER');
+    $function = wb_get_function_address('GetDoubleClickTime', $libUser);
+    $interval = wb_call_function($function, array()) / 1000;
+
+    $button = $event->getPressedButton();
+    $clickCount = 1;
+
+    foreach(self::$eventBuffer->getReveresedQueue() as $index => $queuedEvent) {
+      //var_dump($queuedEvent);
+      if($event == $queuedEvent)
+        continue;
+
+      if($queuedEvent === null)
+        return $clickCount;
+
+      if($queuedEvent->getPressedButton() !== $button)
+        return $clickCount;
+
+      if(($event->time - $queuedEvent->time) > $interval) {
+        return $clickCount;
+      }
+
+      $clickCount++;
+    }
+
+    return $clickCount;
+  }
+}
+
+class RingBuffer {
+  private $buffer = null;
+
+  private $index  = 0;
+
+  public function __construct($size) {
+    $this->buffer = new \SplFixedArray($size);
+  }
+
+  public function add($item) {
+    $this->index = (++$this->index) % $this->buffer->getSize();
+
+    //var_dump('adding to index = '.$this->index);
+
+    $this->buffer[$this->index] = $item;
+  }
+
+  public function getReveresedQueue() {
+    $result = array();
+    for($i = 0; $i < $this->buffer->getSize(); $i++) {
+      $currentIndex = $this->index - $i;
+
+      if($currentIndex < 0) {
+        $currentIndex = $currentIndex + $this->buffer->getSize();
+      }
+
+      if($this->buffer[$currentIndex] !== null) {
+        $result[] = $this->buffer[$currentIndex];
+      }
+    }
+
+    return $result;
   }
 }

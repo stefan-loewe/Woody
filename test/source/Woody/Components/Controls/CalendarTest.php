@@ -27,6 +27,13 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
   private $application = false;
 
   /**
+   * the timer for the test application
+   *
+   * @var \Woody\Components\Timer\Timer
+   */
+  private $timer = null;
+
+  /**
    * Sets up the fixture, for example, opens a network connection.
    * This method is called before a test is executed.
    */

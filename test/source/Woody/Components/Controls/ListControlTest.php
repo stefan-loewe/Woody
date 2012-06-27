@@ -29,6 +29,13 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
   protected $application = null;
 
   /**
+   * the timer for the test application
+   *
+   * @var \Woody\Components\Timer\Timer
+   */
+  private $timer = null;
+
+  /**
    * Sets up the fixture, for example, opens a network connection.
    * This method is called before a test is executed.
    */
@@ -45,7 +52,6 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-
   }
 
   /**

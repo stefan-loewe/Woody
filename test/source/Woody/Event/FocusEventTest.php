@@ -19,6 +19,34 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
   private $event = null;
 
   /**
+   * a edit box for testing
+   *
+   * @var \Woody\Components\Controls\EditBox
+   */
+  private $control1 = null;
+
+  /**
+   * another edit box for testing
+   *
+   * @var \Woody\Components\Controls\EditBox
+   */
+  private $control2 = null;
+
+  /**
+   * the test application
+   *
+   * @var \Woody\App\TestApplication
+   */
+  private $application = false;
+
+/**
+   * the timer for the test application
+   *
+   * @var \Woody\Components\Timer\Timer
+   */
+  private $timer = null;
+
+  /**
    * Sets up the fixture, for example, opens a network connection.
    * This method is called before a test is executed.
    */
@@ -50,6 +78,7 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\FocusEvent::getFocusGainedComponent
    * @covers \Woody\Event\FocusEvent::getFocusLostComponent
    * @covers \Woody\Event\FocusEvent::__toString
+   * @covers \Woody\Event\Event::__toString
    */
   public function testGetFocusGainedComponent() {
     $this->application  = new TestApplication();

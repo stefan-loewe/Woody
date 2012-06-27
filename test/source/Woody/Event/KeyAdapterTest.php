@@ -50,7 +50,7 @@ class KeyAdapterTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Event\KeyAdapter::keyPressed
    * @covers Woody\Event\KeyAdapter::keyReleased
    */
-  public function testKeyPressed() {
+  public function testKeyPressedKeyReleased() {
     $event = $this->getMockBuilder('\Woody\Event\KeyEvent')
       ->disableOriginalConstructor()
       ->getMock();
