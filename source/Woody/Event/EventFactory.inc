@@ -58,6 +58,7 @@ class EventFactory {
     }
 
     else if(self::isFocusEvent($typeID)) {
+      var_dump('isFocusEvent');
       $event = new FocusEvent($windowID, $id, $controlID, $typeID, $propertyID, self::$previousFocusedControl);
       self::$previousFocusedControl = $source;
 
@@ -67,6 +68,7 @@ class EventFactory {
     }
 
     else if(self::isMouseEvent($typeID)) {
+      var_dump('isMouseEvent');
       $event = new MouseEvent($windowID, $id, $controlID, $typeID, $propertyID);
 
       if(self::isMouseDownEvent($typeID)) {
@@ -84,13 +86,12 @@ class EventFactory {
     }
 
     else if(self::isKeyEvent($typeID)) {
+      var_dump('isKeyEvent');
       $event = new KeyEvent($windowID, $id, $controlID, $typeID, $propertyID);
-
       foreach($source->getKeyListeners() as $keyListener) {
         ($typeID === WBC_KEYDOWN) ? $keyListener->keyPressed($event) : $keyListener->keyReleased($event);
       }
     }
-
     // for EditBox, an ActionEvent would be FocusLost + content changed = onChangeEvent
 
     // additionally, fire a ActionEvent if appropriate
@@ -102,6 +103,15 @@ class EventFactory {
       if(!self::isFocusEvent($typeID)) {
 
         if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\PushButton) {
+          $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
+        }
+        else if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\Slider) {
+          $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
+        }
+        else if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\EditBox) {
+          $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
+        }
+        else if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\Checkbox) {
           $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
         }
         else if(is_a($propertyID, 'Utils\Http\HttpGetRequest')) {
@@ -116,7 +126,8 @@ class EventFactory {
       }
     }
 
-    return $event;
+    // app crashes when returning event here, and also an ActionEvent was created !??!!?
+    //return $event;
   }
 
   private static function isWindowCloseEvent($id) {
@@ -124,7 +135,7 @@ class EventFactory {
   }
 
   private static function isMouseEvent($typeID) {
-    return is_int($typeID) && (($typeID & WBC_MOUSEDOWN) || ($typeID & WBC_MOUSEUP) || ($typeID && WBC_DBLCLICK));
+    return is_int($typeID) && (($typeID & WBC_MOUSEDOWN) || ($typeID & WBC_MOUSEUP) || ($typeID & WBC_DBLCLICK));
   }
 
   private static function isMouseDownEvent($typeID) {

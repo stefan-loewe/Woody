@@ -74,6 +74,15 @@ class Timer {
   }
 
   /**
+   * This method return the id of the timer.
+   *
+   * @return int
+   */
+  public function getID() {
+    return $this->id;
+  }
+
+  /**
    * This method returns the timer associated with the given woody id.
    *
    * @param int $timerID the woody id of the timer
@@ -142,11 +151,11 @@ class Timer {
   }
 
   /**
-   * This method return the id of the timer.
+   * This method determines if the timer is running or not.
    *
-   * @return int
+   * @return true if the the timer is running, else false
    */
-  public function getID() {
-    return $this->id;
+  public function isRunning() {
+    return $this->isRunning;
   }
 }

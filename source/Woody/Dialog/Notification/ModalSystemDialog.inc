@@ -4,7 +4,7 @@ namespace Woody\Dialog\Notification;
 
 use \Woody\Components\Windows\AbstractWindow;
 
-abstract class PopUpDialog {
+abstract class ModalSystemDialog {
   /**
    * the title of the dialog
    *

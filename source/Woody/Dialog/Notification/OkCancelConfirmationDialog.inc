@@ -4,7 +4,7 @@ namespace Woody\Dialog\Notification;
 
 use \Woody\Components\Windows\AbstractWindow;
 
-class OkCancelConfirmationDialog extends PopUpDialog {
+class OkCancelConfirmationDialog extends ConfirmationDialog {
   public function __construct($title, $text, AbstractWindow $parentWindow = null) {
     parent::__construct(WBC_OKCANCEL, $title, $text, $parentWindow);
   }

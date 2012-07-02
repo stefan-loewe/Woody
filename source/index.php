@@ -164,10 +164,57 @@ else if(!TRUE) {
   var_dump($d->cancel());
 }
 else if(TRUE) {
+/*
+    $libUser  = wb_load_library('Dxva2');
+    $function = wb_get_function_address('SetMonitorBrightness', $libUser);
+    $interval = wb_call_function($function, array());
+var_dump($interval);*/
+
+//  exec(('powershell -executionPolicy Unrestricted "D:/workspace/programming/PHP/woody/source/test.ps1" < NUL'));
+  //exec(('powershell -executionPolicy Unrestricted -Command "function set-monitorBrightness {  [CmdletBinding()] param ( [ValidateRange(0,100)] [int]$brightness ) $monitors = Get-WmiObject -Namespace root\wmi -Class WmiMonitorBrightnessMethods; foreach ($monitor in $monitors){ $monitor.WmiSetBrightness(5, $brightness) } }; set-monitorBrightness 10;" < NUL'));
+/*function set-monitorBrightness {  [CmdletBinding()] param ( [ValidateRange(0,100)] [int]$brightness ) $monitors = Get-WmiObject -Namespace root\wmi -Class WmiMonitorBrightnessMethods; foreach ($monitor in $monitors){ $monitor.WmiSetBrightness(5, $brightness) } }; set-monitorBrightness 10;*/
+
+/*function set-monitorBrightness {
+  [CmdletBinding()]
+  param (
+    [ValidateRange(0,100)]
+    [int]$brightness
+  )
+  $monitors = Get-WmiObject -Namespace root\wmi -Class WmiMonitorBrightnessMethods
+
+  foreach ($monitor in $monitors){
+    $monitor.WmiSetBrightness(5, $brightness)
+  }
+}
+set-monitorBrightness 10*/
+
+/*
+echo 1;
+  $wmi = new COM('winmgmts:root\wmi');
+echo 2;
+  $res = $wmi->get("WmiMonitorBrightnessMethods");
+echo 3;
+$timeout = pack("I", 10);
+var_dump($timeout);
+$brightness = pack("I", 10);
+var_dump($brightness);
+  $res->WmiSetBrightness($brightness, $timeout);
+echo 4;
+*/
+
+  /*
+$wmi = new COM('winmgmts://');
+  $processor = $wmi->ExecQuery("SELECT * FROM Win32_Processor");
+  foreach($processor as $obj){
+    $cpu_load_time = $obj->LoadPercentage;
+  }
+  echo $cpu_load_time;
+   */
+
   $win = new MainWindow('MyWin2', new Point(50, 50), new Dimension(400, 300));
   $win->create();
 
-  $box1 = new \Woody\Components\Controls\EditBox('', new Point(10, 10), new Dimension(300, 22));
+  $box1 = new \Woody\Components\Controls\EditBox('aa', new Point(10, 10), new Dimension(300, 22));
   $win->add($box1);
   $box2 = new \Woody\Components\Controls\EditBox('', new Point(10, 35), new Dimension(300, 22));
   $win->add($box2);
@@ -176,17 +223,60 @@ else if(TRUE) {
 
   $box1->addKeyListener(
           new \Woody\Event\KeyAdapter(
-                  null, function($ev) {
+                  null, function($ev) use ($win) {
                     $currentValue = $ev->getSource()->getValue();
+                    var_dump(1);
                     if(strlen($currentValue) > 3) {
                       $ev->getSource()
                               ->setValue(substr($currentValue, 0, 3))
                               ->setCursor(3);
+
+
+                      $d = new Woody\Dialog\FileSystem\MultiFileOpenDialog('testConstruct', $win, '.', null);
+                      $d->open();
                     }
                   }));
 
   $win->addMouseListener(new \Woody\Event\MouseAdapter(function($event) {
     var_dump('$event->getClickCount() = '.$event->getClickCount());
+  }));
+
+  $slider1 = new \Woody\Components\Controls\Slider(new Point(10, 60), new Dimension(300, 25));
+  $win->add($slider1);
+
+  $chkStayAwake = new \Woody\Components\Controls\Checkbox(0, new Point(10, 90), new Dimension(25, 25));
+  $win->add($chkStayAwake);
+
+  $chkStayAwake->addActionListener(new \Woody\Event\ActionAdapter(function($event) use ($win) {
+    $timer = new Timer(function() {
+      $libUser  = wb_load_library('Kernel32');
+      $function = wb_get_function_address('SetThreadExecutionState', $libUser);
+      $savor = wb_call_function($function, array(/*ES_DISPLAY_REQUIRED:=*/2));
+    }, $win, 55000);
+
+    $timer->start();
+
+
+    }));
+
+  $timers = array();
+    $slider1->setRange(0, 10)->addActionListener(new \Woody\Event\ActionAdapter(function($event) use ($win) {
+global $timers;
+
+    if(isset($timers[$event->getSource()->getID()]) && $timers[$event->getSource()->getID()]->isRunning()) {
+      $timers[$event->getSource()->getID()]->destroy();
+    }
+
+    $source = $event->getSource();
+    $timer = new Timer(function() use ($timers, $source) {
+      global $timers;
+
+      exec(('powershell -executionPolicy Unrestricted -Command "function set-monitorBrightness {  [CmdletBinding()] param ( [ValidateRange(0,100)] [int]$brightness ) $monitors = Get-WmiObject -Namespace root\wmi -Class WmiMonitorBrightnessMethods; foreach ($monitor in $monitors){ $monitor.WmiSetBrightness(5, $brightness) } }; set-monitorBrightness '.($source->getValue() * 10).';" < NUL'));
+      $timers[$source->getID()]->destroy();
+    }, $win, 1000);
+
+    $timer->start();
+    $timers[$event->getSource()->getID()] = $timer;
   }));
 }
 else if(!TRUE) {
