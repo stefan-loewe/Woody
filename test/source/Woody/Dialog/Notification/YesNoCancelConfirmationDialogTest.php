@@ -29,11 +29,11 @@ class YesNoCancelConfirmationDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers \Woody\Dialog\FileSystem\YesNoCancelConfirmationDialog::__construct
-   * @covers \Woody\Dialog\FileSystem\ConfirmationDialog::__construct
-   * @covers \Woody\Dialog\FileSystem\ModalSystemDialog::__construct
+   * @covers \Woody\Dialog\Notification\YesNoCancelConfirmationDialog::__construct
+   * @covers \Woody\Dialog\Notification\ConfirmationDialog::__construct
+   * @covers \Woody\Dialog\Notification\ModalSystemDialog::__construct
    */
-  public function YesNoCancelConfirmationDialog() {
+  public function testConstruct() {
     $this->dialog = new YesNoCancelConfirmationDialog('testConstruct', 'testConstruct', null);
 
     $this->assertInstanceOf('\Woody\Dialog\Notification\YesNoCancelConfirmationDialog', $this->dialog);

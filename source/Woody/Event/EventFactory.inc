@@ -4,6 +4,7 @@ namespace Woody\Event;
 
 use \Woody\Components\Component;
 use \Woody\Components\Timer\Timer;
+use \Utils\DataStructures\RingBuffer;
 
 /**
  * @TODO this is a mess
@@ -172,63 +173,29 @@ class EventFactory {
     $interval = wb_call_function($function, array()) / 1000;
 
     $button = $event->getPressedButton();
-    $clickCount = 1;
+    $clickCount = 0;
 
-    foreach(self::$eventBuffer->getReveresedQueue() as $queuedEvent) {
-      if($event == $queuedEvent) {
-        continue;
+    $eventFound = FALSE;
+    foreach(self::$eventBuffer->getLiFoOrder() as $currentEvent) {
+      $eventFound = $eventFound || $event == $currentEvent;
+
+      if($eventFound) {
+        if($currentEvent === null) {
+          return $clickCount;
+        }
+
+        if($currentEvent->getPressedButton() !== $button) {
+          return $clickCount;
+        }
+
+        if(($event->time - $currentEvent->time) > $interval) {
+          return $clickCount;
+        }
+
+        $clickCount++;
       }
-
-      if($queuedEvent === null) {
-        return $clickCount;
-      }
-
-      if($queuedEvent->getPressedButton() !== $button) {
-        return $clickCount;
-      }
-
-      if(($event->time - $queuedEvent->time) > $interval) {
-        return $clickCount;
-      }
-
-      $clickCount++;
     }
 
     return $clickCount;
-  }
-}
-
-class RingBuffer {
-  private $buffer = null;
-
-  private $index  = 0;
-
-  public function __construct($size) {
-    $this->buffer = new \SplFixedArray($size);
-  }
-
-  public function add($item) {
-    $this->index = (++$this->index) % $this->buffer->getSize();
-
-    //var_dump('adding to index = '.$this->index);
-
-    $this->buffer[$this->index] = $item;
-  }
-
-  public function getReveresedQueue() {
-    $result = array();
-    for($i = 0; $i < $this->buffer->getSize(); $i++) {
-      $currentIndex = $this->index - $i;
-
-      if($currentIndex < 0) {
-        $currentIndex = $currentIndex + $this->buffer->getSize();
-      }
-
-      if($this->buffer[$currentIndex] !== null) {
-        $result[] = $this->buffer[$currentIndex];
-      }
-    }
-
-    return $result;
   }
 }

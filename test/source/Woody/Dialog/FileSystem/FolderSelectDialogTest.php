@@ -29,8 +29,8 @@ class FolderSelectDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers FolderSelectDialog::__construct
-   * @covers FileSystemDialog::__construct
+   * @covers \Woody\Dialog\FileSystem\FolderSelectDialog::__construct
+   * @covers \Woody\Dialog\FileSystem\FileSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new FolderSelectDialog('testConstruct', null, '.');

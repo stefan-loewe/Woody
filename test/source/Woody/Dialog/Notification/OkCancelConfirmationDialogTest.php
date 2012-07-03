@@ -29,13 +29,13 @@ class OkCancelConfirmationDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers \Woody\Dialog\FileSystem\OkCancelConfirmationDialog::__construct
-   * @covers \Woody\Dialog\FileSystem\ConfirmationDialog::__construct
-   * @covers \Woody\Dialog\FileSystem\ModalSystemDialog::__construct
+   * @covers \Woody\Dialog\Notification\OkCancelConfirmationDialog::__construct
+   * @covers \Woody\Dialog\Notification\ConfirmationDialog::__construct
+   * @covers \Woody\Dialog\Notification\ModalSystemDialog::__construct
    */
-  public function YesNoCancelConfirmationDialog() {
+  public function testConstruct() {
     $this->dialog = new OkCancelConfirmationDialog('testConstruct', 'testConstruct', null);
 
-    $this->assertInstanceOf('\Woody\Dialog\FileSystem\OkCancelConfirmationDialog', $this->dialog);
+    $this->assertInstanceOf('\Woody\Dialog\Notification\OkCancelConfirmationDialog', $this->dialog);
   }
 }

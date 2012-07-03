@@ -29,8 +29,8 @@ class FileOpenDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers FileOpenDialog::__construct
-   * @covers FileSystemDialog::__construct
+   * @covers \Woody\Dialog\FileSystem\FileOpenDialog::__construct
+   * @covers \Woody\Dialog\FileSystem\FileSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new FileOpenDialog('testConstruct', null, '.', null);

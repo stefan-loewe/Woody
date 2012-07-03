@@ -29,8 +29,8 @@ class FileSaveDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers FileSaveDialog::__construct
-   * @covers FileSystemDialog::__construct
+   * @covers \Woody\Dialog\FileSystem\FileSaveDialog::__construct
+   * @covers \Woody\Dialog\FileSystem\FileSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new FileSaveDialog('testConstruct', null, '.', null);

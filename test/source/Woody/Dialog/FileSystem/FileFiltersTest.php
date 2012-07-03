@@ -29,7 +29,7 @@ class FileFiltersTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the filter.
    *
-   * @covers FileFilters::__construct
+   * @covers \Woody\Dialog\FileSystem\FileFilters::__construct
    */
   public function testConstruct() {
     $this->filters = new FileFilters();
@@ -40,8 +40,8 @@ class FileFiltersTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding filters and getting them in array representation.
    *
-   * @covers FileFilters::add
-   * @covers FileFilters::toArray
+   * @covers \Woody\Dialog\FileSystem\FileFilters::add
+   * @covers \Woody\Dialog\FileSystem\FileFilters::toArray
    */
   public function testAdd() {
     $this->filters = new FileFilters();

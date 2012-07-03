@@ -29,9 +29,9 @@ class WarningMessageDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers \Woody\Dialog\FileSystem\WarningMessageDialog::__construct
-   * @covers \Woody\Dialog\FileSystem\ConfirmationDialog::__construct
-   * @covers \Woody\Dialog\FileSystem\ModalSystemDialog::__construct
+   * @covers \Woody\Dialog\Notification\WarningMessageDialog::__construct
+   * @covers \Woody\Dialog\Notification\ConfirmationDialog::__construct
+   * @covers \Woody\Dialog\Notification\ModalSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new WarningMessageDialog('testConstruct', 'testConstruct', null);
