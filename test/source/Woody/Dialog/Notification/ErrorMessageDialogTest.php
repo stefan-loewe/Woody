@@ -30,7 +30,7 @@ class ErrorMessageDialogTest extends \PHPUnit_Framework_TestCase {
    * This method tests creating the dialog.
    *
    * @covers \Woody\Dialog\Notification\ErrorMessageDialog::__construct
-   * @covers \Woody\Dialog\Notification\ConfirmationDialog::__construct
+   * @covers \Woody\Dialog\Notification\MessageDialog::__construct
    * @covers \Woody\Dialog\Notification\ModalSystemDialog::__construct
    */
   public function testConstruct() {

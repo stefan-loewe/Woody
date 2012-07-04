@@ -44,7 +44,7 @@ class FocusAdapterTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method test the callback execution when a component gains focus.
    *
-   * @covers Woody\Event\KeyAdapter::keyPressed
+   * @covers Woody\Event\FocusAdapter::focusGained
    */
   public function testFocusGained() {
     $event = $this->getMockBuilder('\Woody\Event\FocusEvent')
