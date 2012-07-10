@@ -14,6 +14,13 @@ interface Container {
    * @return $this
    */
   function add(Component $component);
+  
+  /**
+   * This method returns the collection of components associated with the container.
+   * 
+   * @return \SplFixedArray the collection of components associated with the container
+   */
+  function getComponents();
 
   /**
    * This method removes a component from a container.

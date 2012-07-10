@@ -18,7 +18,7 @@ class ImageResource {
    *
    * @param string $imageFileName the file to use as image
    */
-  public function __construct($imageFileName, Dimension $dimension = null) {
+  public function __construct($imageFileName = null, Dimension $dimension = null) {
     $this->imageFileName = $imageFileName;
 
     if($dimension == null) {
@@ -29,6 +29,10 @@ class ImageResource {
       $this->dimension = new Dimension($dimension->width, $dimension->height);
     }
   }
+  
+  public function getDimension() {
+      return new Dimension($this->dimension->width, $this->dimension->height);
+  }
 
   /**
    * This method returns the image resource as bitmap.
@@ -36,15 +40,20 @@ class ImageResource {
    * @return string the image resource as bitmap
    */
   public function getBitmap() {
-    $dib = FreeImage_Load(self::isJpeg($this->imageFileName) ? FIF_JPEG : FIF_BMP, $this->imageFileName, 0);
+    if($this->imageFileName == null) {
+      $bmp = wb_create_image(
+        $this->dimension->width,
+        $this->dimension->height);
+    }
+    else {
+      $dib = FreeImage_Load(self::isJpeg($this->imageFileName) ? FIF_JPEG : FIF_BMP, $this->imageFileName, 0);
 
-    $bmp = wb_create_image(
-      $this->dimension->width,
-      $this->dimension->height,
-      FreeImage_GetInfoHeader($dib), FreeImage_GetBits($dib)
-    );
-
-    FreeImage_Unload($dib);
+      $bmp = wb_create_image(
+        $this->dimension->width,
+        $this->dimension->height,
+        FreeImage_GetInfoHeader($dib), FreeImage_GetBits($dib),
+        FreeImage_Unload($dib));
+    }
 
     return $bmp;
   }

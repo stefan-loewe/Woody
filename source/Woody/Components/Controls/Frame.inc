@@ -4,6 +4,7 @@ namespace Woody\Components\Controls;
 
 use \Woody\Components\Component;
 use \Woody\Components\Container;
+use \Woody\Layouts\GridLayout;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
@@ -11,9 +12,16 @@ class Frame extends Control implements Container {
   /**
    * the child controls of this frame
    *
-   * @var SplObjectStorage
+   * @var \SplObjectStorage
    */
   protected $children = null;
+  
+  /**
+   * the layout of frame
+   *
+   * @var \Woody\Layouts\GridLayout
+   */
+  protected $layout = null;
 
   /**
    * This method acts as the constructor of the class.
@@ -53,6 +61,16 @@ class Frame extends Control implements Container {
 
     return $this;
   }
+  
+  public function getComponents() {
+    $components = new \SplFixedArray($this->children->count());
+
+    foreach($this->children as $index => $child) {
+      $components[$index] = $child;
+    }
+
+    return $components;
+  }
 
   /**
    * This method removes a control from the parent.
@@ -70,5 +88,23 @@ class Frame extends Control implements Container {
     }
 
     return $this;
+  }
+  
+  /**
+   * This method returns the layout of the frame.
+   * 
+   * @return \Woody\Layouts\GridLayout the layout of the frame
+   */
+  public function getLayout() {
+    return $this->layout;
+  }
+  
+  /**
+   * This method sets the layout of the frame.
+   * 
+   * @param \Woody\Layouts\GridLayout $layout the layout to set
+   */
+  public function setLayout(GridLayout $layout) {
+    $this->layout = $layout;
   }
 }

@@ -5,8 +5,8 @@ namespace Woody\Components\Windows;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class MainWindow extends AbstractWindow {
+class ResizableWindow extends AbstractWindow {
   public function __construct($label, Point $point, Dimension $dimension) {
-    parent::__construct(AppWindow, $label, $point, $dimension);
+    parent::__construct(ResizableWindow, $label, $point, $dimension);
   }
 }

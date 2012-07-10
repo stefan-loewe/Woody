@@ -98,6 +98,16 @@ abstract class AbstractWindow extends Component implements Container {
 
     return $this;
   }
+  
+  public function getComponents() {
+    $components = new \SplFixedArray($this->children->count());
+
+    foreach($this->children as $index => $child) {
+      $components[$index] = $child;
+    }
+
+    return $components;
+  }
 
   public function remove(Component $control) {
     if($this->children->offsetExists($control)) {
@@ -111,6 +121,24 @@ abstract class AbstractWindow extends Component implements Container {
     }
 
     return $this;
+  }
+  
+  /**
+   * This method returns the layout of the window.
+   * 
+   * @return \Woody\Layouts\GridLayout the layout of the window
+   */
+  public function getLayout() {
+    return $this->layout;
+  }
+  
+  /**
+   * This method sets the layout of the window.
+   * 
+   * @param \Woody\Layouts\GridLayout $layout the layout to set
+   */
+  public function setLayout(GridLayout $layout) {
+    $this->layout = $layout;
   }
 
   /**

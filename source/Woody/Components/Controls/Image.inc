@@ -13,7 +13,7 @@ class Image extends Control {
    *
    * @var \Woody\Utils\ImageResource
    */
-  private $imageResource = null;
+  protected $imageResource = null;
 
   /**
    * This method acts as the constructor of the class.
@@ -42,7 +42,7 @@ class Image extends Control {
    *
    * @return \Woody\Components\Controls\Image $this
    */
-  private function setImage() {
+  protected function setImage() {
     $bitmap = $this->imageResource->getBitmap();
 
     wb_set_image($this->controlID, $bitmap);
