@@ -7,55 +7,85 @@ use \Utils\Geom\Dimension;
 
 class ImageResource {
   /**
-   * the file name of the image to create the image resource for
+   * the dimension of the image resource
    *
-   * @var string
+   * @var \Utils\Geom\Dimension
    */
-  private $imageFileName = null;
+  private $dimension = null;
+
+  /**
+   *
+   * @var int
+   */
+  private $resource = null;
+
+  /**
+   * This method creates a blank image.
+   *
+   * @param \Utils\Geom\Dimension $dimension the dimension of the image
+   * @return \Woody\Util\ImageResource the blank image
+   */
+  public static function create(Dimension $dimension) {
+    return new ImageResource($dimension, null);
+  }
+
+  /**
+   * This method creates an image from the given file with the dimensions of the image, or with the supplied dimension.
+   *
+   * @param string the file name of the image file
+   * @param \Utils\Geom\Dimension $dimension the dimension to which to crop the image
+   * @return \Woody\Util\ImageResource the blank image
+   */
+  public static function createFromFile($imageFileName, Dimension $dimension = null) {
+    if($dimension == null) {
+      $dimension = getimagesize($imageFileName);
+      $dimension = new Dimension($dimension[0], $dimension[1]);
+    }
+
+    return new ImageResource($dimension, $imageFileName);
+  }
 
   /**
    * This method acts as the constructor of the class.
    *
-   * @param string $imageFileName the file to use as image
+   * @param \Utils\Geom\Dimension $dimension the dimension of the image
+   * @param string $imageFileName the image file to create the image from
    */
-  public function __construct($imageFileName = null, Dimension $dimension = null) {
-    $this->imageFileName = $imageFileName;
+  private function __construct(Dimension $dimension, $imageFileName = null) {
+    $this->dimension = new Dimension($dimension->width, $dimension->height);
 
-    if($dimension == null) {
-      $this->dimension = getimagesize($this->imageFileName);
-      $this->dimension = new Dimension($this->dimension[0], $this->dimension[1]);
+    if($imageFileName !== null) {
+      $this->createResourceFromFile($imageFileName);
     }
     else {
-      $this->dimension = new Dimension($dimension->width, $dimension->height);
+      $this->createResourceBlank();
     }
-  }
-  
-  public function getDimension() {
-      return new Dimension($this->dimension->width, $this->dimension->height);
   }
 
   /**
-   * This method returns the image resource as bitmap.
-   *
-   * @return string the image resource as bitmap
+   * This method creates a blank image resource.
    */
-  public function getBitmap() {
-    if($this->imageFileName == null) {
-      $bmp = wb_create_image(
+  private function createResourceBlank() {
+    $this->resource = wb_create_image(
         $this->dimension->width,
         $this->dimension->height);
-    }
-    else {
-      $dib = FreeImage_Load(self::isJpeg($this->imageFileName) ? FIF_JPEG : FIF_BMP, $this->imageFileName, 0);
+  }
 
-      $bmp = wb_create_image(
-        $this->dimension->width,
-        $this->dimension->height,
-        FreeImage_GetInfoHeader($dib), FreeImage_GetBits($dib),
-        FreeImage_Unload($dib));
-    }
+  /**
+   * This method creates an image resource from a given image file.
+   *
+   * @param string $imageFileName the image file to create the image from
+   */
+  private function createResourceFromFile($imageFileName) {
+    $dib = FreeImage_Load(self::isJpeg($imageFileName) ? FIF_JPEG : FIF_BMP, $imageFileName, 0);
 
-    return $bmp;
+    $this->resource = wb_create_image(
+      $this->dimension->width,
+      $this->dimension->height,
+      FreeImage_GetInfoHeader($dib),
+      FreeImage_GetBits($dib));
+
+    FreeImage_Unload($dib);
   }
 
   /**
@@ -68,5 +98,53 @@ class ImageResource {
    */
   private static function isJpeg($imageFileName) {
     return substr($imageFileName, -4) === '.jpg';
+  }
+
+  /**
+   * This method returns the dimension of the image resource.
+   *
+   * @return \Utils\Geom\Dimension the image resource
+   */
+  public function getDimension() {
+      return new Dimension($this->dimension->width, $this->dimension->height);
+  }
+
+  /**
+   * This method draws a line on the image.
+   *
+   * @param \Utils\Geom\Point $source the source point of the line
+   * @param \Utils\Geom\Point $target the target point of the line
+   * @param int $color the color of the line
+   * @param boolean $width the width of the line in pixels
+   * @param boolean $style the sytle of the line
+   */
+  public function drawLine(Point $source, Point $target, $color, $width, $style) {
+    wb_draw_line($this->resource, $source->x, $source->y, $target->x, $target->y, $color, $width, $style);
+  }
+
+  /**
+   * This method draws a rectangle on the image.
+   *
+   * @param \Utils\Geom\Point $topLeftCorner the top left corner of the rectangle
+   * @param \Utils\Geom\Dimension $target the dimension of the rectangle
+   * @param int $color the color of the rectangle
+   * @param boolean $filled whether or not to draw the rectangle filled
+   * @param boolean $width the width of the line in pixels
+   * @param boolean $style the sytle of the line
+   */
+  public function drawRectangle(Point $topLeftCorner, Dimension $dimension, $color, $filled, $width, $style) {
+    wb_draw_rect($this->resource,
+      $topLeftCorner->x,
+      $topLeftCorner->y,
+      $dimension->width,
+      $dimension->height,
+      $color,
+      $filled,
+      $width,
+      $style);
+  }
+
+  public function getResource() {
+    return $this->resource;
   }
 }

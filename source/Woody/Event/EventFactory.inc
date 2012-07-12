@@ -45,6 +45,9 @@ class EventFactory {
       self::$eventBuffer = new RingBuffer(10);
     }
 
+if(!self::isTimerEvent($windowID, $controlID, $id))
+  var_dump('eventing ...');
+
     $source = Component::getComponentByID($controlID);
 
     // window close button does not have a control, so create a window close event
@@ -113,6 +116,9 @@ class EventFactory {
           $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
         }
         else if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\Checkbox) {
+          $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
+        }
+        else if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\Scrollbar) {
           $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
         }
         else if(is_a($propertyID, 'Utils\Http\HttpGetRequest')) {

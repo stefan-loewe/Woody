@@ -43,8 +43,8 @@ class Image extends Control {
    * @return \Woody\Components\Controls\Image $this
    */
   protected function setImage() {
-    $bitmap = $this->imageResource->getBitmap();
-
+    $bitmap = $this->imageResource->getResource();
+var_dump($bitmap);
     wb_set_image($this->controlID, $bitmap);
     wb_destroy_image($bitmap);
 
