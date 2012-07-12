@@ -8,7 +8,6 @@
   <testsuite name="woody">
     <!-- this one should be first, as it references a singleton, which otherwise gets instantiated -->
     <directory suffix="php">./test/source/Woody/System*</directory>
-
     <directory suffix="php">./test/source/Woody/App*</directory>
     <directory suffix="php">./test/source/Woody/Components/Controls*</directory>
     <directory suffix="php">./test/source/Woody/Components/Windows*</directory>

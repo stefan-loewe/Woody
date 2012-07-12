@@ -34,14 +34,15 @@ class Tab extends Control implements Container {
     $this->pages[$title] = $page;
   }
 
+  // missing
   public function add(Component $control) {
   }
 
-  /**
-   * This method removes a control from the parent.
-   *
-   * @param Component $control
-   */
+  // missing
+  public function getComponents() {
+  }
+
+  // missing
   public function remove(Component $control) {
   }
 }
