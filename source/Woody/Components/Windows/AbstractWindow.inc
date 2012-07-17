@@ -7,14 +7,24 @@ use \Woody\Components\Container;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 use \Woody\System\WindowConstraints;
+use \Woody\Event\WindowResizeListener;
+use \Woody\Event\WindowResizeEvent;
+use \Woody\Event\WindowResizeAdapter;
 
 abstract class AbstractWindow extends Component implements Container {
   /**
    * the child controls of this window
    *
-   * @var SplObjectStorage
+   * @var \SplObjectStorage
    */
-  protected $children = null;
+  protected $children             = null;
+
+  /**
+   * the collection of resize listeners registered for this window
+   *
+   * @var \SplObjectStorage
+   */
+  protected $resizeListeners      = null;
 
   /*
     const CENTERED              = WBC_CENTER;
@@ -28,14 +38,13 @@ abstract class AbstractWindow extends Component implements Container {
     parent::__construct($label, $topLeftCorner, $dimension);
 
     //todo: type via decorators???
-    $this->type = $type;
-
+    $this->type   = $type;
     $this->parent = null;
   }
 
   public function create(Component $parent = null) {
     $this->controlID = wb_create_window(
-      $this->parent === null ? null : $this->parent->getControlID(), $this->type, $this->value, $this->topLeftCorner->x,
+      $parent === null ? null : $parent->getControlID(), $this->type, $this->value, $this->topLeftCorner->x,
       $this->topLeftCorner->y, $this->dimension->width, $this->dimension->height,
       $this->style | WBC_TASKBAR | WBC_NOTIFY, $this->getParameters()
     );
@@ -162,17 +171,40 @@ abstract class AbstractWindow extends Component implements Container {
   }
 
   /**
-   * This method adds a resize listener to the component.
+   * This method adds a resize listener to this window.
    *
-   * @param ResizeListener $resizeListener the resize listener to add
-   * @return ABstractWindow $this
+   * @param WindowResizeListener $resizeListener the resize listener to add
+   * @return AbstractWindow $this
    */
-  public function addResizeListener(/*ResizeListener*/ $resizeListener) {
+  public function addWindowResizeListener(WindowResizeListener $resizeListener) {
     if($this->resizeListeners == null) {
       $this->resizeListeners = new \SplObjectStorage();
     }
 
-    $this->resizeListeners[$resizeListener] = true;
+    $this->resizeListeners->attach($resizeListener);
+
+    return $this;
+  }
+
+  /**
+   * This method returns the collection of resize listeners registered for this window.
+   *
+   * @return \SplObjectStorage the collection of resize listeners registered for this window
+   */
+  public function getWindowResizeListeners() {
+    return ($this->resizeListeners == null) ? new \SplObjectStorage() : $this->resizeListeners;
+  }
+
+  /**
+   * This method removes a resize listener from this window.
+   *
+   * @param ResizeListener $resizeListener the resize listener to remove
+   * @return AbstractWindow $this
+   */
+  public function removeWindowResizeListener(WindowResizeListener $resizeListener) {
+    if($this->resizeListeners != null) {
+      $this->resizeListeners->detach($resizeListener);
+    }
 
     return $this;
   }

@@ -44,7 +44,7 @@ class Image extends Control {
    */
   protected function setImage() {
     $bitmap = $this->imageResource->getResource();
-var_dump($bitmap);
+
     wb_set_image($this->controlID, $bitmap);
     wb_destroy_image($bitmap);
 

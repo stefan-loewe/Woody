@@ -384,7 +384,7 @@ abstract class Component implements IComponent {
   /**
    * This method removes a mouse listener from the component.
    *
-   * @param mouseListener $mouseListener the mouse listener to remove
+   * @param MouseListener $mouseListener the mouse listener to remove
    * @return Component $this
    */
   public function removeMouseListener(MouseListener $mouseListener) {

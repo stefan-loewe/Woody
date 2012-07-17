@@ -45,8 +45,8 @@ class EventFactory {
       self::$eventBuffer = new RingBuffer(10);
     }
 
-if(!self::isTimerEvent($windowID, $controlID, $id))
-  var_dump(time().': eventing ...');
+//if(!self::isTimerEvent($windowID, $controlID, $id))
+  //var_dump(time().': eventing ...');
 
     $source = Component::getComponentByID($controlID);
 
@@ -62,7 +62,7 @@ if(!self::isTimerEvent($windowID, $controlID, $id))
     }
 
     else if(self::isFocusEvent($typeID)) {
-      var_dump('isFocusEvent');
+      //var_dump('isFocusEvent');
       $event = new FocusEvent($windowID, $id, $controlID, $typeID, $propertyID, self::$previousFocusedControl);
       self::$previousFocusedControl = $source;
 if($source != null) // fails on tabs for now ... is null
@@ -72,7 +72,7 @@ if($source != null) // fails on tabs for now ... is null
     }
 
     else if(self::isMouseEvent($typeID)) {
-      var_dump('isMouseEvent');
+      //var_dump('isMouseEvent');
       $event = new MouseEvent($windowID, $id, $controlID, $typeID, $propertyID);
 
       if(self::isMouseDownEvent($typeID)) {
@@ -90,7 +90,7 @@ if($source != null) // fails on tabs for now ... is null
     }
 
     else if(self::isKeyEvent($typeID)) {
-      var_dump('isKeyEvent');
+      //var_dump('isKeyEvent');
       $event = new KeyEvent($windowID, $id, $controlID, $typeID, $propertyID);
 
 if($source != null) // fails on tabs for now ... is null
@@ -104,7 +104,7 @@ if($source != null) // fails on tabs for now ... is null
     // maybe let the ActionEvent wrap the RawEvent new ActionEvent($event, $meta)
     if(self::isControlEvent($id)) {
       $actionEvent = null;
-var_dump('actionEvent? -> source = '.get_class($source));
+//var_dump('actionEvent? -> source = '.get_class($source));
       // handled before
       if(!self::isFocusEvent($typeID)) {
 
@@ -137,9 +137,17 @@ var_dump('actionEvent? -> source = '.get_class($source));
 
     if(self::isWindowEvent($windowID, $controlID)) {
       //echo 'WINWINWINWINWIN'.'$typeID = '.$typeID.' / '.$propertyID;
-      if(($typeID & 0x00002000) === $typeID) {
-        foreach($source->resizeListeners as $listener) {
-          $listener->__invoke();
+      if($typeID === 0x00002000) {
+        foreach($source->getWindowResizeListeners() as $resizeListener) {
+          $oldDim = $source->getDimension();
+
+          $newDim = wb_get_size($source->getControlID());
+          $newDim = new \Utils\Geom\Dimension($newDim[0], $newDim[1]);
+
+          $event = new WindowResizeEvent($windowID, $id, $controlID, $typeID, $propertyID, $oldDim, $newDim);
+          $resizeListener->windowResized($event);
+
+          $source->resizeTo($newDim);
         }
       }
     }

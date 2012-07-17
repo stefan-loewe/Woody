@@ -24,7 +24,6 @@ class ActionAdapter implements ActionListener {
   }
 
   public function actionPerformed(ActionEvent $event) {
-    if($this->onActionPerformed != null)
-      $this->onActionPerformed->__invoke($event);
+    $this->onActionPerformed->__invoke($event);
   }
 }
