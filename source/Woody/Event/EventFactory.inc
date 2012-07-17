@@ -46,7 +46,7 @@ class EventFactory {
     }
 
 if(!self::isTimerEvent($windowID, $controlID, $id))
-  var_dump('eventing ...');
+  var_dump(time().': eventing ...');
 
     $source = Component::getComponentByID($controlID);
 
@@ -65,7 +65,7 @@ if(!self::isTimerEvent($windowID, $controlID, $id))
       var_dump('isFocusEvent');
       $event = new FocusEvent($windowID, $id, $controlID, $typeID, $propertyID, self::$previousFocusedControl);
       self::$previousFocusedControl = $source;
-
+if($source != null) // fails on tabs for now ... is null
       foreach($source->getFocusListeners() as $focusListener) {
         $focusListener->focusGained($event);
       }
@@ -92,6 +92,8 @@ if(!self::isTimerEvent($windowID, $controlID, $id))
     else if(self::isKeyEvent($typeID)) {
       var_dump('isKeyEvent');
       $event = new KeyEvent($windowID, $id, $controlID, $typeID, $propertyID);
+
+if($source != null) // fails on tabs for now ... is null
       foreach($source->getKeyListeners() as $keyListener) {
         ($typeID === WBC_KEYDOWN) ? $keyListener->keyPressed($event) : $keyListener->keyReleased($event);
       }
@@ -102,7 +104,7 @@ if(!self::isTimerEvent($windowID, $controlID, $id))
     // maybe let the ActionEvent wrap the RawEvent new ActionEvent($event, $meta)
     if(self::isControlEvent($id)) {
       $actionEvent = null;
-
+var_dump('actionEvent? -> source = '.get_class($source));
       // handled before
       if(!self::isFocusEvent($typeID)) {
 
@@ -129,6 +131,15 @@ if(!self::isTimerEvent($windowID, $controlID, $id))
           foreach($source->getActionListeners() as $actionListener) {
             $actionListener->actionPerformed($actionEvent);
           }
+        }
+      }
+    }
+
+    if(self::isWindowEvent($windowID, $controlID)) {
+      //echo 'WINWINWINWINWIN'.'$typeID = '.$typeID.' / '.$propertyID;
+      if(($typeID & 0x00002000) === $typeID) {
+        foreach($source->resizeListeners as $listener) {
+          $listener->__invoke();
         }
       }
     }

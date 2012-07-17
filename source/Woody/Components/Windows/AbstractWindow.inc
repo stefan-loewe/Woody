@@ -98,7 +98,7 @@ abstract class AbstractWindow extends Component implements Container {
 
     return $this;
   }
-  
+
   public function getComponents() {
     $components = new \SplFixedArray($this->children->count());
 
@@ -122,19 +122,19 @@ abstract class AbstractWindow extends Component implements Container {
 
     return $this;
   }
-  
+
   /**
    * This method returns the layout of the window.
-   * 
+   *
    * @return \Woody\Layouts\GridLayout the layout of the window
    */
   public function getLayout() {
     return $this->layout;
   }
-  
+
   /**
    * This method sets the layout of the window.
-   * 
+   *
    * @param \Woody\Layouts\GridLayout $layout the layout to set
    */
   public function setLayout(GridLayout $layout) {
@@ -159,5 +159,21 @@ abstract class AbstractWindow extends Component implements Container {
       | WBC_REDRAW
       | WBC_RESIZE
       | WBC_HEADERSEL;
+  }
+
+  /**
+   * This method adds a resize listener to the component.
+   *
+   * @param ResizeListener $resizeListener the resize listener to add
+   * @return ABstractWindow $this
+   */
+  public function addResizeListener(/*ResizeListener*/ $resizeListener) {
+    if($this->resizeListeners == null) {
+      $this->resizeListeners = new \SplObjectStorage();
+    }
+
+    $this->resizeListeners[$resizeListener] = true;
+
+    return $this;
   }
 }

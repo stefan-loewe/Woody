@@ -188,13 +188,9 @@ abstract class Component implements IComponent {
    * @todo this is different for windows & controls
    */
   protected function move(Point $topLeftCorner) {
-    // @TODO: 0 s too strict, rather have maybe window_width - 10 (respectively -10 or title_height - 10 for height)
-    $x = max(0, $topLeftCorner->x);
-    $y = max(0, $topLeftCorner->y);
+    wb_set_position($this->controlID, $topLeftCorner->x, $topLeftCorner->y);
 
-    wb_set_position($this->controlID, $x, $y);
-
-    $this->topLeftCorner = new Point($x, $y);
+    $this->topLeftCorner = new Point($topLeftCorner->x, $topLeftCorner->y);
 
     return $this;
   }
