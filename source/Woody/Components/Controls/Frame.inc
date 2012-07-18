@@ -15,7 +15,7 @@ class Frame extends Control implements Container {
    * @var \SplObjectStorage
    */
   protected $children = null;
-  
+
   /**
    * the layout of frame
    *
@@ -36,6 +36,12 @@ class Frame extends Control implements Container {
     $this->type = Frame;
 
     $this->children = new \SplObjectStorage();
+  }
+
+  protected function create(Component $parent) {
+    parent::create($parent);
+
+    wb_set_handler($this->controlID, 'globalWinBinderEventHandler');
   }
 
   /**
@@ -61,7 +67,7 @@ class Frame extends Control implements Container {
 
     return $this;
   }
-  
+
   public function getComponents() {
     $components = new \SplFixedArray($this->children->count());
 
@@ -89,19 +95,19 @@ class Frame extends Control implements Container {
 
     return $this;
   }
-  
+
   /**
    * This method returns the layout of the frame.
-   * 
+   *
    * @return \Woody\Layouts\GridLayout the layout of the frame
    */
   public function getLayout() {
     return $this->layout;
   }
-  
+
   /**
    * This method sets the layout of the frame.
-   * 
+   *
    * @param \Woody\Layouts\GridLayout $layout the layout to set
    */
   public function setLayout(GridLayout $layout) {

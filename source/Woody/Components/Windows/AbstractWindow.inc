@@ -10,14 +10,9 @@ use \Woody\System\WindowConstraints;
 use \Woody\Event\WindowResizeListener;
 use \Woody\Event\WindowResizeEvent;
 use \Woody\Event\WindowResizeAdapter;
+use \Woody\Components\Controls\Frame;
 
-abstract class AbstractWindow extends Component implements Container {
-  /**
-   * the child controls of this window
-   *
-   * @var \SplObjectStorage
-   */
-  protected $children             = null;
+abstract class AbstractWindow extends Component {
 
   /**
    * the collection of resize listeners registered for this window
@@ -25,6 +20,13 @@ abstract class AbstractWindow extends Component implements Container {
    * @var \SplObjectStorage
    */
   protected $resizeListeners      = null;
+
+  /**
+   * the root pane of the window
+   *
+   * @var Woody\Components\Controls\Frame
+   */
+  protected $rootPane             = null;
 
   /*
     const CENTERED              = WBC_CENTER;
@@ -51,7 +53,8 @@ abstract class AbstractWindow extends Component implements Container {
 
     static::$components[$this->controlID] = $this;
 
-    $this->children = new \SplObjectStorage();
+    $this->rootPane = new Frame('main', new Point(-1, -8), new Dimension($this->dimension->width, $this->dimension->height));
+    $this->rootPane->create($this);
 
     return $this;
   }
@@ -86,50 +89,15 @@ abstract class AbstractWindow extends Component implements Container {
    * The resizing will adhere to some form of sanatizing, as windows widths/heights of e.g. "0" are not possible.
    */
   protected function resize(Dimension $dimension) {
-    return parent::resize(WindowConstraints::getInstance()->enforceConstraints($dimension));
-  }
+    parent::resize(WindowConstraints::getInstance()->enforceConstraints($dimension));
 
-  /**
-   * This method adds a control to the window. Calling this method twice with the same object behaves like moving the
-   * control from one parent to the other.
-   *
-   * @param Component $control
-   * @return Frame
-   */
-  public function add(Component $control) {
-    if($control->parent !== null) {
-      $control->parent->remove($control);
-    }
-
-    $control->create($this);
-
-    $this->children[$control] = $control->controlID;
+    $this->rootPane->resizeTo($dimension);
 
     return $this;
   }
 
-  public function getComponents() {
-    $components = new \SplFixedArray($this->children->count());
-
-    foreach($this->children as $index => $child) {
-      $components[$index] = $child;
-    }
-
-    return $components;
-  }
-
-  public function remove(Component $control) {
-    if($this->children->offsetExists($control)) {
-      $this->children->offsetUnset($control);
-
-      // removing implies destroying the winbinder resource here
-      wb_destroy_control($control->controlID);
-
-      $control->controlID = null;
-      $control->parent = null;
-    }
-
-    return $this;
+  public function getRootPane() {
+    return $this->rootPane;
   }
 
   /**
