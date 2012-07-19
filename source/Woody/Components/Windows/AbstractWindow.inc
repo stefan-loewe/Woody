@@ -53,7 +53,7 @@ abstract class AbstractWindow extends Component {
 
     static::$components[$this->controlID] = $this;
 
-    $this->rootPane = new Frame('main', new Point(-1, -8), new Dimension($this->dimension->width, $this->dimension->height));
+    $this->rootPane = new Frame('', new Point(-1, -8), new Dimension($this->dimension->width, $this->dimension->height));
     $this->rootPane->create($this);
 
     return $this;
@@ -98,24 +98,6 @@ abstract class AbstractWindow extends Component {
 
   public function getRootPane() {
     return $this->rootPane;
-  }
-
-  /**
-   * This method returns the layout of the window.
-   *
-   * @return \Woody\Layouts\GridLayout the layout of the window
-   */
-  public function getLayout() {
-    return $this->layout;
-  }
-
-  /**
-   * This method sets the layout of the window.
-   *
-   * @param \Woody\Layouts\GridLayout $layout the layout to set
-   */
-  public function setLayout(GridLayout $layout) {
-    $this->layout = $layout;
   }
 
   /**
