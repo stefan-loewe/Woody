@@ -75,4 +75,10 @@ interface IComponent {
    * @return Component $this
    */
   public function resizeTo(Dimension $dimension);
+
+  public function refresh();
+
+  public function enable();
+
+  public function disable();
 }

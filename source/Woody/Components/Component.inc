@@ -394,4 +394,16 @@ abstract class Component implements IComponent {
 
     return $this;
   }
+
+  public function refresh($now = TRUE) {
+    wb_refresh($this->controlID, $now);
+  }
+
+  public function enable() {
+    wb_set_enabled($this->controlID, TRUE);
+  }
+
+  public function disable() {
+    wb_set_enabled($this->controlID, FALSE);
+  }
 }
