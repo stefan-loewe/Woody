@@ -24,25 +24,16 @@ class GridLayout {
 
   public function layout(Container $container) {
     // for frames
-    $containerInsetX = 10;
-    $containerInsetY = 8;
-
-    if($container instanceof \Woody\Components\Windows\AbstractWindow) {
-      $containerInsetX = 10;
-      $containerInsetY = 30;
-    }
+    $containerInsetX  = 10;
+    $containerInsetY  = 18;
+    $initialOffsetX   = 7;
+    $initialOffsetY   = 13;
 
     $containerDimension = $container->getDimension();
     $componentDimension = new Dimension(
             intval(($containerDimension->width - $containerInsetX - ($this->columns - 1) * $this->horizontalGap) / $this->columns),
             intval(($containerDimension->height - $containerInsetY - ($this->rows - 1) * $this->verticalGap) / $this->rows));
 
-    $initialOffsetX = 0;
-    $initialOffsetY = 0;
-    if($container instanceof \Woody\Components\Controls\Frame) {
-      $initialOffsetX = 7;
-      $initialOffsetY = 13;
-    }
     foreach($container->getComponents() as $index => $component) {
       $component->resizeTo($componentDimension);
 
