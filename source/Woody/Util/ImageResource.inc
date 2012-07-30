@@ -14,6 +14,7 @@ class ImageResource {
   private $dimension = null;
 
   /**
+   * the handle to the raw resource
    *
    * @var int
    */
@@ -106,7 +107,7 @@ class ImageResource {
    * @return \Utils\Geom\Dimension the image resource
    */
   public function getDimension() {
-      return new Dimension($this->dimension->width, $this->dimension->height);
+    return new Dimension($this->dimension->width, $this->dimension->height);
   }
 
   /**
@@ -118,32 +119,37 @@ class ImageResource {
    * @param boolean $width the width of the line in pixels
    * @param boolean $style the sytle of the line
    */
-  public function drawLine(Point $source, Point $target, $color, $width, $style) {
+  public function drawLine(Point $source, Point $target, $color, $width = null, $style = null) {
     wb_draw_line($this->resource, $source->x, $source->y, $target->x, $target->y, $color, $width, $style);
   }
 
   /**
    * This method draws a rectangle on the image.
    *
-   * @param \Utils\Geom\Point $topLeftCorner the top left corner of the rectangle
-   * @param \Utils\Geom\Dimension $target the dimension of the rectangle
+   * @param \Utils\Geom\Point $tlc the top left corner of the rectangle
+   * @param \Utils\Geom\Dimension $dim the dimension of the rectangle
    * @param int $color the color of the rectangle
    * @param boolean $filled whether or not to draw the rectangle filled
    * @param boolean $width the width of the line in pixels
    * @param boolean $style the sytle of the line
    */
-  public function drawRectangle(Point $topLeftCorner, Dimension $dimension, $color, $filled, $width, $style) {
+  public function drawRectangle(Point $tlc, Dimension $dim, $color, $filled = TRUE, $width = null, $style = null) {
     wb_draw_rect($this->resource,
-      $topLeftCorner->x,
-      $topLeftCorner->y,
-      $dimension->width,
-      $dimension->height,
+      $tlc->x,
+      $tlc->y,
+      $dim->width,
+      $dim->height,
       $color,
       $filled,
       $width,
       $style);
   }
 
+  /**
+   * This method returns the handle to the raw resource.
+   *
+   * @return int
+   */
   public function getResource() {
     return $this->resource;
   }

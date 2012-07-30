@@ -406,4 +406,12 @@ abstract class Component implements IComponent {
   public function disable() {
     wb_set_enabled($this->controlID, FALSE);
   }
+
+  public function show() {
+    wb_set_visible($this->controlID, TRUE);
+  }
+
+  public function hide() {
+    wb_set_visible($this->controlID, FALSE);
+  }
 }

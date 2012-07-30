@@ -215,9 +215,9 @@ $wmi = new COM('winmgmts://');
   $win->create();
 
   $box1 = new \Woody\Components\Controls\EditBox('aa', new Point(10, 10), new Dimension(300, 22));
-  $win->add($box1);
+  $win->getRootPane()->add($box1);
   $box2 = new \Woody\Components\Controls\EditBox('', new Point(10, 35), new Dimension(300, 22));
-  $win->add($box2);
+  $win->getRootPane()->add($box2);
   //$box1->addActionListener(new Handler());
   $box1->addFocusListener(new FocusHandler());
 
@@ -242,10 +242,10 @@ $wmi = new COM('winmgmts://');
   }));
 
   $slider1 = new \Woody\Components\Controls\Slider(new Point(10, 60), new Dimension(300, 25));
-  $win->add($slider1);
+  $win->getRootPane()->add($slider1);
 
   $chkStayAwake = new \Woody\Components\Controls\Checkbox(0, new Point(10, 90), new Dimension(25, 25));
-  $win->add($chkStayAwake);
+  $win->getRootPane()->add($chkStayAwake);
 
   $chkStayAwake->addActionListener(new \Woody\Event\ActionAdapter(function($event) use ($win) {
     $timer = new Timer(function() {
