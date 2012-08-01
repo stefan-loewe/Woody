@@ -46,17 +46,33 @@ abstract class AbstractWindow extends Component {
 
   public function create(Component $parent = null) {
     $this->controlID = wb_create_window(
-      $parent === null ? null : $parent->getControlID(), $this->type, $this->value, $this->topLeftCorner->x,
-      $this->topLeftCorner->y, $this->dimension->width, $this->dimension->height,
-      $this->style | WBC_TASKBAR | WBC_NOTIFY, $this->getParameters()
+      $parent === null ? null : $parent->getControlID(),
+      $this->type,
+      $this->value,
+      $this->topLeftCorner->x,
+      $this->topLeftCorner->y,
+      $this->dimension->width,
+      $this->dimension->height,
+      $this->style | WBC_TASKBAR | WBC_NOTIFY,
+      $this->getParameters()
     );
 
     static::$components[$this->controlID] = $this;
 
-    $this->rootPane = new Frame('', new Point(-1, -8), new Dimension($this->dimension->width, $this->dimension->height));
-    $this->rootPane->create($this);
+    $this->createRootPane();
 
     return $this;
+  }
+
+  /**
+   * This method creates the root pane for this window. All other controls have to be added to this frame.
+   */
+  private function createRootPane() {
+    $rootPaneTopLeftCorner  = new Point(-1, -8);
+    $rootPaneDimension      = new Dimension($this->dimension->width, $this->dimension->height);
+
+    $this->rootPane = new Frame('', $rootPaneTopLeftCorner, $rootPaneDimension);
+    $this->rootPane->create($this);
   }
 
   /**

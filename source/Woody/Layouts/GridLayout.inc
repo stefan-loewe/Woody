@@ -3,6 +3,7 @@
 namespace Woody\Layouts;
 
 use \Woody\Components\Container;
+use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
 class GridLayout {
@@ -23,24 +24,34 @@ class GridLayout {
   }
 
   public function layout(Container $container) {
-    // for frames
-    $containerInsetX  = 10;
-    $containerInsetY  = 18;
     $initialOffsetX   = 7;
     $initialOffsetY   = 13;
 
     $containerDimension = $container->getDimension();
-    $componentDimension = new Dimension(
-            intval(($containerDimension->width - $containerInsetX - ($this->columns - 1) * $this->horizontalGap) / $this->columns),
-            intval(($containerDimension->height - $containerInsetY - ($this->rows - 1) * $this->verticalGap) / $this->rows));
+    $componentDimension = $this->getComponentDimension($containerDimension);
 
     foreach($container->getComponents() as $index => $component) {
       $component->resizeTo($componentDimension);
 
-      $xOffset = $initialOffsetX + ($this->horizontalGap + $componentDimension->width) * ($index % $this->columns);
-      $yOffset = $initialOffsetY + ($this->verticalGap + $componentDimension->height) * floor(($index / $this->columns));
+      $xOffset = ($this->horizontalGap + $componentDimension->width) * ($index % $this->columns);
+      $yOffset = ($this->verticalGap + $componentDimension->height) * floor(($index / $this->columns));
 
-      $component->moveTo(new \Utils\Geom\Point($xOffset, $yOffset));
+      $component->moveTo(new Point($initialOffsetX + $xOffset, $initialOffsetY + $yOffset));
     }
+  }
+
+  private function getComponentDimension($containerDimension) {
+    $frameInsetX  = 10;
+    $frameInsetY  = 18;
+
+    $containerInnerWidth  = $containerDimension->width - $frameInsetX;
+    $containerInnerWidth  = $containerInnerWidth - (($this->columns - 1) * $this->horizontalGap);
+    $widthPerComponent    = $containerInnerWidth / $this->columns;
+
+    $containerInnerHeight = $containerDimension->height - $frameInsetY;
+    $containerInnerHeight = $containerInnerHeight - (($this->rows - 1) * $this->verticalGap);
+    $heightPerComponent   = $containerInnerHeight / $this->rows;
+
+    return new Dimension(intval($widthPerComponent), intval($heightPerComponent));
   }
 }

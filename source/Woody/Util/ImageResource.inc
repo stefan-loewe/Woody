@@ -67,9 +67,7 @@ class ImageResource {
    * This method creates a blank image resource.
    */
   private function createResourceBlank() {
-    $this->resource = wb_create_image(
-        $this->dimension->width,
-        $this->dimension->height);
+    $this->resource = wb_create_image($this->dimension->width, $this->dimension->height);
   }
 
   /**
@@ -84,7 +82,8 @@ class ImageResource {
       $this->dimension->width,
       $this->dimension->height,
       FreeImage_GetInfoHeader($dib),
-      FreeImage_GetBits($dib));
+      FreeImage_GetBits($dib)
+    );
 
     FreeImage_Unload($dib);
   }
@@ -142,7 +141,8 @@ class ImageResource {
       $color,
       $filled,
       $width,
-      $style);
+      $style
+    );
   }
 
   /**

@@ -62,8 +62,6 @@ class WindowResizeEvent extends Event {
    * @return Dimension
    */
   public function getDeltaDimension() {
-    return new Dimension(
-      $this->newDimension->width - $this->oldDimension->width,
-      $this->newDimension->height - $this->oldDimension->height);
+    return $this->newDimension->resizeBy(new Dimension(-$this->oldDimension->width, -$this->oldDimension->height));
   }
 }
