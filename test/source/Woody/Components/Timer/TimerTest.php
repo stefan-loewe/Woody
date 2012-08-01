@@ -38,6 +38,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * This method sets up a plain window for testing.
    */
   protected function setUp() {
+
     $this->window = new MainWindow('timer test', new Point(50, 50), new Dimension(300, 200));
 
     $this->window->create(null);
@@ -50,7 +51,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-
   }
 
   /**
@@ -140,23 +140,23 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   public function testGetID() {
     wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
-          $this->assertEquals($this->window->getID() + 1, $this->timer->getID());
+          $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
 
           $this->timer->destroy();
           $this->window->destroy();
 
-          $this->assertEquals($this->window->getID() + 1, $this->timer->getID());
+          $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
         }, $this->window, Timer::TEST_TIMEOUT);
 
-    $this->assertEquals($this->window->getID() + 1, $this->timer->getID());
+    $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
 
     $this->timer->start();
 
-    $this->assertEquals($this->window->getID() + 1, $this->timer->getID());
+    $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
 
     $this->window->startEventHandler();
 
-    $this->assertEquals($this->window->getID() + 1, $this->timer->getID());
+    $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
   }
 
   /**
