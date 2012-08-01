@@ -107,7 +107,7 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
             $this->eventFired = TRUE;
           }));
 
-    $this->application->getWindow()->add($htmlControl);
+    $this->application->getWindow()->getRootPane()->add($htmlControl);
 
     $this->server->register($htmlControl);
     // starting the server has to be done really fast, i.e., timeout of 1 millisecond

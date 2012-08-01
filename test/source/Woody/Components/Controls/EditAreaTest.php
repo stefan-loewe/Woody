@@ -43,7 +43,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
 
     $this->editArea = new EditArea('testValue', new Point(20, 20), new Dimension(100, 80));
 
-    $this->application->getWindow()->add($this->editArea);
+    $this->application->getWindow()->getRootPane()->add($this->editArea);
   }
 
   /**

@@ -44,7 +44,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
 
     $this->listControl = $this->getObjectUnderTest();
 
-    $this->application->getWindow()->add($this->listControl);
+    $this->application->getWindow()->getRootPane()->add($this->listControl);
   }
 
   /**

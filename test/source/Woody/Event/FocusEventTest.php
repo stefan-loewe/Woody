@@ -85,8 +85,8 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
     $this->control1     = new EditBox('', new Point(20, 20), new Dimension(100, 18));
     $this->control2     = new EditBox('', new Point(20, 45), new Dimension(100, 18));
 
-    $this->application->getWindow()->add($this->control1);
-    $this->application->getWindow()->add($this->control2);
+    $this->application->getWindow()->getRootPane()->add($this->control1);
+    $this->application->getWindow()->getRootPane()->add($this->control2);
 
     $this->timer = new Timer(function() {
       $this->event = new FocusEvent($this->application->getWindow()->getControlID(),

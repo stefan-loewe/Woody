@@ -100,50 +100,6 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests adding components to the window.
-   *
-   * @covers \Woody\Components\Windows\AbstractWindow::add
-   * @covers \Woody\Components\Controls\Control::create
-   * @covers \Woody\Components\Controls\Control::calculateAbsoluteTopLeftCorner
-   */
-  public function testAdd() {
-    $checkbox = new \Woody\Components\Controls\Checkbox(false, new Point(10, 10), new Dimension(10, 10));
-    $this->assertNull($checkbox->getParent());
-
-    $this->window->add($checkbox);
-    $this->assertEquals($this->window, $checkbox->getParent());
-
-    $this->window2 = new MainWindow('MainWindow2', new Point(11, 22), new Dimension(555, 333));
-    $this->window2->create();
-    $this->window2->add($checkbox);
-    $this->assertEquals($this->window2, $checkbox->getParent());
-
-    $this->window->add($checkbox);
-    $this->assertEquals($this->window, $checkbox->getParent());
-
-    $this->window2->destroy();
-  }
-
-  /**
-   * This method tests removing components from the window.
-   *
-   * @covers \Woody\Components\Windows\AbstractWindow::remove
-   */
-  public function testRemove() {
-    $checkbox = new \Woody\Components\Controls\Checkbox(false, new Point(10, 10), new Dimension(10, 10));
-    $this->assertNull($checkbox->getParent());
-
-    $this->window->remove($checkbox);
-    $this->assertNull($checkbox->getParent());
-
-    $this->window->add($checkbox);
-    $this->assertEquals($this->window, $checkbox->getParent());
-
-    $this->window->remove($checkbox);
-    $this->assertNull($checkbox->getParent());
-  }
-
-  /**
    * This method tests moving the window by an offset.
    *
    * @covers \Woody\Components\Component::moveBy

@@ -43,7 +43,7 @@ class HtmlControlTest extends \PHPUnit_Framework_TestCase {
 
     $this->htmlControl = new HtmlControl('http://www.web.de', new Point(20, 20), new Dimension(260, 160));
 
-    $this->application->getWindow()->add($this->htmlControl);
+    $this->application->getWindow()->getRootPane()->add($this->htmlControl);
   }
 
   /**

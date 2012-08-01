@@ -43,7 +43,7 @@ class SliderTest extends \PHPUnit_Framework_TestCase {
 
     $this->slider = new Slider(new Point(20, 20), new Dimension(80, 20));
 
-    $this->application->getWindow()->add($this->slider);
+    $this->application->getWindow()->getRootPane()->add($this->slider);
   }
 
   /**

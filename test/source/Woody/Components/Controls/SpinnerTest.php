@@ -43,7 +43,7 @@ class SpinnerTest extends \PHPUnit_Framework_TestCase {
 
     $this->spinner = new Spinner(new Point(105, 20), new Dimension(80, 20));
 
-    $this->application->getWindow()->add($this->spinner);
+    $this->application->getWindow()->getRootPane()->add($this->spinner);
   }
 
   /**

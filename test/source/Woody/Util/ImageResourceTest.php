@@ -43,7 +43,7 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Util\ImageResource::__construct
    */
   public function testConstruct() {
-    $this->imageResource = new ImageResource($this->jpgImage);
+    $this->imageResource = ImageResource::createFromFile($this->jpgImage);
     $expected = getimagesize($this->jpgImage);
     $actual   = \PHPUnit_Framework_Assert::readAttribute($this->imageResource, 'dimension');
     $this->assertEquals($expected[0], $actual->width);
@@ -51,33 +51,33 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
 
 
     $expected = new Dimension(200, 100);
-    $this->imageResource = new ImageResource($this->jpgImage, $expected);
+    $this->imageResource = ImageResource::createFromFile($this->jpgImage, $expected);
     $actual = \PHPUnit_Framework_Assert::readAttribute($this->imageResource, 'dimension');
     $this->assertEquals($expected->width, $actual->width);
     $this->assertEquals($expected->height, $actual->height);
   }
 
   /**
-   * This method tests getting the bitmap for a jpg-image.
+   * This method tests getting the resource for a jpg-image.
    *
-   * @covers \Woody\Util\ImageResource::getBitmap
+   * @covers \Woody\Util\ImageResource::getResource
    * @covers \Woody\Util\ImageResource::isJpeg
    */
   public function testGetBitmapJpg() {
-    $this->imageResource = new ImageResource($this->jpgImage);
+    $this->imageResource = ImageResource::createFromFile($this->jpgImage);
 
-    $this->assertNotNull($this->imageResource->getBitmap());
+    $this->assertNotNull($this->imageResource->getResource());
   }
 
   /**
-   * This method tests getting the bitmap for a bitmap-image.
+   * This method tests getting the resource for a bitmap-image.
    *
-   * @covers \Woody\Util\ImageResource::getBitmap
+   * @covers \Woody\Util\ImageResource::getResource
    * @covers \Woody\Util\ImageResource::isJpeg
    */
   public function testGetBitmapBmp() {
-    $this->imageResource = new ImageResource($this->bmpImage);
+    $this->imageResource = ImageResource::createFromFile($this->bmpImage);
 
-    $this->assertNotNull($this->imageResource->getBitmap());
+    $this->assertNotNull($this->imageResource->getResource());
   }
 }

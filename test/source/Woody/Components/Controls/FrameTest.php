@@ -42,7 +42,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
 
     $this->frame = new Frame('frameLabel', new Point(20, 20), new Dimension(100, 18));
 
-    $this->application->getWindow()->add($this->frame);
+    $this->application->getWindow()->getRootPane()->add($this->frame);
   }
 
   /**
@@ -58,7 +58,6 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Component::getWindow
    * @covers \Woody\Components\Controls\Frame::add
    * @covers \Woody\Components\Controls\Control::create
-   * @covers \Woody\Components\Controls\Control::calculateAbsoluteTopLeftCorner
    */
   public function testAdd() {
     $this->timer = new Timer(function() {

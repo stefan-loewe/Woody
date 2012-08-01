@@ -45,7 +45,7 @@ class TableTest extends \PHPUnit_Framework_TestCase {
 
     $this->table = new Table(new Point(20, 20), new Dimension(260, 160));
 
-    $this->application->getWindow()->add($this->table);
+    $this->application->getWindow()->getRootPane()->add($this->table);
   }
 
   /**

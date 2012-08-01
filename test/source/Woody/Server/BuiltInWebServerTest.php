@@ -97,7 +97,7 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
             $this->eventFired = TRUE;
           }));
 
-    $this->application->getWindow()->add($htmlControl);
+    $this->application->getWindow()->getRootPane()->add($htmlControl);
 
     $this->server->register($htmlControl);
 

@@ -42,7 +42,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
 
     $this->checkbox = new Checkbox(FALSE, new Point(20, 20), new Dimension(20, 20));
 
-    $this->application->getWindow()->add($this->checkbox);
+    $this->application->getWindow()->getRootPane()->add($this->checkbox);
   }
 
   /**

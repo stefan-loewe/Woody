@@ -43,7 +43,7 @@ class ScrollBarTest extends \PHPUnit_Framework_TestCase {
 
     $this->scrollBar = new ScrollBar(new Point(20, 20), new Dimension(20, Timer::TEST_TIMEOUT));
 
-    $this->application->getWindow()->add($this->scrollBar);
+    $this->application->getWindow()->getRootPane()->add($this->scrollBar);
   }
 
   /**

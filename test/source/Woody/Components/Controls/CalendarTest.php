@@ -42,7 +42,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
 
     $this->calendar = new Calendar(new Point(20, 20), new Dimension(197, 157));
 
-    $this->application->getWindow()->add($this->calendar);
+    $this->application->getWindow()->getRootPane()->add($this->calendar);
   }
 
   /**

@@ -43,7 +43,7 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase {
 
     $this->progressBar = new ProgressBar(new Point(20, 20), new Dimension(80, 20));
 
-    $this->application->getWindow()->add($this->progressBar);
+    $this->application->getWindow()->getRootPane()->add($this->progressBar);
   }
 
   /**

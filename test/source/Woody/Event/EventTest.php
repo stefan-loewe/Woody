@@ -49,8 +49,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
   public function testGetSource() {
     $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $control  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
-    $window->create()
-      ->add($control);
+    $window->create()->getRootPane()->add($control);
 
     $event = new KeyEvent($window->getID(), $control->getID(), $control->getControlID(), 0, 0);
 

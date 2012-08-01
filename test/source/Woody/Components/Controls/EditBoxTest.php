@@ -42,7 +42,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
 
     $this->editBox = new EditBox('', new Point(20, 20), new Dimension(100, 18));
 
-    $this->application->getWindow()->add($this->editBox);
+    $this->application->getWindow()->getRootPane()->add($this->editBox);
   }
 
   /**

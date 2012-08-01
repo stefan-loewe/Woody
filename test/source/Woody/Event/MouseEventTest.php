@@ -71,7 +71,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   public function testGetClickCount() {
     $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $control1 = new EditBox('', new Point(20, 20), new Dimension(100, 18));
-    $window->create()->add($control1);
+    $window->create()->getRootPane()->add($control1);
 
 
     // first click
