@@ -9,11 +9,24 @@ abstract class Application {
    * @var \Woody\Components\Windows\AbstractWindow
    */
   protected $window = null;
+  
+  protected static $instance = null;
 
   /**
    * This method acts as the constructor of the class.
    */
   public function __construct() {
+    if(static::$instance === null) {
+      static::$instance = $this;
+    }
+  }
+  
+  public static function getInstance() {
+    return static::$instance;
+  }
+  
+  public function getWindow() {
+    return $this->window;
   }
 
   /**

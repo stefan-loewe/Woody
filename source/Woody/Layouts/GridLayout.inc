@@ -3,6 +3,7 @@
 namespace Woody\Layouts;
 
 use \Woody\Components\Container;
+use \Woody\Components\Controls\Checkbox;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
@@ -32,6 +33,10 @@ class GridLayout {
 
     foreach($container->getComponents() as $index => $component) {
       $component->resizeTo($componentDimension);
+      
+      if($component instanceof Checkbox) {
+        $component->resizeTo(new Dimension($componentDimension->width, Checkbox::VISIBLE_HEIGHT));
+      }
 
       $xOffset = ($this->horizontalGap + $componentDimension->width) * ($index % $this->columns);
       $yOffset = ($this->verticalGap + $componentDimension->height) * floor(($index / $this->columns));

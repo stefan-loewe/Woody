@@ -6,6 +6,8 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
 class Checkbox extends Control {
+  
+  const VISIBLE_HEIGHT = 17;
   /**
    * This method acts as the constructor of the class.
    *
