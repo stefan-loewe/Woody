@@ -117,9 +117,12 @@ class ImageResource {
    * @param int $color the color of the line
    * @param boolean $width the width of the line in pixels
    * @param boolean $style the sytle of the line
+   * @return \Woody\Util\ImageResource $this
    */
   public function drawLine(Point $source, Point $target, $color, $width = null, $style = null) {
     wb_draw_line($this->resource, $source->x, $source->y, $target->x, $target->y, $color, $width, $style);
+
+    return $this;
   }
 
   /**
@@ -131,9 +134,11 @@ class ImageResource {
    * @param boolean $filled whether or not to draw the rectangle filled
    * @param boolean $width the width of the line in pixels
    * @param boolean $style the sytle of the line
+   * @return \Woody\Util\ImageResource $this
    */
   public function drawRectangle(Point $tlc, Dimension $dim, $color, $filled = TRUE, $width = null, $style = null) {
-    wb_draw_rect($this->resource,
+    wb_draw_rect(
+      $this->resource,
       $tlc->x,
       $tlc->y,
       $dim->width,
@@ -143,6 +148,8 @@ class ImageResource {
       $width,
       $style
     );
+
+    return $this;
   }
 
   /**

@@ -34,9 +34,11 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
    *
    * @covers \Woody\App\TestApplication::__construct
    * @covers \Woody\App\Application::__construct
+   * @covers \Woody\App\Application::getInstance
    */
   public function testConstruct() {
     $this->assertInstanceOf('\Woody\App\Application', $this->application);
+    $this->assertInstanceOf('\Woody\App\Application', $this->application->getInstance());
 
     $this->timer = new Timer(function() {
           $this->timer->destroy();
@@ -50,7 +52,7 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the window from the application.
    *
-   * @covers \Woody\App\TestApplication::getWindow
+   * @covers \Woody\App\Application::getWindow
    */
   public function testGetWindow() {
     $this->assertInstanceOf('Woody\Components\Windows\AbstractWindow', $this->application->getWindow());

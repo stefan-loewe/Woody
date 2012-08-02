@@ -31,6 +31,8 @@ class TestApplication extends Application {
    * This method acts as the constructor of the class.
    */
   public function __construct() {
+    parent::__construct();
+
     $this->window = new MainWindow('TestApp', new Point(50, 50), new Dimension(300, 200));
 
     // the callback that actually closes the window
@@ -46,15 +48,6 @@ class TestApplication extends Application {
     $this->window->create(null);
 
     $this->shutdownTimer->start();
-  }
-
-  /**
-   * This method returns the main window of the test application
-   *
-   * @return \Woody\Components\Windows\AbstractWindow
-   */
-  public function getWindow() {
-    return $this->window;
   }
 
   /**

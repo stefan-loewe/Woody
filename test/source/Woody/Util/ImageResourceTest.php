@@ -2,6 +2,7 @@
 
 namespace Woody\Util;
 
+use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
 /**
@@ -16,8 +17,18 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
    */
   protected $imageResource;
 
+  /**
+   * path to image file for testing loading of JPGs
+   *
+   * @var string
+   */
   private $jpgImage = '../../../../data/woody.jpg';
 
+  /**
+   * path to image file for testing loading of BMPs
+   *
+   * @var string
+   */
   private $bmpImage = '../../../../data/woody.jpg';
 
   /**
@@ -34,25 +45,46 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-
   }
 
   /**
    * This method tests creating the image resource.
    *
+   * @covers \Woody\Util\ImageResource::create
    * @covers \Woody\Util\ImageResource::__construct
+   * @covers \Woody\Util\ImageResource::createResourceBlank
+   * @covers \Woody\Util\ImageResource::getDimension
    */
-  public function testConstruct() {
-    $this->imageResource = ImageResource::createFromFile($this->jpgImage);
-    $expected = getimagesize($this->jpgImage);
-    $actual   = \PHPUnit_Framework_Assert::readAttribute($this->imageResource, 'dimension');
+  public function testCreate() {
+    $this->imageResource  = ImageResource::create(new Dimension(100, 50));
+    $expected             = new Dimension(100, 50);
+    $actual               = $this->imageResource->getDimension();
+
+    $this->assertEquals($expected->width, $actual->width);
+    $this->assertEquals($expected->height, $actual->height);
+  }
+
+  /**
+   * This method tests creating the image resource.
+   *
+   * @covers \Woody\Util\ImageResource::createFromFile
+   * @covers \Woody\Util\ImageResource::__construct
+   * @covers \Woody\Util\ImageResource::createResourceFromFile
+   * @covers \Woody\Util\ImageResource::getDimension
+   */
+  public function testCreateFromFile() {
+    $this->imageResource  = ImageResource::createFromFile($this->jpgImage);
+    $expected             = getimagesize($this->jpgImage);
+    $actual               = $this->imageResource->getDimension();
+
     $this->assertEquals($expected[0], $actual->width);
     $this->assertEquals($expected[1], $actual->height);
 
 
+    $this->imageResource = ImageResource::createFromFile($this->jpgImage, new Dimension(200, 100));
     $expected = new Dimension(200, 100);
-    $this->imageResource = ImageResource::createFromFile($this->jpgImage, $expected);
-    $actual = \PHPUnit_Framework_Assert::readAttribute($this->imageResource, 'dimension');
+    $actual   = $this->imageResource->getDimension();
+
     $this->assertEquals($expected->width, $actual->width);
     $this->assertEquals($expected->height, $actual->height);
   }
@@ -79,5 +111,21 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
     $this->imageResource = ImageResource::createFromFile($this->bmpImage);
 
     $this->assertNotNull($this->imageResource->getResource());
+  }
+
+  /**
+   * This method tests drawing onto the image resource.
+   *
+   * @covers \Woody\Util\ImageResource::drawLine
+   * @covers \Woody\Util\ImageResource::drawRectangle
+   */
+  public function testDraw() {
+    $this->imageResource = ImageResource::create(new Dimension(100, 50));
+
+    $this->imageResource = $this->imageResource->drawLine(new Point(0, 0), new Point(100, 50), 0);
+    $this->assertInstanceOf('Woody\Util\ImageResource', $this->imageResource);
+
+    $this->imageResource = $this->imageResource->drawRectangle(new Point(0, 0), new Dimension(100, 50), 0);
+    $this->assertInstanceOf('Woody\Util\ImageResource', $this->imageResource);
   }
 }
