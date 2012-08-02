@@ -6,8 +6,16 @@ use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
 class Checkbox extends Control {
+  /**
+   * the maximal width of a checkbox
+   */
+  const MAX_WIDTH = 17;
   
-  const VISIBLE_HEIGHT = 17;
+  /**
+   * the maximal height of a checkbox
+   */
+  const MAX_HEIGHT = 17;
+  
   /**
    * This method acts as the constructor of the class.
    *
@@ -20,6 +28,26 @@ class Checkbox extends Control {
 
     $this->type = CheckBox;
   }
+  
+  /**
+   * @inheritDoc
+   * 
+   * A checkbox cannot be resized any larger than defined by VISIBLE_WIDTH and VISIBLE_HEIGHT, respectively.
+   * 
+   * @param Dimension $dimension the Dimension to resize the Checkbox to.
+   */
+  public function resizeTo(Dimension $dimension) {
+    if($dimension->width > Checkbox::MAX_WIDTH) {
+      $dimension = $dimension->resizeTo(new Dimension(Checkbox::MAX_WIDTH, $dimension->height));
+    }
+    
+    if($dimension->height > Checkbox::MAX_HEIGHT) {
+      $dimension = $dimension->resizeTo(new Dimension($dimension->width, Checkbox::MAX_HEIGHT));
+    }
+    
+    parent::resizeTo($dimension);
+  }
+
 
   /**
    * This method returns whether the checkbox is checked or not.
