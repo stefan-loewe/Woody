@@ -112,7 +112,7 @@ class ControlConstructorTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Controls\Image::__construct
    */
   public function testConstructImage() {
-    $imageResource = $this->getMockBuilder('\Woody\Util\ImageResource')->disableOriginalConstructor()->getMock();
+    $imageResource = $this->getMockBuilder('\Woody\Util\Image\ImageResource')->disableOriginalConstructor()->getMock();
     $this->control = new Image($imageResource, new Point(20, 20), new Dimension(120, 20));
     $this->assertNotNull($this->control->getID());
   }
@@ -124,7 +124,7 @@ class ControlConstructorTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Controls\ImageButton::__construct
    */
   public function testConstructImageButton() {
-    $imageResource = $this->getMockBuilder('\Woody\Util\ImageResource')->disableOriginalConstructor()->getMock();
+    $imageResource = $this->getMockBuilder('\Woody\Util\Image\ImageResource')->disableOriginalConstructor()->getMock();
     $this->control = new ImageButton($imageResource, new Point(20, 20), new Dimension(120, 20));
     $this->assertNotNull($this->control->getID());
   }

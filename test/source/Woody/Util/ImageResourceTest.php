@@ -50,10 +50,10 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the image resource.
    *
-   * @covers \Woody\Util\ImageResource::create
-   * @covers \Woody\Util\ImageResource::__construct
-   * @covers \Woody\Util\ImageResource::createResourceBlank
-   * @covers \Woody\Util\ImageResource::getDimension
+   * @covers \Woody\Util\Image\ImageResource::create
+   * @covers \Woody\Util\Image\ImageResource::__construct
+   * @covers \Woody\Util\Image\ImageResource::createResourceBlank
+   * @covers \Woody\Util\Image\ImageResource::getDimension
    */
   public function testCreate() {
     $this->imageResource  = ImageResource::create(new Dimension(100, 50));
@@ -67,10 +67,10 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the image resource.
    *
-   * @covers \Woody\Util\ImageResource::createFromFile
-   * @covers \Woody\Util\ImageResource::__construct
-   * @covers \Woody\Util\ImageResource::createResourceFromFile
-   * @covers \Woody\Util\ImageResource::getDimension
+   * @covers \Woody\Util\Image\ImageResource::createFromFile
+   * @covers \Woody\Util\Image\ImageResource::__construct
+   * @covers \Woody\Util\Image\ImageResource::createResourceFromFile
+   * @covers \Woody\Util\Image\ImageResource::getDimension
    */
   public function testCreateFromFile() {
     $this->imageResource  = ImageResource::createFromFile($this->jpgImage);
@@ -92,8 +92,8 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the resource for a jpg-image.
    *
-   * @covers \Woody\Util\ImageResource::getResource
-   * @covers \Woody\Util\ImageResource::isJpeg
+   * @covers \Woody\Util\Image\ImageResource::getResource
+   * @covers \Woody\Util\Image\ImageResource::isJpeg
    */
   public function testGetBitmapJpg() {
     $this->imageResource = ImageResource::createFromFile($this->jpgImage);
@@ -104,8 +104,8 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the resource for a bitmap-image.
    *
-   * @covers \Woody\Util\ImageResource::getResource
-   * @covers \Woody\Util\ImageResource::isJpeg
+   * @covers \Woody\Util\Image\ImageResource::getResource
+   * @covers \Woody\Util\Image\ImageResource::isJpeg
    */
   public function testGetBitmapBmp() {
     $this->imageResource = ImageResource::createFromFile($this->bmpImage);
@@ -116,8 +116,8 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests drawing onto the image resource.
    *
-   * @covers \Woody\Util\ImageResource::drawLine
-   * @covers \Woody\Util\ImageResource::drawRectangle
+   * @covers \Woody\Util\Image\ImageResource::drawLine
+   * @covers \Woody\Util\Image\ImageResource::drawRectangle
    */
   public function testDraw() {
     $this->imageResource = ImageResource::create(new Dimension(100, 50));

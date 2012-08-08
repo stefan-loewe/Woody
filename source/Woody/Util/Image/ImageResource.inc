@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Util;
+namespace Woody\Util\Image;
 
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
@@ -24,7 +24,7 @@ class ImageResource {
    * This method creates a blank image.
    *
    * @param \Utils\Geom\Dimension $dimension the dimension of the image
-   * @return \Woody\Util\ImageResource the blank image
+   * @return \Woody\Util\Image\ImageResource the blank image
    */
   public static function create(Dimension $dimension) {
     return new ImageResource($dimension, null);
@@ -35,7 +35,7 @@ class ImageResource {
    *
    * @param string the file name of the image file
    * @param \Utils\Geom\Dimension $dimension the dimension to which to crop the image
-   * @return \Woody\Util\ImageResource the blank image
+   * @return \Woody\Util\Image\ImageResource the blank image
    */
   public static function createFromFile($imageFileName, Dimension $dimension = null) {
     if($dimension == null) {
@@ -117,7 +117,7 @@ class ImageResource {
    * @param int $color the color of the line
    * @param boolean $width the width of the line in pixels
    * @param boolean $style the sytle of the line
-   * @return \Woody\Util\ImageResource $this
+   * @return \Woody\Util\Image\ImageResource $this
    */
   public function drawLine(Point $source, Point $target, $color, $width = null, $style = null) {
     wb_draw_line($this->resource, $source->x, $source->y, $target->x, $target->y, $color, $width, $style);
@@ -134,7 +134,7 @@ class ImageResource {
    * @param boolean $filled whether or not to draw the rectangle filled
    * @param boolean $width the width of the line in pixels
    * @param boolean $style the sytle of the line
-   * @return \Woody\Util\ImageResource $this
+   * @return \Woody\Util\Image\ImageResource $this
    */
   public function drawRectangle(Point $tlc, Dimension $dim, $color, $filled = TRUE, $width = null, $style = null) {
     wb_draw_rect(

@@ -3,7 +3,7 @@
 namespace Woody\Components\Controls;
 
 use \Woody\Components\Component;
-use \Woody\Util\ImageResource;
+use \Woody\Util\Image\ImageResource;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
@@ -11,14 +11,14 @@ class Image extends Control {
   /**
    * the image resource the image control is associated with
    *
-   * @var \Woody\Utils\ImageResource
+   * @var \Woody\Utils\Image\ImageResource
    */
   protected $imageResource = null;
 
   /**
    * This method acts as the constructor of the class.
    *
-   * @param \Woody\Utils\ImageResource $imageResource the image resource the image control is associated with
+   * @param \Woody\Utils\Image\ImageResource $imageResource the image resource the image control is associated with
    * @param Point $topLeftCorner the top left corner of the image
    * @param Dimension $dimension the dimension of the image
    */

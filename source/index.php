@@ -10,7 +10,7 @@ use \Woody\Components\Controls\EditBox;
 use \Woody\Components\Controls\Checkbox;
 use \Woody\Components\Controls\HTMLControl;
 use \Woody\Server\BuiltInWebServer;
-use \Woody\Util\ImageResource;
+use \Woody\Util\Image\ImageResource;
 use \Utils\Http\HttpRequest;
 use \Utils\Sockets\ServerSocket;
 

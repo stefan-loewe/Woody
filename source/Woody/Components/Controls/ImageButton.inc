@@ -3,7 +3,7 @@
 namespace Woody\Components\Controls;
 
 use \Woody\Components\Component;
-use \Woody\Util\ImageResource;
+use \Woody\Util\Image\ImageResource;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 

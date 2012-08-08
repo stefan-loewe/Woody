@@ -3,11 +3,11 @@
 namespace Woody\Util\WinApi\Types;
 
 class Dword {
-   public function getPackString(){
-     return 'L';
-   }
-   
-   public function getLength(){
-     return 4;
-   }
+  public function getPackFormatCharacter(){
+    return 'L';
+  }
+
+  public function getLength(){
+    return 4;
+  }
 }
