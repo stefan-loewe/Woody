@@ -5,7 +5,7 @@ namespace Woody\Components\Controls;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class Spinner extends Control {
+class Spinner extends Control implements Actionable {
   /**
    * This method acts as the constructor of the class.
    *

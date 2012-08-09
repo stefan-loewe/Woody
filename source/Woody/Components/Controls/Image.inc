@@ -7,7 +7,7 @@ use \Woody\Util\Image\ImageResource;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class Image extends Control {
+class Image extends Control implements Actionable {
   /**
    * the image resource the image control is associated with
    *

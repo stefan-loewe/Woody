@@ -2,9 +2,13 @@
 
 namespace Woody\Event;
 
-use \Woody\Components\Component;
-use \Woody\Components\Timer\Timer;
 use \Utils\DataStructures\RingBuffer;
+use \Utils\Geom\Dimension;
+use \Woody\Components\Component;
+use \Woody\Components\Controls\Actionable;
+use \Woody\Components\Controls\Control;
+use \Woody\Components\Timer\Timer;
+use \Woody\Components\Windows\AbstractWindow;
 
 /**
  * @TODO this is a mess
@@ -13,14 +17,14 @@ class EventFactory {
   /**
    * the window that just had the focus before
    *
-   * @var \Woody\Components\Windows\AbstractWindow
+   * @var AbstractWindow
    */
   private static $previousFocusedWindow = null;
 
   /**
    * the control that just had the focus before
    *
-   * @var \Woody\Components\Controls\Control
+   * @var Control
    */
   private static $previousFocusedControl = null;
 
@@ -65,7 +69,7 @@ class EventFactory {
       //var_dump('isFocusEvent');
       $event = new FocusEvent($windowID, $id, $controlID, $typeID, $propertyID, self::$previousFocusedControl);
       self::$previousFocusedControl = $source;
-if($source != null) // fails on tabs for now ... is null
+
       foreach($source->getFocusListeners() as $focusListener) {
         $focusListener->focusGained($event);
       }
@@ -93,7 +97,6 @@ if($source != null) // fails on tabs for now ... is null
       //var_dump('isKeyEvent');
       $event = new KeyEvent($windowID, $id, $controlID, $typeID, $propertyID);
 
-if($source != null) // fails on tabs for now ... is null
       foreach($source->getKeyListeners() as $keyListener) {
         ($typeID === WBC_KEYDOWN) ? $keyListener->keyPressed($event) : $keyListener->keyReleased($event);
       }
@@ -108,19 +111,7 @@ if($source != null) // fails on tabs for now ... is null
       // handled before
       if(!self::isFocusEvent($typeID)) {
 
-        if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\PushButton) {
-          $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
-        }
-        else if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\Slider) {
-          $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
-        }
-        else if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\EditBox) {
-          $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
-        }
-        else if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\Checkbox) {
-          $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
-        }
-        else if(/* self::isKeyUpEvent($typeID) && */$source instanceof \Woody\Components\Controls\Scrollbar) {
+        if($source instanceof Actionable) {
           $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
         }
         else if(is_a($propertyID, 'Utils\Http\HttpGetRequest')) {
@@ -142,7 +133,7 @@ if($source != null) // fails on tabs for now ... is null
           $oldDim = $source->getDimension();
 
           $newDim = wb_get_size($source->getControlID());
-          $newDim = new \Utils\Geom\Dimension($newDim[0], $newDim[1]);
+          $newDim = new Dimension($newDim[0], $newDim[1]);
 
           $event = new WindowResizeEvent($windowID, $id, $controlID, $typeID, $propertyID, $oldDim, $newDim);
           $resizeListener->windowResized($event);

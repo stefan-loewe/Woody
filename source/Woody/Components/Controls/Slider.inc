@@ -5,7 +5,7 @@ namespace Woody\Components\Controls;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class Slider extends Control {
+class Slider extends Control implements Actionable {
   /**
    * This method acts as the constructor of the class.
    *

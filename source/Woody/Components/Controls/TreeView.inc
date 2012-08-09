@@ -6,7 +6,7 @@ use \Utils\Model\ITreeModel;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class TreeView extends Control implements \SplObserver {
+class TreeView extends Control implements \SplObserver, Actionable {
   /**
    * the model of the tree view
    *

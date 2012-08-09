@@ -6,7 +6,7 @@ use \Woody\Model\ListModel;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-abstract class ListControl extends Control implements \SplObserver {
+abstract class ListControl extends Control implements \SplObserver, Actionable {
   /**
    * the model of the list control
    *

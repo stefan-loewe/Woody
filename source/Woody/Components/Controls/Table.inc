@@ -7,7 +7,7 @@ use \Woody\Model\TableModel;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class Table extends Control implements \SplObserver {
+class Table extends Control implements \SplObserver, Actionable {
   /**
    * the table model of the table
    *

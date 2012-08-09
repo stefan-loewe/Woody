@@ -5,7 +5,7 @@ namespace Woody\Components\Controls;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-abstract class EditField extends Control {
+abstract class EditField extends Control implements Actionable {
   /**
    * This method acts as the constructor of the class.
    *
