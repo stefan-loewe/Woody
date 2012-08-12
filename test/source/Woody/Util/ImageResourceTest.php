@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Util;
+namespace Woody\Util\Image;
 
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
@@ -123,9 +123,9 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
     $this->imageResource = ImageResource::create(new Dimension(100, 50));
 
     $this->imageResource = $this->imageResource->drawLine(new Point(0, 0), new Point(100, 50), 0);
-    $this->assertInstanceOf('Woody\Util\ImageResource', $this->imageResource);
+    $this->assertInstanceOf('Woody\Util\Image\ImageResource', $this->imageResource);
 
     $this->imageResource = $this->imageResource->drawRectangle(new Point(0, 0), new Dimension(100, 50), 0);
-    $this->assertInstanceOf('Woody\Util\ImageResource', $this->imageResource);
+    $this->assertInstanceOf('Woody\Util\Image\ImageResource', $this->imageResource);
   }
 }
