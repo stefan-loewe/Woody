@@ -254,4 +254,29 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
 
     $this->fail('The expected TimerNotRunningException has not been raised.');
   }
+
+  /**
+   * This method tests determining if the timer is running.
+   *
+   * @covers Woody\Components\Timer\Timer::isRunning
+   */
+  public function testIsRunning() {
+    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
+    $this->timer = new Timer(function() {
+          $this->assertTrue($this->timer->isRunning());
+
+          $this->timer->destroy();
+          $this->assertFalse($this->timer->isRunning());
+
+          $this->window->destroy();
+        }, $this->window, Timer::TEST_TIMEOUT);
+
+
+    $this->assertFalse($this->timer->isRunning());
+    $this->timer->start();
+    $this->assertTrue($this->timer->isRunning());
+
+    $this->window->startEventHandler();
+  }
+
 }

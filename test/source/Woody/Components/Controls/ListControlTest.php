@@ -4,9 +4,6 @@ namespace Woody\Components\Controls;
 
 use \Woody\App\TestApplication;
 use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
-use \Woody\Model\ListModel;
 
 /**
  * Test class for ListControl.

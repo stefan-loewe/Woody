@@ -2,8 +2,6 @@
 
 namespace Woody\Dialog\FileSystem;
 
-use \Woody\Components\Windows\AbstractWindow;
-
 class FileFilters {
   /**
    * the collection of filters

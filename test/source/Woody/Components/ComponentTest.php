@@ -3,7 +3,6 @@
 namespace Woody\Components;
 
 use \Woody\Components\Windows\MainWindow;
-use \Woody\Components\Timer\Timer;
 use \Woody\Components\Controls\Label;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;

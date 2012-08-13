@@ -4,8 +4,6 @@ namespace Woody\Components\Windows;
 
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
-use \Woody\System\WindowConstraints;
-use \Woody\Components\Timer\Timer;
 use \Woody\WinBinderErrorException;
 
 /**
@@ -59,6 +57,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * This method tests creating the window.
    *
    * @covers \Woody\Components\Windows\AbstractWindow::create
+   * @covers \Woody\Components\Windows\AbstractWindow::createRootPane
    * @covers \Woody\Components\Windows\AbstractWindow::getParameters
    */
   public function testCreate() {
@@ -97,6 +96,15 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
     }
 
     $this->fail('The expected WinBinderErrorException has not been raised.');
+  }
+
+  /**
+   * This method tests getting the root pane of the window.
+   *
+   * @covers \Woody\Components\Windows\AbstractWindow::getRootPane
+   */
+  public function testGetRootPane() {
+    $this->assertInstanceOf('\Woody\Components\Controls\Frame', $this->window->getRootPane());
   }
 
   /**
@@ -187,5 +195,24 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
     $this->window->resizeTo(new Dimension(300, 200));
     $this->assertEquals(300, $this->window->getDimension()->width);
     $this->assertEquals(200, $this->window->getDimension()->height);
+  }
+
+  /**
+   * This method tests adding, getting and removing resize handlers.
+   *
+   * @covers \Woody\Components\Windows\AbstractWindow::addWindowResizeListener
+   * @covers \Woody\Components\Windows\AbstractWindow::getWindowResizeListeners
+   * @covers \Woody\Components\Windows\AbstractWindow::removeWindowResizeListener
+   */
+  public function testResizeHandlers() {
+    $resizeListener = $this->getMockBuilder('\Woody\Event\WindowResizeAdapter')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+    $this->assertEquals($this->window, $this->window->addWindowResizeListener($resizeListener));
+    $this->assertTrue($this->window->getWindowResizeListeners()->contains($resizeListener));
+
+    $this->assertEquals($this->window, $this->window->removeWindowResizeListener($resizeListener));
+    $this->assertFalse($this->window->getWindowResizeListeners()->contains($resizeListener));
   }
 }

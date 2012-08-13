@@ -2,10 +2,8 @@
 
 namespace Woody\Components;
 
-use \Woody\Components\Windows\AbstractWindow;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
-use \Woody\System\System;
 
 interface IComponent {
 

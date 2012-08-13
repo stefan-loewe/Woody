@@ -2,8 +2,6 @@
 
 namespace Woody\Event;
 
-use \Utils\Geom\Point;
-
 class ActionEvent extends Event {
   /**
    * This method acts as the constructor of the class.

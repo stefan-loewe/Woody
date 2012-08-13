@@ -3,13 +3,10 @@
 namespace Woody\Components\Windows;
 
 use \Woody\Components\Component;
-use \Woody\Components\Container;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 use \Woody\System\WindowConstraints;
 use \Woody\Event\WindowResizeListener;
-use \Woody\Event\WindowResizeEvent;
-use \Woody\Event\WindowResizeAdapter;
 use \Woody\Components\Controls\Frame;
 
 abstract class AbstractWindow extends Component {
@@ -112,6 +109,11 @@ abstract class AbstractWindow extends Component {
     return $this;
   }
 
+  /**
+   * This method returns the root pane of this window.
+   *
+   * @return Frame the root pane of this window
+   */
   public function getRootPane() {
     return $this->rootPane;
   }

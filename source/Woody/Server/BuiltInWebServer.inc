@@ -3,7 +3,6 @@
 namespace Woody\Server;
 
 use \Woody\Components\Windows\AbstractWindow;
-use \Woody\Components\Timer\Timer;
 use \Woody\Components\Controls\HtmlControl;
 
 class BuiltInWebServer {

@@ -2,9 +2,7 @@
 
 namespace Woody\System;
 
-use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
-use \Woody\Components\Windows\MainWindow;
 
 class WindowConstraints {
   /**

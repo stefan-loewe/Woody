@@ -6,8 +6,6 @@ use \Woody\App\TestApplication;
 use \Woody\Components\Timer\Timer;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
-use \Woody\Model\TableModel;
-use \Woody\Model\DefaultTableModel;
 
 /**
  * Test class for Table.

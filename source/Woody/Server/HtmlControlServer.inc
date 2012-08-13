@@ -8,7 +8,6 @@ use \Woody\Components\Timer\Timer;
 use \Utils\Sockets\ServerSocket;
 use \Utils\Sockets\Server;
 use \Utils\Http\HttpRequestFactory;
-use \Utils\Http\HttpRequest;
 use \Utils\Logging\Logger;
 
 /**

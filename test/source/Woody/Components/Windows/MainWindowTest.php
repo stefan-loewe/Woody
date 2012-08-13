@@ -4,9 +4,6 @@ namespace Woody\Components\Windows;
 
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
-use \Woody\System\WindowConstraints;
-use \Woody\Components\Timer\Timer;
-use \Woody\WinBinderErrorException;
 
 /**
  * Test class for AbstractWindow.

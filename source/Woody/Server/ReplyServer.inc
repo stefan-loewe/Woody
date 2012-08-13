@@ -3,12 +3,9 @@
 namespace Woody\Server;
 
 use \Woody\Components\Windows\AbstractWindow;
-use \Woody\Components\Controls\HtmlControl;
 use \Woody\Components\Timer\Timer;
 use \Utils\Sockets\ServerSocket;
 use \Utils\Sockets\Server;
-use \Utils\Http\HttpRequestFactory;
-use \Utils\Http\HttpRequest;
 use \Utils\Logging\Logger;
 
 class ReplyServer extends Server {

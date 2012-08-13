@@ -3,7 +3,6 @@
 namespace Woody\Layouts;
 
 use \Woody\Components\Container;
-use \Woody\Components\Controls\Checkbox;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
