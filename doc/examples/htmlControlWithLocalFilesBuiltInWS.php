@@ -32,7 +32,7 @@ class HTMLControlDemoBuiltInWebServer extends Application {
     public function __construct($port) {
         parent::__construct();
 
-        Utils\Logging\Logger::setLogLevel(Utils\Logging\Logger::OFF);
+        Utils\Logging\Logger::setLogLevel(Utils\Logging\Logger::ALL);
 
         $this->port         = $port;
 
@@ -58,10 +58,7 @@ class HTMLControlDemoBuiltInWebServer extends Application {
 
     private function getHtmlControlCallback() {
         return function(ActionEvent $event) {
-                    $keyValuePairs = $event->property->getKeyValuePairs();
-
                     $content = '<h1>header, large</h1>
-                                <br>time = '.$keyValuePairs['time'].'
                                 <br>followed by an image ...
                                 <br><img src="woody.png">';
                     $event->type->write($content);
