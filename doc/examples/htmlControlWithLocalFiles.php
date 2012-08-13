@@ -10,7 +10,6 @@ use \Woody\Components\Controls\HTMLControl;
 use \Woody\Event\ActionAdapter;
 use \Woody\Components\Controls\PushButton;
 use \Woody\Dialog\FileSystem\FileOpenDialog;
-use \Woody\Dialog\FileSystem\MultiFileOpenDialog;
 use \Woody\Dialog\FileSystem\FileFilters;
 
 require_once(realpath(__DIR__.'../../../source/bootstrap/bootstrap.php'));
@@ -44,20 +43,19 @@ class HTMLControlDemo extends Application {
         $this->window       = new MainWindow('custom webserver', new Point(50, 50), new Dimension(800, 500));
         $this->window->create();
 
-        $this->htmlControl  = new HTMLControl('http://127.0.0.1:'.$this->port, new Point(50, 50), new Dimension(350, 300));
-        $this->htmlControl->addActionListener(new ActionAdapter($this->getHtmlControlCallback()));
-        $this->window->add($this->htmlControl);
-
         $this->editArea     = new Woody\Components\Controls\EditArea('', new Point(450, 50), new Dimension(300, 300));
-        $this->window->add($this->editArea);
-
+        $this->htmlControl  = new HTMLControl('http://127.0.0.1:'.$this->port, new Point(50, 50), new Dimension(350, 300));
         $this->btnRefresh   = new PushButton("refresh", new Point(50, 370), new Dimension(150, 22));
-        $this->btnRefresh->addActionListener(new ActionAdapter($this->getBtnRefreshCallback()));
-        $this->window->add($this->btnRefresh);
-
         $this->btnBrowse    = new PushButton("browse ...", new Point(220, 370), new Dimension(150, 22));
+
+        $this->window->getRootPane()->add($this->htmlControl);
+        $this->window->getRootPane()->add($this->editArea);
+        $this->window->getRootPane()->add($this->btnRefresh);
+        $this->window->getRootPane()->add($this->btnBrowse);
+
+        $this->htmlControl->addActionListener(new ActionAdapter($this->getHtmlControlCallback()));
+        $this->btnRefresh->addActionListener(new ActionAdapter($this->getBtnRefreshCallback()));
         $this->btnBrowse->addActionListener(new ActionAdapter($this->getBtnBrowseCallback()));
-        $this->window->add($this->btnBrowse);
     }
 
     private function getHtmlControlCallback() {

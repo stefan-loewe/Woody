@@ -39,21 +39,21 @@ class HTMLControlDemoBuiltInWebServer extends Application {
         $this->window       = new MainWindow('built-in-webserver', new Point(50, 50), new Dimension(800, 500));
         $this->window->create();
 
-        $this->htmlControl  = new HTMLControl('http://127.0.0.1:'.$this->port, new Point(20, 25), new Dimension(760, 300));
-        $this->htmlControl->addActionListener(new ActionAdapter($this->getHtmlControlCallback()));
-        $this->window->add($this->htmlControl);
-
-        $this->btnRoot      = new PushButton("document root", new Point(20, 345), new Dimension(100, 22));
-        $this->btnRoot->addActionListener(new ActionAdapter($this->getBtnRootCallback()));
-        $this->window->add($this->btnRoot);
-
+        $this->htmlControl  = new HTMLControl('http://127.0.0.1:'.$this->port, new Point(20, 25), new Dimension(760, 300));$this->btnRoot      = new PushButton("document root", new Point(20, 345), new Dimension(100, 22));
         $this->btnWeb       = new PushButton("www.google.com", new Point(135, 345), new Dimension(100, 22));
-        $this->btnWeb->addActionListener(new ActionAdapter($this->getBtnWebCallback()));
-        $this->window->add($this->btnWeb);
-
         $this->btnPhpInfo   = new PushButton("phpinfo()", new Point(250, 345), new Dimension(100, 22));
+
+        $this->htmlControl->addActionListener(new ActionAdapter($this->getHtmlControlCallback()));
+        $this->window->getRootPane()->add($this->htmlControl);
+
+        $this->btnRoot->addActionListener(new ActionAdapter($this->getBtnRootCallback()));
+        $this->window->getRootPane()->add($this->btnRoot);
+
+        $this->btnWeb->addActionListener(new ActionAdapter($this->getBtnWebCallback()));
+        $this->window->getRootPane()->add($this->btnWeb);
+
         $this->btnPhpInfo->addActionListener(new ActionAdapter($this->getBtnPhpInfoCallback()));
-        $this->window->add($this->btnPhpInfo);
+        $this->window->getRootPane()->add($this->btnPhpInfo);
     }
 
     private function getHtmlControlCallback() {
