@@ -3,7 +3,6 @@
 namespace Woody\Util\WinApi;
 
 class WinApi {
-
   /**
    * This method allows making calls to function of the Windows API.
    *

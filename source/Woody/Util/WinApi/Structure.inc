@@ -7,7 +7,8 @@ abstract class Structure {
   /**
    * This method acts as the constructor of the class.
    */
-  public function __construct() {}
+  public function __construct() {
+  }
 
   /**
    * This method returns the packed binary representation of this object, so that it can be passed to the C backend.
@@ -49,7 +50,6 @@ abstract class Structure {
     $unpackString = '';
 
     foreach($this->getTypeMapping() as $propertyName => $type) {
-
       $typeClassName  = "\\Woody\\Util\\WinApi\\Types\\".$type;
       $typeClass      = new $typeClassName();
 
@@ -70,7 +70,7 @@ abstract class Structure {
 
     $mapping = array();
 
-    foreach ($properties as $property) {
+    foreach($properties as $property) {
       $mapping[$property->getName()] = $this->extractType($property->getDocComment());
     }
 

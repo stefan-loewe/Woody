@@ -3,11 +3,11 @@
 namespace Woody\Util\WinApi\Types;
 
 class Byte {
-  public function getPackFormatCharacter(){
+  public function getPackFormatCharacter() {
     return 'C';
   }
 
-  public function getLength(){
+  public function getLength() {
     return 1;
   }
 }
