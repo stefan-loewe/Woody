@@ -9,7 +9,7 @@ class FolderSelectDialog extends FileSystemDialog {
     parent::__construct($title, $parentWindow, $path);
   }
 
-  function open() {
+  public function open() {
     $this->selection[0] = wb_sys_dlg_path(
       $this->window === null ? null : $this->window->getControlID(),
       $this->title,
@@ -17,7 +17,7 @@ class FolderSelectDialog extends FileSystemDialog {
     );
   }
 
-  function getSelection() {
+  public function getSelection() {
     return $this->selection;
   }
 }

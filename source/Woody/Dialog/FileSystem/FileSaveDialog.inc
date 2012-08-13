@@ -20,7 +20,7 @@ class FileSaveDialog extends FileSystemDialog {
     $this->filters = $filters;
   }
 
-  function open() {
+  public function open() {
     $this->selection[0] = wb_sys_dlg_save(
       $this->window === null ? null : $this->window->getControlID(),
       $this->title,

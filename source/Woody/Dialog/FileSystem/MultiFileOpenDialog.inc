@@ -9,7 +9,7 @@ class MultiFileOpenDialog extends FileOpenDialog {
     parent::__construct($title, $parentWindow, $path, $filters);
   }
 
-  function open() {
+  public function open() {
     $this->selection = wb_sys_dlg_open(
       $this->window === null ? null : $this->window->getControlID(),
       $this->title,
@@ -20,7 +20,7 @@ class MultiFileOpenDialog extends FileOpenDialog {
     );
   }
 
-  function getSelection() {
+  public function getSelection() {
     $selection = (count($this->selection) === 0) ? array() : $this->selection;
 
     return new \ArrayObject($selection);

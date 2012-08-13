@@ -50,7 +50,7 @@ abstract class FileSystemDialog {
    *
    * @return string the full path to the selected file system object, or null if nothing was selected
    */
-  function getSelection() {
+  public function getSelection() {
     return (count($this->selection) === 0) ? null : trim($this->selection[0]);
   }
 }
