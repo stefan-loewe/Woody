@@ -43,6 +43,13 @@ class Timer {
   private $isRunning = false;
 
   /**
+   * counter for counting how often the timer was already called
+   *
+   * @var int
+   */
+  private $counter = 0;
+
+  /**
    * the collection of all timers
    *
    * @var array[int]Timer
@@ -129,6 +136,8 @@ class Timer {
     }
 
     $this->callback->__invoke();
+
+    $this->counter++;
   }
 
   /**
@@ -157,5 +166,14 @@ class Timer {
    */
   public function isRunning() {
     return $this->isRunning;
+  }
+
+  /**
+   * This method determines how often the timer was called.
+   *
+   * @return int the number of times the counter was called
+   */
+  public function getExecutionCount() {
+    return $this->counter;
   }
 }
