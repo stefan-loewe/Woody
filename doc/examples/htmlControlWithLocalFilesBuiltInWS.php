@@ -22,6 +22,8 @@ class HTMLControlDemoBuiltInWebServer extends Application {
      */
     private $server = null;
 
+    private $documentRoot = null;
+
     /**
      * the port on which the server is listening on.
      *
@@ -35,6 +37,8 @@ class HTMLControlDemoBuiltInWebServer extends Application {
         Utils\Logging\Logger::setLogLevel(Utils\Logging\Logger::ALL);
 
         $this->port         = $port;
+
+        $this->documentRoot = __DIR__.'\\www';
 
         $this->window       = new MainWindow('built-in-webserver', new Point(50, 50), new Dimension(800, 500));
         $this->window->create();
@@ -58,10 +62,11 @@ class HTMLControlDemoBuiltInWebServer extends Application {
 
     private function getHtmlControlCallback() {
         return function(ActionEvent $event) {
-                    $content = '<h1>header, large</h1>
-                                <br>followed by an image ...
-                                <br><img src="woody.png">';
+                    $content = '<h1>header, large</h1>'
+                      .'<br>followed by an image ...<br>'
+                      .'<img src="woody.png">';
                     $event->type->write($content);
+                    $event->type->write(file_get_contents($this->documentRoot.'\\woody.png'));
                 };
     }
 
@@ -87,9 +92,9 @@ class HTMLControlDemoBuiltInWebServer extends Application {
         $this->server = new BuiltInWebServer(
           $this->window,
           $this->port,
-          __DIR__.'\\www',
+          $this->documentRoot,
           '"C:\\Program Files\\PHP54\\php.exe"',
-          'D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
+          __DIR__.'\\..\\..\\source\\server.php',
           new HtmlControlServer($this->window, 1234));
 
         $this->server->start()->register($this->htmlControl);

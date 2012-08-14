@@ -1,5 +1,3 @@
-sniff for use \woody\ns versus woody\ns
-re-implement imageFrame
 layout manager
 trait for magic getter/setter
 different window types
