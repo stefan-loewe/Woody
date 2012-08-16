@@ -22,6 +22,11 @@ class HTMLControlDemoBuiltInWebServer extends Application {
      */
     private $server = null;
 
+    /**
+     * the document root of the web server
+     *
+     * @var string
+     */
     private $documentRoot = null;
 
     /**

@@ -31,6 +31,13 @@ class HTMLControlDemo extends Application {
     private $port           = null;
 
     /**
+     * the document root of the web server
+     *
+     * @var string
+     */
+    private $documentRoot = null;
+
+    /**
      * a file name, used for demonstration purpose, only
      *
      * @var string
@@ -43,6 +50,7 @@ class HTMLControlDemo extends Application {
         Logger::setLogLevel(Logger::ALL);
 
         $this->port         = $port;
+        $this->documentRoot = __DIR__.'\\www';
 
         $this->window       = new MainWindow('custom webserver', new Point(50, 50), new Dimension(800, 500));
         $this->window->create();
@@ -68,7 +76,7 @@ class HTMLControlDemo extends Application {
 
                     // get static content
                     if(preg_match('/\.(?:png|jpg|jpeg|gif)$/', $uri)) {
-                        $event->type->write(file_get_contents('D:\\workspace\\programming\\PHP\\woody\\doc\\examples\\www'.$uri));
+                        $event->type->write(file_get_contents($this->documentRoot.$uri));
                     }
 
                     else {
@@ -78,13 +86,7 @@ class HTMLControlDemo extends Application {
                             $this->editArea->setValue(urldecode($keyValuePairs['eventData']));
                         }
                         else {
-                            $header = 'HTTP/1.1 200 OK'."\r\n".
-                            'Connection: close'."\r\n".
-                            'Content-Type: text/html; charset=ISO-8859-1'."\r\n";
-                            $event->type->write($header);
-
-                            $content = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
-                                        .'<html>'
+                            $content = '<html>'
                                             .'<head>'
                                                 .'<title>'
                                                     .'Woody - interactive HTMLControl'
@@ -106,9 +108,6 @@ class HTMLControlDemo extends Application {
                                             .'<body onclick="sendEventData(event)">'
                                                 .'<h1>Woody</h1>'
                                                 .'<div>'
-                                                    .'<img src="woody.png" alt="woody logo"/>'
-                                                .'</div>'
-                                                .'<div>'
                                                     .'this site was requested on '.date('d.m.Y \a\t H:i:s', isset($keyValuePairs['time']) ? $keyValuePairs['time'] : time())
                                                     .'<br>'
                                                     .'this site was generated on '.date('d.m.Y \a\t H:i:s')
@@ -118,6 +117,13 @@ class HTMLControlDemo extends Application {
                                                 .'</div>'
                                             .'</body>'
                                         .'</html>';
+
+                            $header = "HTTP/1.1 200 OK"."\r\n"
+                              ."Length: ".strlen($content)."\r\n"
+                              ."Content-Type: text/html"."\r\n"."\r\n";
+
+                            $event->type->write($header);
+                            sleep(1);
                             $event->type->write($content);
                         }
                     }
@@ -152,7 +158,7 @@ class HTMLControlDemo extends Application {
     }
 
     public function start() {
-        $this->server = new HtmlControlServer($this->window, $this->port, __DIR__.'\\www');
+        $this->server = new HtmlControlServer($this->window, $this->port, $this->documentRoot);
         $this->server->start(100)->register($this->htmlControl);
 
         $this->window->startEventHandler();
