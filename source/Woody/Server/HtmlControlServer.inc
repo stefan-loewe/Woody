@@ -5,6 +5,7 @@ namespace Woody\Server;
 use \Woody\Components\Windows\AbstractWindow;
 use \Woody\Components\Controls\HtmlControl;
 use \Woody\Components\Timer\Timer;
+use \Woody\Event\EventFactory;
 use \Utils\Sockets\ServerSocket;
 use \Utils\Sockets\Server;
 use \Utils\Http\HttpRequestFactory;
@@ -82,23 +83,25 @@ class HtmlControlServer extends Server {
    * It reads upto 2048 bytes, packs it into a respective HTTPRequest object,
    * and routes it to all registered HtmlControls.
    */
-  protected function processClient(ServerSocket $clientSocket) {
-    $message = trim($clientSocket->read(2048));
+  protected function processClient(ServerSocket $connectedClient) {
+    $message = trim($connectedClient->read(2048));
 
     Logger::log(Logger::DEBUG, 'client said: '.$message);
 
+    // foreach registered HtmlControl, create an event,
+    // and pass it to that HtmlControl
     foreach($this->htmlControls as $htmlControl) {
-      \Woody\Event\EventFactory::createEvent(
+      EventFactory::createEvent(
         //not public $htmlControl->getWindow()->getControlID(),
         null,
         $htmlControl->getID(),
         $htmlControl->getControlID(),
-        $clientSocket,
+        $connectedClient,
         HttpRequestFactory::createRequest($message)
       );
     }
 
-    $this->disconnectClient($clientSocket);
+    $this->disconnectClient($connectedClient);
   }
 
   public function start($interval = 1000) {

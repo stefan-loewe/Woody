@@ -114,6 +114,9 @@ class EventFactory {
         if($source instanceof Actionable) {
           $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
         }
+        
+        // these are special events, namely those created when HTMLControls receive new data
+        // see HtmlControlServer::processClient
         else if(is_a($propertyID, 'Utils\Http\HttpGetRequest')) {
           $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
         }

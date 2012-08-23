@@ -139,9 +139,9 @@ class HTMLControlDemo extends Application {
     private function getBtnBrowseCallback() {
         return function() {
             $fileFilters = new FileFilters();
-            $fileFilters->add("PHP source code", "*.php?")
-                ->add("Web page", "*.htm?")
+            $fileFilters->add("Web page", "*.htm?")
                 ->add("Text document", "*.txt")
+                ->add("PHP source code", "*.php?")
                 ->add("All files", "*.*");
 
             $fileOpenDialog = new FileOpenDialog(
