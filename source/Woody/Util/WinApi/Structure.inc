@@ -19,7 +19,7 @@ abstract class Structure {
     $packString = '';
 
     foreach($this->getTypeMapping() as $type) {
-      $typeClassName  = "\\Woody\\Util\\WinAPI\\Types\\".$type;
+      $typeClassName  = "\\Woody\\Util\\WinApi\\Types\\".$type;
       $typeClass      = new $typeClassName();
 
       $packString = $packString.pack($typeClass->getPackFormatCharacter(), $typeClass->getLength());
