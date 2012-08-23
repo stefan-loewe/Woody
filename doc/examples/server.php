@@ -1,6 +1,6 @@
 <?php
 
-require_once('bootstrap/bootstrap.php');
+require_once('../../source/bootstrap/bootstrap.php');
 
 $requestUri = $_SERVER["REQUEST_URI"];
 
