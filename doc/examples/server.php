@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../source/bootstrap/bootstrap.php');
+require_once('D:\workspace\programming\PHP\woody\source\bootstrap\bootstrap.php');
 
 $requestUri = $_SERVER["REQUEST_URI"];
 
@@ -30,7 +30,7 @@ else {
 
   $client->send(strrev($_SERVER['REQUEST_URI']));
 
-  echo $client->readLine(1024);
+  //echo $client->readLine(1024);
 
   $client->disconnect();
 

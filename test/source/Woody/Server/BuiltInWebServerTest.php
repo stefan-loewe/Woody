@@ -53,7 +53,7 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
       9990,
       '.',
       '"C:\\Program Files\\PHP54\\php.exe"',
-      'D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
+      'D:\\workspace\\programming\\PHP\\woody\\doc\\examples\\server.php',
       new HtmlControlServer($window, 1235));
 
     $this->assertInstanceOf('Woody\Server\BuiltInWebServer', $this->server);
@@ -74,7 +74,7 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
       9991,
       '.',
       '"C:\\Program Files\\PHP54\\php.exe"',
-      'D:\\workspace\\programming\\PHP\\woody\\source\\server.php',
+      'D:\\workspace\\programming\\PHP\\woody\\doc\\examples\\server.php',
       new HtmlControlServer($this->application->getWindow(), 1234));
 
     $this->callback     = function() {
@@ -88,7 +88,7 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
     };
 
     $this->timer = new Timer($this->callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
-    $htmlControl = new HtmlControl("none", new Point(10, 20), new Dimension(200, 100));
+    $htmlControl = new HtmlControl('http://www.loewe.ws', new Point(10, 20), new Dimension(200, 100));
 
     // the action listener of the HTML control checks, if the received response equals the expected one,
     // and also sets counter to 1
