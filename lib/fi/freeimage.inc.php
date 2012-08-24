@@ -4,7 +4,7 @@
 
  WINBINDER - The native Windows binding for PHP for PHP
 
- Copyright © Hypervisual - see LICENSE.TXT for details
+ Copyright Â© Hypervisual - see LICENSE.TXT for details
  Author: Rubem Pechansky (http://winbinder.org/contact.php)
 
  Some functions to call the FreeImage library directly
@@ -65,11 +65,24 @@ define("FIF_GIF",		25);
 //------------------------------------------------------------- GLOBAL VARIABLES
 
 if(!isset($FI)) {
-	$FI = wb_load_library("ext\\freeimage");
+  /*
+   * check in application directory, the current directory, 32-bit System directory (e.g. C:\WINDOWS\SYSTEM32),
+   * 16-bit System directory (e.g. C:\WINDOWS\SYSTEM), Windows directory (e.g. C:\WINDOWS) and the directories contained
+   * in the PATH
+   */
+	$FI = wb_load_library("freeimage");
+
+  /*
+   * if the above failed, check for ext-subfolder, hoping that PHP is in the PATH and the dll is in the ext-subfolder
+   */
 	if(!$FI) {
-		wb_message_box(null, "FreeImage extension could not be loaded.", "Error", WBC_STOP);
+    $FI = wb_load_library("ext\\freeimage");
+  }
+
+  if(!$FI) {
+    wb_message_box(null, "FreeImage extension could not be loaded.", "Error", WBC_STOP);
 		die();
-	}
+  }
 }
 //-------------------------------------------------------------------- FUNCTIONS
 
