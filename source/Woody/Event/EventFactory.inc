@@ -4,6 +4,7 @@ namespace Woody\Event;
 
 use \Utils\DataStructures\RingBuffer;
 use \Utils\Geom\Dimension;
+use \Utils\Http\HttpGetRequest;
 use \Woody\Components\Component;
 use \Woody\Components\Controls\Actionable;
 use \Woody\Components\Controls\Control;
@@ -29,129 +30,92 @@ class EventFactory {
   private static $previousFocusedControl = null;
 
   /**
-   * identifier for a focus event (WBC_GETFOCUS)
+   * the event ring buffer - needed for determining the click-counter of mouse click events
    *
-   * @var int
+   * @var RingBuffer
    */
-  private static $FOCUS_EVENT = 0x00001000;
-
-  /**
-   * identifier for a key-up event (WBC_KEYUP)
-   *
-   * @var int
-   */
-  private static $KEY_UP_EVENT = 0x00000800;
-
   private static $eventBuffer = null;
 
+  /**
+   * This method creates events and dispatches them to the respective listeners.
+   *
+   * @param int $windowID the id of the window where the event was triggered
+   * @param int $id the internal winbinder id of the source control
+   * @param int $controlID the control id of the source control
+   * @param int $typeID the type id of the event
+   * @param int $propertyID the property id of the event
+   * @return void
+   */
   public static function createEvent($windowID, $id, $controlID, $typeID, $propertyID) {
     if(self::$eventBuffer === null) {
       self::$eventBuffer = new RingBuffer(10);
     }
 
-//if(!self::isTimerEvent($windowID, $controlID, $id))
-  //var_dump(time().': eventing ...');
+    $eventInfo = self::createEventInfo($windowID, $id, $controlID, $typeID, $propertyID);
 
-    $source = Component::getComponentByID($controlID);
-
-    // window close button does not have a control, so create a window close event
-    if(self::isWindowCloseEvent($id)) {
-      $source->destroy();
-      $event = 'WindowCloseEvent';
+    // window close button is not a real control, so handle it here - close window
+    if(self::isWindowCloseEvent($eventInfo->id)) {
+      $eventInfo->source->destroy();
+      return;
     }
 
-    else if(self::isTimerEvent($windowID, $controlID, $id)) {
-      Timer::getTimerByID($id)->run();
-      $event = 'TimerEvent';
+    // timeout of timers are handled here, too - the callback is executed by calling Timer::run
+    else if(self::isTimerEvent($eventInfo->windowID, $eventInfo->controlID, $eventInfo->id)) {
+      Timer::getTimerByID($eventInfo->id)->run();
+      return;
     }
 
-    else if(self::isFocusEvent($typeID)) {
-      //var_dump('isFocusEvent');
-      $event = new FocusEvent($windowID, $id, $controlID, $typeID, $propertyID, self::$previousFocusedControl);
-      self::$previousFocusedControl = $source;
+    else if(self::isFocusEvent($eventInfo->typeID)) {
+      self::createAndDispatchFocusEvent($eventInfo);
+    }
 
-      foreach($source->getFocusListeners() as $focusListener) {
-        $focusListener->focusGained($event);
+    else if(self::isMouseEvent($eventInfo->typeID)) {
+      self::createAndDispatchMouseEvent($eventInfo);
+    }
+
+    else if(self::isKeyEvent($eventInfo->typeID)) {
+      self::createAndDispatchKeyEvent($eventInfo);
+    }
+
+    if(self::isControlEvent($eventInfo->id)) {
+      // only handle non-focus-events of controls (FocusEvent was handled above and does not trigger Actions)
+      if(!self::isFocusEvent($eventInfo->typeID)) {
+        self::createAndDispatchActionEvent($eventInfo);
+      }
+
+      return;
+    }
+
+    // create and dispatch WindowEvents, e.g. when resizing a window
+    if(self::isWindowEvent($eventInfo->windowID, $eventInfo->controlID)) {
+      if(self::isWindowResizeEvent($eventInfo->typeID)) {
+        self::createAndDispatchWindowResizeEvent($eventInfo);
       }
     }
 
-    else if(self::isMouseEvent($typeID)) {
-      //var_dump('isMouseEvent');
-      $event = new MouseEvent($windowID, $id, $controlID, $typeID, $propertyID);
-
-      if(self::isMouseDownEvent($typeID)) {
-        self::$eventBuffer->add($event);
-      }
-
-      foreach($source->getMouseListeners() as $mouseListener) {
-        if(self::isMouseDownEvent($typeID)) {
-          $mouseListener->mousePressed($event);
-        }
-        else if(self::isMouseUpEvent($typeID)) {
-          $mouseListener->mouseReleased($event);
-        }
-      }
-    }
-
-    else if(self::isKeyEvent($typeID)) {
-      //var_dump('isKeyEvent');
-      $event = new KeyEvent($windowID, $id, $controlID, $typeID, $propertyID);
-
-      foreach($source->getKeyListeners() as $keyListener) {
-        ($typeID === WBC_KEYDOWN) ? $keyListener->keyPressed($event) : $keyListener->keyReleased($event);
-      }
-    }
-    // for EditBox, an ActionEvent would be FocusLost + content changed = onChangeEvent
-
-    // additionally, fire a ActionEvent if appropriate
-    // maybe let the ActionEvent wrap the RawEvent new ActionEvent($event, $meta)
-    if(self::isControlEvent($id)) {
-      $actionEvent = null;
-//var_dump('actionEvent? -> source = '.get_class($source));
-      // handled before
-      if(!self::isFocusEvent($typeID)) {
-
-        if($source instanceof Actionable) {
-          $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
-        }
-        
-        // these are special events, namely those created when HTMLControls receive new data
-        // see HtmlControlServer::processClient
-        else if(is_a($propertyID, 'Utils\Http\HttpGetRequest')) {
-          $actionEvent = new ActionEvent($windowID, $id, $controlID, $typeID, $propertyID);
-        }
-
-        if($actionEvent !== null) {
-          foreach($source->getActionListeners() as $actionListener) {
-            $actionListener->actionPerformed($actionEvent);
-          }
-        }
-      }
-    }
-
-    if(self::isWindowEvent($windowID, $controlID)) {
-      //echo 'WINWINWINWINWIN'.'$typeID = '.$typeID.' / '.$propertyID;
-      if($typeID === 0x00002000) {
-        foreach($source->getWindowResizeListeners() as $resizeListener) {
-          $oldDim = $source->getDimension();
-
-          $newDim = wb_get_size($source->getControlID());
-          $newDim = new Dimension($newDim[0], $newDim[1]);
-
-          $event = new WindowResizeEvent($windowID, $id, $controlID, $typeID, $propertyID, $oldDim, $newDim);
-          $resizeListener->windowResized($event);
-
-          $source->resizeTo($newDim);
-        }
-      }
-    }
-
-    // app crashes when returning event here, and also an ActionEvent was created !??!!?
+    // app crashes when an ActionEvent was created and $event was returned here !?!?!?!
     //return $event;
+  }
+
+  private static function createEventInfo($windowID, $id, $controlID, $typeID, $propertyID) {
+    $eventInfo = new \stdClass();
+
+    $eventInfo->windowID    = $windowID;
+    $eventInfo->id          = $id;
+    $eventInfo->controlID   = $controlID;
+    $eventInfo->typeID      = $typeID;
+    $eventInfo->propertyID  = $propertyID;
+    $eventInfo->source      = Component::getComponentByID($controlID);
+
+    return $eventInfo;
   }
 
   private static function isWindowCloseEvent($id) {
     return $id === IDCLOSE;
+  }
+
+  private static function isTimerEvent($windowID, $controlID, $id) {
+    return self::isWindowEvent($windowID, $controlID) && $id != 0 && $id != IDCLOSE;
   }
 
   private static function isMouseEvent($typeID) {
@@ -171,15 +135,15 @@ class EventFactory {
   }
 
   private static function isFocusEvent($typeID) {
-    return is_int($typeID) && ($typeID === self::$FOCUS_EVENT);
-  }
-
-  private static function isTimerEvent($windowID, $controlID, $id) {
-    return self::isWindowEvent($windowID, $controlID) && $id != 0 && $id != IDCLOSE;
+    return is_int($typeID) && ($typeID === WBC_GETFOCUS);
   }
 
   private static function isWindowEvent($windowID, $controlID) {
     return $windowID == $controlID;
+  }
+
+  private static function isWindowResizeEvent($typeID) {
+    return is_int($typeID) && ($typeID === WBC_RESIZE);
   }
 
   private static function isControlEvent($id) {
@@ -216,5 +180,107 @@ class EventFactory {
     }
 
     return $clickCount;
+  }
+
+  private static function createAndDispatchFocusEvent($eventInfo) {
+    $event = new FocusEvent(
+      $eventInfo->windowID,
+      $eventInfo->id,
+      $eventInfo->controlID,
+      $eventInfo->typeID,
+      $eventInfo->propertyID,
+      self::$previousFocusedControl
+    );
+
+    self::$previousFocusedControl = $eventInfo->source;
+
+    foreach($eventInfo->source->getFocusListeners() as $focusListener) {
+      $focusListener->focusGained($event);
+    }
+  }
+
+  private static function createAndDispatchMouseEvent($eventInfo) {
+      $event = new MouseEvent(
+        $eventInfo->windowID,
+        $eventInfo->id,
+        $eventInfo->controlID,
+        $eventInfo->typeID,
+        $eventInfo->propertyID
+      );
+
+      if(self::isMouseDownEvent($eventInfo->typeID)) {
+        self::$eventBuffer->add($event);
+      }
+
+      foreach($eventInfo->source->getMouseListeners() as $mouseListener) {
+        if(self::isMouseDownEvent($eventInfo->typeID)) {
+          $mouseListener->mousePressed($event);
+        }
+        else if(self::isMouseUpEvent($eventInfo->typeID)) {
+          $mouseListener->mouseReleased($event);
+        }
+      }
+  }
+
+  private static function createAndDispatchKeyEvent($eventInfo) {
+      $event = new KeyEvent(
+        $eventInfo->windowID,
+        $eventInfo->id,
+        $eventInfo->controlID,
+        $eventInfo->typeID,
+        $eventInfo->propertyID
+      );
+
+      foreach($eventInfo->source->getKeyListeners() as $keyListener) {
+        ($eventInfo->typeID === WBC_KEYDOWN) ? $keyListener->keyPressed($event) : $keyListener->keyReleased($event);
+      }
+  }
+
+  // no other events are raised when, e.g., clicking on a button, or selecting from a listbox, therefore, AcionEvents
+  // are needed
+  // TODO: for EditBox, an ActionEvent would be FocusLost + content changed = onChangeEvent
+  private static function createAndDispatchActionEvent($eventInfo) {
+    // trigger action events for all Actionables, as well as when the propertyID actually is a HttpGetRequest
+    // the later are special events, namely those raised by HTMLControls when they receive new data
+    // @see HtmlControlServer::processClient
+    if($eventInfo->source instanceof Actionable || $eventInfo->propertyID instanceof HttpGetRequest) {
+      $actionEvent = new ActionEvent(
+        $eventInfo->windowID,
+        $eventInfo->id,
+        $eventInfo->controlID,
+        $eventInfo->typeID,
+        $eventInfo->propertyID
+      );
+
+      foreach($eventInfo->source->getActionListeners() as $actionListener) {
+        $actionListener->actionPerformed($actionEvent);
+      }
+    }
+  }
+
+  private static function createAndDispatchWindowResizeEvent($eventInfo) {
+    // the previous dimension is still stored in the Woody object
+    $oldDim = $eventInfo->source->getDimension();
+
+    // the winbinder resource already has the new dimension
+    $newDim = wb_get_size($eventInfo->source->getControlID());
+    $newDim = new Dimension($newDim[0], $newDim[1]);
+
+    $event = new WindowResizeEvent(
+      $eventInfo->windowID,
+      $eventInfo->id,
+      $eventInfo->controlID,
+      $eventInfo->typeID,
+      $eventInfo->propertyID,
+      $oldDim,
+      $newDim
+    );
+
+    // update the dimension of the Woody object here
+    $eventInfo->resizeTo($newDim);
+
+    foreach($eventInfo->source->getWindowResizeListeners() as $resizeListener) {
+      $resizeListener->windowResized($event);
+    }
   }
 }
