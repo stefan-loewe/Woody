@@ -30,6 +30,7 @@ else {
 
   $client->send(strrev($_SERVER['REQUEST_URI']));
 
+  // may not read here, this breaks BuiltInWebServerTest
   //echo $client->readLine(1024);
 
   $client->disconnect();
