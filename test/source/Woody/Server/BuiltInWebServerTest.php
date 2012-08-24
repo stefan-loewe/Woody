@@ -93,7 +93,8 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
     // the action listener of the HTML control checks, if the received response equals the expected one,
     // and also sets counter to 1
     $htmlControl->addActionListener(new ActionAdapter(function($event) {
-            $this->assertEquals(strrev('/?woody=great'), $event->property->getRawRequest());
+            $this->assertEquals('/?woody=great', $event->property->getRawRequest());
+            $event->type->write('success');
             $this->eventFired = TRUE;
           }));
 

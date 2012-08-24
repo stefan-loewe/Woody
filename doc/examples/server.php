@@ -28,12 +28,33 @@ else {
 
   $client->connect();
 
-  $client->send(strrev($_SERVER['REQUEST_URI']));
+  $client->send($_SERVER['REQUEST_URI']);
 
-  // may not read here, this breaks BuiltInWebServerTest
-  //echo $client->readLine(1024);
+  echo getReply($client);
 
   $client->disconnect();
 
   $client->close();
+}
+
+/**
+ * This function prints the reply. If we would do a blocking-read, this breaks BuiltInWebServerTest, as that would wait
+ * endlesslly, as no reply is sent there. This work-around is not really nice but works with both the test case and the
+ * htmlControlWithLocalFilesBuiltInWS example.
+ *
+ * @param \Utils\Sockets\ClientSocket $client the socket connection of the client connecting to the HtmlControlServer
+ */
+function getReply($client) {
+  $client->setNonBlocking();
+  $reply = '';
+  for($i = 0; $i < 3; $i++) {
+
+    $reply .= $client->readLine(1024);
+    if(strlen($reply) > 0) {
+      break;
+    }
+    sleep(1);
+  }
+
+  return $reply;
 }

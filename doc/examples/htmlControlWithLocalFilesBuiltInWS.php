@@ -38,9 +38,7 @@ class HTMLControlDemoBuiltInWebServer extends Application {
 
     public function __construct($port) {
         parent::__construct();
-
-        Utils\Logging\Logger::setLogLevel(Utils\Logging\Logger::ALL);
-
+\Utils\Logging\Logger::setLogLevel(\Utils\Logging\Logger::ALL);
         $this->port         = $port;
 
         $this->documentRoot = __DIR__.'\\www';
