@@ -151,6 +151,7 @@ class ControlConstructorTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Component::__construct
    * @covers \Woody\Components\Controls\Control::__construct
    * @covers \Woody\Components\Controls\ListControl::__construct
+   * @covers \Woody\Components\Controls\ListControl::getDefaultCellRenderer
    * @covers \Woody\Components\Controls\ListBox::__construct
    */
   public function testConstructListBox() {

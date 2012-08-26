@@ -53,6 +53,38 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * This method tests resizing the checkbox.
+   *
+   * @covers \Woody\Components\Controls\Checkbox::resizeTo
+   */
+  public function testResizeTo() {
+    $callback = function() {
+      $expected = new Dimension(15, 15);
+      $this->checkbox->resizeTo($expected);
+
+      $actual = $this->checkbox->getDimension();
+      $this->assertEquals($expected->width, $actual->width);
+      $this->assertEquals($expected->height, $actual->height);
+
+      
+      $this->checkbox->resizeTo(new Dimension(150, 150));
+
+      $actual = $this->checkbox->getDimension();
+      $this->assertEquals(Checkbox::MAX_WIDTH, $actual->width);
+      $this->assertEquals(Checkbox::MAX_HEIGHT, $actual->height);
+
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+
+    $this->timer->start();
+
+    $this->application->start();
+  }
+
+  /**
    * This method tests retrieving the value of the checkbox.
    *
    * @covers \Woody\Components\Controls\Checkbox::isChecked

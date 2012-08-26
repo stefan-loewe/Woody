@@ -2,10 +2,11 @@
 
 namespace Woody\Components\Controls;
 
+use \Utils\Geom\Dimension;
+use \Utils\Geom\Point;
 use \Woody\App\TestApplication;
 use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \Woody\Layouts\GridLayout;
 
 /**
  * Test class for EditBox.
@@ -80,6 +81,35 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * This method tests getting the components of the frame.
+   *
+   * @covers \Woody\Components\Controls\Frame::getComponents
+   */
+  public function testGetComponents() {
+    $this->timer = new Timer(function() {
+      $checkbox = new Checkbox(false, new Point(10, 10), new Dimension(10, 10));
+      $this->frame->add($checkbox);
+
+      $editbox = new EditBox('false', new Point(10, 40), new Dimension(100, 22));
+      $this->frame->add($editbox);
+
+      $components = $this->frame->getComponents();
+      $this->assertEquals($components[0], $checkbox);
+      $this->assertEquals($components[1], $editbox);
+
+      $this->timer->destroy();
+      $this->application->stop();
+      },
+      $this->application->getWindow(),
+      Timer::TEST_TIMEOUT
+    );
+
+    $this->timer->start();
+
+    $this->application->start();
+  }
+
+  /**
    * This method tests removing components to the frame.
    *
    * @covers \Woody\Components\Controls\Frame::remove
@@ -101,6 +131,32 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
           $this->timer->destroy();
           $this->application->stop();
         }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+
+    $this->timer->start();
+
+    $this->application->start();
+  }
+
+  /**
+   * This method tests getting and setting the layout.
+   *
+   * @covers \Woody\Components\Controls\Frame::getLayout
+   * @covers \Woody\Components\Controls\Frame::setLayout
+   */
+  public function testGetSetLayout() {
+    $callback = function() {
+      $this->assertNull($this->frame->getLayout());
+
+      $layout = new GridLayout(1, 1);
+      $this->frame->setLayout($layout);
+
+      $this->assertEquals($layout, $this->frame->getLayout());
+
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+    
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
     $this->timer->start();
 

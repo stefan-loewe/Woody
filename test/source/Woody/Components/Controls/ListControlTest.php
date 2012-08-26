@@ -131,10 +131,10 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetSetSelectedIndex() {
     $this->timer = new Timer(function() {
-                              $this->assertEquals(-1, $this->listControl->getSelectedIndex());
+                              $this->assertEquals(ListControl::NO_SELECTION, $this->listControl->getSelectedIndex());
 
                               $this->listControl->setSelectedIndex(10);
-                              $this->assertEquals(-1, $this->listControl->getSelectedIndex());
+                              $this->assertEquals(ListControl::NO_SELECTION, $this->listControl->getSelectedIndex());
 
                               // get a mock for the model ...
                               $model = $this->getMockBuilder('\Woody\Model\ListModel')
@@ -150,7 +150,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
 
                               $model->attach($this->listControl);
                               $this->listControl->setModel($model);
-                              $this->assertEquals(-1, $this->listControl->getSelectedIndex());
+                              $this->assertEquals(ListControl::NO_SELECTION, $this->listControl->getSelectedIndex());
 
                               $this->listControl->setSelectedIndex(0);
                               $this->assertEquals(0, $this->listControl->getSelectedIndex());
@@ -162,13 +162,16 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
                               $this->assertEquals(1, $this->listControl->getSelectedIndex());
 
                               $this->listControl->setSelectedIndex(2);
-                              $this->assertEquals(-1, $this->listControl->getSelectedIndex());
+                              $this->assertEquals(ListControl::NO_SELECTION, $this->listControl->getSelectedIndex());
 
                               $this->listControl->setSelectedIndex(1);
                               $this->assertEquals(1, $this->listControl->getSelectedIndex());
 
-                              $this->listControl->setSelectedIndex(-1);
-                              $this->assertEquals(-1, $this->listControl->getSelectedIndex());
+                              $this->listControl->setSelectedIndex(ListControl::NO_SELECTION);
+                              $this->assertEquals(ListControl::NO_SELECTION, $this->listControl->getSelectedIndex());
+
+                              $this->listControl->setSelectedIndex(-2);
+                              $this->assertEquals(ListControl::NO_SELECTION, $this->listControl->getSelectedIndex());
 
                               $this->listControl->setSelectedIndex(1);
                               $this->assertEquals(1, $this->listControl->getSelectedIndex());
