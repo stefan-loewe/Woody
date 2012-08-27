@@ -173,4 +173,51 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
     $this->timer->start();
     $this->application->start();
   }
+
+  /**
+   * This method tests setting the editbox readonly.
+   *
+   * @covers \Woody\Components\Controls\EditBox::setReadOnly
+   */
+  public function testSetReadOnly() {
+    $callback = function() {
+      $this->assertSame($this->editBox, $this->editBox->setReadOnly(TRUE));
+      $this->assertSame($this->editBox, $this->editBox->setReadOnly(FALSE));
+
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+
+    $this->timer->start();
+    $this->application->start();
+  }
+
+  /**
+   * This method tests setting the cursor of the editbox.
+   *
+   * @covers \Woody\Components\Controls\EditBox::setCursor
+   */
+  public function testSetCursor() {
+    $callback = function() {
+      $this->editBox->setValue('');
+      $this->assertSame($this->editBox, $this->editBox->setCursor(0));
+      $this->assertSame($this->editBox, $this->editBox->setCursor(-1));
+
+      $this->editBox->setValue('someText');
+      $this->assertSame($this->editBox, $this->editBox->setCursor(0));
+      $this->assertSame($this->editBox, $this->editBox->setCursor(-1));
+      $this->assertSame($this->editBox, $this->editBox->setCursor(7));
+      $this->assertSame($this->editBox, $this->editBox->setCursor(8));
+      $this->assertSame($this->editBox, $this->editBox->setCursor(9));
+      $this->assertSame($this->editBox, $this->editBox->setCursor(10));
+
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+
+    $this->timer->start();
+    $this->application->start();
+  }
 }

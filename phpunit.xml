@@ -17,6 +17,9 @@
     <directory suffix="php">./test/source/Woody/Model*</directory>
     <directory suffix="php">./test/source/Woody/Server*</directory>
     <directory suffix="php">./test/source/Woody/Util*</directory>
+
+    <!-- blacklist all interfaces - obsolete with phpunit 3.7 -->
+    <exclude>./test/source/Woody/Components/Controls/Actionable.inc</exclude>
   </testsuite>
 </testsuites>
 <logging>

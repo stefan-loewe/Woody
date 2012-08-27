@@ -164,7 +164,7 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * This method tests expanding and collapsing a node in the tree view.
-   * 
+   *
    * @covers \Woody\Components\Controls\TreeView::expandNode
    * @covers \Woody\Components\Controls\TreeView::collapseNode
    */
@@ -179,8 +179,28 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
       $this->timer->destroy();
       $this->application->stop();
     };
-    
+
     $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+
+    $this->timer->start();
+
+    $this->application->start();
+  }
+
+  /**
+   * This method tests setting the node renderer.
+   *
+   * @covers \Woody\Components\Controls\TreeView::setNodeRenderer
+   */
+  public function testSetNodeRenderer() {
+    $callback = function() {
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+
+    $this->assertSame($this->treeView, $this->treeView->setNodeRenderer(function() {}));
 
     $this->timer->start();
 

@@ -38,8 +38,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * This method sets up a plain window for testing.
    */
   protected function setUp() {
-
-    $this->window = new MainWindow('timer test', new Point(50, 50), new Dimension(300, 200));
+    $this->window = new MainWindow($this->getName().'-'.basename(__FILE__), new Point(50, 50), new Dimension(300, 200));
 
     $this->window->create(null);
 
@@ -59,7 +58,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::__construct
    */
   public function testConstruct() {
-    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           $this->timer->destroy();
           $this->window->destroy();
@@ -78,7 +76,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::start
    */
   public function testStart() {
-    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           $this->timer->destroy();
           $this->window->destroy();
@@ -97,7 +94,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::run
    */
   public function testRun() {
-    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           if(++$this->counter > 10) {
             $this->timer->destroy();
@@ -117,7 +113,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::destroy
    */
   public function testDestroy() {
-    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           ++$this->counter;
 
@@ -138,7 +133,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::getID
    */
   public function testGetID() {
-    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
 
@@ -165,7 +159,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::getTimerByID
    */
   public function testGetTimerByID() {
-    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           $this->timer->destroy();
           $this->window->destroy();
@@ -184,6 +177,29 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * This method tests the returning of the execution counter of the timer.
+   *
+   * @covers Woody\Components\Timer\Timer::getExecutionCount
+   */
+  public function testGetExecutionCount() {
+    $callback = function() {
+      if($this->timer->getExecutionCount() > 0) {
+        $this->assertEquals(1, $this->timer->getExecutionCount());
+
+        $this->timer->destroy();
+        $this->window->destroy();
+      }
+    };
+
+    $this->timer = new Timer($callback, $this->window, Timer::TEST_TIMEOUT);
+
+    $this->assertEquals(0, $this->timer->getExecutionCount());
+
+    $this->timer->start();
+    $this->window->startEventHandler();
+  }
+
+  /**
    * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException\TimerAlreadyRunningException is
    * thrown, when starting an already started timer.
    *
@@ -191,7 +207,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Timer\TimerAlreadyRunningException::__construct
    */
   public function testTimerAlreadyRunningException() {
-    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           try {
             $this->timer->start();
@@ -219,7 +234,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Timer\TimerNotRunningException::__construct
    */
   public function testTimerNotRunningRunException() {
-    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function(){}, $this->window, Timer::TEST_TIMEOUT);
 
     try {

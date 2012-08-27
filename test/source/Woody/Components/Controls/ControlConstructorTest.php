@@ -17,7 +17,7 @@ class ControlConstructorTest extends \PHPUnit_Framework_TestCase {
    * @var \Woody\Components\Controls\Control
    */
   private $control = null;
-  
+
   /**
    * the window to hold the control
    *
@@ -156,7 +156,7 @@ class ControlConstructorTest extends \PHPUnit_Framework_TestCase {
     $imageResource->expects($this->once())
       ->method('getResource')
       ->will($this->returnValue(\Woody\Util\Image\ImageResource::create(new Dimension(10, 10))->getResource()));
-    
+
     $this->control = new ImageButton($imageResource, new Point(20, 20), new Dimension(120, 20));
     $this->assertNotNull($this->control->getID());
 

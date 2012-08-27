@@ -331,4 +331,24 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
 
     $this->application->start();
   }
+
+  /**
+   * This method tests setting the cell renderer.
+   *
+   * @covers \Woody\Components\Controls\ListControl::setCellRenderer
+   */
+  public function testSetCellRenderer() {
+    $callback = function() {
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+
+    $this->assertSame($this->listControl, $this->listControl->setCellRenderer(function() {}));
+
+    $this->timer->start();
+
+    $this->application->start();
+  }
 }
