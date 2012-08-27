@@ -41,7 +41,7 @@ class HtmlControlTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->application = new TestApplication();
 
-    $this->htmlControl = new HtmlControl('http://www.web.de', new Point(20, 20), new Dimension(260, 160));
+    $this->htmlControl = new HtmlControl('http://www.loewe.ws', new Point(20, 20), new Dimension(260, 160));
 
     $this->application->getWindow()->getRootPane()->add($this->htmlControl);
   }
@@ -60,7 +60,7 @@ class HtmlControlTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetUrl() {
     $this->timer = new Timer(function() {
-                              $this->assertEquals('http://www.web.de', $this->htmlControl->getUrl());
+                              $this->assertEquals('http://www.loewe.ws', $this->htmlControl->getUrl());
                               $this->timer->destroy();
 
                               $this->application->stop();
@@ -78,7 +78,7 @@ class HtmlControlTest extends \PHPUnit_Framework_TestCase {
    */
   public function testSetUrl() {
     $this->timer = new Timer(function() {
-                              $url = 'http:\\www.php.net';
+                              $url = 'http:\\www.loewe.ws';
                               $this->htmlControl->setUrl($url);
                               $this->assertEquals($url, $this->htmlControl->getUrl());
                               $this->timer->destroy();

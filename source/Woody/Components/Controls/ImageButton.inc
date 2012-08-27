@@ -40,7 +40,7 @@ class ImageButton extends Button {
    * @return \Woody\Components\Controls\ImageButton $this
    */
   private function setImage() {
-    $bitmap = $this->imageResource->getBitmap();
+    $bitmap = $this->imageResource->getResource();
 
     wb_set_image($this->controlID, $bitmap);
     wb_destroy_image($bitmap);

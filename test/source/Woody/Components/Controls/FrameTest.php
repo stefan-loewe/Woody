@@ -61,19 +61,21 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Controls\Control::create
    */
   public function testAdd() {
-    $this->timer = new Timer(function() {
-        $checkbox = new Checkbox(false, new Point(10, 10), new Dimension(10, 10));
-        $this->assertNull($checkbox->getParent());
+    $callback = function() {
+      $checkbox = new Checkbox(false, new Point(10, 10), new Dimension(10, 10));
+      $this->assertNull($checkbox->getParent());
 
-        $this->frame->add($checkbox);
-        $this->assertEquals($this->frame, $checkbox->getParent());
+      $this->frame->add($checkbox);
+      $this->assertEquals($this->frame, $checkbox->getParent());
 
-        $this->frame->add($checkbox);
-        $this->assertEquals($this->frame, $checkbox->getParent());
+      $this->frame->add($checkbox);
+      $this->assertEquals($this->frame, $checkbox->getParent());
 
-        $this->timer->destroy();
-        $this->application->stop();
-        }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+        
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
     $this->timer->start();
 

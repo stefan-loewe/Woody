@@ -163,6 +163,31 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * This method tests expanding and collapsing a node in the tree view.
+   * 
+   * @covers \Woody\Components\Controls\TreeView::expandNode
+   * @covers \Woody\Components\Controls\TreeView::collapseNode
+   */
+  public function testExpandCollapse() {
+    $callback = function() {
+      $model = $this->getDefaultMock();
+      $this->treeView->setModel($model);
+
+      $this->assertSame($this->treeView, $this->treeView->expandNode($model->getRoot()));
+      $this->assertSame($this->treeView, $this->treeView->collapseNode($model->getRoot()));
+
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+    
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+
+    $this->timer->start();
+
+    $this->application->start();
+  }
+
+  /**
    * This method returns the default mock object for testing this class.
    *
    * @return \Woody\Model\DefaultTreeModel

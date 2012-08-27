@@ -2,6 +2,7 @@
 
 namespace Woody\Components\Controls;
 
+use \Woody\Components\Windows\MainWindow;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
@@ -11,17 +12,26 @@ use \Utils\Geom\Dimension;
  */
 class ControlConstructorTest extends \PHPUnit_Framework_TestCase {
   /**
-   * the push button to test
+   * the control to test
    *
    * @var \Woody\Components\Controls\Control
    */
   private $control = null;
+  
+  /**
+   * the window to hold the control
+   *
+   * @var \Woody\Components\Controls\Windows\AbstractWindow
+   */
+  private $window = null;
 
   /**
    * Sets up the fixture, for example, opens a network connection.
    * This method is called before a test is executed.
    */
   protected function setUp() {
+    $this->window = new MainWindow('ControlConstructTest', new Point(10, 10), new Dimension(300, 200));
+    $this->window->create();
   }
 
   /**
@@ -29,6 +39,7 @@ class ControlConstructorTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
+    $this->window->destroy();
   }
 
   /**
@@ -88,31 +99,48 @@ class ControlConstructorTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Component::__construct
    * @covers \Woody\Components\Controls\Control::__construct
    * @covers \Woody\Components\Controls\Frame::__construct
+   * @covers \Woody\Components\Controls\Frame::create
    */
   public function testConstructFrame() {
     $this->control = new Frame('testConstructFrame', new Point(20, 20), new Dimension(120, 20));
     $this->assertNotNull($this->control->getID());
+
+    $this->window->getRootPane()->add($this->control);
+    $this->assertEquals($this->window->getRootPane(), $this->control->getParent());
   }
 
   /**
    * @covers \Woody\Components\Component::__construct
    * @covers \Woody\Components\Controls\Control::__construct
    * @covers \Woody\Components\Controls\HtmlControl::__construct
+   * @covers \Woody\Components\Controls\HtmlControl::create
    */
   public function testConstructHtmlControl() {
     $this->control = new HtmlControl('http://www.loewe.ws', new Point(20, 20), new Dimension(120, 20));
     $this->assertNotNull($this->control->getID());
+
+    $this->window->getRootPane()->add($this->control);
+    $this->assertEquals($this->window->getRootPane(), $this->control->getParent());
   }
 
   /**
    * @covers \Woody\Components\Component::__construct
    * @covers \Woody\Components\Controls\Control::__construct
    * @covers \Woody\Components\Controls\Image::__construct
+   * @covers \Woody\Components\Controls\Image::create
+   * @covers \Woody\Components\Controls\Image::setImage
    */
   public function testConstructImage() {
     $imageResource = $this->getMockBuilder('\Woody\Util\Image\ImageResource')->disableOriginalConstructor()->getMock();
     $this->control = new Image($imageResource, new Point(20, 20), new Dimension(120, 20));
     $this->assertNotNull($this->control->getID());
+
+    $imageResource->expects($this->once())
+      ->method('getResource')
+      ->will($this->returnValue(\Woody\Util\Image\ImageResource::create(new Dimension(10, 10))->getResource()));
+
+    $this->window->getRootPane()->add($this->control);
+    $this->assertEquals($this->window->getRootPane(), $this->control->getParent());
   }
 
   /**
@@ -120,11 +148,20 @@ class ControlConstructorTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Controls\Control::__construct
    * @covers \Woody\Components\Controls\Button::__construct
    * @covers \Woody\Components\Controls\ImageButton::__construct
+   * @covers \Woody\Components\Controls\ImageButton::create
+   * @covers \Woody\Components\Controls\ImageButton::setImage
    */
   public function testConstructImageButton() {
     $imageResource = $this->getMockBuilder('\Woody\Util\Image\ImageResource')->disableOriginalConstructor()->getMock();
+    $imageResource->expects($this->once())
+      ->method('getResource')
+      ->will($this->returnValue(\Woody\Util\Image\ImageResource::create(new Dimension(10, 10))->getResource()));
+    
     $this->control = new ImageButton($imageResource, new Point(20, 20), new Dimension(120, 20));
     $this->assertNotNull($this->control->getID());
+
+    $this->window->getRootPane()->add($this->control);
+    $this->assertEquals($this->window->getRootPane(), $this->control->getParent());
   }
 
   /**
