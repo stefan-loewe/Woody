@@ -44,7 +44,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
     $this->topLeftCorner  = new Point(20, 20);
     $this->dimension      = new Dimension(100, 20);
     $this->component      = new Label('TestLabel', $this->topLeftCorner, $this->dimension);
-    $this->window->add($this->component);
+    $this->window->getRootPane()->add($this->component);
   }
 
   /**
@@ -56,14 +56,14 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests getting and setting the timestamp from the calendar.
+   * This method tests getting the ids of the component.
    *
    * @covers \Woody\Components\Component::getUniqueID
    * @covers \Woody\Components\Component::getComponentByID
    * @covers \Woody\Components\Component::getControlID
    * @covers \Woody\Components\Component::getID
    */
-  public function testComponentSimple() {
+  public function testGetIDs() {
     $id1 = Component::getUniqueID();
     $id2 = Component::getUniqueID();
     $this->assertEquals(1, $id2 - $id1);
@@ -74,33 +74,44 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests getting and setting the timestamp from the calendar.
+   * This method tests getting the parent of the component.
    *
    * @covers \Woody\Components\Component::getParent
    */
-  public function testComponentGetParent() {
-    $this->assertEquals($this->window, $this->component->getParent());
+  public function testGetParent() {
+    $this->assertEquals($this->window->getRootPane(), $this->component->getParent());
   }
 
   /**
-   * This method tests getting and setting the timestamp from the calendar.
+   * This method tests getting the position of the component.
    *
    * @covers \Woody\Components\Component::getPosition
    */
-  public function testComponentGetPosition() {
+  public function testGetPosition() {
     $this->assertEquals($this->topLeftCorner->x, $this->component->getPosition()->x);
     $this->assertEquals($this->topLeftCorner->y, $this->component->getPosition()->y);
     $this->assertFalse($this->topLeftCorner === $this->component->getPosition());
   }
 
   /**
-   * This method tests getting and setting the timestamp from the calendar.
+   * This method tests getting the dimension of the component.
    *
    * @covers \Woody\Components\Component::getDimension
    */
-  public function testComponentGetDimension() {
+  public function testGetDimension() {
     $this->assertEquals($this->dimension->width, $this->component->getDimension()->width);
     $this->assertEquals($this->dimension->height, $this->component->getDimension()->height);
     $this->assertFalse($this->dimension === $this->component->getDimension());
+  }
+
+  /**
+   * This method tests hiding and showing the component.
+   *
+   * @covers \Woody\Components\Component::hide
+   * @covers \Woody\Components\Component::show
+   */
+  public function testHideShow() {
+    $this->assertSame($this->component, $this->component->hide());
+    $this->assertSame($this->component, $this->component->show());
   }
 }

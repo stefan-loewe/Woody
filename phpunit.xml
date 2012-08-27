@@ -10,6 +10,7 @@
     <directory suffix="php">./test/source/Woody/System*</directory>
     <directory suffix="php">./test/source/Woody/App*</directory>
     <directory suffix="php">./test/source/Woody/Components/Controls*</directory>
+    <file>./test/source/Woody/Components/ComponentTest.php</file>
     <directory suffix="php">./test/source/Woody/Components/Windows*</directory>
     <directory suffix="php">./test/source/Woody/Components/Timer*</directory>
     <directory suffix="php">./test/source/Woody/Dialog*</directory>
