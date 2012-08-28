@@ -221,25 +221,6 @@ abstract class Component implements IComponent {
   }
 
   /**
-   * This method returns the window to which this component is attached to, or null if none was found.
-   *
-   * @return AbstractWindow the window to which this component is attached to
-   */
-  protected function getWindow() {
-    $currentParent = $this;
-
-    while($currentParent != null) {
-      if($currentParent instanceof AbstractWindow) {
-        return $currentParent;
-      }
-
-      $currentParent = $currentParent->parent;
-    }
-
-    return null;
-  }
-
-  /**
    * This method adds an action listener to the component.
    *
    * @param ActionListener $actionListener the action listener to add

@@ -56,7 +56,6 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding components to the frame.
    *
-   * @covers \Woody\Components\Component::getWindow
    * @covers \Woody\Components\Controls\Frame::add
    * @covers \Woody\Components\Controls\Control::create
    */

@@ -105,6 +105,111 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * This method tests adding, getting, and removing an action listener from the component.
+   *
+   * @covers \Woody\Components\Component::getActionListeners
+   * @covers \Woody\Components\Component::addActionListener
+   * @covers \Woody\Components\Component::removeActionListener
+   */
+  public function testActionListeners() {
+    $this->assertEquals(0, $this->component->getActionListeners()->count());
+    
+    $actionListener = $this->getMockBuilder('\Woody\Event\ActionAdapter')
+                                      ->disableOriginalConstructor()
+                                      ->getMock();
+    
+    $this->component->addActionListener($actionListener);
+    $this->assertEquals(1, $this->component->getActionListeners()->count());
+
+    $this->component->removeActionListener($actionListener);
+    $this->assertEquals(0, $this->component->getActionListeners()->count());
+  }
+
+  /**
+   * This method tests adding, getting, and removing a focus listener from the component.
+   *
+   * @covers \Woody\Components\Component::getFocusListeners
+   * @covers \Woody\Components\Component::addFocusListener
+   * @covers \Woody\Components\Component::removeFocusListener
+   */
+  public function testFocusListeners() {
+    $this->assertEquals(0, $this->component->getFocusListeners()->count());
+    
+    $focusListener = $this->getMockBuilder('\Woody\Event\FocusAdapter')
+                                      ->disableOriginalConstructor()
+                                      ->getMock();
+    
+    $this->component->addFocusListener($focusListener);
+    $this->assertEquals(1, $this->component->getFocusListeners()->count());
+
+    $this->component->removeFocusListener($focusListener);
+    $this->assertEquals(0, $this->component->getFocusListeners()->count());
+  }
+
+  /**
+   * This method tests adding, getting, and removing a key listener from the component.
+   *
+   * @covers \Woody\Components\Component::getKeyListeners
+   * @covers \Woody\Components\Component::addKeyListener
+   * @covers \Woody\Components\Component::removeKeyListener
+   */
+  public function testKeyListeners() {
+    $this->assertEquals(0, $this->component->getKeyListeners()->count());
+    
+    $keyListener = $this->getMockBuilder('\Woody\Event\KeyAdapter')
+                                      ->disableOriginalConstructor()
+                                      ->getMock();
+    
+    $this->component->addKeyListener($keyListener);
+    $this->assertEquals(1, $this->component->getKeyListeners()->count());
+
+    $this->component->removeKeyListener($keyListener);
+    $this->assertEquals(0, $this->component->getKeyListeners()->count());
+  }
+
+  /**
+   * This method tests adding, getting, and removing a mouse listener from the component.
+   *
+   * @covers \Woody\Components\Component::getMouseListeners
+   * @covers \Woody\Components\Component::addMouseListener
+   * @covers \Woody\Components\Component::removeMouseListener
+   */
+  public function testMouseListeners() {
+    $this->assertEquals(0, $this->component->getMouseListeners()->count());
+    
+    $mouseListener = $this->getMockBuilder('\Woody\Event\MouseAdapter')
+                                      ->disableOriginalConstructor()
+                                      ->getMock();
+    
+    $this->component->addMouseListener($mouseListener);
+    $this->assertEquals(1, $this->component->getMouseListeners()->count());
+
+    $this->component->removeMouseListener($mouseListener);
+    $this->assertEquals(0, $this->component->getMouseListeners()->count());
+  }
+
+  /**
+   * This method tests refreshing the component.
+   *
+   * @covers \Woody\Components\Component::refresh
+   */
+  public function testRefresh() {
+    $this->assertSame($this->component, $this->component->refresh(TRUE));
+    $this->assertSame($this->component, $this->component->refresh(FALSE));
+  }
+
+  /**
+   * This method tests hiding and showing the component.
+   *
+   * @covers \Woody\Components\Component::disable
+   * @covers \Woody\Components\Component::enable
+   */
+  public function testDisableEnable() {
+    $this->assertSame($this->component, $this->component->disable());
+    $this->assertSame($this->component, $this->component->enable());
+  }
+
+  /**
    * This method tests hiding and showing the component.
    *
    * @covers \Woody\Components\Component::hide
