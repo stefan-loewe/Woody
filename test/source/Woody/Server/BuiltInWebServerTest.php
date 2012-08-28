@@ -53,63 +53,10 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
       9990,
       '.',
       'php.exe',
-      '..\\..\\..\\..\\doc\\examples\\server.php',
+      realpath(__DIR__.'\\..\\..\\..\\..\\doc\\examples\\server.php'),
       new HtmlControlServer($window, 1235));
 
     $this->assertInstanceOf('Woody\Server\BuiltInWebServer', $this->server);
-  }
-
-  /**
-   * This method tests starting the server.
-   *
-   * @covers \Woody\Server\BuiltInWebServer::start
-   * @covers \Woody\Server\BuiltInWebServer::stop
-   */
-  public function testStart() {
-    $this->application  = new TestApplication();
-    wb_set_text($this->application->getWindow()->getControlID(), $this->getName().' in '.basename(__FILE__));
-
-    $this->server = new BuiltInWebServer(
-      $this->application->getWindow(),
-      9991,
-      '.',
-      'php.exe',
-      '..\\..\\..\\..\\doc\\examples\\server.php',
-      new HtmlControlServer($this->application->getWindow(), 1234));
-
-    $this->callback     = function() {
-      if($this->eventFired) {
-        $this->server->stop();
-        $this->timer->destroy();
-        $this->application->stop();
-
-        $this->assertTrue($this->eventFired);
-      }
-    };
-
-    $this->timer = new Timer($this->callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
-    $htmlControl = new HtmlControl('http://www.loewe.ws', new Point(10, 20), new Dimension(200, 100));
-
-    // the action listener of the HTML control checks, if the received response equals the expected one,
-    // and also sets counter to 1
-    $htmlControl->addActionListener(new ActionAdapter(function($event) {
-            $this->assertEquals('/?woody=great', $event->property->getRawRequest());
-            $event->type->write('success');
-            $this->eventFired = TRUE;
-          }));
-
-    $this->application->getWindow()->getRootPane()->add($htmlControl);
-
-    $this->server->register($htmlControl);
-
-    $this->server->start();
-
-    $this->timer->start();
-
-    // send something to the socket
-    file_get_contents('http://127.0.0.1:9991?woody=great');
-
-    $this->application->start();
   }
 
   /**
@@ -141,5 +88,58 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertInstanceOf('\Woody\Server\BuiltInWebServer', $this->server->register($htmlControl));
     $this->assertInstanceOf('\Woody\Server\BuiltInWebServer', $this->server->unregister($htmlControl));
+  }
+
+  /**
+   * This method tests starting the server.
+   *
+   * @covers \Woody\Server\BuiltInWebServer::start
+   * @covers \Woody\Server\BuiltInWebServer::stop
+   */
+  public function testStart() {
+    $this->application  = new TestApplication();
+    wb_set_text($this->application->getWindow()->getControlID(), $this->getName().' in '.basename(__FILE__));
+
+    $this->server = new BuiltInWebServer(
+      $this->application->getWindow(),
+      9991,
+      '.',
+      'php.exe',
+      realpath(__DIR__.'\\..\\..\\..\\..\\doc\\examples\\server.php'),
+      new HtmlControlServer($this->application->getWindow(), 1234));
+
+    $this->callback     = function() {
+      if($this->eventFired) {
+        $this->server->stop();
+        $this->timer->destroy();
+        $this->application->stop();
+
+        $this->assertTrue($this->eventFired);
+      }
+    };
+
+    $this->timer = new Timer($this->callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+    $htmlControl = new HtmlControl('none', new Point(10, 20), new Dimension(200, 100));
+
+    // the action listener of the HTML control checks, if the received response equals the expected one,
+    // and also sets counter to 1
+    $htmlControl->addActionListener(new ActionAdapter(function($event) {
+            $this->assertEquals('/?woody=great', $event->property->getRawRequest());
+            $event->type->write('success');
+            $this->eventFired = TRUE;
+          }));
+
+    $this->application->getWindow()->getRootPane()->add($htmlControl);
+
+    $this->server->register($htmlControl);
+
+    $this->server->start();
+
+    $this->timer->start();
+
+    // send something to the socket
+    file_get_contents('http://127.0.0.1:9991?woody=great');
+
+    $this->application->start();
   }
 }

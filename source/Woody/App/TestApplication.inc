@@ -11,7 +11,7 @@ class TestApplication extends Application {
   /**
    * the interval for the shutdown timer
    */
-  private static $SHUT_DOWN_TIMER_INTERAL = 1000;
+  private static $SHUT_DOWN_TIMER_INTERAL = 100;
 
   /**
    * the shutdown timer of the application
