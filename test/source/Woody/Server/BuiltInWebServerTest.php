@@ -52,8 +52,8 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
       $window,
       9990,
       '.',
-      '"C:\\Program Files\\PHP54\\php.exe"',
-      'D:\\workspace\\programming\\PHP\\woody\\doc\\examples\\server.php',
+      'php.exe',
+      '..\\..\\..\\..\\doc\\examples\\server.php',
       new HtmlControlServer($window, 1235));
 
     $this->assertInstanceOf('Woody\Server\BuiltInWebServer', $this->server);
@@ -73,8 +73,8 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
       $this->application->getWindow(),
       9991,
       '.',
-      '"C:\\Program Files\\PHP54\\php.exe"',
-      'D:\\workspace\\programming\\PHP\\woody\\doc\\examples\\server.php',
+      'php.exe',
+      '..\\..\\..\\..\\doc\\examples\\server.php',
       new HtmlControlServer($this->application->getWindow(), 1234));
 
     $this->callback     = function() {

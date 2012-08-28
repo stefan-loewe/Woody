@@ -41,7 +41,7 @@ class BuiltInWebServer {
   private $documentRoot = null;
 
   /**
-   * the path to the PHP executable, e.g., "C:\\Program Files\\PHP54\\php.exe"
+   * the path to the PHP executable, e.g., "C:\\Program Files\\PHP\\php.exe"
    *
    * @var string
    */
@@ -60,7 +60,7 @@ class BuiltInWebServer {
    * @param AbstractWindow $window the window associated with the server, normally the main window of the application
    * @param int $port the port on which the server listens
    * @param string $documentRoot the document root of the server
-   * @param string $pathToPhpExecutable the path to the PHP executable, e.g., "C:\\Program Files\\PHP54\\php.exe"
+   * @param string $pathToPhpExecutable the path to the PHP executable, e.g., "C:\\Program Files\\PHP\\php.exe"
    * @param string $routerScript the script which handles the routing for PHP's internal webserver
    * @param HtmlControlServer the server used to communicate with the router script of the built-in php web server
    */

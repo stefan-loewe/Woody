@@ -96,7 +96,7 @@ class HTMLControlDemoBuiltInWebServer extends Application {
           $this->window,
           $this->port,
           $this->documentRoot,
-          '"C:\\Program Files\\PHP54\\php.exe"',
+          'php.exe',
           'server.php',
           new HtmlControlServer($this->window, 1234));
 
