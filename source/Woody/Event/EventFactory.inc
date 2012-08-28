@@ -277,7 +277,7 @@ class EventFactory {
     );
 
     // update the dimension of the Woody object here
-    $eventInfo->resizeTo($newDim);
+    $eventInfo->source->resizeTo($newDim);
 
     foreach($eventInfo->source->getWindowResizeListeners() as $resizeListener) {
       $resizeListener->windowResized($event);
