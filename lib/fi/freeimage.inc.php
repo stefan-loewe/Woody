@@ -70,17 +70,18 @@ if(!isset($FI)) {
    * 16-bit System directory (e.g. C:\WINDOWS\SYSTEM), Windows directory (e.g. C:\WINDOWS) and the directories contained
    * in the PATH
    */
-	$FI = wb_load_library("freeimage");
-
+  $currentLevel = error_reporting(0);
+  $FI = wb_load_library('freeimage');
+  error_reporting($currentLevel);
   /*
    * if the above failed, check for ext-subfolder, hoping that PHP is in the PATH and the dll is in the ext-subfolder
    */
-	if(!$FI) {
-    $FI = wb_load_library("ext\\freeimage");
+  if(!$FI) {
+    $FI = wb_load_library('ext\\freeimage');
   }
 
   if(!$FI) {
-    wb_message_box(null, "FreeImage extension could not be loaded.", "Error", WBC_STOP);
+    wb_message_box(null, 'FreeImage extension could not be loaded.', 'Error', WBC_STOP);
 		die();
   }
 }

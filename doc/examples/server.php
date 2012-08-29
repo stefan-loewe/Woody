@@ -1,8 +1,8 @@
 <?php
 
-require_once('D:\workspace\programming\PHP\woody\source\bootstrap\bootstrap.php');
+require_once(realpath(__DIR__.'..\..\..\source\bootstrap\bootstrap.php'));
 
-$requestUri = $_SERVER["REQUEST_URI"];
+$requestUri = $_SERVER['REQUEST_URI'];
 
 //$fh = fopen('php://stdout', 'w');
 //fputs($fh, "\n\nrequest to: ".$requestUri);
@@ -16,7 +16,7 @@ if(preg_match('/\.(?:png|jpg|jpeg|gif)$/', $requestUri)) {
 else if(preg_match('/\.(?:php)$/', $requestUri)) {
   return false;
 }
-else if($_SERVER['REQUEST_URI'] === '/') {
+else if($requestUri === '/') {
   foreach(glob($_SERVER['DOCUMENT_ROOT'].'\*') as $entry) {
     $filename = substr($entry, strrpos($entry, '\\') + 1);
     echo '<br><a href="'.$filename.'">'.$filename.'</a>';
@@ -28,7 +28,7 @@ else {
 
   $client->connect();
 
-  $client->send($_SERVER['REQUEST_URI']);
+  $client->send($requestUri);
 
   echo getReply($client);
 
