@@ -2,8 +2,6 @@
 
 namespace Woody\Components\Controls;
 
-use \Woody\Components\Component;
-use \Woody\Components\Container;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
@@ -39,16 +37,14 @@ class Tab extends Control {
     $page = wb_create_items($this->controlID, $title);
 
     $this->pages[$title] = $page;
-    var_dump('count($this->pages) - 1 = '.(count($this->pages)));
+
     $f = new Frame($title, new Point(0, -7), new Dimension(200, 100), count($this->pages));
-    
+
     $f->create($this);
-    
+
     $this->frames[] = $f;
-    
-    //actually, add a Frame here for each new tag page, and add controls to the frame
   }
-  
+
   public function getTabPage($tabPageIndex) {
     return $this->frames[$tabPageIndex];
   }

@@ -48,8 +48,7 @@ class TabTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers {className}::{origMethodName}
-   * @todo Implement testAddPage().
+   * @covers  Woody\Components\Controls\Tab::addPage
    */
   public function testAddPage() {
     $callback = function() {
@@ -74,40 +73,4 @@ class TabTest extends \PHPUnit_Framework_TestCase {
 
     $this->application->start();
   }
-
-  /**
-   * @covers {className}::{origMethodName}
-   * @todo Implement testAdd().
-   */
-  public function testAdd() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
-  }
-
-  /**
-   * @covers {className}::{origMethodName}
-   * @todo Implement testGetComponents().
-   */
-  public function testGetComponents() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
-  }
-
-  /**
-   * @covers {className}::{origMethodName}
-   * @todo Implement testRemove().
-   */
-  public function testRemove() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-    );
-  }
-
 }
-
-?>
