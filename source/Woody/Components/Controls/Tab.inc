@@ -32,6 +32,8 @@ class Tab extends Control implements Container {
     $page = wb_create_items($this->controlID, $title);
 
     $this->pages[$title] = $page;
+    
+    //actually, add a Frame here for each new tag page, and add controls to the frame
   }
 
   // missing
