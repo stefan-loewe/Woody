@@ -22,6 +22,13 @@ class Frame extends Control implements Container {
    * @var \Woody\Layouts\GridLayout
    */
   protected $layout = null;
+  
+  /**
+   * the tab index of the frame, needed for adding the frame to a page of tab control
+   *
+   * @var int
+   */
+  protected $tabIndex = null;
 
   /**
    * This method acts as the constructor of the class.
@@ -31,14 +38,14 @@ class Frame extends Control implements Container {
    * @param Dimension $dimension the dimension of the frame, denoting the height of the bounding box - including the
    *  border but without the excess vertical space used by the (optional) label of the frame
    */
-  public function __construct($label, Point $topLeftCorner, Dimension $dimension) {
+  public function __construct($label, Point $topLeftCorner, Dimension $dimension, $tabIndex = null) {
     // the frame has to be increased by 8 pixels in height, to get the user specified height
     // these 8 pixels are subtracted by the Windows API when creating frames, as they are
     // reserved for the (optional) label
     parent::__construct($label, $topLeftCorner, $dimension->resizeBy(new Dimension(0, 8)));
 
-    $this->type = Frame;
-
+    $this->type     = Frame;
+    $this->tabIndex = $tabIndex;
     $this->children = new \SplObjectStorage();
   }
 

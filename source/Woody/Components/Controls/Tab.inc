@@ -7,13 +7,19 @@ use \Woody\Components\Container;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
-class Tab extends Control implements Container {
+class Tab extends Control {
   /**
    * the collection of tab pages
    *
    * @var \ArrayObject
    */
   private $pages = null;
+  /**
+   * the collection of frames associated with the tab pages
+   *
+   * @var \ArrayObject
+   */
+  private $frames = null;
 
   /**
    * This method acts as the constructor of the class.
@@ -24,27 +30,26 @@ class Tab extends Control implements Container {
   public function __construct(Point $topLeftCorner, Dimension $dimension) {
     parent::__construct(null, $topLeftCorner, $dimension);
 
-    $this->pages = new \ArrayObject();
-    $this->type = TabControl;
+    $this->pages  = new \ArrayObject();
+    $this->frames = new \ArrayObject();
+    $this->type   = TabControl;
   }
 
   public function addPage($title) {
     $page = wb_create_items($this->controlID, $title);
 
     $this->pages[$title] = $page;
+    var_dump('count($this->pages) - 1 = '.(count($this->pages)));
+    $f = new Frame($title, new Point(0, -7), new Dimension(200, 100), count($this->pages));
+    
+    $f->create($this);
+    
+    $this->frames[] = $f;
     
     //actually, add a Frame here for each new tag page, and add controls to the frame
   }
-
-  // missing
-  public function add(Component $control) {
-  }
-
-  // missing
-  public function getComponents() {
-  }
-
-  // missing
-  public function remove(Component $control) {
+  
+  public function getTabPage($tabPageIndex) {
+    return $this->frames[$tabPageIndex];
   }
 }
