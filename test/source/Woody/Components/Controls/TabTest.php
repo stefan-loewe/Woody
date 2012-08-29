@@ -53,9 +53,10 @@ class TabTest extends \PHPUnit_Framework_TestCase {
    */
   public function testAddPage() {
     $callback = function() {
-      
+                              $this->timer->destroy();
+                              $this->application->stop();
     };
-    
+
     $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
     $this->timer->start();
@@ -64,13 +65,13 @@ class TabTest extends \PHPUnit_Framework_TestCase {
     $this->application->getWindow()->getRootPane()->add($tab);
     $tab->addPage("t1");
     $tab->addPage("t2");
-    
+
     $tab->getTabPage(0)->add(new EditBox('new', new Point(5, 5), new Dimension(50, 20)));
     $tab->getTabPage(0)->add(new EditBox('new2', new Point(25, 5), new Dimension(50, 20)));
-    
+
     $tab->getTabPage(1)->add(new EditBox('new21', new Point(5, 15), new Dimension(50, 20)));
     $tab->getTabPage(1)->add(new EditBox('new22', new Point(25, 15), new Dimension(50, 20)));
-    
+
     $this->application->start();
   }
 

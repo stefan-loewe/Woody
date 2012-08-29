@@ -40,8 +40,6 @@ abstract class Control extends Component {
       ($this instanceof Frame && $parent instanceof Tab) ? ($this->tabIndex) : null
     );
 
-    var_dump(($this instanceof Frame && $parent instanceof Tab) ? ($this->tabIndex) : null);
-    
     static::$components[$this->controlID] = $this;
   }
 }
