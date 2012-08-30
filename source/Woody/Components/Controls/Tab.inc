@@ -7,17 +7,11 @@ use \Utils\Geom\Dimension;
 
 class Tab extends Control {
   /**
-   * the collection of tab pages
+   * the collection of pages associated with each winbinder tab page
    *
    * @var \ArrayObject
    */
   private $pages = null;
-  /**
-   * the collection of frames associated with the tab pages
-   *
-   * @var \ArrayObject
-   */
-  private $frames = null;
 
   /**
    * This method acts as the constructor of the class.
@@ -28,24 +22,30 @@ class Tab extends Control {
   public function __construct(Point $topLeftCorner, Dimension $dimension) {
     parent::__construct(null, $topLeftCorner, $dimension);
 
-    $this->pages  = new \ArrayObject();
-    $this->frames = new \ArrayObject();
     $this->type   = TabControl;
+    $this->pages = new \ArrayObject();
   }
 
-  public function addPage($title) {
-    $page = wb_create_items($this->controlID, $title);
+  /**
+   * This method adds a new tab page to the tab control.
+   *
+   * @param string $header the name of the tab page
+   */
+  public function addTabPage($header) {
+    // create a winbinder tab page item
+    wb_create_items($this->controlID, $header);
 
-    $this->pages[$title] = $page;
-
-    $f = new Frame($title, new Point(0, -7), new Dimension(200, 100), count($this->pages));
-
-    $f->create($this);
-
-    $this->frames[] = $f;
+    $this->pages[$header] = new Frame(null, new Point(0, -7), new Dimension(200, 100), $this->pages->count());
+    $this->pages[$header]->create($this);
   }
 
-  public function getTabPage($tabPageIndex) {
-    return $this->frames[$tabPageIndex];
+  /**
+   * This method returns a handle to the tab page with the given header.
+   *
+   * @param string $header the name of the tab page to be returned.
+   * @return Frame
+   */
+  public function getTabPage($header) {
+    return $this->pages[$header];
   }
 }

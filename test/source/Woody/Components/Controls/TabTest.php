@@ -48,28 +48,33 @@ class TabTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers  Woody\Components\Controls\Tab::addPage
+   *
+   * @covers Woody\Components\Controls\Tab::addTabPage
+   * @covers Woody\Components\Controls\Tab::getTabPage
    */
   public function testAddPage() {
     $callback = function() {
-                              $this->timer->destroy();
-                              $this->application->stop();
+      $this->timer->destroy();
+      $this->application->stop();
     };
 
-    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+    $this->tab   = new Tab(new Point(10, 10), new Dimension(200, 100));
 
+    $this->timer  = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
     $this->timer->start();
 
-    $tab = new Tab(new Point(10, 10), new Dimension(200, 100));
-    $this->application->getWindow()->getRootPane()->add($tab);
-    $tab->addPage("t1");
-    $tab->addPage("t2");
+    $this->application->getWindow()->getRootPane()->add($this->tab);
+    $this->tab->addTabPage('tab1');
+    $this->tab->addTabPage('tab2');
 
-    $tab->getTabPage(0)->add(new EditBox('new', new Point(5, 5), new Dimension(50, 20)));
-    $tab->getTabPage(0)->add(new EditBox('new2', new Point(25, 5), new Dimension(50, 20)));
+    $tabPage1 = $this->tab->getTabPage('tab1');
+    $tabPage2 = $this->tab->getTabPage('tab2');
 
-    $tab->getTabPage(1)->add(new EditBox('new21', new Point(5, 15), new Dimension(50, 20)));
-    $tab->getTabPage(1)->add(new EditBox('new22', new Point(25, 15), new Dimension(50, 20)));
+    $tabPage1->add(new EditBox('box 1.1', new Point(5, 15), new Dimension(50, 20)));
+    $tabPage1->add(new EditBox('box 1.2', new Point(65, 15), new Dimension(50, 20)));
+
+    $tabPage2->add(new EditBox('box 2.1', new Point(5, 15), new Dimension(50, 20)));
+    $tabPage2->add(new EditBox('box 2.2', new Point(5, 45), new Dimension(50, 20)));
 
     $this->application->start();
   }
