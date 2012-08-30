@@ -100,8 +100,8 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
 
     $htmlControl        = new HtmlControl("none", new Point(10, 20), new Dimension(200, 100));
 
-    // the action listener of the HTML control checks, if the received response equals the expected one,
-    // and also sets counter to 1
+    // the action listener of the HTML control checks if the received response equals the expected one,
+    // and also sets eventFired flag to true
     $htmlControl->addActionListener(new ActionAdapter(function($event) {
             $this->assertEquals('writing stuff to server socket', $event->property->getRawRequest());
             $this->eventFired = TRUE;

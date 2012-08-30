@@ -94,7 +94,6 @@ class ImageResource {
    * @param string $imageFileName the file name of the image file to determine its file type
    *
    * @return boolean true, if the image is a jpeg, else false
-   * @todo copied from ImageButton - extract image resource as class !?!?!
    */
   private static function isJpeg($imageFileName) {
     return substr($imageFileName, -4) === '.jpg';

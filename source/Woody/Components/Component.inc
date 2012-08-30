@@ -92,9 +92,11 @@ abstract class Component implements IComponent {
    * @var \SplObjectStorage
    */
   private $focusListeners = null;
-  // @TODO how to handle param and style ?!?!this ... Decorator?
+
+  // @TODO how to handle param and style? subclassing, constructor parameters, decorator pattern?
   protected $param = 0;
   protected $style = 0;
+
   protected static $components = array();
 
   /**
@@ -185,7 +187,6 @@ abstract class Component implements IComponent {
    *
    * @param Point $topLeftCorner
    * @return Component $this
-   * @todo this is different for windows & controls
    */
   protected function move(Point $topLeftCorner) {
     wb_set_position($this->controlID, $topLeftCorner->x, $topLeftCorner->y);
@@ -378,31 +379,31 @@ abstract class Component implements IComponent {
 
   public function refresh($now = TRUE) {
     wb_refresh($this->controlID, $now);
-    
+
     return $this;
   }
 
   public function enable() {
     wb_set_enabled($this->controlID, TRUE);
-    
+
     return $this;
   }
 
   public function disable() {
     wb_set_enabled($this->controlID, FALSE);
-    
+
     return $this;
   }
 
   public function show() {
     wb_set_visible($this->controlID, TRUE);
-    
+
     return $this;
   }
 
   public function hide() {
     wb_set_visible($this->controlID, FALSE);
-    
+
     return $this;
   }
 }

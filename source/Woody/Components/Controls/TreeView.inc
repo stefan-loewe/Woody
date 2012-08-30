@@ -175,8 +175,7 @@ class TreeView extends Control implements \SplObserver, Actionable {
   /**
    * This method returns the default item renderer for the tree view, which returns the result of __toString for objects
    * implementing it and the plain passed in element if not.
-   *
-   * @todo copied from list model
+   * 
    * @return \Callable the default cell renderer
    */
   protected static function getDefaultNodeRenderer() {

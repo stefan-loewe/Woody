@@ -25,19 +25,11 @@ abstract class AbstractWindow extends Component {
    */
   protected $rootPane             = null;
 
-  /*
-    const CENTERED              = WBC_CENTER;
-
-    const TITLE_BAR_HEIGHT      = 30;
-
-    const BORDER_WIDTH          = 2;
-   */
-
   public function __construct($type, $label, Point $topLeftCorner, Dimension $dimension) {
     parent::__construct($label, $topLeftCorner, $dimension);
 
-    //todo: type via decorators???
     $this->type   = $type;
+
     $this->parent = null;
   }
 
