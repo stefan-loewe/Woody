@@ -35,7 +35,12 @@ class Tab extends Control {
     // create a winbinder tab page item
     wb_create_items($this->controlID, $header);
 
-    $this->pages[$header] = new Frame(null, new Point(0, -7), new Dimension(200, 100), $this->pages->count());
+    $this->pages[$header] = new Frame(
+      null,
+      new Point(-2, -9),
+      new Dimension($this->dimension->width, $this->dimension->height),
+      $this->pages->count()
+    );
     $this->pages[$header]->create($this);
   }
 

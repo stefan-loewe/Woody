@@ -40,14 +40,14 @@ abstract class Component implements IComponent {
   /**
    * the top left corner of the component
    *
-   * @var Woody\Utils\Misc\Point
+   * @var Woody\Utils\Geom\Point
    */
   protected $topLeftCorner = null;
 
   /**
    * the dimension of the component
    *
-   * @var Woody\Utils\Misc\Dimension
+   * @var Woody\Utils\Geom\Dimension
    */
   protected $dimension = null;
 
@@ -93,9 +93,9 @@ abstract class Component implements IComponent {
    */
   private $focusListeners = null;
 
-  // @TODO how to handle param and style? subclassing, constructor parameters, decorator pattern?
-  protected $param = 0;
+  // @TODO handle param and style with constructor injection, subclassing or decorator pattern?
   protected $style = 0;
+  protected $param = 0;
 
   protected static $components = array();
 

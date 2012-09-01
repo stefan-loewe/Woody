@@ -24,7 +24,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
    *
    * @var \Woody\App\TestApplication
    */
-  private $application = false;
+  private $application = null;
 
   /**
    * the timer for the test application
@@ -66,7 +66,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
       $this->assertEquals($expected->width, $actual->width);
       $this->assertEquals($expected->height, $actual->height);
 
-      
+
       $this->checkbox->resizeTo(new Dimension(150, 150));
 
       $actual = $this->checkbox->getDimension();

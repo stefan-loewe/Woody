@@ -9,19 +9,12 @@ use \Woody\Components\Component;
 use \Woody\Components\Controls\Actionable;
 use \Woody\Components\Controls\Control;
 use \Woody\Components\Timer\Timer;
-use \Woody\Components\Windows\AbstractWindow;
 
 /**
- * @TODO this is a mess
+ * This class is responsible for creating events from the raw winbinder event data. Furhtermore, it dispatched the
+ * created events to listeneres registered at the respective source of the event.
  */
 class EventFactory {
-  /**
-   * the window that just had the focus before
-   *
-   * @var AbstractWindow
-   */
-  private static $previousFocusedWindow = null;
-
   /**
    * the control that just had the focus before
    *

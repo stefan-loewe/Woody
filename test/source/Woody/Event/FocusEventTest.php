@@ -37,7 +37,7 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
    *
    * @var \Woody\App\TestApplication
    */
-  private $application = false;
+  private $application = null;
 
 /**
    * the timer for the test application

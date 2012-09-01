@@ -1,9 +1,3 @@
-layout manager
-trait for magic getter/setter
+layout manager -> extract interface
 different window types
 create wrapper type for woody id, e.g. WoodyID, wrapping an int
-
-seperate between real unit tests, mocking away any dependencies and functional test using winbinder library calls
-event handling (ActionEvent, instead of or in parallel to low-level event)
-  Timer associated to Window, only? Window::setTimeout() returns Timer, handle it as Window-Event
-

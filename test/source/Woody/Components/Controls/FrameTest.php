@@ -25,7 +25,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
    *
    * @var TestApplication
    */
-  private $application = false;
+  private $application = null;
 
   /**
    * the timer for the test application
@@ -73,7 +73,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
       $this->timer->destroy();
       $this->application->stop();
     };
-        
+
     $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
     $this->timer->start();
@@ -156,7 +156,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
       $this->timer->destroy();
       $this->application->stop();
     };
-    
+
     $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
     $this->timer->start();
