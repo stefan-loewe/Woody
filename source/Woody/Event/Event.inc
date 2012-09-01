@@ -5,6 +5,7 @@ namespace Woody\Event;
 use \Woody\Components\Component;
 
 abstract class Event {
+  use \Utils\Common\ValueObject;
   /**
    * the winbinder identifier for the window or origin
    *
@@ -63,13 +64,6 @@ abstract class Event {
     $this->type       = $type;
     $this->property   = $property;
     $this->time       = microtime(TRUE);
-  }
-
-  /**
-   * @TODO --> TRAIT
-   */
-  public function __get($memberName) {
-    return $this->$memberName;
   }
 
   /**
