@@ -38,7 +38,7 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\Event::__construct
    */
   public function testConstruct() {
-    $this->event = new FocusEvent(0, 0, 0, 0, 0);
+    $this->event = new FocusEvent(new EventInfo(0, 0, 0, 0, 0));
 
     $this->assertInstanceOf('\Woody\Event\FocusEvent', $this->event);
   }
@@ -60,21 +60,11 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
     $window->getRootPane()->add($control1);
     $window->getRootPane()->add($control2);
 
-    $this->event = new FocusEvent(0,
-      $control1->getID(),
-      $control1->getControlID(),
-      0,
-      0,
-      null);
+    $this->event = new FocusEvent(new EventInfo(0, $control1->getID(), $control1->getControlID(), 0, 0, null));
     $this->assertEquals($control1, $this->event->getFocusGainedComponent());
     $this->assertNull($this->event->getFocusLostComponent());
 
-    $this->event = new FocusEvent(0,
-      $control2->getID(),
-      $control2->getControlID(),
-      0,
-      0,
-      $control1);
+    $this->event = new FocusEvent(new EventInfo(0, $control2->getID(), $control2->getControlID(), 0, 0), $control1);
     $this->assertEquals($control1, $this->event->getFocusLostComponent());
     $this->assertEquals($control2, $this->event->getFocusGainedComponent());
 

@@ -22,7 +22,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->event = new KeyEvent(0, 0, 0, 0, 0);
+    $this->event = new KeyEvent(new EventInfo(0, 0, 0, 0, 0));
   }
 
   /**
@@ -51,7 +51,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
     $control  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
     $window->create()->getRootPane()->add($control);
 
-    $event = new KeyEvent($window->getID(), $control->getID(), $control->getControlID(), 0, 0);
+    $event = new KeyEvent(new EventInfo($window->getID(), $control->getID(), $control->getControlID(), 0, 0));
 
     $this->assertEquals($control, $event->getSource());
 

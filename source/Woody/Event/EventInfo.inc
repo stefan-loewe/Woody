@@ -2,25 +2,23 @@
 
 namespace Woody\Event;
 
-use \Woody\Components\Component;
-
 class EventInfo {
   use \Utils\Common\ValueObject;
 
   private $windowID    = null;
   private $id          = null;
   private $controlID   = null;
-  private $typeID      = null;
-  private $propertyID  = null;
+  private $type        = null;
+  private $property    = null;
   private $source      = null;
 
   public function __construct($windowID, $woodyID, $controlID, $typeID, $propertyID) {
     $this->windowID    = $windowID;
     $this->id          = $woodyID;
     $this->controlID   = $controlID;
-    $this->typeID      = $typeID;
-    $this->propertyID  = $propertyID;
-    $this->source      = Component::getComponentByID($controlID);
+    $this->type        = $typeID;
+    $this->property    = $propertyID;
+//    $this->source      = Component::getComponentByID($controlID);
   }
 
   public function isWindowCloseEvent() {
@@ -32,15 +30,15 @@ class EventInfo {
   }
 
   public function isFocusEvent() {
-    return $this->typeID === WBC_GETFOCUS;
+    return $this->type === WBC_GETFOCUS;
   }
 
   public function isMouseEvent() {
-    return ($this->typeID & WBC_MOUSEDOWN) || ($this->typeID & WBC_MOUSEUP) || ($this->typeID & WBC_DBLCLICK);
+    return ($this->type & WBC_MOUSEDOWN) || ($this->type & WBC_MOUSEUP) || ($this->type & WBC_DBLCLICK);
   }
 
   public function isKeyEvent() {
-    return ($this->typeID === WBC_KEYDOWN) || ($this->typeID === WBC_KEYUP);
+    return ($this->type === WBC_KEYDOWN) || ($this->type === WBC_KEYUP);
   }
 
   public function isControlEvent() {
@@ -52,6 +50,6 @@ class EventInfo {
   }
 
   public function isWindowResizeEvent() {
-    return $this->typeID === WBC_RESIZE;
+    return $this->type === WBC_RESIZE;
   }
 }

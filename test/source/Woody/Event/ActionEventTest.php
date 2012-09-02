@@ -17,7 +17,7 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->event = new ActionEvent(0, 0, 0, 0, 0);
+    $this->event = new ActionEvent(new EventInfo(0, 0, 0, 0, 0));
   }
 
   /**

@@ -22,7 +22,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->event = new MouseEvent(0, 0, 0, 257, 10223723);
+    $this->event = new MouseEvent(new EventInfo(0, 0, 0, 257, 10223723));
   }
 
   /**
@@ -69,7 +69,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\MouseEvent::getPressedButton
    */
   public function testGetPressedButton2() {
-    $this->event = new MouseEvent(0, 0, 0, 258, 10223723);
+    $this->event = new MouseEvent(new EventInfo(0, 0, 0, 258, 10223723));
     $this->assertEquals(MouseEvent::BUTTON2, $this->event->getPressedButton());
   }
 
@@ -79,7 +79,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\MouseEvent::getPressedButton
    */
   public function testGetPressedButton3() {
-    $this->event = new MouseEvent(0, 0, 0, 272, 10223723);
+    $this->event = new MouseEvent(new EventInfo(0, 0, 0, 272, 10223723));
     $this->assertEquals(MouseEvent::BUTTON3, $this->event->getPressedButton());
   }
 

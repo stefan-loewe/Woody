@@ -15,16 +15,11 @@ class FocusEvent extends Event {
   /**
    * This method acts as the constructor of the class.
    *
-   * @param int $windowID the winbinder identifier for the control or origin
-   * @param int $id the identifier for the control or origin
-   * @param int $controlID the winbinder identifier for the control or origin
-   * @param int $type the winbinder identifier for the type of event
-   * @param int $property the winbinder identifier for properties of the event
+   * @param EventInfo the event info containing the raw data of this event
    * @param $lostFocusComponent Component the component which lost the focus, which maybe null if no component was
-   * focused before
    */
-  public function __construct($windowID, $id, $controlID, $type, $property, Component $lostFocusComponent = null) {
-    parent::__construct($windowID, $id, $controlID, $type, $property);
+  public function __construct(EventInfo $eventInfo, Component $lostFocusComponent = null) {
+    parent::__construct($eventInfo);
 
     $this->lostFocusComponent = $lostFocusComponent;
   }

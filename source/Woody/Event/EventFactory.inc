@@ -5,7 +5,6 @@ namespace Woody\Event;
 use \Utils\DataStructures\RingBuffer;
 use \Utils\Geom\Dimension;
 use \Utils\Http\HttpGetRequest;
-use \Woody\Components\Component;
 use \Woody\Components\Controls\Actionable;
 use \Woody\Components\Controls\Control;
 use \Woody\Components\Timer\Timer;
@@ -122,36 +121,23 @@ class EventFactory {
   }
 
   private static function createAndDispatchFocusEvent($eventInfo) {
-    $event = new FocusEvent(
-      $eventInfo->windowID,
-      $eventInfo->id,
-      $eventInfo->controlID,
-      $eventInfo->typeID,
-      $eventInfo->propertyID,
-      self::$previousFocusedControl
-    );
+    $event = new FocusEvent($eventInfo);
 
     self::$previousFocusedControl = $eventInfo->source;
 
-    foreach($eventInfo->source->getFocusListeners() as $focusListener) {
+    foreach($event->getSource()->getFocusListeners() as $focusListener) {
       $focusListener->focusGained($event);
     }
   }
 
   private static function createAndDispatchMouseEvent($eventInfo) {
-      $event = new MouseEvent(
-        $eventInfo->windowID,
-        $eventInfo->id,
-        $eventInfo->controlID,
-        $eventInfo->typeID,
-        $eventInfo->propertyID
-      );
+      $event = new MouseEvent($eventInfo);
 
       if($event->isMouseDownEvent()) {
         self::$eventBuffer->add($event);
       }
 
-      foreach($eventInfo->source->getMouseListeners() as $mouseListener) {
+      foreach($event->getSource()->getMouseListeners() as $mouseListener) {
         if($event->isMouseDownEvent()) {
           $mouseListener->mousePressed($event);
         }
@@ -162,15 +148,9 @@ class EventFactory {
   }
 
   private static function createAndDispatchKeyEvent($eventInfo) {
-      $event = new KeyEvent(
-        $eventInfo->windowID,
-        $eventInfo->id,
-        $eventInfo->controlID,
-        $eventInfo->typeID,
-        $eventInfo->propertyID
-      );
+      $event = new KeyEvent($eventInfo);
 
-      foreach($eventInfo->source->getKeyListeners() as $keyListener) {
+      foreach($event->getSource()->getKeyListeners() as $keyListener) {
         if($event->isKeyDownEvent()) {
           $keyListener->keyPressed($event);
         }
@@ -188,16 +168,10 @@ class EventFactory {
     // trigger action events for all Actionables, as well as when the propertyID actually is a HttpGetRequest
     // the later are special events, namely those raised by HTMLControls when they receive new data
     // @see HtmlControlServer::processClient
-    if($eventInfo->source instanceof Actionable || $eventInfo->propertyID instanceof HttpGetRequest) {
-      $actionEvent = new ActionEvent(
-        $eventInfo->windowID,
-        $eventInfo->id,
-        $eventInfo->controlID,
-        $eventInfo->typeID,
-        $eventInfo->propertyID
-      );
+    if($eventInfo->source instanceof Actionable || $eventInfo->property instanceof HttpGetRequest) {
+      $actionEvent = new ActionEvent($eventInfo);
 
-      foreach($eventInfo->source->getActionListeners() as $actionListener) {
+      foreach($event->getSource()->getActionListeners() as $actionListener) {
         $actionListener->actionPerformed($actionEvent);
       }
     }
@@ -211,33 +185,19 @@ class EventFactory {
     $newDim = wb_get_size($eventInfo->source->getControlID());
     $newDim = new Dimension($newDim[0], $newDim[1]);
 
-    $event = new WindowResizeEvent(
-      $eventInfo->windowID,
-      $eventInfo->id,
-      $eventInfo->controlID,
-      $eventInfo->typeID,
-      $eventInfo->propertyID,
-      $oldDim,
-      $newDim
-    );
+    $event = new WindowResizeEvent($eventInfo, $oldDim, $newDim);
 
     // update the dimension of the Woody object here
     $eventInfo->source->resizeTo($newDim);
 
-    foreach($eventInfo->source->getWindowResizeListeners() as $resizeListener) {
+    foreach($event->getSource()->getWindowResizeListeners() as $resizeListener) {
       $resizeListener->windowResized($event);
     }
   }
 
   private static function createAndDispatchWindowClosedEvent($eventInfo) {
-    $event = new WindowCloseEvent(
-      $eventInfo->windowID,
-      $eventInfo->id,
-      $eventInfo->controlID,
-      $eventInfo->typeID,
-      $eventInfo->propertyID
-    );
+    $event = new WindowCloseEvent($eventInfo);
 
-    $eventInfo->source->getWindowCloseListener()->windowClosed($event);
+    $event->getSource()->getWindowCloseListener()->windowClosed($event);
   }
 }
