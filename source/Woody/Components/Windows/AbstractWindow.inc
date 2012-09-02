@@ -8,7 +8,9 @@ use \Utils\Geom\Dimension;
 use \Woody\System\WindowConstraints;
 use \Woody\Event\WindowResizeListener;
 use \Woody\Components\Controls\Frame;
+use \Woody\Event\WindowCloseAdapter;
 use \Woody\Event\WindowCloseEvent;
+use \Woody\Event\WindowCloseListener;
 
 abstract class AbstractWindow extends Component {
 
@@ -58,8 +60,6 @@ abstract class AbstractWindow extends Component {
 
     $this->createRootPane();
 
-    $this->initializeWindowCloseListener();
-
     return $this;
   }
 
@@ -80,8 +80,13 @@ abstract class AbstractWindow extends Component {
    * @return AbstractWindow $this
    */
   public function close() {
-    $event = new WindowCloseEvent($this->id, IDCLOSE, 0, 0, 0);
-    $this->getWindowCloseListener()->windowClosed($event);
+    $closeListener = $this->getWindowCloseListener();
+
+    if($closeListener !== null) {
+      $closeListener->windowClosed(new WindowCloseEvent($this->id, IDCLOSE, 0, 0, 0));
+    }
+
+    $this->destroy();
 
     return $this;
   }
@@ -153,7 +158,8 @@ abstract class AbstractWindow extends Component {
   }
 
   /**
-   * This method sets the close listener for this window.
+   * This method sets the close listener for this window, which can be used to do some clean-up duties before destroying
+   * the window.
    *
    * @param WindowCloseListener $closeListener the resize listener to add
    * @return AbstractWindow $this
@@ -164,16 +170,13 @@ abstract class AbstractWindow extends Component {
     return $this;
   }
 
+  /**
+   * This method returns the current close listener for this window.
+   *
+   * @return WindowCloseListener
+   */
   public function getWindowCloseListener() {
     return $this->closeListener;
-  }
-
-  private function initializeWindowCloseListener() {
-    $onWindowClosedCallback = function() {
-      $this->destroy();
-    };
-
-    $this->closeListener = new \Woody\Event\WindowCloseAdapter($onWindowClosedCallback);
   }
 
   /**
