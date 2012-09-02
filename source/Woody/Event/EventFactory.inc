@@ -5,6 +5,7 @@ namespace Woody\Event;
 use \Utils\DataStructures\RingBuffer;
 use \Utils\Geom\Dimension;
 use \Utils\Http\HttpGetRequest;
+use \Woody\Components\Component;
 use \Woody\Components\Controls\Actionable;
 use \Woody\Components\Controls\Control;
 use \Woody\Components\Timer\Timer;
@@ -45,7 +46,6 @@ class EventFactory {
 
     // window close button is not a real control, so handle it here - close window
     if($eventInfo->isWindowCloseEvent()) {
-      //$eventInfo->source->destroy();
       self::createAndDispatchWindowClosedEvent($eventInfo);
       return;
     }
@@ -123,7 +123,7 @@ class EventFactory {
   private static function createAndDispatchFocusEvent($eventInfo) {
     $event = new FocusEvent($eventInfo);
 
-    self::$previousFocusedControl = $eventInfo->source;
+    self::$previousFocusedControl = $event->getSource();
 
     foreach($event->getSource()->getFocusListeners() as $focusListener) {
       $focusListener->focusGained($event);
@@ -168,11 +168,12 @@ class EventFactory {
     // trigger action events for all Actionables, as well as when the propertyID actually is a HttpGetRequest
     // the later are special events, namely those raised by HTMLControls when they receive new data
     // @see HtmlControlServer::processClient
-    if($eventInfo->source instanceof Actionable || $eventInfo->property instanceof HttpGetRequest) {
-      $actionEvent = new ActionEvent($eventInfo);
+    $source = Component::getComponentByID($eventInfo->controlID);
+    if($source instanceof Actionable || $eventInfo->property instanceof HttpGetRequest) {
+      $event = new ActionEvent($eventInfo);
 
       foreach($event->getSource()->getActionListeners() as $actionListener) {
-        $actionListener->actionPerformed($actionEvent);
+        $actionListener->actionPerformed($event);
       }
     }
   }
@@ -188,7 +189,7 @@ class EventFactory {
     $event = new WindowResizeEvent($eventInfo, $oldDim, $newDim);
 
     // update the dimension of the Woody object here
-    $eventInfo->source->resizeTo($newDim);
+    $event->getSource()->resizeTo($newDim);
 
     foreach($event->getSource()->getWindowResizeListeners() as $resizeListener) {
       $resizeListener->windowResized($event);
