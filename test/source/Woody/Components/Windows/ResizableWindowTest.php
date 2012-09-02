@@ -45,8 +45,5 @@ class ResizableWindowTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertNull($this->window->getControlID());
     $this->assertNotNull($this->window->getID());
-
-    $this->window->create();
-    $this->window->startEventHandler();
   }
 }

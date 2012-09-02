@@ -1,6 +1,5 @@
-different window types
+code coverage, esp. events
 create wrapper type for woody id, e.g. WoodyID, wrapping an int
-code coverage 
 ------------------------------------------------------------------------------------------------------------------
 Controls:
 
