@@ -35,7 +35,7 @@ class PopupWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Windows\PopupWindow::__construct
    */
   public function testConstruct() {
-    $this->window = new ResizableWindow('PopupWindow', new Point(121, 343), new Dimension(987, 654));
+    $this->window = new PopupWindow('PopupWindow', new Point(121, 343), new Dimension(987, 654));
 
     $this->assertEquals($this->window->getPosition()->x, 121);
     $this->assertEquals($this->window->getPosition()->y, 343);
