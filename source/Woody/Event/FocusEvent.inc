@@ -27,9 +27,6 @@ class FocusEvent extends Event {
     parent::__construct($windowID, $id, $controlID, $type, $property);
 
     $this->lostFocusComponent = $lostFocusComponent;
-    //var_dump($this->lostFocusComponent === null ?
-    //  '$this->lostFocusComponent is null' :
-    //  '$this->lostFocusComponent is NOT null');
   }
 
   /**

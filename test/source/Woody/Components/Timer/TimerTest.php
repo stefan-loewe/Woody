@@ -60,7 +60,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   public function testConstruct() {
     $this->timer = new Timer(function() {
           $this->timer->destroy();
-          $this->window->destroy();
+          $this->window->close();
 
           $this->assertEquals(1, ++$this->counter);
         }, $this->window, Timer::TEST_TIMEOUT);
@@ -78,7 +78,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   public function testStart() {
     $this->timer = new Timer(function() {
           $this->timer->destroy();
-          $this->window->destroy();
+          $this->window->close();
 
           $this->assertEquals(1, ++$this->counter);
         }, $this->window, Timer::TEST_TIMEOUT);
@@ -97,7 +97,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
     $this->timer = new Timer(function() {
           if(++$this->counter > 10) {
             $this->timer->destroy();
-            $this->window->destroy();
+            $this->window->close();
             $this->assertEquals(11, $this->counter);
           }
         }, $this->window, Timer::TEST_TIMEOUT);
@@ -117,7 +117,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
           ++$this->counter;
 
           $this->timer->destroy();
-          $this->window->destroy();
+          $this->window->close();
 
           $this->assertEquals(1, $this->counter);
         }, $this->window, Timer::TEST_TIMEOUT);
@@ -137,7 +137,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
           $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
 
           $this->timer->destroy();
-          $this->window->destroy();
+          $this->window->close();
 
           $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
         }, $this->window, Timer::TEST_TIMEOUT);
@@ -161,7 +161,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   public function testGetTimerByID() {
     $this->timer = new Timer(function() {
           $this->timer->destroy();
-          $this->window->destroy();
+          $this->window->close();
         }, $this->window, Timer::TEST_TIMEOUT);
 
     $timer = Timer::getTimerByID($this->timer->getID());
@@ -187,7 +187,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $this->timer->getExecutionCount());
 
         $this->timer->destroy();
-        $this->window->destroy();
+        $this->window->close();
       }
     };
 
@@ -213,7 +213,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
           }
           catch(TimerAlreadyRunningException $tare) {
             $this->timer->destroy();
-            $this->window->destroy();
+            $this->window->close();
 
             return;
           }
@@ -240,7 +240,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
       $this->timer->run();
     }
     catch(TimerNotRunningException $tnre) {
-      $this->window->destroy();
+      $this->window->close();
       return;
     }
 
@@ -262,7 +262,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
       $this->timer->destroy();
     }
     catch(TimerNotRunningException $tnre) {
-      $this->window->destroy();
+      $this->window->close();
       return;
     }
 
@@ -282,7 +282,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
           $this->timer->destroy();
           $this->assertFalse($this->timer->isRunning());
 
-          $this->window->destroy();
+          $this->window->close();
         }, $this->window, Timer::TEST_TIMEOUT);
 
 

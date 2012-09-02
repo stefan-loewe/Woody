@@ -93,27 +93,28 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
     $control1 = new EditBox('', new Point(20, 20), new Dimension(100, 18));
     $window->create()->getRootPane()->add($control1);
 
-
-    // first click
-    EventFactory::createEvent(0, $control1->getID(), $control1->getControlID(), 257, 10223723);
-    EventFactory::createEvent(0, $control1->getID(), $control1->getControlID(), 257, 10223723);
-    EventFactory::createEvent(0, $control1->getID(), $control1->getControlID(), 257, 10223723);
+    // first click ...
+    $eventInfo = new EventInfo(0, $control1->getID(), $control1->getControlID(), 257, 10223723);
+    EventFactory::createEvent($eventInfo);
+    // ... 2nd ...
+    EventFactory::createEvent($eventInfo);
+    // ... and 3rd
+    EventFactory::createEvent($eventInfo);
 
     $events = self::readAttribute('\Woody\Event\EventFactory', 'eventBuffer')->getLifoOrder();
-
     $this->assertEquals(3, $events[0]->getClickCount());
     $this->assertEquals(2, $events[1]->getClickCount());
     $this->assertEquals(1, $events[2]->getClickCount());
 
-    // delay ...
+    // create a one-second delay ...
     sleep(1);
 
-    EventFactory::createEvent(0, $control1->getID(), $control1->getControlID(), 257, 10223723);
-    // ... to have one click only again
+    EventFactory::createEvent($eventInfo);
+    // ... to have a single-click only again
     $events = self::readAttribute('\Woody\Event\EventFactory', 'eventBuffer')->getLifoOrder();
     $this->assertEquals(1, $events[3]->getClickCount());
 
-    $window->destroy();
+    $window->close();
   }
 
   /**

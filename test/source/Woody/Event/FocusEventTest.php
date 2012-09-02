@@ -2,9 +2,8 @@
 
 namespace Woody\Event;
 
-use \Woody\App\TestApplication;
 use \Woody\Components\Controls\EditBox;
-use \Woody\Components\Timer\Timer;
+use \Woody\Components\Windows\MainWindow;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
@@ -53,7 +52,7 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\Event::__toString
    */
   public function testGetFocusGainedComponent() {
-    $window = new \Woody\Components\Windows\MainWindow('FocusEventTest', new Point(20, 20), new Dimension(300, 200));
+    $window       = new MainWindow('FocusEventTest', new Point(20, 20), new Dimension(300, 200));
     $control1     = new EditBox('123', new Point(20, 20), new Dimension(100, 18));
     $control2     = new EditBox('456', new Point(20, 45), new Dimension(100, 18));
 
@@ -81,6 +80,6 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertTrue(strpos($this->event->__toString(), 'gained = ') !== FALSE);
 
-    $window->destroy();
+    $window->close();
   }
 }

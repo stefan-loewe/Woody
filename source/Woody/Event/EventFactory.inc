@@ -39,40 +39,39 @@ class EventFactory {
    * @param int $propertyID the property id of the event
    * @return void
    */
-  public static function createEvent($windowID, $id, $controlID, $typeID, $propertyID) {
+  public static function createEvent(EventInfo $eventInfo) {
     if(self::$eventBuffer === null) {
       self::$eventBuffer = new RingBuffer(10);
     }
 
-    $eventInfo = self::createEventInfo($windowID, $id, $controlID, $typeID, $propertyID);
-
     // window close button is not a real control, so handle it here - close window
-    if(self::isWindowCloseEvent($eventInfo->id)) {
-      $eventInfo->source->destroy();
+    if($eventInfo->isWindowCloseEvent()) {
+      //$eventInfo->source->destroy();
+      self::createAndDispatchWindowClosedEvent($eventInfo);
       return;
     }
 
     // timeout of timers are handled here, too - the callback is executed by calling Timer::run
-    else if(self::isTimerEvent($eventInfo->windowID, $eventInfo->controlID, $eventInfo->id)) {
+    else if($eventInfo->isTimerEvent()) {
       Timer::getTimerByID($eventInfo->id)->run();
       return;
     }
 
-    else if(self::isFocusEvent($eventInfo->typeID)) {
+    else if($eventInfo->isFocusEvent()) {
       self::createAndDispatchFocusEvent($eventInfo);
     }
 
-    else if(self::isMouseEvent($eventInfo->typeID)) {
+    else if($eventInfo->isMouseEvent()) {
       self::createAndDispatchMouseEvent($eventInfo);
     }
 
-    else if(self::isKeyEvent($eventInfo->typeID)) {
+    else if($eventInfo->isKeyEvent()) {
       self::createAndDispatchKeyEvent($eventInfo);
     }
 
-    if(self::isControlEvent($eventInfo->id)) {
+    if($eventInfo->isControlEvent()) {
       // only handle non-focus-events of controls (FocusEvent was handled above and does not trigger Actions)
-      if(!self::isFocusEvent($eventInfo->typeID)) {
+      if(!$eventInfo->isFocusEvent()) {
         self::createAndDispatchActionEvent($eventInfo);
       }
 
@@ -80,67 +79,14 @@ class EventFactory {
     }
 
     // create and dispatch WindowEvents, e.g. when resizing a window
-    if(self::isWindowEvent($eventInfo->windowID, $eventInfo->controlID)) {
-      if(self::isWindowResizeEvent($eventInfo->typeID)) {
+    if($eventInfo->isWindowEvent()) {
+      if($eventInfo->isWindowResizeEvent()) {
         self::createAndDispatchWindowResizeEvent($eventInfo);
       }
     }
 
     // app crashes when an ActionEvent was created and $event was returned here !?!?!?!
     //return $event;
-  }
-
-  private static function createEventInfo($windowID, $id, $controlID, $typeID, $propertyID) {
-    $eventInfo = new \stdClass();
-
-    $eventInfo->windowID    = $windowID;
-    $eventInfo->id          = $id;
-    $eventInfo->controlID   = $controlID;
-    $eventInfo->typeID      = $typeID;
-    $eventInfo->propertyID  = $propertyID;
-    $eventInfo->source      = Component::getComponentByID($controlID);
-
-    return $eventInfo;
-  }
-
-  private static function isWindowCloseEvent($id) {
-    return $id === IDCLOSE;
-  }
-
-  private static function isTimerEvent($windowID, $controlID, $id) {
-    return self::isWindowEvent($windowID, $controlID) && $id != 0 && $id != IDCLOSE;
-  }
-
-  private static function isMouseEvent($typeID) {
-    return is_int($typeID) && (($typeID & WBC_MOUSEDOWN) || ($typeID & WBC_MOUSEUP) || ($typeID & WBC_DBLCLICK));
-  }
-
-  private static function isMouseDownEvent($typeID) {
-    return is_int($typeID) && (($typeID & WBC_MOUSEDOWN) || ($typeID & WBC_DBLCLICK));
-  }
-
-  private static function isMouseUpEvent($typeID) {
-    return is_int($typeID) && ($typeID & WBC_MOUSEUP);
-  }
-
-  private static function isKeyEvent($typeID) {
-    return is_int($typeID) && (($typeID === WBC_KEYDOWN) || ($typeID === WBC_KEYUP));
-  }
-
-  private static function isFocusEvent($typeID) {
-    return is_int($typeID) && ($typeID === WBC_GETFOCUS);
-  }
-
-  private static function isWindowEvent($windowID, $controlID) {
-    return $windowID == $controlID;
-  }
-
-  private static function isWindowResizeEvent($typeID) {
-    return is_int($typeID) && ($typeID === WBC_RESIZE);
-  }
-
-  private static function isControlEvent($id) {
-    return $id !== 0;
   }
 
   public static function getClickCount(MouseEvent $event) {
@@ -201,15 +147,15 @@ class EventFactory {
         $eventInfo->propertyID
       );
 
-      if(self::isMouseDownEvent($eventInfo->typeID)) {
+      if($event->isMouseDownEvent()) {
         self::$eventBuffer->add($event);
       }
 
       foreach($eventInfo->source->getMouseListeners() as $mouseListener) {
-        if(self::isMouseDownEvent($eventInfo->typeID)) {
+        if($event->isMouseDownEvent()) {
           $mouseListener->mousePressed($event);
         }
-        else if(self::isMouseUpEvent($eventInfo->typeID)) {
+        else if($event->isMouseUpEvent()) {
           $mouseListener->mouseReleased($event);
         }
       }
@@ -225,7 +171,13 @@ class EventFactory {
       );
 
       foreach($eventInfo->source->getKeyListeners() as $keyListener) {
-        ($eventInfo->typeID === WBC_KEYDOWN) ? $keyListener->keyPressed($event) : $keyListener->keyReleased($event);
+        if($event->isKeyDownEvent()) {
+          $keyListener->keyPressed($event);
+        }
+
+        else if($event->isKeyUpEvent()) {
+          $keyListener->keyReleased($event);
+        }
       }
   }
 
@@ -275,5 +227,17 @@ class EventFactory {
     foreach($eventInfo->source->getWindowResizeListeners() as $resizeListener) {
       $resizeListener->windowResized($event);
     }
+  }
+
+  private static function createAndDispatchWindowClosedEvent($eventInfo) {
+    $event = new WindowCloseEvent(
+      $eventInfo->windowID,
+      $eventInfo->id,
+      $eventInfo->controlID,
+      $eventInfo->typeID,
+      $eventInfo->propertyID
+    );
+
+    $eventInfo->source->getWindowCloseListener()->windowClosed($event);
   }
 }

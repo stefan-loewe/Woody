@@ -52,7 +52,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-    $this->window->destroy();
+    $this->window->close();
   }
 
   /**
@@ -113,11 +113,11 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
    */
   public function testActionListeners() {
     $this->assertEquals(0, $this->component->getActionListeners()->count());
-    
+
     $actionListener = $this->getMockBuilder('\Woody\Event\ActionAdapter')
                                       ->disableOriginalConstructor()
                                       ->getMock();
-    
+
     $this->component->addActionListener($actionListener);
     $this->assertEquals(1, $this->component->getActionListeners()->count());
 
@@ -134,11 +134,11 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
    */
   public function testFocusListeners() {
     $this->assertEquals(0, $this->component->getFocusListeners()->count());
-    
+
     $focusListener = $this->getMockBuilder('\Woody\Event\FocusAdapter')
                                       ->disableOriginalConstructor()
                                       ->getMock();
-    
+
     $this->component->addFocusListener($focusListener);
     $this->assertEquals(1, $this->component->getFocusListeners()->count());
 
@@ -155,11 +155,11 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
    */
   public function testKeyListeners() {
     $this->assertEquals(0, $this->component->getKeyListeners()->count());
-    
+
     $keyListener = $this->getMockBuilder('\Woody\Event\KeyAdapter')
                                       ->disableOriginalConstructor()
                                       ->getMock();
-    
+
     $this->component->addKeyListener($keyListener);
     $this->assertEquals(1, $this->component->getKeyListeners()->count());
 
@@ -176,11 +176,11 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
    */
   public function testMouseListeners() {
     $this->assertEquals(0, $this->component->getMouseListeners()->count());
-    
+
     $mouseListener = $this->getMockBuilder('\Woody\Event\MouseAdapter')
                                       ->disableOriginalConstructor()
                                       ->getMock();
-    
+
     $this->component->addMouseListener($mouseListener);
     $this->assertEquals(1, $this->component->getMouseListeners()->count());
 

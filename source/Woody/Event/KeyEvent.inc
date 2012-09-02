@@ -16,6 +16,14 @@ class KeyEvent extends Event {
     parent::__construct($windowID, $id, $controlID, $type, $property);
   }
 
+  public function isKeyUpEvent() {
+    return $this->type & WBC_KEYUP;
+  }
+
+  public function isKeyDownEvent() {
+    return $this->type & WBC_KEYDOWN;
+  }
+
   /**
    * This method returns which key was pressed.
    *

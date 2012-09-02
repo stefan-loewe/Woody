@@ -8,8 +8,16 @@ use \Utils\Geom\Dimension;
 use \Woody\System\WindowConstraints;
 use \Woody\Event\WindowResizeListener;
 use \Woody\Components\Controls\Frame;
+use \Woody\Event\WindowCloseEvent;
 
 abstract class AbstractWindow extends Component {
+
+  /**
+   * the close listener registered for this window
+   *
+   * @var \Woody\Event\WindowCloseListener
+   */
+  protected $closeListener        = null;
 
   /**
    * the collection of resize listeners registered for this window
@@ -50,6 +58,8 @@ abstract class AbstractWindow extends Component {
 
     $this->createRootPane();
 
+    $this->initializeWindowCloseListener();
+
     return $this;
   }
 
@@ -65,11 +75,23 @@ abstract class AbstractWindow extends Component {
   }
 
   /**
-   * This method destroys a window.
+   * This method closes the window.
    *
    * @return AbstractWindow $this
    */
-  public function destroy() {
+  public function close() {
+    $event = new WindowCloseEvent($this->id, IDCLOSE, 0, 0, 0);
+    $this->getWindowCloseListener()->windowClosed($event);
+
+    return $this;
+  }
+
+  /**
+   * This method closes the window.
+   *
+   * @return AbstractWindow $this
+   */
+  private function destroy() {
     wb_destroy_window($this->controlID);
 
     return $this;
@@ -128,6 +150,30 @@ abstract class AbstractWindow extends Component {
       | WBC_REDRAW
       | WBC_RESIZE
       | WBC_HEADERSEL;
+  }
+
+  /**
+   * This method sets the close listener for this window.
+   *
+   * @param WindowCloseListener $closeListener the resize listener to add
+   * @return AbstractWindow $this
+   */
+  public function setWindowCloseListener(WindowCloseListener $closeListener) {
+    $this->closeListener = $closeListener;
+
+    return $this;
+  }
+
+  public function getWindowCloseListener() {
+    return $this->closeListener;
+  }
+
+  private function initializeWindowCloseListener() {
+    $onWindowClosedCallback = function() {
+      $this->destroy();
+    };
+
+    $this->closeListener = new \Woody\Event\WindowCloseAdapter($onWindowClosedCallback);
   }
 
   /**

@@ -31,7 +31,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-    $this->window->destroy();
+    $this->window->close();
   }
 
   /**
@@ -68,19 +68,20 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
     $this->assertNotNull($this->window3->getControlID());
     $this->assertNotNull($this->window3->getID());
 
-    $this->window3->destroy();
+    $this->window3->close();
   }
 
   /**
-   * This method tests destroying the window.
+   * This method tests closing the window.
    *
+   * @covers \Woody\Components\Windows\AbstractWindow::close
    * @covers \Woody\Components\Windows\AbstractWindow::destroy
    */
-  public function testDestroy() {
+  public function testClose() {
     $this->window4 = new MainWindow('AbstractWindow', new Point(11, 22), new Dimension(555, 333));
 
     $this->window4->create();
-    $this->window4->destroy();
+    $this->window4->close();
 
     $this->assertEquals($this->window4->getPosition()->x, 11);
     $this->assertEquals($this->window4->getPosition()->y, 22);

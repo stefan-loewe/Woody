@@ -39,7 +39,7 @@ class TestApplication extends Application {
     $callback = function() {
       if(!$this->isRunning) {
         $this->shutdownTimer->destroy();
-        $this->window->destroy();
+        $this->window->close();
       }
     };
 

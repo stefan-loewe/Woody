@@ -63,7 +63,7 @@ class AbstractWindowEventLoopTest extends \PHPUnit_Framework_TestCase {
           $this->timer->destroy();
 
           $this->assertEquals(5, ++$this->counter);
-          $this->window->destroy();
+          $this->window->close();
 
           $this->assertEquals(6, ++$this->counter);
         }, $this->window, Timer::TEST_TIMEOUT);

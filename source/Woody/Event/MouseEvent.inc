@@ -38,6 +38,14 @@ class MouseEvent extends Event {
     parent::__construct($windowID, $id, $controlID, $type, $property);
   }
 
+  public function isMouseDownEvent() {
+    return ($this->type & WBC_MOUSEDOWN) || ($this->type & WBC_DBLCLICK);
+  }
+
+  public function isMouseUpEvent() {
+    return $this->type & WBC_MOUSEUP;
+  }
+
   /**
    * This method returns the position of the mouse when the event occured.
    *
