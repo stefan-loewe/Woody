@@ -180,6 +180,17 @@ abstract class AbstractWindow extends Component {
   }
 
   /**
+   * This method removes the close listener for this window.
+   *
+   * @return AbstractWindow $this
+   */
+  public function removeWindowCloseListener() {
+    $this->closeListener = null;
+
+    return $this;
+  }
+
+  /**
    * This method adds a resize listener to this window.
    *
    * @param WindowResizeListener $resizeListener the resize listener to add
