@@ -21,7 +21,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $this->window = new MainWindow('AbstractWindow', new Point(50, 50), new Dimension(300, 200));
 
     $this->window->create(null);
   }
@@ -41,7 +41,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Component::__construct
    */
   public function testConstruct() {
-    $this->window2 = new MainWindow('MainWindow2', new Point(12, 34), new Dimension(456, 789));
+    $this->window2 = new MainWindow('AbstractWindow', new Point(12, 34), new Dimension(456, 789));
 
     $this->assertEquals($this->window2->getPosition()->x, 12);
     $this->assertEquals($this->window2->getPosition()->y, 34);
@@ -61,7 +61,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Windows\AbstractWindow::getParameters
    */
   public function testCreate() {
-    $this->window3 = new MainWindow('MainWindow3', new Point(34, 12), new Dimension(789, 456));
+    $this->window3 = new MainWindow('AbstractWindow', new Point(34, 12), new Dimension(789, 456));
 
     $this->window3->create();
 
@@ -77,7 +77,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Windows\AbstractWindow::destroy
    */
   public function testDestroy() {
-    $this->window4 = new MainWindow('MainWindow4', new Point(11, 22), new Dimension(555, 333));
+    $this->window4 = new MainWindow('AbstractWindow', new Point(11, 22), new Dimension(555, 333));
 
     $this->window4->create();
     $this->window4->destroy();

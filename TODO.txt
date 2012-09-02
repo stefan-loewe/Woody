@@ -1,3 +1,25 @@
-layout manager -> extract interface
 different window types
 create wrapper type for woody id, e.g. WoodyID, wrapping an int
+code coverage 
+------------------------------------------------------------------------------------------------------------------
+Controls:
+
+wrapper for
+- Menu
+- StatusBar
+- Accelerator
+- HyperLink
+- RadioButton
+- RTFEditBox
+- ToolBar
+------------------------------------------------------------------------------------------------------------------
+Features:
+
+- frame/pane that allows scrolling of content out of the box, without adding the pieces manually
+- more layouts, see http://docs.oracle.com/javase/tutorial/uiswing/layout/layoutlist.html
+------------------------------------------------------------------------------------------------------------------
+winbinder extension:
+
+- tabbing through controls does not work in more than one frame
+- fix other bugs, there are plenty
+------------------------------------------------------------------------------------------------------------------
