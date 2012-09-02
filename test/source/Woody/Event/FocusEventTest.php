@@ -19,34 +19,6 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
   private $event = null;
 
   /**
-   * a edit box for testing
-   *
-   * @var \Woody\Components\Controls\EditBox
-   */
-  private $control1 = null;
-
-  /**
-   * another edit box for testing
-   *
-   * @var \Woody\Components\Controls\EditBox
-   */
-  private $control2 = null;
-
-  /**
-   * the test application
-   *
-   * @var \Woody\App\TestApplication
-   */
-  private $application = null;
-
-/**
-   * the timer for the test application
-   *
-   * @var \Woody\Components\Timer\Timer
-   */
-  private $timer = null;
-
-  /**
    * Sets up the fixture, for example, opens a network connection.
    * This method is called before a test is executed.
    */
@@ -81,39 +53,34 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\Event::__toString
    */
   public function testGetFocusGainedComponent() {
-    $this->application  = new TestApplication();
-    $this->control1     = new EditBox('', new Point(20, 20), new Dimension(100, 18));
-    $this->control2     = new EditBox('', new Point(20, 45), new Dimension(100, 18));
+    $window = new \Woody\Components\Windows\MainWindow('FocusEventTest', new Point(20, 20), new Dimension(300, 200));
+    $control1     = new EditBox('123', new Point(20, 20), new Dimension(100, 18));
+    $control2     = new EditBox('456', new Point(20, 45), new Dimension(100, 18));
 
-    $this->application->getWindow()->getRootPane()->add($this->control1);
-    $this->application->getWindow()->getRootPane()->add($this->control2);
+    $window->create();
+    $window->getRootPane()->add($control1);
+    $window->getRootPane()->add($control2);
 
-    $this->timer = new Timer(function() {
-      $this->event = new FocusEvent($this->application->getWindow()->getControlID(),
-        $this->control1->getID(),
-        $this->control1->getControlID(),
-        0,
-        0,
-        null);
-      $this->assertEquals($this->control1, $this->event->getFocusGainedComponent());
-      $this->assertNull($this->event->getFocusLostComponent());
+    $this->event = new FocusEvent(0,
+      $control1->getID(),
+      $control1->getControlID(),
+      0,
+      0,
+      null);
+    $this->assertEquals($control1, $this->event->getFocusGainedComponent());
+    $this->assertNull($this->event->getFocusLostComponent());
 
-      $this->event = new FocusEvent($this->application->getWindow()->getControlID(),
-        $this->control2->getID(),
-        $this->control2->getControlID(),
-        0,
-        0,
-        $this->control1);
-      $this->assertEquals($this->control1, $this->event->getFocusLostComponent());
-      $this->assertEquals($this->control2, $this->event->getFocusGainedComponent());
+    $this->event = new FocusEvent(0,
+      $control2->getID(),
+      $control2->getControlID(),
+      0,
+      0,
+      $control1);
+    $this->assertEquals($control1, $this->event->getFocusLostComponent());
+    $this->assertEquals($control2, $this->event->getFocusGainedComponent());
 
-      $this->assertTrue(strpos($this->event->__toString(), 'gained = ') !== FALSE);
+    $this->assertTrue(strpos($this->event->__toString(), 'gained = ') !== FALSE);
 
-      $this->timer->destroy();
-      $this->application->stop();
-    }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
-
-    $this->timer->start();
-    $this->application->start();
+    $window->destroy();
   }
 }

@@ -55,12 +55,32 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests getting the pressed button of the event.
+   * This method tests getting if the right button was pressed.
    *
    * @covers \Woody\Event\MouseEvent::getPressedButton
    */
-  public function testGetPressedButton() {
+  public function testGetPressedButton1() {
     $this->assertEquals(MouseEvent::BUTTON1, $this->event->getPressedButton());
+  }
+
+  /**
+   * This method tests getting if the left button was pressed.
+   *
+   * @covers \Woody\Event\MouseEvent::getPressedButton
+   */
+  public function testGetPressedButton2() {
+    $this->event = new MouseEvent(0, 0, 0, 258, 10223723);
+    $this->assertEquals(MouseEvent::BUTTON2, $this->event->getPressedButton());
+  }
+
+  /**
+   * This method tests getting if the middle button was pressed.
+   *
+   * @covers \Woody\Event\MouseEvent::getPressedButton
+   */
+  public function testGetPressedButton3() {
+    $this->event = new MouseEvent(0, 0, 0, 272, 10223723);
+    $this->assertEquals(MouseEvent::BUTTON3, $this->event->getPressedButton());
   }
 
   /**
@@ -80,7 +100,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
     EventFactory::createEvent(0, $control1->getID(), $control1->getControlID(), 257, 10223723);
 
     $events = self::readAttribute('\Woody\Event\EventFactory', 'eventBuffer')->getLifoOrder();
-    
+
     $this->assertEquals(3, $events[0]->getClickCount());
     $this->assertEquals(2, $events[1]->getClickCount());
     $this->assertEquals(1, $events[2]->getClickCount());

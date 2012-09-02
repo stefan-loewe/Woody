@@ -56,14 +56,17 @@ class MouseEvent extends Event {
   public function getPressedButton() {
     $button = self::NO_BUTTON;
 
-    if($this->type & self::BUTTON1)
+    if($this->type & self::BUTTON1) {
       $button = self::BUTTON1;
+    }
 
-    else if($this->type & self::BUTTON2)
+    else if($this->type & self::BUTTON2) {
       $button = self::BUTTON2;
+    }
 
-    else if($this->type & self::BUTTON3)
+    else if($this->type & self::BUTTON3) {
       $button = self::BUTTON3;
+    }
 
     return $button;
   }
