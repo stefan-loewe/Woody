@@ -8,6 +8,7 @@ use \Utils\Geom\Dimension;
 use \Woody\System\WindowConstraints;
 use \Woody\Event\WindowResizeListener;
 use \Woody\Components\Controls\Frame;
+use \Woody\Event\EventInfo;
 use \Woody\Event\WindowCloseAdapter;
 use \Woody\Event\WindowCloseEvent;
 use \Woody\Event\WindowCloseListener;
@@ -83,7 +84,7 @@ abstract class AbstractWindow extends Component {
     $closeListener = $this->getWindowCloseListener();
 
     if($closeListener !== null) {
-      $closeListener->windowClosed(new WindowCloseEvent($this->id, IDCLOSE, 0, 0, 0));
+      $closeListener->windowClosed(new WindowCloseEvent(new EventInfo($this->id, IDCLOSE, 0, 0, 0)));
     }
 
     $this->destroy();

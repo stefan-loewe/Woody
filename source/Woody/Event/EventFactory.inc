@@ -192,6 +192,6 @@ class EventFactory {
   private static function createAndDispatchWindowClosedEvent($eventInfo) {
     $event = new WindowCloseEvent($eventInfo);
 
-    $event->getSource()->getWindowCloseListener()->windowClosed($event);
+    $event->getSource()->close();
   }
 }
