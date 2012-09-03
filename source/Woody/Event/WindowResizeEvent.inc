@@ -24,14 +24,16 @@ class WindowResizeEvent extends Event {
    * This method acts as the constructor of the class.
    *
    * @param EventInfo the event info containing the raw data of this event
-   * @param Dimension $oldDim the old dimension of the component before resizing
-   * @param Dimension $newDim the new dimension of the component after resizing
    */
-  public function __construct(EventInfo $eventInfo, Dimension $oldDim, Dimension $newDim) {
+  public function __construct(EventInfo $eventInfo) {
     parent::__construct($eventInfo);
-
-    $this->oldDimension = $oldDim;
-    $this->newDimension = $newDim;
+    
+    // the previous dimension is still stored in the Woody object
+    $this->oldDimension = $this->getSource()->getDimension();
+    
+    // the winbinder resource already has the new dimension
+    $newDim = wb_get_size($this->getSource()->getControlID());
+    $this->newDimension = new Dimension($newDim[0], $newDim[1]);
   }
 
   /**

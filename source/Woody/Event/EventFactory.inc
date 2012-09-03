@@ -179,17 +179,10 @@ class EventFactory {
   }
 
   private static function createAndDispatchWindowResizeEvent($eventInfo) {
-    // the previous dimension is still stored in the Woody object
-    $oldDim = $eventInfo->source->getDimension();
-
-    // the winbinder resource already has the new dimension
-    $newDim = wb_get_size($eventInfo->source->getControlID());
-    $newDim = new Dimension($newDim[0], $newDim[1]);
-
-    $event = new WindowResizeEvent($eventInfo, $oldDim, $newDim);
+    $event = new WindowResizeEvent($eventInfo);
 
     // update the dimension of the Woody object here
-    $event->getSource()->resizeTo($newDim);
+    $event->getSource()->resizeTo($event->getNewDimension());
 
     foreach($event->getSource()->getWindowResizeListeners() as $resizeListener) {
       $resizeListener->windowResized($event);
