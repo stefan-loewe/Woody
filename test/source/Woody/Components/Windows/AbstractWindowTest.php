@@ -199,21 +199,48 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests adding, getting and removing resize handlers.
+   * This method tests adding, getting and removing resize listeners.
    *
    * @covers \Woody\Components\Windows\AbstractWindow::addWindowResizeListener
    * @covers \Woody\Components\Windows\AbstractWindow::getWindowResizeListeners
    * @covers \Woody\Components\Windows\AbstractWindow::removeWindowResizeListener
    */
-  public function testResizeHandlers() {
+  public function testWindowResizeListeners() {
     $resizeListener = $this->getMockBuilder('\Woody\Event\WindowResizeAdapter')
-            ->disableOriginalConstructor()
-            ->getMock();
+      ->disableOriginalConstructor()
+      ->getMock();
 
     $this->assertEquals($this->window, $this->window->addWindowResizeListener($resizeListener));
     $this->assertTrue($this->window->getWindowResizeListeners()->contains($resizeListener));
 
     $this->assertEquals($this->window, $this->window->removeWindowResizeListener($resizeListener));
     $this->assertFalse($this->window->getWindowResizeListeners()->contains($resizeListener));
+  }
+
+  /**
+   * This method tests adding, getting and removing close listeners.
+   *
+   * @covers \Woody\Components\Windows\AbstractWindow::setWindowCloseListener
+   * @covers \Woody\Components\Windows\AbstractWindow::getWindowCloseListener
+   * @covers \Woody\Components\Windows\AbstractWindow::removeWindowCloseListener
+   * @covers \Woody\Components\Windows\AbstractWindow::close
+   */
+  public function testWindowCloseListeners() {
+    $window = new MainWindow('AbstractWindow', new Point(12, 34), new Dimension(456, 789));
+    $window->create();
+
+    $closeListener = $this->getMockBuilder('\Woody\Event\WindowCloseAdapter')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $closeListener->expects($this->once())
+        ->method('windowClosed');
+
+    $this->assertEquals($window, $window->setWindowCloseListener($closeListener));
+    $this->assertEquals($window->getWindowCloseListener(), $closeListener);
+
+    $window->close();
+
+    $this->assertEquals($this->window, $this->window->removeWindowCloseListener($closeListener));
+    $this->assertNull($this->window->getWindowCloseListener());
   }
 }

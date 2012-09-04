@@ -2,7 +2,7 @@
 
 namespace Woody\Util\WinApi\Types;
 
-class Dword {
+class Dword implements Type {
   public function getPackFormatCharacter() {
     return 'L';
   }

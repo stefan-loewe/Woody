@@ -37,4 +37,15 @@ class FileOpenDialogTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertInstanceOf('\Woody\Dialog\FileSystem\FileOpenDialog', $this->dialog);
   }
+
+  /**
+   * This method tests getting the current selection from the select-file dialog.
+   *
+   * @covers \Woody\Dialog\FileSystem\FileSystemDialog::getSelection
+   */
+  public function testGetSelection() {
+    $this->dialog = new FileOpenDialog('testFileSelection', null, '.', null);
+
+    $this->assertNull($this->dialog->getSelection());
+  }
 }

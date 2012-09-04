@@ -2,7 +2,7 @@
 
 namespace Woody\Util\WinApi\Types;
 
-class Byte {
+class Byte implements Type {
   public function getPackFormatCharacter() {
     return 'C';
   }
@@ -11,4 +11,3 @@ class Byte {
     return 1;
   }
 }
-

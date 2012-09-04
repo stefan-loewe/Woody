@@ -17,7 +17,7 @@ class KeyEventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->event = new KeyEvent(new EventInfo(0, 0, 0, 0, 65));
+    $this->event = new KeyEvent(new EventInfo(0, 0, 0, WBC_KEYUP, 65));
   }
 
   /**
@@ -35,6 +35,17 @@ class KeyEventTest extends \PHPUnit_Framework_TestCase {
    */
   public function testConstruct() {
     $this->assertInstanceOf('\Woody\Event\KeyEvent', $this->event);
+  }
+
+  /**
+   * This method tests getting the type of the key event.
+   *
+   * @covers \Woody\Event\KeyEvent::isKeyDownEvent
+   * @covers \Woody\Event\KeyEvent::isKeyUpEvent
+   */
+  public function testIsKeyUpDownEvent() {
+    $this->assertTrue($this->event->isKeyUpEvent());
+    $this->assertFalse($this->event->isKeyDownEvent());
   }
 
   /**

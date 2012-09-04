@@ -43,6 +43,17 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * This method tests getting the type of the mouse event.
+   *
+   * @covers \Woody\Event\MouseEvent::isMouseDownEvent
+   * @covers \Woody\Event\MouseEvent::isMouseUpEvent
+   */
+  public function testIsMouseUpDownEvent() {
+    $this->assertTrue($this->event->isMouseDownEvent());
+    $this->assertFalse($this->event->isMouseUpEvent());
+  }
+
+  /**
    * This methos tests getting the position of the mouse event.
    *
    * @covers \Woody\Event\MouseEvent::getPosition
@@ -87,6 +98,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * This method tests getting the click count of the event.
    *
    * @covers \Woody\Event\MouseEvent::getClickCount
+   * @covers \Woody\Event\EventFactory::getClickCount
    */
   public function testGetClickCount() {
     $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));

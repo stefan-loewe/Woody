@@ -72,7 +72,7 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\App\TestApplication::start
    * @covers \Woody\App\TestApplication::stop
    */
-  public function testStart() {
+  public function testStartStop() {
         $this->timer = new Timer(function() {
           $this->timer->destroy();
           $this->application->stop();

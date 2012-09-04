@@ -16,8 +16,4 @@ class FolderSelectDialog extends FileSystemDialog {
       $this->path
     );
   }
-
-  public function getSelection() {
-    return $this->selection;
-  }
 }

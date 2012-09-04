@@ -37,4 +37,15 @@ class MultiFileOpenDialogTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertInstanceOf('\Woody\Dialog\FileSystem\MultiFileOpenDialog', $this->dialog);
   }
+
+  /**
+   * This method tests getting the current selection from the multi-file dialog.
+   *
+   * @covers \Woody\Dialog\FileSystem\MultiFileOpenDialog::getSelection
+   */
+  public function testGetSelection() {
+    $this->dialog = new MultiFileOpenDialog('testMultiFileSelection', null, '.', null);
+
+    $this->assertEquals(new \ArrayObject(), $this->dialog->getSelection());
+  }
 }

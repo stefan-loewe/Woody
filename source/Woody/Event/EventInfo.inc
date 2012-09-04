@@ -10,7 +10,6 @@ class EventInfo {
   private $controlID   = null;
   private $type        = null;
   private $property    = null;
-  private $source      = null;
 
   public function __construct($windowID, $woodyID, $controlID, $typeID, $propertyID) {
     $this->windowID    = $windowID;
@@ -18,7 +17,14 @@ class EventInfo {
     $this->controlID   = $controlID;
     $this->type        = $typeID;
     $this->property    = $propertyID;
-//    $this->source      = Component::getComponentByID($controlID);
+  }
+
+  public function isWindowEvent() {
+    return $this->windowID == $this->controlID;
+  }
+
+  public function isWindowResizeEvent() {
+    return $this->type === WBC_RESIZE;
   }
 
   public function isWindowCloseEvent() {
@@ -26,7 +32,11 @@ class EventInfo {
   }
 
   public function isTimerEvent() {
-    return self::isWindowEvent($this->windowID, $this->controlID) && $this->id != 0 && $this->id != IDCLOSE;
+    return $this->isWindowEvent() && $this->id != 0 && $this->id != IDCLOSE;
+  }
+
+  public function isControlEvent() {
+    return $this->id !== 0;
   }
 
   public function isFocusEvent() {
@@ -39,17 +49,5 @@ class EventInfo {
 
   public function isKeyEvent() {
     return ($this->type === WBC_KEYDOWN) || ($this->type === WBC_KEYUP);
-  }
-
-  public function isControlEvent() {
-    return $this->id !== 0;
-  }
-
-  public function isWindowEvent() {
-    return $this->windowID == $this->controlID;
-  }
-
-  public function isWindowResizeEvent() {
-    return $this->type === WBC_RESIZE;
   }
 }

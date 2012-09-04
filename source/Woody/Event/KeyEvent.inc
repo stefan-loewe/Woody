@@ -13,11 +13,11 @@ class KeyEvent extends Event {
   }
 
   public function isKeyUpEvent() {
-    return $this->type & WBC_KEYUP;
+    return ($this->type & WBC_KEYUP) == WBC_KEYUP;
   }
 
   public function isKeyDownEvent() {
-    return $this->type & WBC_KEYDOWN;
+    return ($this->type & WBC_KEYDOWN) === WBC_KEYDOWN;
   }
 
   /**

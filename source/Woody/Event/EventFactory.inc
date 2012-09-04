@@ -3,7 +3,6 @@
 namespace Woody\Event;
 
 use \Utils\DataStructures\RingBuffer;
-use \Utils\Geom\Dimension;
 use \Utils\Http\HttpGetRequest;
 use \Woody\Components\Component;
 use \Woody\Components\Controls\Actionable;
@@ -181,7 +180,7 @@ class EventFactory {
   private static function createAndDispatchWindowResizeEvent($eventInfo) {
     $event = new WindowResizeEvent($eventInfo);
 
-    // update the dimension of the Woody object here
+    // update the dimension of the Woody object here (the actual component is already resized)
     $event->getSource()->resizeTo($event->getNewDimension());
 
     foreach($event->getSource()->getWindowResizeListeners() as $resizeListener) {

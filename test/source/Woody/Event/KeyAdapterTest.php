@@ -13,7 +13,7 @@ class KeyAdapterTest extends \PHPUnit_Framework_TestCase {
   private $adapter = null;
 
   /**
-   * @var boolean simple flag to determine, if the callback was executed
+   * @var int simple counter to determine, how often the callback was executed
    */
   private $callbackExecuted = 0;
 

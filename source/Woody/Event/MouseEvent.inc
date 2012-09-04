@@ -35,11 +35,12 @@ class MouseEvent extends Event {
   }
 
   public function isMouseDownEvent() {
-    return ($this->type & WBC_MOUSEDOWN) || ($this->type & WBC_DBLCLICK);
+    return (($this->type & WBC_MOUSEDOWN) === WBC_MOUSEDOWN)
+      || (($this->type & WBC_DBLCLICK) === WBC_DBLCLICK);
   }
 
   public function isMouseUpEvent() {
-    return $this->type & WBC_MOUSEUP;
+    return ($this->type & WBC_MOUSEUP) === WBC_MOUSEUP;
   }
 
   /**
