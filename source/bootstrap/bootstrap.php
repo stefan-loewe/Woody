@@ -1,5 +1,9 @@
 <?php
 
+use \Woody\Event\EventInfo;
+use \Woody\Event\EventFactory;
+use \Woody\Event\EventDispatcher;
+
 error_reporting(E_ALL | E_STRICT);
 
 define('INSTALLATION_FOLDER', str_replace('\\', '/', realpath(__DIR__.'/../..')));
@@ -20,7 +24,10 @@ function globalWinBinderEventHandler($windowID, $id, $controlID = 0, $type = 0, 
   //var_dump(date('H:i:s').': calling globalWinBinderEventHandler in '.__FILE__.' at line '.__LINE__);
   //var_dump($windowID.', '.$id.', '.$controlID.', '.$type.', '.$property);
 
-  \Woody\Event\EventFactory::createEvent(new \Woody\Event\EventInfo($windowID, $id, $controlID, $type, $property));
+  $event = EventFactory::createEvent($eventInfo = new EventInfo($windowID, $id, $controlID, $type, $property));
+  if($event != null) {
+    EventDispatcher::dispatchEvent($eventInfo, $event);
+  }
 }
 
 $callback = function($errno, $errstr, $errfile, $errline) {

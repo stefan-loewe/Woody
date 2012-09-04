@@ -45,46 +45,45 @@ class EventFactory {
 
     // window close button is not a real control, so handle it here - close window
     if($eventInfo->isWindowCloseEvent()) {
-      self::createAndDispatchWindowClosedEvent($eventInfo);
-      return;
+      return self::createAndDispatchWindowClosedEvent($eventInfo);
     }
 
     // timeout of timers are handled here, too - the callback is executed by calling Timer::run
     else if($eventInfo->isTimerEvent()) {
       Timer::getTimerByID($eventInfo->id)->run();
-      return;
+      return null;
     }
 
     else if($eventInfo->isFocusEvent()) {
-      self::createAndDispatchFocusEvent($eventInfo);
+      return self::createAndDispatchFocusEvent($eventInfo);
     }
 
     else if($eventInfo->isMouseEvent()) {
-      self::createAndDispatchMouseEvent($eventInfo);
+      return self::createAndDispatchMouseEvent($eventInfo);
     }
 
     else if($eventInfo->isKeyEvent()) {
-      self::createAndDispatchKeyEvent($eventInfo);
+      return self::createAndDispatchKeyEvent($eventInfo);
     }
-
+/*
     if($eventInfo->isControlEvent()) {
       // only handle non-focus-events of controls (FocusEvent was handled above and does not trigger Actions)
       if(!$eventInfo->isFocusEvent()) {
-        self::createAndDispatchActionEvent($eventInfo);
+        return self::createAndDispatchActionEvent($eventInfo);
       }
 
       return;
     }
-
+*/
     // create and dispatch WindowEvents, e.g. when resizing a window
-    if($eventInfo->isWindowEvent()) {
+    else if($eventInfo->isWindowEvent()) {
       if($eventInfo->isWindowResizeEvent()) {
-        self::createAndDispatchWindowResizeEvent($eventInfo);
+        return self::createAndDispatchWindowResizeEvent($eventInfo);
       }
     }
 
     // app crashes when an ActionEvent was created and $event was returned here !?!?!?!
-    //return $event;
+    return null;
   }
 
   public static function getClickCount(MouseEvent $event) {
@@ -120,44 +119,25 @@ class EventFactory {
   }
 
   private static function createAndDispatchFocusEvent($eventInfo) {
-    $event = new FocusEvent($eventInfo);
+    $event = new FocusEvent($eventInfo, self::$previousFocusedControl);
 
     self::$previousFocusedControl = $event->getSource();
 
-    foreach($event->getSource()->getFocusListeners() as $focusListener) {
-      $focusListener->focusGained($event);
-    }
+    return $event;
   }
 
   private static function createAndDispatchMouseEvent($eventInfo) {
-      $event = new MouseEvent($eventInfo);
+    $event = new MouseEvent($eventInfo);
 
-      if($event->isMouseDownEvent()) {
-        self::$eventBuffer->add($event);
-      }
+    if($event->isMouseDownEvent()) {
+      self::$eventBuffer->add($event);
+    }
 
-      foreach($event->getSource()->getMouseListeners() as $mouseListener) {
-        if($event->isMouseDownEvent()) {
-          $mouseListener->mousePressed($event);
-        }
-        else if($event->isMouseUpEvent()) {
-          $mouseListener->mouseReleased($event);
-        }
-      }
+    return $event;
   }
 
   private static function createAndDispatchKeyEvent($eventInfo) {
-      $event = new KeyEvent($eventInfo);
-
-      foreach($event->getSource()->getKeyListeners() as $keyListener) {
-        if($event->isKeyDownEvent()) {
-          $keyListener->keyPressed($event);
-        }
-
-        else if($event->isKeyUpEvent()) {
-          $keyListener->keyReleased($event);
-        }
-      }
+    return new KeyEvent($eventInfo);
   }
 
   // no other events are raised when, e.g., clicking on a button, or selecting from a listbox, therefore, AcionEvents
@@ -183,14 +163,10 @@ class EventFactory {
     // update the dimension of the Woody object here (the actual component is already resized)
     $event->getSource()->resizeTo($event->getNewDimension());
 
-    foreach($event->getSource()->getWindowResizeListeners() as $resizeListener) {
-      $resizeListener->windowResized($event);
-    }
+    return $event;
   }
 
   private static function createAndDispatchWindowClosedEvent($eventInfo) {
-    $event = new WindowCloseEvent($eventInfo);
-
-    $event->getSource()->close();
+    return new WindowCloseEvent($eventInfo);
   }
 }
