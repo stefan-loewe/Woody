@@ -13,7 +13,7 @@ class ActionEvent extends Event {
   }
 
   public function dispatch() {
-    foreach($this->getSource()->getActionListeners as $actionListener) {
+    foreach($this->getSource()->getActionListeners() as $actionListener) {
       $actionListener->actionPerformed($this);
     }
   }

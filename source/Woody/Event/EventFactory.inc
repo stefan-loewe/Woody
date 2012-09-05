@@ -21,13 +21,6 @@ class EventFactory {
   private static $previousFocusedControl = null;
 
   /**
-   * the event ring buffer - needed for determining the click-counter of mouse click events
-   *
-   * @var RingBuffer
-   */
-  private static $eventBuffer = null;
-
-  /**
    * This method creates events and dispatches them to the respective listeners.
    *
    * @param int $windowID the id of the window where the event was triggered
@@ -111,11 +104,11 @@ class EventFactory {
     $source = Component::getComponentByID($eventInfo->controlID);
     if($source instanceof Actionable || $eventInfo->property instanceof HttpGetRequest) {
       $event = new ActionEvent($eventInfo);
-
-      foreach($event->getSource()->getActionListeners() as $actionListener) {
-        $actionListener->actionPerformed($event);
-      }
+      
+      return $event;
     }
+    
+    return null;
   }
 
   private static function createWindowResizeEvent($eventInfo) {
