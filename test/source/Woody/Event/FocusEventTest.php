@@ -2,8 +2,8 @@
 
 namespace Woody\Event;
 
-use \Woody\Components\Controls\EditBox;
 use \Woody\Components\Windows\MainWindow;
+use \Woody\Components\Controls\EditBox;
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
@@ -41,6 +41,32 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
     $this->event = new FocusEvent(new EventInfo(0, 0, 0, 0, 0));
 
     $this->assertInstanceOf('\Woody\Event\FocusEvent', $this->event);
+  }
+  
+ /**
+   * This method tests dispatching the event.
+   *
+   * @covers \Woody\Event\FocusEvent::dispatch
+   */
+  public function testDispatch() {
+    $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
+    $window->create()->getRootPane()->add($editbox);
+    
+    $focusListener = $this->getMockBuilder('\Woody\Event\FocusAdapter')
+      ->disableOriginalConstructor()
+      ->getMock();
+    
+    $focusListener->expects($this->once())->method('focusGained');
+    $editbox->addFocusListener($focusListener);
+
+    $event = new FocusEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_GETFOCUS, 0));
+    $event->dispatch();
+
+    $event = new KeyEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_KEYUP, 65));
+    $event->dispatch();
+    
+    $window->close();
   }
 
   /**

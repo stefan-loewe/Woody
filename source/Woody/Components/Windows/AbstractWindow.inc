@@ -68,11 +68,14 @@ abstract class AbstractWindow extends Component {
    * This method creates the root pane for this window. All other controls have to be added to this frame.
    */
   private function createRootPane() {
-    $rootPaneTopLeftCorner  = new Point(-1, -8);
-    $rootPaneDimension      = new Dimension($this->dimension->width, $this->dimension->height);
+    $rootPaneTopLeftCorner  = new Point(-1, 38);
+    $rootPaneDimension      = new Dimension($this->dimension->width, $this->dimension->height - 40);
 
     $this->rootPane = new Frame('', $rootPaneTopLeftCorner, $rootPaneDimension);
     $this->rootPane->create($this);
+    
+    //$e = new \Woody\Components\Controls\EditBox('bla', new Point(10, 10), new Dimension(100, 20));
+    //$e->create($this);
   }
 
   /**

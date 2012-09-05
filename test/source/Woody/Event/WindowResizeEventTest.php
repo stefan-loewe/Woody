@@ -4,6 +4,8 @@ namespace Woody\Event;
 
 use \Woody\App\TestApplication;
 use \Woody\Components\Timer\Timer;
+use \Woody\Components\Windows\MainWindow;
+use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
 
 /**
@@ -52,7 +54,29 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
    */
   protected function tearDown() {
   }
+  
+ /**
+   * This method tests dispatching the event.
+   *
+   * @covers \Woody\Event\WindowResizeEvent::dispatch
+   */
+  public function testDispatch() {
+    $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $window->create();
+    
+    $resizeListener = $this->getMockBuilder('\Woody\Event\WindowResizeAdapter')
+      ->disableOriginalConstructor()
+      ->getMock();
+    
+    $resizeListener->expects($this->once())->method('windowResized');
+    $window->addWindowResizeListener($resizeListener);
 
+    $event = new WindowResizeEvent(new EventInfo($window->getControlID(), 0, $window->getControlID(), WBC_RESIZE, 0));
+    $event->dispatch();
+    
+    $window->close();
+  }
+  
   /**
    * @covers \Woody\Event\WindowResizeEvent::__construct
    * @covers \Woody\Event\Event::__construct
@@ -60,43 +84,21 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\WindowResizeEvent::getNewDimension
    * @covers \Woody\Event\WindowResizeEvent::getDeltaDimension
    */
-  public function testDimensions() {
-    $this->application = new TestApplication();
+  public function testDim() {
+    $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $window->create();
+    
+    // simulate an event - no real event will be triggered, as event loop is not running ...
+    wb_set_size($window->getControlID(), 400, 250);
 
-    $this->isInitialized  = false;
-    $this->isAsserted     = false;
-
-    $timerCallback = function() {
-      if(!$this->isInitialized) {
-        $resizeCallback = function(WindowResizeEvent $resizeEvent) {
-          // here the assertions will be performed
-          $this->assertEquals(new Dimension(300, 200), $resizeEvent->getOldDimension());
-          $this->assertEquals(new Dimension(400, 250), $resizeEvent->getNewDimension());
-          $this->assertEquals(new Dimension(100, 50), $resizeEvent->getDeltaDimension());
-          $this->isAsserted = true;
-        };
-        $this->application->getWindow()->addWindowResizeListener(new WindowResizeAdapter($resizeCallback));
-
-        // resize the window
-        $old    = $this->application->getWindow()->getDimension();
-        $delta  = new Dimension(100, 50);
-        $new    = $old->resizeBy($delta);
-        $this->application->getWindow()->resizeTo($new);
-
-        $this->isInitialized = true;
-      }
-
-      // only destroy the test once the assertions have been executed
-      if($this->isAsserted) {
-        $this->timer->destroy();
-        $this->application->stop();
-      }
-    };
-
-    $this->timer = new Timer($timerCallback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
-
-    $this->timer->start();
-
-    $this->application->start();
+    // ... therefore, we have to build our own
+    $event = new WindowResizeEvent(new EventInfo($window->getControlID(), 0, $window->getControlID(), WBC_RESIZE, 0));
+    $event->dispatch();
+    
+    $this->assertEquals(new Dimension(300, 200), $event->getOldDimension());
+    $this->assertEquals(new Dimension(400, 250), $event->getNewDimension());
+    $this->assertEquals(new Dimension(100, 50), $event->getDeltaDimension());
+    
+    $window->close();
   }
 }

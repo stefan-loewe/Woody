@@ -40,6 +40,33 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    */
   public function testConstruct() {
     $this->assertInstanceOf('\Woody\Event\MouseEvent', $this->event);
+  }/**
+   * This method tests dispatching the event.
+   *
+   * @covers \Woody\Event\MouseEvent::dispatch
+   * @covers \Woody\Event\MouseEvent::isMouseDownEvent
+   * @covers \Woody\Event\MouseEvent::isMouseUpEvent
+   */
+  public function testDispatch() {
+    $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
+    $window->create()->getRootPane()->add($editbox);
+    
+    $mouseListener = $this->getMockBuilder('\Woody\Event\MouseAdapter')
+      ->disableOriginalConstructor()
+      ->getMock();
+    
+    $mouseListener->expects($this->once())->method('mousePressed');
+    $mouseListener->expects($this->once())->method('mouseReleased');
+    $editbox->addMouseListener($mouseListener);
+
+    $event = new MouseEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_MOUSEDOWN, 0));
+    $event->dispatch();
+
+    $event = new MouseEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_MOUSEUP, 0));
+    $event->dispatch();
+    
+    $window->close();
   }
 
   /**
