@@ -40,7 +40,7 @@ class MouseEvent extends Event {
    */
   public function __construct(EventInfo $eventInfo) {
     parent::__construct($eventInfo);
-    
+
     if(self::$eventBuffer === null) {
       self::$eventBuffer = new RingBuffer(10);
     }
@@ -49,7 +49,7 @@ class MouseEvent extends Event {
       self::$eventBuffer->add($this);
     }
   }
-  
+
   public function dispatch() {
     foreach($this->getSource()->getMouseListeners() as $mouseListener) {
       if($this->isMouseDownEvent()) {
@@ -64,8 +64,7 @@ class MouseEvent extends Event {
   // has to be public, as it is needed to fill event buffer in event factory, to determine click count
   // we might be able to move that here, right?
   private function isMouseDownEvent() {
-    return (($this->type & WBC_MOUSEDOWN) === WBC_MOUSEDOWN)
-      || (($this->type & WBC_DBLCLICK) === WBC_DBLCLICK);
+    return (($this->type & WBC_MOUSEDOWN) === WBC_MOUSEDOWN) || (($this->type & WBC_DBLCLICK) === WBC_DBLCLICK);
   }
 
   private function isMouseUpEvent() {
@@ -118,10 +117,6 @@ class MouseEvent extends Event {
       $eventFound = $eventFound || $this == $currentEvent;
 
       if($eventFound) {
-        if($currentEvent === null) {
-          return $clickCount;
-        }
-
         if($currentEvent->getPressedButton() !== $button) {
           return $clickCount;
         }

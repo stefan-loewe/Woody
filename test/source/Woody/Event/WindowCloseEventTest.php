@@ -21,7 +21,11 @@ class WindowCloseEventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->event = new WindowCloseEvent(new EventInfo(0, IDCLOSE, 0, 0, 0));
+    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+      ->disableOriginalConstructor()
+      ->getMock();
+    
+    $this->event = new WindowCloseEvent($eventInfo);
   }
 
   /**
@@ -40,7 +44,7 @@ class WindowCloseEventTest extends \PHPUnit_Framework_TestCase {
   public function testConstruct() {
     $this->assertInstanceOf('\Woody\Event\WindowCloseEvent', $this->event);
   }
-  
+
  /**
    * This method tests dispatching the event.
    *
@@ -49,17 +53,17 @@ class WindowCloseEventTest extends \PHPUnit_Framework_TestCase {
   public function testDispatch() {
     $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $window->create();
-    
+
     $closeListener = $this->getMockBuilder('\Woody\Event\WindowCloseAdapter')
       ->disableOriginalConstructor()
       ->getMock();
-    
+
     $closeListener->expects($this->once())->method('windowClosed');
     $window->setWindowCloseListener($closeListener);
 
     $event = new WindowCloseEvent(new EventInfo($window->getControlID(), IDCLOSE, $window->getControlID(), 0, 0));
     $event->dispatch();
-    
+
     $window->close();
   }
 }

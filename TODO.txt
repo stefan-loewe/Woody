@@ -1,4 +1,5 @@
 code coverage, esp. events
+make timers create events, too - add listener, adapter resp.
 create wrapper type for woody id, e.g. WoodyID, wrapping an int
 ------------------------------------------------------------------------------------------------------------------
 Controls:
@@ -19,6 +20,7 @@ Features:
 ------------------------------------------------------------------------------------------------------------------
 winbinder extension:
 
+- no got-focus/focus-lost events wehn focusing controls, other than windows
 - tabbing through controls does not work in more than one frame
 - fix other bugs, there are plenty
 ------------------------------------------------------------------------------------------------------------------

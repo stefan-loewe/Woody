@@ -22,7 +22,17 @@ class KeyEventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->event = new KeyEvent(new EventInfo(0, 0, 0, WBC_KEYUP, 65));
+    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    // make eventInfo::property be 65
+    $eventInfo->expects($this->at(4))
+      ->method('__get')
+      ->with($this->equalTo('property'))
+      ->will($this->returnValue('65'));
+
+    $this->event = new KeyEvent($eventInfo);
   }
 
   /**
@@ -53,11 +63,11 @@ class KeyEventTest extends \PHPUnit_Framework_TestCase {
     $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
     $window->create()->getRootPane()->add($editbox);
-    
+
     $keyListener = $this->getMockBuilder('\Woody\Event\KeyAdapter')
       ->disableOriginalConstructor()
       ->getMock();
-    
+
     $keyListener->expects($this->once())->method('keyPressed');
     $keyListener->expects($this->once())->method('keyReleased');
     $editbox->addKeyListener($keyListener);
@@ -67,7 +77,7 @@ class KeyEventTest extends \PHPUnit_Framework_TestCase {
 
     $event = new KeyEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_KEYUP, 65));
     $event->dispatch();
-    
+
     $window->close();
   }
 

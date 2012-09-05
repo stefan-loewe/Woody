@@ -21,17 +21,13 @@ class EventFactory {
   private static $previousFocusedControl = null;
 
   /**
-   * This method creates events and dispatches them to the respective listeners.
+   * This method creates a collection of events based in the event info object that is given as input.
    *
-   * @param int $windowID the id of the window where the event was triggered
-   * @param int $id the internal winbinder id of the source control
-   * @param int $controlID the control id of the source control
-   * @param int $typeID the type id of the event
-   * @param int $propertyID the property id of the event
-   * @return void
+   * @param EventInfo $eventInfo the event info object containing the raw event information
+   * @return \Traversable
    */
   public static function createEvent(EventInfo $eventInfo) {
-    
+
     $events = new \ArrayObject();
 
     // window close button is not a real control, so handle it here - close window
@@ -58,17 +54,17 @@ class EventFactory {
       $events[] = self::createKeyEvent($eventInfo);
     }
 
-    if($eventInfo->isControlEvent()) {
-      // only handle non-focus-events of controls (FocusEvent was handled above and does not trigger Actions)
-      if(!$eventInfo->isFocusEvent()) {
-        $events[] = self::createActionEvent($eventInfo);
-      }
-    }
-
     // create and dispatch WindowEvents, e.g. when resizing a window
     else if($eventInfo->isWindowEvent()) {
       if($eventInfo->isWindowResizeEvent()) {
         $events[] = self::createWindowResizeEvent($eventInfo);
+      }
+    }
+
+    if($eventInfo->isControlEvent()) {
+      // only handle non-focus-events of controls (FocusEvent was handled above and does not trigger Actions)
+      if(!$eventInfo->isFocusEvent()) {
+        $events[] = self::createActionEvent($eventInfo);
       }
     }
 
@@ -101,13 +97,13 @@ class EventFactory {
     // trigger action events for all Actionables, as well as when the propertyID actually is a HttpGetRequest
     // the later are special events, namely those raised by HTMLControls when they receive new data
     // @see HtmlControlServer::processClient
-    $source = Component::getComponentByID($eventInfo->controlID);
-    if($source instanceof Actionable || $eventInfo->property instanceof HttpGetRequest) {
+    $event = new ActionEvent($eventInfo);
+    if($event->getSource() instanceof Actionable || $event->property instanceof HttpGetRequest) {
       $event = new ActionEvent($eventInfo);
-      
+
       return $event;
     }
-    
+
     return null;
   }
 
@@ -115,7 +111,8 @@ class EventFactory {
     $event = new WindowResizeEvent($eventInfo);
 
     // update the dimension of the Woody object here (the actual component is already resized)
-    $event->getSource()->resizeTo($event->getNewDimension());
+    if($event->getSource() !== null)
+      $event->getSource()->resizeTo($event->getNewDimension());
 
     return $event;
   }

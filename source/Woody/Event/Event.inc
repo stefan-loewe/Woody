@@ -49,6 +49,13 @@ abstract class Event {
   protected $time = null;
 
   /**
+   * the source of the event
+   *
+   * @var Component
+   */
+  protected $source = null;
+
+  /**
    * This method acts as the constructor of the class.
    *
    * @param EventInfo the even info containing the raw data of this event
@@ -59,6 +66,8 @@ abstract class Event {
     $this->controlID  = $eventInfo->controlID;
     $this->type       = $eventInfo->type;
     $this->property   = $eventInfo->property;
+    $this->source     = $eventInfo->source;
+
     $this->time       = microtime(TRUE);
   }
 
@@ -66,14 +75,14 @@ abstract class Event {
    * This method dispatches the event to the listeners registered at the source of the event.
    */
   abstract public function dispatch();
-  
+
   /**
    * This method returns the source of the event.
    *
    * @return Component the source of the event
    */
   public function getSource() {
-    return Component::getComponentByID($this->controlID);
+    return $this->source;
   }
 
   /**

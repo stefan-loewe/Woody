@@ -73,7 +73,7 @@ abstract class AbstractWindow extends Component {
 
     $this->rootPane = new Frame('', $rootPaneTopLeftCorner, $rootPaneDimension);
     $this->rootPane->create($this);
-    
+
     //$e = new \Woody\Components\Controls\EditBox('bla', new Point(10, 10), new Dimension(100, 20));
     //$e->create($this);
   }

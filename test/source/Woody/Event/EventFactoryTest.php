@@ -8,11 +8,6 @@ namespace Woody\Event;
  */
 class EventFactoryTest extends \PHPUnit_Framework_TestCase {
   /**
-   * @var EventFactory
-   */
-  private $factory = null;
-
-  /**
    * Sets up the fixture, for example, opens a network connection.
    * This method is called before a test is executed.
    */
@@ -24,14 +19,29 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-
   }
 
   /**
    * @covers \Woody\Event\EventFactory::createEvent
-   * @todo Implement testCreateEvent().
+   * @covers \Woody\Event\EventFactory::createFocusEvent
+   * @covers \Woody\Event\EventFactory::createMouseEvent
+   * @covers \Woody\Event\EventFactory::createKeyEvent
+   * @covers \Woody\Event\EventFactory::createActionEvent
+   * @covers \Woody\Event\EventFactory::createWindowResizeEvent
+   * @covers \Woody\Event\EventFactory::createWindowClosedEvent
    */
   public function testCreateEvent() {
-    //EventFactory::createEvent(new EventInfo(0, IDCLOSE, 0, 0, 0));
+    
+    $this->assertInstanceOf('\Woody\Event\WindowCloseEvent', EventFactory::createEvent(new EventInfo(0, IDCLOSE, 0, 0, 0))[0]);
+
+    //$this->assertInstanceOf('\Woody\Event\TimerEvent', EventFactory::createEvent(new EventInfo(1, 1, 1, 0, 0))[0]);
+
+    $this->assertInstanceOf('\Woody\Event\FocusEvent', EventFactory::createEvent(new EventInfo(0, 0, 0, WBC_GETFOCUS, 0))[0]);
+
+    $this->assertInstanceOf('\Woody\Event\MouseEvent', EventFactory::createEvent(new EventInfo(0, 0, 0, WBC_MOUSEDOWN, 0))[0]);
+
+    $this->assertInstanceOf('\Woody\Event\KeyEvent', EventFactory::createEvent(new EventInfo(0, 0, 0, WBC_KEYDOWN, 0))[0]);
+
+    $this->assertInstanceOf('\Woody\Event\WindowResizeEvent', EventFactory::createEvent(new EventInfo(0, 0, 0, WBC_RESIZE, 0))[0]);
   }
 }

@@ -22,7 +22,10 @@ class EventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->event = new KeyEvent(new EventInfo(0, 0, 0, 0, 0));
+    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $this->event = new KeyEvent($eventInfo);
   }
 
   /**

@@ -38,11 +38,15 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\Event::__construct
    */
   public function testConstruct() {
-    $this->event = new FocusEvent(new EventInfo(0, 0, 0, 0, 0));
+    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    $this->event = new FocusEvent($eventInfo);
 
     $this->assertInstanceOf('\Woody\Event\FocusEvent', $this->event);
   }
-  
+
  /**
    * This method tests dispatching the event.
    *
@@ -52,20 +56,17 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
     $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
     $window->create()->getRootPane()->add($editbox);
-    
+
     $focusListener = $this->getMockBuilder('\Woody\Event\FocusAdapter')
       ->disableOriginalConstructor()
       ->getMock();
-    
+
     $focusListener->expects($this->once())->method('focusGained');
     $editbox->addFocusListener($focusListener);
 
     $event = new FocusEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_GETFOCUS, 0));
     $event->dispatch();
 
-    $event = new KeyEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_KEYUP, 65));
-    $event->dispatch();
-    
     $window->close();
   }
 

@@ -2,6 +2,8 @@
 
 namespace Woody\Event;
 
+use \Woody\Components\Component;
+
 class EventInfo {
   use \Utils\Common\ValueObject;
 
@@ -10,6 +12,7 @@ class EventInfo {
   private $controlID   = null;
   private $type        = null;
   private $property    = null;
+  private $source      = null;
 
   public function __construct($windowID, $woodyID, $controlID, $typeID, $propertyID) {
     $this->windowID    = $windowID;
@@ -17,6 +20,9 @@ class EventInfo {
     $this->controlID   = $controlID;
     $this->type        = $typeID;
     $this->property    = $propertyID;
+
+    if($this->controlID !== 0)
+      $this->source      = Component::getComponentByID($this->controlID);
   }
 
   public function isWindowEvent() {

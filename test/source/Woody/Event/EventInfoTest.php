@@ -58,7 +58,7 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Event\EventInfo::isTimerEvent
    */
   public function testIsTimerEvent() {
-    $this->eventInfo = new EventInfo(1, 1, 1, 0, 0);
+    $this->eventInfo = new EventInfo(0, 1, 0, 0, 0);
 
     $this->assertTrue($this->eventInfo->isTimerEvent());
   }

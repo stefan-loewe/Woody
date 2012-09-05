@@ -22,7 +22,21 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->event = new MouseEvent(new EventInfo(0, 0, 0, 257, 10223723));
+    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    // configure the mock to return the proper values for its members
+    $eventInfo->expects($this->at(3))
+      ->method('__get')
+      ->with($this->equalTo('type'))
+      ->will($this->returnValue(WBC_MOUSEDOWN | WBC_LBUTTON));
+    $eventInfo->expects($this->at(4))
+      ->method('__get')
+      ->with($this->equalTo('property'))
+      ->will($this->returnValue(10223723));
+
+    $this->event = new MouseEvent($eventInfo);
   }
 
   /**
@@ -51,11 +65,11 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
     $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
     $window->create()->getRootPane()->add($editbox);
-    
+
     $mouseListener = $this->getMockBuilder('\Woody\Event\MouseAdapter')
       ->disableOriginalConstructor()
       ->getMock();
-    
+
     $mouseListener->expects($this->once())->method('mousePressed');
     $mouseListener->expects($this->once())->method('mouseReleased');
     $editbox->addMouseListener($mouseListener);
@@ -65,7 +79,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
 
     $event = new MouseEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_MOUSEUP, 0));
     $event->dispatch();
-    
+
     $window->close();
   }
 
@@ -96,7 +110,17 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\MouseEvent::getPressedButton
    */
   public function testGetPressedButton2() {
-    $this->event = new MouseEvent(new EventInfo(0, 0, 0, 258, 10223723));
+    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    // configure the mock to return the proper values for its members
+    $eventInfo->expects($this->at(3))
+      ->method('__get')
+      ->with($this->equalTo('type'))
+      ->will($this->returnValue(WBC_MOUSEDOWN | WBC_RBUTTON));
+
+    $this->event = new MouseEvent($eventInfo);
     $this->assertEquals(MouseEvent::BUTTON2, $this->event->getPressedButton());
   }
 
@@ -106,7 +130,17 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\MouseEvent::getPressedButton
    */
   public function testGetPressedButton3() {
-    $this->event = new MouseEvent(new EventInfo(0, 0, 0, 272, 10223723));
+    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    // configure the mock to return the proper values for its members
+    $eventInfo->expects($this->at(3))
+      ->method('__get')
+      ->with($this->equalTo('type'))
+      ->will($this->returnValue(WBC_MOUSEDOWN | WBC_MBUTTON));
+
+    $this->event = new MouseEvent($eventInfo);
     $this->assertEquals(MouseEvent::BUTTON3, $this->event->getPressedButton());
   }
 
@@ -122,10 +156,10 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
 
     // create a one-second delay to have a single-click only again
     sleep(1);
-    
+
     $events = new \ArrayObject();
-    $eventInfo = new EventInfo(0, $control1->getID(), $control1->getControlID(), 257, 10223723);
-    
+    $eventInfo = new EventInfo(0, $control1->getID(), $control1->getControlID(), WBC_MOUSEDOWN | WBC_LBUTTON, 0);
+
     // first click ...
     $events[] = new MouseEvent($eventInfo);
     // ... 2nd ...
@@ -140,9 +174,17 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
     // create a one-second delay to have a single-click only again
     sleep(1);
 
-    $event = EventFactory::createEvent($eventInfo)[0];
-    
-    $this->assertEquals(1, $event->getClickCount());
+    $leftClickEvent   = EventFactory::createEvent($eventInfo)[0];
+
+    $eventInfo = new EventInfo(0, $control1->getID(), $control1->getControlID(), WBC_MOUSEDOWN | WBC_RBUTTON, 0);
+    $rightClickEvent  = EventFactory::createEvent($eventInfo)[0];
+
+    $this->assertEquals(1, $leftClickEvent->getClickCount());
+    $this->assertEquals(1, $rightClickEvent->getClickCount());
+
+    $eventInfo    = new EventInfo(0, $control1->getID(), $control1->getControlID(), WBC_MOUSEUP, 0);
+    $mouseUpEvent = EventFactory::createEvent($eventInfo)[0];
+    $this->assertEquals(0, $mouseUpEvent->getClickCount());
 
     $window->close();
   }

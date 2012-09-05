@@ -240,12 +240,12 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($window, $window->setWindowCloseListener($closeListener));
     $this->assertEquals($window->getWindowCloseListener(), $closeListener);
 
-    $windowCloseEvent = new WindowCloseEvent(new EventInfo($window->getControlID(), IDCLOSE, $window->getControlID(), 0, 0));
+    $windowCloseEvent = new WindowCloseEvent($e = new EventInfo($window->getControlID(), IDCLOSE, $window->getControlID(), 0, 0));
     $windowCloseEvent->dispatch();
 
     $this->assertEquals($this->window, $this->window->removeWindowCloseListener($closeListener));
     $this->assertNull($this->window->getWindowCloseListener());
-    
+
     $window->close();
   }
 }
