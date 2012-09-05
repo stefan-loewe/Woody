@@ -24,11 +24,11 @@ class KeyEvent extends Event {
     }
   }
 
-  public function isKeyUpEvent() {
+  private function isKeyUpEvent() {
     return ($this->type & WBC_KEYUP) == WBC_KEYUP;
   }
 
-  public function isKeyDownEvent() {
+  private function isKeyDownEvent() {
     return ($this->type & WBC_KEYDOWN) === WBC_KEYDOWN;
   }
 

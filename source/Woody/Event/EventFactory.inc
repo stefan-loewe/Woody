@@ -2,7 +2,6 @@
 
 namespace Woody\Event;
 
-use \Utils\DataStructures\RingBuffer;
 use \Utils\Http\HttpGetRequest;
 use \Woody\Components\Component;
 use \Woody\Components\Controls\Actionable;
@@ -39,86 +38,52 @@ class EventFactory {
    * @return void
    */
   public static function createEvent(EventInfo $eventInfo) {
-    if(self::$eventBuffer === null) {
-      self::$eventBuffer = new RingBuffer(10);
-    }
+    
+    $events = new \ArrayObject();
 
     // window close button is not a real control, so handle it here - close window
     if($eventInfo->isWindowCloseEvent()) {
-      return self::createAndDispatchWindowClosedEvent($eventInfo);
+      $events[] = self::createWindowClosedEvent($eventInfo);
     }
 
     // timeout of timers are handled here, too - the callback is executed by calling Timer::run
     else if($eventInfo->isTimerEvent()) {
+      // @TODO: make this return an event as well
       Timer::getTimerByID($eventInfo->id)->run();
-      return null;
+      $events[] = null;
     }
 
     else if($eventInfo->isFocusEvent()) {
-      return self::createAndDispatchFocusEvent($eventInfo);
+      $events[] = self::createFocusEvent($eventInfo);
     }
 
     else if($eventInfo->isMouseEvent()) {
-      return self::createAndDispatchMouseEvent($eventInfo);
+      $events[] = self::createMouseEvent($eventInfo);
     }
 
     else if($eventInfo->isKeyEvent()) {
-      return self::createAndDispatchKeyEvent($eventInfo);
+      $events[] = self::createKeyEvent($eventInfo);
     }
-/*
+
     if($eventInfo->isControlEvent()) {
       // only handle non-focus-events of controls (FocusEvent was handled above and does not trigger Actions)
       if(!$eventInfo->isFocusEvent()) {
-        return self::createAndDispatchActionEvent($eventInfo);
+        $events[] = self::createActionEvent($eventInfo);
       }
-
-      return;
     }
-*/
+
     // create and dispatch WindowEvents, e.g. when resizing a window
     else if($eventInfo->isWindowEvent()) {
       if($eventInfo->isWindowResizeEvent()) {
-        return self::createAndDispatchWindowResizeEvent($eventInfo);
+        $events[] = self::createWindowResizeEvent($eventInfo);
       }
     }
 
     // app crashes when an ActionEvent was created and $event was returned here !?!?!?!
-    return null;
+    return $events;
   }
 
-  public static function getClickCount(MouseEvent $event) {
-    $libUser  = wb_load_library('USER');
-    $function = wb_get_function_address('GetDoubleClickTime', $libUser);
-    $interval = wb_call_function($function, array()) / 1000;
-
-    $button = $event->getPressedButton();
-    $clickCount = 0;
-
-    $eventFound = FALSE;
-    foreach(self::$eventBuffer->getLiFoOrder() as $currentEvent) {
-      $eventFound = $eventFound || $event == $currentEvent;
-
-      if($eventFound) {
-        if($currentEvent === null) {
-          return $clickCount;
-        }
-
-        if($currentEvent->getPressedButton() !== $button) {
-          return $clickCount;
-        }
-
-        if(($event->time - $currentEvent->time) > $interval) {
-          return $clickCount;
-        }
-
-        $clickCount++;
-      }
-    }
-
-    return $clickCount;
-  }
-
-  private static function createAndDispatchFocusEvent($eventInfo) {
+  private static function createFocusEvent($eventInfo) {
     $event = new FocusEvent($eventInfo, self::$previousFocusedControl);
 
     self::$previousFocusedControl = $event->getSource();
@@ -126,24 +91,20 @@ class EventFactory {
     return $event;
   }
 
-  private static function createAndDispatchMouseEvent($eventInfo) {
+  private static function createMouseEvent($eventInfo) {
     $event = new MouseEvent($eventInfo);
-
-    if($event->isMouseDownEvent()) {
-      self::$eventBuffer->add($event);
-    }
 
     return $event;
   }
 
-  private static function createAndDispatchKeyEvent($eventInfo) {
+  private static function createKeyEvent($eventInfo) {
     return new KeyEvent($eventInfo);
   }
 
   // no other events are raised when, e.g., clicking on a button, or selecting from a listbox, therefore, AcionEvents
   // are needed
   // TODO: for EditBox, an ActionEvent would be FocusLost + content changed = onChangeEvent
-  private static function createAndDispatchActionEvent($eventInfo) {
+  private static function createActionEvent($eventInfo) {
     // trigger action events for all Actionables, as well as when the propertyID actually is a HttpGetRequest
     // the later are special events, namely those raised by HTMLControls when they receive new data
     // @see HtmlControlServer::processClient
@@ -157,7 +118,7 @@ class EventFactory {
     }
   }
 
-  private static function createAndDispatchWindowResizeEvent($eventInfo) {
+  private static function createWindowResizeEvent($eventInfo) {
     $event = new WindowResizeEvent($eventInfo);
 
     // update the dimension of the Woody object here (the actual component is already resized)
@@ -166,7 +127,7 @@ class EventFactory {
     return $event;
   }
 
-  private static function createAndDispatchWindowClosedEvent($eventInfo) {
+  private static function createWindowClosedEvent($eventInfo) {
     return new WindowCloseEvent($eventInfo);
   }
 }

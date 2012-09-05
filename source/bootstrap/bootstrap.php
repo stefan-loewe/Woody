@@ -24,10 +24,12 @@ function globalWinBinderEventHandler($windowID, $id, $controlID = 0, $type = 0, 
   //var_dump(date('H:i:s').': calling globalWinBinderEventHandler in '.__FILE__.' at line '.__LINE__);
   //var_dump($windowID.', '.$id.', '.$controlID.', '.$type.', '.$property);
 
-  $event = EventFactory::createEvent($eventInfo = new EventInfo($windowID, $id, $controlID, $type, $property));
-  if($event != null) {
-    //EventDispatcher::dispatchEvent($eventInfo, $event);
-    $event->dispatch();
+  $events = EventFactory::createEvent($eventInfo = new EventInfo($windowID, $id, $controlID, $type, $property));
+  foreach($events as $event) {
+    if($event != null) {
+      //EventDispatcher::dispatchEvent($eventInfo, $event);
+      $event->dispatch();
+    }
   }
 }
 

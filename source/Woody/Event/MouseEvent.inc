@@ -2,6 +2,7 @@
 
 namespace Woody\Event;
 
+use \Utils\DataStructures\RingBuffer;
 use \Utils\Geom\Point;
 
 class MouseEvent extends Event {
@@ -26,12 +27,27 @@ class MouseEvent extends Event {
   const BUTTON3 = WBC_MBUTTON;
 
   /**
+   * the event ring buffer - needed for determining the click-counter of mouse events.
+   *
+   * @var RingBuffer
+   */
+  private static $eventBuffer = null;
+
+  /**
    * This method acts as the constructor of the class.
    *
    * @param EventInfo the event info containing the raw data of this event
    */
   public function __construct(EventInfo $eventInfo) {
     parent::__construct($eventInfo);
+    
+    if(self::$eventBuffer === null) {
+      self::$eventBuffer = new RingBuffer(10);
+    }
+
+    if($this->isMouseDownEvent()) {
+      self::$eventBuffer->add($this);
+    }
   }
   
   public function dispatch() {
@@ -47,7 +63,7 @@ class MouseEvent extends Event {
 
   // has to be public, as it is needed to fill event buffer in event factory, to determine click count
   // we might be able to move that here, right?
-  public function isMouseDownEvent() {
+  private function isMouseDownEvent() {
     return (($this->type & WBC_MOUSEDOWN) === WBC_MOUSEDOWN)
       || (($this->type & WBC_DBLCLICK) === WBC_DBLCLICK);
   }
@@ -90,7 +106,35 @@ class MouseEvent extends Event {
   }
 
   public function getClickCount() {
-    return EventFactory::getClickCount($this);
+    $libUser  = wb_load_library('USER');
+    $function = wb_get_function_address('GetDoubleClickTime', $libUser);
+    $interval = wb_call_function($function, array()) / 1000;
+
+    $button = $this->getPressedButton();
+    $clickCount = 0;
+
+    $eventFound = FALSE;
+    foreach(self::$eventBuffer->getLiFoOrder() as $currentEvent) {
+      $eventFound = $eventFound || $this == $currentEvent;
+
+      if($eventFound) {
+        if($currentEvent === null) {
+          return $clickCount;
+        }
+
+        if($currentEvent->getPressedButton() !== $button) {
+          return $clickCount;
+        }
+
+        if(($this->time - $currentEvent->time) > $interval) {
+          return $clickCount;
+        }
+
+        $clickCount++;
+      }
+    }
+
+    return $clickCount;
   }
 
   /**

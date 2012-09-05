@@ -38,24 +38,13 @@ class KeyEventTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests getting the type of the key event.
-   *
-   * @covers \Woody\Event\KeyEvent::isKeyDownEvent
-   * @covers \Woody\Event\KeyEvent::isKeyUpEvent
-   */
-  public function testIsKeyUpDownEvent() {
-    $this->assertTrue($this->event->isKeyUpEvent());
-    $this->assertFalse($this->event->isKeyDownEvent());
-  }
-
-  /**
    * This method tests returning the character associated with the respective key.
    *
    * @covers \Woody\Event\KeyEvent::getPressedKey
    */
   public function testGetPressedKey() {
     $this->assertEquals('A', $this->event->getPressedKey());
-  }
+  } 
 
   /**
    * This method tests the string representation of the key event.

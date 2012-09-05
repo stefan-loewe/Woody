@@ -87,33 +87,35 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * This method tests getting the click count of the event.
    *
    * @covers \Woody\Event\MouseEvent::getClickCount
-   * @covers \Woody\Event\EventFactory::getClickCount
    */
   public function testGetClickCount() {
     $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $control1 = new EditBox('', new Point(20, 20), new Dimension(100, 18));
     $window->create()->getRootPane()->add($control1);
 
-    // first click ...
+    // create a one-second delay to have a single-click only again
+    sleep(1);
+    
+    $events = new \ArrayObject();
     $eventInfo = new EventInfo(0, $control1->getID(), $control1->getControlID(), 257, 10223723);
-    EventFactory::createEvent($eventInfo);
+    
+    // first click ...
+    $events[] = new MouseEvent($eventInfo);
     // ... 2nd ...
-    EventFactory::createEvent($eventInfo);
+    $events[] = new MouseEvent($eventInfo);
     // ... and 3rd
-    EventFactory::createEvent($eventInfo);
+    $events[] = new MouseEvent($eventInfo);
 
-    $events = self::readAttribute('\Woody\Event\EventFactory', 'eventBuffer')->getLifoOrder();
-    $this->assertEquals(3, $events[0]->getClickCount());
+    $this->assertEquals(1, $events[0]->getClickCount());
     $this->assertEquals(2, $events[1]->getClickCount());
-    $this->assertEquals(1, $events[2]->getClickCount());
+    $this->assertEquals(3, $events[2]->getClickCount());
 
-    // create a one-second delay ...
+    // create a one-second delay to have a single-click only again
     sleep(1);
 
-    EventFactory::createEvent($eventInfo);
-    // ... to have a single-click only again
-    $events = self::readAttribute('\Woody\Event\EventFactory', 'eventBuffer')->getLifoOrder();
-    $this->assertEquals(1, $events[3]->getClickCount());
+    $event = EventFactory::createEvent($eventInfo)[0];
+    
+    $this->assertEquals(1, $event->getClickCount());
 
     $window->close();
   }
