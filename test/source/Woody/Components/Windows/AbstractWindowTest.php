@@ -4,6 +4,8 @@ namespace Woody\Components\Windows;
 
 use \Utils\Geom\Point;
 use \Utils\Geom\Dimension;
+use \Woody\Event\EventInfo;
+use \Woody\Event\WindowCloseEvent;
 use \Woody\WinBinderErrorException;
 
 /**
@@ -21,7 +23,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->window = new MainWindow('AbstractWindow', new Point(50, 50), new Dimension(300, 200));
+    $this->window = new MainWindow($this->getName().'-'.basename(__FILE__), new Point(50, 50), new Dimension(300, 200));
 
     $this->window->create(null);
   }
@@ -226,7 +228,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Components\Windows\AbstractWindow::close
    */
   public function testWindowCloseListeners() {
-    $window = new MainWindow('AbstractWindow', new Point(12, 34), new Dimension(456, 789));
+    $window = new MainWindow($this->getName().'-'.basename(__FILE__), new Point(12, 34), new Dimension(456, 789));
     $window->create();
 
     $closeListener = $this->getMockBuilder('\Woody\Event\WindowCloseAdapter')
@@ -238,9 +240,12 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($window, $window->setWindowCloseListener($closeListener));
     $this->assertEquals($window->getWindowCloseListener(), $closeListener);
 
-    $window->close();
+    $windowCloseEvent = new WindowCloseEvent(new EventInfo($window->getControlID(), IDCLOSE, $window->getControlID(), 0, 0));
+    $windowCloseEvent->dispatch();
 
     $this->assertEquals($this->window, $this->window->removeWindowCloseListener($closeListener));
     $this->assertNull($this->window->getWindowCloseListener());
+    
+    $window->close();
   }
 }

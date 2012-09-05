@@ -81,19 +81,13 @@ abstract class AbstractWindow extends Component {
    * @return AbstractWindow $this
    */
   public function close() {
-    $closeListener = $this->getWindowCloseListener();
-
-    if($closeListener !== null) {
-      $closeListener->windowClosed(new WindowCloseEvent(new EventInfo($this->id, IDCLOSE, 0, 0, 0)));
-    }
-
     $this->destroy();
 
     return $this;
   }
 
   /**
-   * This method closes the window.
+   * This method destroys the window.
    *
    * @return AbstractWindow $this
    */

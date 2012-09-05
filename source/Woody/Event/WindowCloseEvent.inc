@@ -11,4 +11,12 @@ class WindowCloseEvent extends Event {
   public function __construct(EventInfo $eventInfo) {
     parent::__construct($eventInfo);
   }
+  
+  public function dispatch() {
+    $closeListener = $this->getSource()->getWindowCloseListener();
+
+    if($closeListener !== null) {
+      $closeListener->windowClosed($this);
+    }
+  }
 }

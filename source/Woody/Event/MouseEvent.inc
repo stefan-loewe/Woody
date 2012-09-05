@@ -33,13 +33,26 @@ class MouseEvent extends Event {
   public function __construct(EventInfo $eventInfo) {
     parent::__construct($eventInfo);
   }
+  
+  public function dispatch() {
+    foreach($this->getSource()->getMouseListeners() as $mouseListener) {
+      if($this->isMouseDownEvent()) {
+        $mouseListener->mousePressed($this);
+      }
+      else if($this->isMouseUpEvent()) {
+        $mouseListener->mouseReleased($this);
+      }
+    }
+  }
 
+  // has to be public, as it is needed to fill event buffer in event factory, to determine click count
+  // we might be able to move that here, right?
   public function isMouseDownEvent() {
     return (($this->type & WBC_MOUSEDOWN) === WBC_MOUSEDOWN)
       || (($this->type & WBC_DBLCLICK) === WBC_DBLCLICK);
   }
 
-  public function isMouseUpEvent() {
+  private function isMouseUpEvent() {
     return ($this->type & WBC_MOUSEUP) === WBC_MOUSEUP;
   }
 

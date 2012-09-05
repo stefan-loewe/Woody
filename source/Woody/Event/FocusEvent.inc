@@ -24,13 +24,19 @@ class FocusEvent extends Event {
     $this->lostFocusComponent = $lostFocusComponent;
   }
 
+  public function dispatch() {
+    foreach($this->getSource()->getFocusListeners() as $focusListener) {
+      $focusListener->focusGained($this);
+    }
+  }
+
   /**
    * This method returns which component gained focus.
    *
    * @return Component the component which gained focus
    */
   public function getFocusGainedComponent() {
-    return Component::getComponentByID($this->controlID);
+    return $this->getSource();
   }
 
   /**

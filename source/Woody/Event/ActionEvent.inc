@@ -12,6 +12,12 @@ class ActionEvent extends Event {
     parent::__construct($eventInfo);
   }
 
+  public function dispatch() {
+    foreach($this->getSource()->getActionListeners as $actionListener) {
+      $actionListener->actionPerformed($this);
+    }
+  }
+
   /**
    * This method returns the string representation of the event.
    *

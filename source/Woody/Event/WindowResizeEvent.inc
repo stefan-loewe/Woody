@@ -35,6 +35,12 @@ class WindowResizeEvent extends Event {
     $newDim = wb_get_size($this->getSource()->getControlID());
     $this->newDimension = new Dimension($newDim[0], $newDim[1]);
   }
+  
+  public function dispatch() {
+    foreach($this->getSource()->getWindowResizeListeners() as $resizeListener) {
+      $resizeListener->windowResized($this);
+    }
+  }
 
   /**
    * This method returns the old dimension of the component before resizing

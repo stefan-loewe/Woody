@@ -11,6 +11,18 @@ class KeyEvent extends Event {
   public function __construct(EventInfo $eventInfo) {
     parent::__construct($eventInfo);
   }
+  
+  public function dispatch() {
+    foreach($this->getSource()->getKeyListeners() as $keyListener) {
+      if($this->isKeyDownEvent()) {
+        $keyListener->keyPressed($this);
+      }
+
+      else if($this->isKeyUpEvent()) {
+        $keyListener->keyReleased($this);
+      }
+    }
+  }
 
   public function isKeyUpEvent() {
     return ($this->type & WBC_KEYUP) == WBC_KEYUP;

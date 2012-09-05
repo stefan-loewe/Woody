@@ -63,6 +63,11 @@ abstract class Event {
   }
 
   /**
+   * This method dispatches the event to the listeners registered at the source of the event.
+   */
+  abstract public function dispatch();
+  
+  /**
    * This method returns the source of the event.
    *
    * @return Component the source of the event

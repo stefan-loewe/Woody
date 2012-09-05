@@ -13,7 +13,6 @@ use \Woody\Components\Controls\Actionable;
 class EventDispatcher {
   public static function dispatchEvent(EventInfo $eventInfo, Event $event) {
     // window close button is not a real control, so handle it here - close window
-    var_dump("the event can dispatch itself - it knows its source and type, and onlyhas to implement event::dispatch()");
     var_dump("action event to piggy-back actual event, or other way round");
     if($eventInfo->isWindowCloseEvent()) {
       return self::dispatchWindowClosedEvent($event);

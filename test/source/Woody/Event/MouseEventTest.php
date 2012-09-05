@@ -43,17 +43,6 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests getting the type of the mouse event.
-   *
-   * @covers \Woody\Event\MouseEvent::isMouseDownEvent
-   * @covers \Woody\Event\MouseEvent::isMouseUpEvent
-   */
-  public function testIsMouseUpDownEvent() {
-    $this->assertTrue($this->event->isMouseDownEvent());
-    $this->assertFalse($this->event->isMouseUpEvent());
-  }
-
-  /**
    * This methos tests getting the position of the mouse event.
    *
    * @covers \Woody\Event\MouseEvent::getPosition
