@@ -66,7 +66,7 @@ abstract class AbstractWindow extends Component {
    */
   private function createRootPane() {
     $rootPaneTopLeftCorner  = new Point(-1, -8);
-    $rootPaneDimension      = new Dimension($this->dimension->width, $this->dimension->height - 40);
+    $rootPaneDimension      = new Dimension($this->dimension->width, $this->dimension->height);
 
     $this->rootPane = new Frame('', $rootPaneTopLeftCorner, $rootPaneDimension);
     $this->rootPane->create($this);

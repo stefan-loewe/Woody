@@ -3,7 +3,6 @@
 namespace Woody\Event;
 
 use \Utils\Http\HttpGetRequest;
-use \Woody\Components\Component;
 use \Woody\Components\Controls\Actionable;
 use \Woody\Components\Controls\Control;
 use \Woody\Components\Timer\Timer;
@@ -38,8 +37,8 @@ class EventFactory {
     // timeout of timers are handled here, too - the callback is executed by calling Timer::run
     else if($eventInfo->isTimerEvent()) {
       // @TODO: make this return an event as well
-      Timer::getTimerByID($eventInfo->id)->run();
-      $events[] = null;
+      //Timer::getTimerByID($eventInfo->id)->run();
+      $events[] = new TimeoutEvent($eventInfo);
     }
 
     else if($eventInfo->isFocusEvent()) {

@@ -89,25 +89,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests the running of a timer. The timer is started, and destroyed after the tenth execution..
-   *
-   * @covers Woody\Components\Timer\Timer::run
-   */
-  public function testRun() {
-    $this->timer = new Timer(function() {
-          if(++$this->counter > 10) {
-            $this->timer->destroy();
-            $this->window->close();
-            $this->assertEquals(11, $this->counter);
-          }
-        }, $this->window, Timer::TEST_TIMEOUT);
-
-    $this->timer->start();
-
-    $this->window->startEventHandler();
-  }
-
-  /**
    * This method tests the destroying of the timer.
    *
    * @covers Woody\Components\Timer\Timer::destroy
@@ -230,32 +211,10 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException\TimerNotRunningException is thrown,
    * when destroying an timer which was not yet started.
    *
-   * @covers Woody\Components\Timer\Timer::run
-   * @covers \Woody\Components\Timer\TimerNotRunningException::__construct
-   */
-  public function testTimerNotRunningRunException() {
-    $this->timer = new Timer(function(){}, $this->window, Timer::TEST_TIMEOUT);
-
-    try {
-      $this->timer->run();
-    }
-    catch(TimerNotRunningException $tnre) {
-      $this->window->close();
-      return;
-    }
-
-    $this->fail('The expected TimerNotRunningException has not been raised.');
-  }
-
-  /**
-   * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException\TimerNotRunningException is thrown,
-   * when destroying an timer which was not yet started.
-   *
    * @covers Woody\Components\Timer\Timer::destroy
    * @covers \Woody\Components\Timer\TimerNotRunningException::__construct
    */
   public function testTimerNotRunningDestroyException() {
-    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function(){}, $this->window, Timer::TEST_TIMEOUT);
 
     try {
@@ -275,7 +234,6 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::isRunning
    */
   public function testIsRunning() {
-    wb_set_text($this->window->getControlID(), $this->getName().' in '.basename(__FILE__));
     $this->timer = new Timer(function() {
           $this->assertTrue($this->timer->isRunning());
 
@@ -285,12 +243,10 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
           $this->window->close();
         }, $this->window, Timer::TEST_TIMEOUT);
 
-
     $this->assertFalse($this->timer->isRunning());
     $this->timer->start();
     $this->assertTrue($this->timer->isRunning());
 
     $this->window->startEventHandler();
   }
-
 }

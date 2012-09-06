@@ -5,6 +5,8 @@ namespace Woody\Components\Timer;
 use \Woody\WinBinderException;
 use \Woody\Components\Component;
 use \Woody\Components\Windows\AbstractWindow;
+use \Woody\Event\TimeoutListener;
+use \Woody\Event\TimeoutAdapter;
 
 class Timer {
   /**
@@ -22,14 +24,7 @@ class Timer {
   protected $window = null;
 
   /**
-   * the callback that is executed once the timer is activated
-   *
-   * @var \Closure
-   */
-  protected $callback = null;
-
-  /**
-   * the number of milliseconds that pass between each call to the callback of the timer
+   * the number of milliseconds that pass between timeout
    *
    * @var int
    */
@@ -48,6 +43,8 @@ class Timer {
    * @var int
    */
   private $counter = 0;
+  
+  private $timeoutListeners = null;
 
   /**
    * the collection of all timers
@@ -57,25 +54,29 @@ class Timer {
   private static $timers = array();
 
   /**
-   * timeout used for scheduling callbacks for unit tests
+   * timeout used for scheduling unit tests
    */
   const TEST_TIMEOUT = 100;
 
   /**
    * This method acts as the constructor of the timer.
    *
-   * @param \Closure $callback the callback that is executed once the timer is activated
+   * @param \Closure $callback the default callback that is executed on each timeout
    * @param \Woody\Components\Windows\AbstractWindow $window the window to which the timer is bound to.
-   * @param int $interval the number of milliseconds that pass between each call to the callback of the timer
+   * @param int $interval the number of milliseconds that pass between each timeout
    */
   public function __construct(\Closure $callback, AbstractWindow $window, $interval) {
     $this->id = Component::getUniqueID();
 
-    $this->callback = $callback;
-
-    $this->window = $window;
+    $this->window   = $window;
 
     $this->interval = $interval;
+
+    // an auxilliary callback to track the number of executions
+    $this->addTimeoutListener(new TimeoutAdapter(function () {$this->counter++;}));
+    
+    // the default callback provided by the user
+    $this->addTimeoutListener(new TimeoutAdapter($callback));
 
     self::$timers[$this->id] = $this;
   }
@@ -124,24 +125,7 @@ class Timer {
   }
 
   /**
-   * This method runs the callback of the timer.
-   *
-   * You should never call this method manually.
-   *
-   * @return void
-   */
-  public function run() {
-    if(!$this->isRunning) {
-      throw new TimerNotRunningException($this);
-    }
-
-    $this->callback->__invoke();
-
-    $this->counter++;
-  }
-
-  /**
-   * This method destroys the timer, i.e. the associated callback will no longer be executed.
+   * This method destroys the timer, i.e. associated callbacks will no longer be executed.
    *
    * @return Woody\Components\Timer\Timer $this
    */
@@ -175,5 +159,44 @@ class Timer {
    */
   public function getExecutionCount() {
     return $this->counter;
+  }
+
+  /**
+   * This method adds a timeout listener to this timer.
+   *
+   * @param TimeoutListener $timeoutListener the timeout listener to add
+   * @return Timer $this
+   */
+  public function addTimeoutListener(TimeoutListener $timeoutListener) {
+    if($this->timeoutListeners == null) {
+      $this->timeoutListeners = new \SplObjectStorage();
+    }
+
+    $this->timeoutListeners->attach($timeoutListener);
+
+    return $this;
+  }
+
+  /**
+   * This method returns the collection of timeout listeners registered for this timer.
+   *
+   * @return \SplObjectStorage the collection of timeout listeners registered for this timer
+   */
+  public function getTimeoutListeners() {
+    return ($this->timeoutListeners == null) ? new \SplObjectStorage() : $this->timeoutListeners;
+  }
+
+  /**
+   * This method removes a timeout listener from this timer.
+   *
+   * @param TimeoutListener $timeoutListener the timeout listener to remove
+   * @return Timer $this
+   */
+  public function removeTimeoutListener(TimeoutListener $timeoutListener) {
+    if($this->timeoutListeners != null) {
+      $this->timeoutListeners->detach($timeoutListener);
+    }
+
+    return $this;
   }
 }
