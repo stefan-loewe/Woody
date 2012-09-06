@@ -19,7 +19,6 @@ Features:
 ------------------------------------------------------------------------------------------------------------------
 winbinder extension:
 
-- no got-focus/focus-lost events wehn focusing controls, other than windows
-- tabbing through controls does not work in more than one frame
+- tabbing through controls does not work over the bounds of a frame
 - fix other bugs, there are plenty
 ------------------------------------------------------------------------------------------------------------------
