@@ -61,7 +61,7 @@ class WindowCloseEventTest extends \PHPUnit_Framework_TestCase {
     $closeListener->expects($this->once())->method('windowClosed');
     $window->setWindowCloseListener($closeListener);
 
-    $event = new WindowCloseEvent(new EventInfo($window->getControlID(), IDCLOSE, $window->getControlID(), 0, 0));
+    $event = new WindowCloseEvent(new EventInfo($window->getControlID(), IDCLOSE, $window, 0, 0));
     $event->dispatch();
 
     $window->close();

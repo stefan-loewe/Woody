@@ -72,10 +72,10 @@ class KeyEventTest extends \PHPUnit_Framework_TestCase {
     $keyListener->expects($this->once())->method('keyReleased');
     $editbox->addKeyListener($keyListener);
 
-    $event = new KeyEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_KEYDOWN, 65));
+    $event = new KeyEvent(new EventInfo(0, $editbox->getID(), $editbox, WBC_KEYDOWN, 65));
     $event->dispatch();
 
-    $event = new KeyEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_KEYUP, 65));
+    $event = new KeyEvent(new EventInfo(0, $editbox->getID(), $editbox, WBC_KEYUP, 65));
     $event->dispatch();
 
     $window->close();

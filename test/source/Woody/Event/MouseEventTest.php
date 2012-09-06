@@ -74,10 +74,10 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
     $mouseListener->expects($this->once())->method('mouseReleased');
     $editbox->addMouseListener($mouseListener);
 
-    $event = new MouseEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_MOUSEDOWN, 0));
+    $event = new MouseEvent(new EventInfo(0, $editbox->getID(), $editbox, WBC_MOUSEDOWN, 0));
     $event->dispatch();
 
-    $event = new MouseEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_MOUSEUP, 0));
+    $event = new MouseEvent(new EventInfo(0, $editbox->getID(), $editbox, WBC_MOUSEUP, 0));
     $event->dispatch();
 
     $window->close();
@@ -158,7 +158,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
     sleep(1);
 
     $events = new \ArrayObject();
-    $eventInfo = new EventInfo(0, $control1->getID(), $control1->getControlID(), WBC_MOUSEDOWN | WBC_LBUTTON, 0);
+    $eventInfo = new EventInfo(0, $control1->getID(), $control1, WBC_MOUSEDOWN | WBC_LBUTTON, 0);
 
     // first click ...
     $events[] = new MouseEvent($eventInfo);
@@ -176,13 +176,13 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
 
     $leftClickEvent   = EventFactory::createEvent($eventInfo)[0];
 
-    $eventInfo = new EventInfo(0, $control1->getID(), $control1->getControlID(), WBC_MOUSEDOWN | WBC_RBUTTON, 0);
+    $eventInfo = new EventInfo(0, $control1->getID(), $control1, WBC_MOUSEDOWN | WBC_RBUTTON, 0);
     $rightClickEvent  = EventFactory::createEvent($eventInfo)[0];
 
     $this->assertEquals(1, $leftClickEvent->getClickCount());
     $this->assertEquals(1, $rightClickEvent->getClickCount());
 
-    $eventInfo    = new EventInfo(0, $control1->getID(), $control1->getControlID(), WBC_MOUSEUP, 0);
+    $eventInfo    = new EventInfo(0, $control1->getID(), $control1, WBC_MOUSEUP, 0);
     $mouseUpEvent = EventFactory::createEvent($eventInfo)[0];
     $this->assertEquals(0, $mouseUpEvent->getClickCount());
 

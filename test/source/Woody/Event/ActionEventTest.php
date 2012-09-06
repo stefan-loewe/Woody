@@ -63,7 +63,7 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase {
     $actionListener->expects($this->once())->method('actionPerformed');
     $editbox->addActionListener($actionListener);
 
-    $event = new ActionEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), 0, 0));
+    $event = new ActionEvent(new EventInfo(0, $editbox->getID(), $editbox, 0, 0));
     $event->dispatch();
 
     $window->close();

@@ -12,17 +12,16 @@ class EventInfo {
   private $controlID   = null;
   private $type        = null;
   private $property    = null;
-  private $source      = null;
+  protected $source      = null;
 
-  public function __construct($windowID, $woodyID, $controlID, $typeID, $propertyID) {
+  public function __construct($windowID, $woodyID, Component $component, $typeID, $propertyID) {
     $this->windowID    = $windowID;
     $this->id          = $woodyID;
-    $this->controlID   = $controlID;
+    $this->controlID   = $component->getControlID();
     $this->type        = $typeID;
     $this->property    = $propertyID;
-
-    if($this->controlID !== 0)
-      $this->source      = Component::getComponentByID($this->controlID);
+    
+    $this->source      = $component;
   }
 
   public function isWindowEvent() {

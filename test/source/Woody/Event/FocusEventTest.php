@@ -64,7 +64,7 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
     $focusListener->expects($this->once())->method('focusGained');
     $editbox->addFocusListener($focusListener);
 
-    $event = new FocusEvent(new EventInfo(0, $editbox->getID(), $editbox->getControlID(), WBC_GETFOCUS, 0));
+    $event = new FocusEvent(new EventInfo(0, $editbox->getID(), $editbox, WBC_GETFOCUS, 0));
     $event->dispatch();
 
     $window->close();
@@ -87,11 +87,11 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
     $window->getRootPane()->add($control1);
     $window->getRootPane()->add($control2);
 
-    $this->event = new FocusEvent(new EventInfo(0, $control1->getID(), $control1->getControlID(), 0, 0, null));
+    $this->event = new FocusEvent(new EventInfo(0, $control1->getID(), $control1, 0, 0, null));
     $this->assertEquals($control1, $this->event->getFocusGainedComponent());
     $this->assertNull($this->event->getFocusLostComponent());
 
-    $this->event = new FocusEvent(new EventInfo(0, $control2->getID(), $control2->getControlID(), 0, 0), $control1);
+    $this->event = new FocusEvent(new EventInfo(0, $control2->getID(), $control2, 0, 0), $control1);
     $this->assertEquals($control1, $this->event->getFocusLostComponent());
     $this->assertEquals($control2, $this->event->getFocusGainedComponent());
 

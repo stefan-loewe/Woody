@@ -31,7 +31,14 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Event\EventInfo::__construct
    */
   public function testIsWindowEvent() {
-    $this->eventInfo = new EventInfo(0, 0, 0, 0, 0);
+    $window = $this->getMockBuilder('\Woody\Components\Windows\MainWindow')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $window->expects($this->at(0))
+        ->method('getControlID')
+        ->will($this->returnValue(0));
+
+    $this->eventInfo = new EventInfo(0, 0, $window, 0, 0);
 
     $this->assertTrue($this->eventInfo->isWindowEvent());
   }
@@ -40,7 +47,14 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Event\EventInfo::isWindowResizeEvent
    */
   public function testIsWindowResizeEvent() {
-    $this->eventInfo = new EventInfo(0, 0, 0, WBC_RESIZE, 0);
+    $window = $this->getMockBuilder('\Woody\Components\Windows\MainWindow')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $window->expects($this->at(0))
+        ->method('getControlID')
+        ->will($this->returnValue(0));
+    
+    $this->eventInfo = new EventInfo(0, 0, $window, WBC_RESIZE, 0);
 
     $this->assertTrue($this->eventInfo->isWindowResizeEvent());
   }
@@ -49,7 +63,14 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Event\EventInfo::isWindowCloseEvent
    */
   public function testIsWindowCloseEvent() {
-    $this->eventInfo = new EventInfo(0, IDCLOSE, 0, 0, 0);
+    $window = $this->getMockBuilder('\Woody\Components\Windows\MainWindow')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $window->expects($this->at(0))
+        ->method('getControlID')
+        ->will($this->returnValue(0));
+    
+    $this->eventInfo = new EventInfo(0, IDCLOSE, $window, 0, 0);
 
     $this->assertTrue($this->eventInfo->isWindowCloseEvent());
   }
@@ -58,7 +79,13 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Event\EventInfo::isTimerEvent
    */
   public function testIsTimerEvent() {
-    $this->eventInfo = new EventInfo(0, 1, 0, 0, 0);
+    $window = $this->getMockBuilder('\Woody\Components\Windows\MainWindow')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $window->expects($this->at(0))
+        ->method('getControlID')
+        ->will($this->returnValue(0));
+    $this->eventInfo = new EventInfo(0, 1, $window, 0, 0);
 
     $this->assertTrue($this->eventInfo->isTimerEvent());
   }
@@ -67,7 +94,13 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Event\EventInfo::isControlEvent
    */
   public function testIsControlEvent() {
-    $this->eventInfo = new EventInfo(0, 1, 0, 0, 0);
+    $editBox = $this->getMockBuilder('\Woody\Components\Controls\EditBox')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $editBox->expects($this->at(0))
+        ->method('getControlID')
+        ->will($this->returnValue(0));
+    $this->eventInfo = new EventInfo(0, 1, $editBox, 0, 0);
 
     $this->assertTrue($this->eventInfo->isControlEvent());
   }
@@ -76,7 +109,15 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Event\EventInfo::isFocusEvent
    */
   public function testIsFocusEvent() {
-    $this->eventInfo = new EventInfo(0, 0, 0, WBC_GETFOCUS, 0);
+    $editBox = $this->getMockBuilder('\Woody\Components\Controls\EditBox')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $editBox->expects($this->at(0))
+        ->method('getControlID')
+        ->will($this->returnValue(0));
+    $this->eventInfo = new EventInfo(0, 1, $editBox, 0, 0);
+    
+    $this->eventInfo = new EventInfo(0, 0, $editBox, WBC_GETFOCUS, 0);
 
     $this->assertTrue($this->eventInfo->isFocusEvent());
   }
@@ -85,7 +126,14 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Event\EventInfo::isMouseEvent
    */
   public function testIsMouseEvent() {
-    $this->eventInfo = new EventInfo(0, 0, 0, WBC_MOUSEDOWN, 0);
+    $editBox = $this->getMockBuilder('\Woody\Components\Controls\EditBox')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $editBox->expects($this->at(0))
+        ->method('getControlID')
+        ->will($this->returnValue(0));
+
+    $this->eventInfo = new EventInfo(0, 0, $editBox, WBC_MOUSEDOWN, 0);
 
     $this->assertTrue($this->eventInfo->isMouseEvent());
   }
@@ -94,7 +142,14 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Event\EventInfo::isKeyEvent
    */
   public function testIsKeyEvent() {
-    $this->eventInfo = new EventInfo(0, 0, 0, WBC_KEYDOWN, 0);
+    $editBox = $this->getMockBuilder('\Woody\Components\Controls\EditBox')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $editBox->expects($this->at(0))
+        ->method('getControlID')
+        ->will($this->returnValue(0));
+    
+    $this->eventInfo = new EventInfo(0, 0, $editBox, WBC_KEYDOWN, 0);
 
     $this->assertTrue($this->eventInfo->isKeyEvent());
   }

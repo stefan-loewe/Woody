@@ -1,4 +1,3 @@
-code coverage, esp. events
 make timers create events, too - add listener, adapter resp.
 create wrapper type for woody id, e.g. WoodyID, wrapping an int
 ------------------------------------------------------------------------------------------------------------------

@@ -71,7 +71,7 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
     $resizeListener->expects($this->once())->method('windowResized');
     $window->addWindowResizeListener($resizeListener);
 
-    $event = new WindowResizeEvent(new EventInfo($window->getControlID(), 0, $window->getControlID(), WBC_RESIZE, 0));
+    $event = new WindowResizeEvent(new EventInfo($window->getControlID(), 0, $window, WBC_RESIZE, 0));
     $event->dispatch();
     
     $window->close();
@@ -92,7 +92,7 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
     wb_set_size($window->getControlID(), 400, 250);
 
     // ... therefore, we have to build our own
-    $event = new WindowResizeEvent(new EventInfo($window->getControlID(), 0, $window->getControlID(), WBC_RESIZE, 0));
+    $event = new WindowResizeEvent(new EventInfo($window->getControlID(), 0, $window, WBC_RESIZE, 0));
     $event->dispatch();
     
     $this->assertEquals(new Dimension(300, 200), $event->getOldDimension());
