@@ -276,5 +276,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertEquals($this->timer, $this->timer->removeTimeoutListener($timeoutListener));
     $this->assertFalse($this->timer->getTimeoutListeners()->contains($timeoutListener));
+    
+    $this->window->close();
   }
 }

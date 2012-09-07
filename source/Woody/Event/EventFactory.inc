@@ -35,9 +35,7 @@ class EventFactory {
 
     // timeout of timers are handled here, too - the callback is executed by calling Timer::run
     else if($eventInfo->isTimerEvent()) {
-      // @TODO: make this return an event as well
-      //Timer::getTimerByID($eventInfo->id)->run();
-      $events[] = new TimeoutEvent($eventInfo);
+      $events[] = self::createTimeoutEvent($eventInfo);
     }
 
     else if($eventInfo->isFocusEvent()) {
@@ -97,8 +95,6 @@ class EventFactory {
     // @see HtmlControlServer::processClient
     $event = new ActionEvent($eventInfo);
     if($event->getSource() instanceof Actionable || $event->property instanceof HttpGetRequest) {
-      $event = new ActionEvent($eventInfo);
-
       return $event;
     }
 
@@ -117,5 +113,9 @@ class EventFactory {
 
   private static function createWindowClosedEvent($eventInfo) {
     return new WindowCloseEvent($eventInfo);
+  }
+  
+  private static function createTimeoutEvent($eventInfo) {
+    return new TimeoutEvent($eventInfo);
   }
 }

@@ -12,7 +12,7 @@ class EventInfo {
   private $controlID   = null;
   private $type        = null;
   private $property    = null;
-  protected $source      = null;
+  private $source      = null;
 
   public function __construct($windowID, $woodyID, Component $component, $typeID, $propertyID) {
     $this->windowID    = $windowID;

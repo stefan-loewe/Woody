@@ -14,34 +14,6 @@ use \Utils\Geom\Dimension;
  */
 class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
   /**
-   * the test application
-   *
-   * @var \Woody\App\TestApplication
-   */
-  private $application = null;
-
-  /**
-   * flag to determine, if the window-resizing test has already been fully initialized
-   *
-   * @var boolean
-   */
-  private $isInitialized = null;
-
-  /**
-   * flag to determine, if theassertions in the window-resizing test have already been fully processed
-   *
-   * @var boolean
-   */
-  private $isAsserted = null;
-
-  /**
-   * the timer for the test application
-   *
-   * @var \Woody\Components\Timer\Timer
-   */
-  private $timer = null;
-
-  /**
    * Sets up the fixture, for example, opens a network connection.
    * This method is called before a test is executed.
    */

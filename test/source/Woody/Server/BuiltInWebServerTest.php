@@ -120,7 +120,7 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
       }
     };
 
-    $this->timer = new Timer($this->callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+    $this->timer = new Timer($this->callback, $this->application->getWindow(), 1000);
     $htmlControl = new HtmlControl('none', new Point(10, 20), new Dimension(200, 100));
 
     // the action listener of the HTML control checks, if the received response equals the expected one,
@@ -144,5 +144,30 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
     file_get_contents('http://127.0.0.1:9991?woody=great');
 
     $this->application->start();
+  }
+
+  /**
+   * This method tests starting the server.
+   *
+   * @covers \Woody\Server\BuiltInWebServer::start
+   * @covers \Woody\Server\BuiltInWebServer::startWebServerProcess
+   * @covers \Woody\Server\BuiltInWebServer::startHtmlReplyServer
+   * @covers \Woody\Server\BuiltInWebServer::stop
+   */
+  public function testStop() {
+    $this->application = new TestApplication();
+wb_set_text($this->application->getWindow()->getControlID(), $this->getName().' in '.basename(__FILE__));
+    $this->server = new BuiltInWebServer(
+      $this->application->getWindow(),
+      8765,
+      '.',
+      'php.exe',
+      realpath(__DIR__.'\\..\\..\\..\\..\\doc\\examples\\server.php'),
+      new HtmlControlServer($this->application->getWindow(), 8642));
+    
+    $this->server->start();
+    $this->server->stop();
+    
+    $this->application->stop();
   }
 }

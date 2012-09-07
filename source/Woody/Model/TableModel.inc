@@ -52,12 +52,11 @@ abstract class TableModel implements \SplSubject {
    * @return string the name of the column
    */
   public function getColumnName($columnIndex) {
-    if(isset($this->headers[$columnIndex])) {
-      return $this->headers[$columnIndex];
+    if(!isset($this->headers[$columnIndex])) {
+      $this->headers[$columnIndex] = $this->toBase26($columnIndex);
     }
-    else {
-      return $this->toBase26($columnIndex);
-    }
+    
+    return $this->headers[$columnIndex];
   }
 
   /**

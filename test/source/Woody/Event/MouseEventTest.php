@@ -22,21 +22,6 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
-      ->disableOriginalConstructor()
-      ->getMock();
-
-    // configure the mock to return the proper values for its members
-    $eventInfo->expects($this->at(3))
-      ->method('__get')
-      ->with($this->equalTo('type'))
-      ->will($this->returnValue(WBC_MOUSEDOWN | WBC_LBUTTON));
-    $eventInfo->expects($this->at(4))
-      ->method('__get')
-      ->with($this->equalTo('property'))
-      ->will($this->returnValue(10223723));
-
-    $this->event = new MouseEvent($eventInfo);
   }
 
   /**
@@ -53,8 +38,16 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\Event::__construct
    */
   public function testConstruct() {
+    // some magic to enforce reinitialisation of the event buffer 
+    $property = new \ReflectionProperty('\Woody\Event\MouseEvent', 'eventBuffer');
+    $property->setAccessible(TRUE);
+    $property->setValue(null);
+    
+    $this->event = new MouseEvent($this->getEventInfoMock());
     $this->assertInstanceOf('\Woody\Event\MouseEvent', $this->event);
-  }/**
+  }
+  
+  /**
    * This method tests dispatching the event.
    *
    * @covers \Woody\Event\MouseEvent::dispatch
@@ -89,6 +82,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\MouseEvent::getPosition
    */
   public function testGetPosition() {
+    $this->event = new MouseEvent($this->getEventInfoMock());
     $position = $this->event->getPosition();
 
     $this->assertEquals(107, $position->x);
@@ -101,6 +95,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\MouseEvent::getPressedButton
    */
   public function testGetPressedButton1() {
+    $this->event = new MouseEvent($this->getEventInfoMock());
     $this->assertEquals(MouseEvent::BUTTON1, $this->event->getPressedButton());
   }
 
@@ -196,7 +191,27 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Event\Event::__toString
    */
   public function test__toString() {
+    $this->event = new MouseEvent($this->getEventInfoMock());
     $this->assertTrue(strpos($this->event->__toString(), 'button = ') !== FALSE);
     $this->assertTrue(strpos($this->event->__toString(), 'position = ') !== FALSE);
+  }
+  
+  private function getEventInfoMock() {
+    
+    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    // configure the mock to return the proper values for its members
+    $eventInfo->expects($this->at(3))
+      ->method('__get')
+      ->with($this->equalTo('type'))
+      ->will($this->returnValue(WBC_MOUSEDOWN | WBC_LBUTTON));
+    $eventInfo->expects($this->at(4))
+      ->method('__get')
+      ->with($this->equalTo('property'))
+      ->will($this->returnValue(10223723));
+    
+    return $eventInfo;
   }
 }

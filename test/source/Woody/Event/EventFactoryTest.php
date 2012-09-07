@@ -48,14 +48,14 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase {
   
   /**
    * @covers \Woody\Event\EventFactory::createEvent
-   * @_covers \Woody\Event\EventFactory::createTimerEvent
+   * @covers \Woody\Event\EventFactory::createTimeoutEvent
    */
-  public function testCreateTimerEvent() {return;
+  public function testCreateTimeoutEvent() {
     $this->eventInfo->expects($this->once())
         ->method('isTimerEvent')
         ->will($this->returnValue(TRUE));
     
-    $this->assertInstanceOf('\Woody\Event\TimerEvent', EventFactory::createEvent($this->eventInfo)[0]);
+    $this->assertInstanceOf('\Woody\Event\TimeoutEvent', EventFactory::createEvent($this->eventInfo)[0]);
   }
 
   /**
@@ -102,7 +102,17 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase {
     // even with reflection, EventInfo::source could not be set to a component in an EventInfo mock object
     // ReflectionProperty::setAccessible claimed EventInfoMock::source would not exist
     // it did work when using a real EventInfo object or when setting the property to public
-    $this->eventInfo = new EventInfo(1, 1, new EditBox('', new Point(1, 2), new Dimension(1, 2)), 0, 0);
+    
+    
+    $this->eventInfo->expects($this->once())
+        ->method('isControlEvent')
+        ->will($this->returnValue(TRUE));
+    
+    $this->eventInfo->expects($this->any())
+        ->method('__get')
+        ->will($this->returnValue($this->getMockBuilder('\Woody\Components\Controls\EditBox')
+      ->disableOriginalConstructor()
+      ->getMock()));
     
     $this->assertInstanceOf('\Woody\Event\ActionEvent', EventFactory::createEvent($this->eventInfo)[0]);
   }
