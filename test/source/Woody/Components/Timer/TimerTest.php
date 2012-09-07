@@ -58,12 +58,13 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::__construct
    */
   public function testConstruct() {
-    $this->timer = new Timer(function() {
-          $this->timer->destroy();
-          $this->window->close();
+    $callback = function() {
+      $this->timer->destroy();
+      $this->window->close();
 
-          $this->assertEquals(1, ++$this->counter);
-        }, $this->window, Timer::TEST_TIMEOUT);
+      $this->assertEquals(1, ++$this->counter);
+    };
+    $this->timer = new Timer($callback, $this->window, Timer::TEST_TIMEOUT);
 
     $this->timer->start();
     $this->window->startEventHandler();
@@ -76,12 +77,13 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::start
    */
   public function testStart() {
-    $this->timer = new Timer(function() {
-          $this->timer->destroy();
-          $this->window->close();
+    $callback = function() {
+      $this->timer->destroy();
+      $this->window->close();
 
-          $this->assertEquals(1, ++$this->counter);
-        }, $this->window, Timer::TEST_TIMEOUT);
+      $this->assertEquals(1, ++$this->counter);
+    };
+    $this->timer = new Timer($callback, $this->window, Timer::TEST_TIMEOUT);
 
     $this->timer->start();
 
@@ -94,14 +96,15 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::destroy
    */
   public function testDestroy() {
-    $this->timer = new Timer(function() {
-          ++$this->counter;
+    $callback = function() {
+      ++$this->counter;
 
-          $this->timer->destroy();
-          $this->window->close();
+      $this->timer->destroy();
+      $this->window->close();
 
-          $this->assertEquals(1, $this->counter);
-        }, $this->window, Timer::TEST_TIMEOUT);
+      $this->assertEquals(1, $this->counter);
+    };
+    $this->timer = new Timer($callback, $this->window, Timer::TEST_TIMEOUT);
 
     $this->timer->start();
 
@@ -114,14 +117,15 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::getID
    */
   public function testGetID() {
-    $this->timer = new Timer(function() {
-          $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
+    $callback = function() {
+      $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
 
-          $this->timer->destroy();
-          $this->window->close();
+      $this->timer->destroy();
+      $this->window->close();
 
-          $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
-        }, $this->window, Timer::TEST_TIMEOUT);
+      $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
+    };
+    $this->timer = new Timer($callback, $this->window, Timer::TEST_TIMEOUT);
 
     $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
 
@@ -140,10 +144,11 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::getTimerByID
    */
   public function testGetTimerByID() {
-    $this->timer = new Timer(function() {
-          $this->timer->destroy();
-          $this->window->close();
-        }, $this->window, Timer::TEST_TIMEOUT);
+    $callback = function() {
+      $this->timer->destroy();
+      $this->window->close();
+    };
+    $this->timer = new Timer($callback, $this->window, Timer::TEST_TIMEOUT);
 
     $timer = Timer::getTimerByID($this->timer->getID());
 
@@ -181,26 +186,27 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException\TimerAlreadyRunningException is
+   * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException is
    * thrown, when starting an already started timer.
    *
    * @covers \Woody\Components\Timer\Timer::start
    * @covers \Woody\Components\Timer\TimerAlreadyRunningException::__construct
    */
   public function testTimerAlreadyRunningException() {
-    $this->timer = new Timer(function() {
-          try {
-            $this->timer->start();
-          }
-          catch(TimerAlreadyRunningException $tare) {
-            $this->timer->destroy();
-            $this->window->close();
+    $callback = function() {
+      try {
+        $this->timer->start();
+      }
+      catch(TimerAlreadyRunningException $tare) {
+        $this->timer->destroy();
+        $this->window->close();
 
-            return;
-          }
+        return;
+      }
 
-          $this->fail('The expected TimerAlreadyRunningException has not been raised.');
-        }, $this->window, Timer::TEST_TIMEOUT);
+      $this->fail('The expected TimerAlreadyRunningException has not been raised.');
+    };
+    $this->timer = new Timer($callback, $this->window, Timer::TEST_TIMEOUT);
 
     $this->timer->start();
 
@@ -208,7 +214,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException\TimerNotRunningException is thrown,
+   * This method tests if the TimerNotRunningException are thrown,
    * when destroying an timer which was not yet started.
    *
    * @covers Woody\Components\Timer\Timer::destroy
@@ -234,19 +240,41 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * @covers Woody\Components\Timer\Timer::isRunning
    */
   public function testIsRunning() {
-    $this->timer = new Timer(function() {
-          $this->assertTrue($this->timer->isRunning());
+    $callback = function() {
+      $this->assertTrue($this->timer->isRunning());
 
-          $this->timer->destroy();
-          $this->assertFalse($this->timer->isRunning());
+      $this->timer->destroy();
+      $this->assertFalse($this->timer->isRunning());
 
-          $this->window->close();
-        }, $this->window, Timer::TEST_TIMEOUT);
+      $this->window->close();
+    };
+    $this->timer = new Timer($callback, $this->window, Timer::TEST_TIMEOUT);
 
     $this->assertFalse($this->timer->isRunning());
     $this->timer->start();
     $this->assertTrue($this->timer->isRunning());
 
     $this->window->startEventHandler();
+  }
+
+  /**
+   * This method tests adding, getting and removing timeout listeners.
+   *
+   * @covers \Woody\Components\Timer\Timer::addTimeoutListener
+   * @covers \Woody\Components\Timer\Timer::getTimeoutListeners
+   * @covers \Woody\Components\Timer\Timer::removeTimeoutListener
+   */
+  public function testWindowResizeListeners() {
+    $timeoutListener = $this->getMockBuilder('\Woody\Event\TimeoutAdapter')
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    $this->timer = new Timer(function() {}, $this->window, Timer::TEST_TIMEOUT);
+    
+    $this->assertEquals($this->timer, $this->timer->addTimeoutListener($timeoutListener));
+    $this->assertTrue($this->timer->getTimeoutListeners()->contains($timeoutListener));
+
+    $this->assertEquals($this->timer, $this->timer->removeTimeoutListener($timeoutListener));
+    $this->assertFalse($this->timer->getTimeoutListeners()->contains($timeoutListener));
   }
 }
