@@ -61,8 +61,6 @@ class MouseEvent extends Event {
     }
   }
 
-  // has to be public, as it is needed to fill event buffer in event factory, to determine click count
-  // we might be able to move that here, right?
   private function isMouseDownEvent() {
     return (($this->type & WBC_MOUSEDOWN) === WBC_MOUSEDOWN) || (($this->type & WBC_DBLCLICK) === WBC_DBLCLICK);
   }
