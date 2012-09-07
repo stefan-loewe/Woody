@@ -26,7 +26,6 @@ class EventFactory {
    * @return \Traversable
    */
   public static function createEvent(EventInfo $eventInfo) {
-
     $events = new \ArrayObject();
 
     // window close button is not a real control, so handle it here - close window

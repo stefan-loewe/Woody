@@ -94,6 +94,8 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
    * This method tests starting the server.
    *
    * @covers \Woody\Server\BuiltInWebServer::start
+   * @covers \Woody\Server\BuiltInWebServer::startWebServerProcess
+   * @covers \Woody\Server\BuiltInWebServer::startHtmlReplyServer
    * @covers \Woody\Server\BuiltInWebServer::stop
    */
   public function testStart() {
@@ -108,7 +110,7 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
       realpath(__DIR__.'\\..\\..\\..\\..\\doc\\examples\\server.php'),
       new HtmlControlServer($this->application->getWindow(), 1234));
 
-    $this->callback     = function() {
+    $this->callback = function() {
       if($this->eventFired) {
         $this->server->stop();
         $this->timer->destroy();
@@ -125,7 +127,7 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
     // and also set the eventFired flag to true
     $htmlControl->addActionListener(new ActionAdapter(function($event) {
             $this->assertEquals('/?woody=great', $event->property->getRawRequest());
-            $event->type->write('success');
+            $event->type->write('success at '.date('H:i:s d.m.Y'));
             
             $this->eventFired = TRUE;
           }));

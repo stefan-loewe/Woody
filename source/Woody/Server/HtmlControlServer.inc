@@ -6,6 +6,7 @@ use \Woody\Components\Windows\AbstractWindow;
 use \Woody\Components\Controls\HtmlControl;
 use \Woody\Components\Timer\Timer;
 use \Woody\Event\EventFactory;
+use \Woody\Event\EventInfo;
 use \Utils\Sockets\ServerSocket;
 use \Utils\Sockets\Server;
 use \Utils\Http\HttpRequestFactory;
@@ -91,14 +92,17 @@ class HtmlControlServer extends Server {
     // foreach registered HtmlControl, create an event,
     // and pass it to that HtmlControl
     foreach($this->htmlControls as $htmlControl) {
-      EventFactory::createEvent(
-        //not public $htmlControl->getWindow()->getControlID(),
-        null,
+      $eventInfo = new EventInfo(0,
         $htmlControl->getID(),
-        $htmlControl->getControlID(),
+        $htmlControl,
         $connectedClient,
-        HttpRequestFactory::createRequest($message)
-      );
+        HttpRequestFactory::createRequest($message));
+      
+      $events = EventFactory::createEvent($eventInfo);
+      
+      foreach($events as $event) {
+        $event->dispatch($event);
+      }
     }
 
     $this->disconnectClient($connectedClient);

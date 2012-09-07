@@ -29,7 +29,7 @@ class EventInfo {
   }
 
   public function isWindowResizeEvent() {
-    return $this->type === WBC_RESIZE;
+    return (is_int($this->type) ? $this->type === WBC_RESIZE : FALSE);
   }
 
   public function isWindowCloseEvent() {
@@ -45,14 +45,24 @@ class EventInfo {
   }
 
   public function isFocusEvent() {
-    return $this->type === WBC_GETFOCUS;
+    return (is_int($this->type) ? $this->type === WBC_GETFOCUS : FALSE);
   }
 
   public function isMouseEvent() {
-    return ($this->type & WBC_MOUSEDOWN) || ($this->type & WBC_MOUSEUP) || ($this->type & WBC_DBLCLICK);
+    if(is_int($this->type)) {
+      return ($this->type & WBC_MOUSEDOWN) || ($this->type & WBC_MOUSEUP) || ($this->type & WBC_DBLCLICK);
+    }
+    else {
+      return FALSE;
+    }
   }
 
   public function isKeyEvent() {
-    return ($this->type === WBC_KEYDOWN) || ($this->type === WBC_KEYUP);
+    if(is_int($this->type)) {
+      return ($this->type === WBC_KEYDOWN) || ($this->type === WBC_KEYUP);      
+    }
+    else {
+      return FALSE;
+    }
   }
 }
