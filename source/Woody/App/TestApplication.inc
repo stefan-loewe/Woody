@@ -30,10 +30,12 @@ class TestApplication extends Application {
   /**
    * This method acts as the constructor of the class.
    */
-  public function __construct() {
+  public function __construct(\PHPUnit_Framework_TestCase $testCase = null) {
     parent::__construct();
 
-    $this->window = new MainWindow('TestApp', new Point(50, 50), new Dimension(300, 200));
+    $title = $this->getTitle();
+    
+    $this->window = new MainWindow($title, new Point(50, 50), new Dimension(300, 200));
 
     // the callback that actually closes the window
     $callback = function() {
@@ -73,5 +75,17 @@ class TestApplication extends Application {
    */
   public function stop() {
     $this->isRunning = FALSE;
+  }
+  
+  private function getTitle() {
+    'TestApplication';
+    
+    if($testCase != null) {
+      $testCaseClass = new \ReflectionClass($testCase);
+      
+      $title = $testCase->getName().' in '.  substr($testCaseClass->getFileName(), strrpos($testCaseClass->getFileName(), DIRECTORY_SEPARATOR) + 1).' - '.$title;
+    }
+    
+    return $title;
   }
 }

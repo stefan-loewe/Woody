@@ -97,10 +97,11 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Server\BuiltInWebServer::startWebServerProcess
    * @covers \Woody\Server\BuiltInWebServer::startHtmlReplyServer
    * @covers \Woody\Server\BuiltInWebServer::stop
+   * @covers \Woody\Event\EventInfo::isMouseEvent
+   * @covers \Woody\Event\EventInfo::isKeyEvent
    */
   public function testStart() {
-    $this->application  = new TestApplication();
-    wb_set_text($this->application->getWindow()->getControlID(), $this->getName().' in '.basename(__FILE__));
+    $this->application  = new TestApplication($this);
 
     $this->server = new BuiltInWebServer(
       $this->application->getWindow(),
@@ -155,8 +156,8 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Server\BuiltInWebServer::stop
    */
   public function testStop() {
-    $this->application = new TestApplication();
-wb_set_text($this->application->getWindow()->getControlID(), $this->getName().' in '.basename(__FILE__));
+    $this->application = new TestApplication($this);
+    
     $this->server = new BuiltInWebServer(
       $this->application->getWindow(),
       8765,

@@ -103,7 +103,6 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase {
     // ReflectionProperty::setAccessible claimed EventInfoMock::source would not exist
     // it did work when using a real EventInfo object or when setting the property to public
     
-    
     $this->eventInfo->expects($this->once())
         ->method('isControlEvent')
         ->will($this->returnValue(TRUE));
