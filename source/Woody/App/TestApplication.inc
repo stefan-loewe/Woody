@@ -33,8 +33,8 @@ class TestApplication extends Application {
   public function __construct(\PHPUnit_Framework_TestCase $testCase = null) {
     parent::__construct();
 
-    $title = $this->getTitle();
-    
+    $title = $this->getTitle($testCase);
+
     $this->window = new MainWindow($title, new Point(50, 50), new Dimension(300, 200));
 
     // the callback that actually closes the window
@@ -76,16 +76,23 @@ class TestApplication extends Application {
   public function stop() {
     $this->isRunning = FALSE;
   }
-  
-  private function getTitle() {
-    'TestApplication';
-    
+
+  /**
+   * This method gets the title for the main window of the application, to indicate which test case in which file is
+   * currently executed.
+   *
+   * @param \PHPUnit_Framework_TestCase $testCase the test test cases that is run by this application
+   * @return string the title for the main window containing the name of the test case and the corresponding file
+   */
+  private function getTitle($testCase) {
+    $title = 'TestApplication';
+
     if($testCase != null) {
-      $testCaseClass = new \ReflectionClass($testCase);
-      
-      $title = $testCase->getName().' in '.  substr($testCaseClass->getFileName(), strrpos($testCaseClass->getFileName(), DIRECTORY_SEPARATOR) + 1).' - '.$title;
+      $testCaseClass  = new \ReflectionClass($testCase);
+      $testCaseFile   = new \SplFileInfo($testCaseClass->getFileName());
+      $title          = $testCase->getName().' in '.$testCaseFile->getBasename().' - '.$title;
     }
-    
+
     return $title;
   }
 }

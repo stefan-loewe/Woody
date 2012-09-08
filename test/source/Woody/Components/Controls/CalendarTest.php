@@ -38,7 +38,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->application = new TestApplication();
+    $this->application = new TestApplication($this);
 
     $this->calendar = new Calendar(new Point(20, 20), new Dimension(197, 157));
 
