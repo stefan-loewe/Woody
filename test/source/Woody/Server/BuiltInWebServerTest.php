@@ -129,7 +129,7 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
     $htmlControl->addActionListener(new ActionAdapter(function($event) {
             $this->assertEquals('/?woody=great', $event->property->getRawRequest());
             $event->type->write('success at '.date('H:i:s d.m.Y'));
-            
+
             $this->eventFired = TRUE;
           }));
 
@@ -156,19 +156,18 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\Server\BuiltInWebServer::stop
    */
   public function testStop() {
-    $this->application = new TestApplication($this);
-    
+    $window   = new \Woody\Components\Windows\MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $window->create();
+
     $this->server = new BuiltInWebServer(
-      $this->application->getWindow(),
+      $window,
       8765,
       '.',
       'php.exe',
       realpath(__DIR__.'\\..\\..\\..\\..\\doc\\examples\\server.php'),
-      new HtmlControlServer($this->application->getWindow(), 8642));
-    
+      new HtmlControlServer($window, 8642));
+
     $this->server->start();
     $this->server->stop();
-    
-    $this->application->stop();
   }
 }

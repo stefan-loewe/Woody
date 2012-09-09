@@ -20,7 +20,7 @@ class EventInfo {
     $this->controlID   = $component->getControlID();
     $this->type        = $typeID;
     $this->property    = $propertyID;
-    
+
     $this->source      = $component;
   }
 
@@ -59,7 +59,7 @@ class EventInfo {
 
   public function isKeyEvent() {
     if(is_int($this->type)) {
-      return ($this->type === WBC_KEYDOWN) || ($this->type === WBC_KEYUP);      
+      return ($this->type === WBC_KEYDOWN) || ($this->type === WBC_KEYUP);
     }
     else {
       return FALSE;
