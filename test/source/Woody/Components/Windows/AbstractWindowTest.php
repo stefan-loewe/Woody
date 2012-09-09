@@ -23,7 +23,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->window = new MainWindow($this->getName().'-'.basename(__FILE__), new Point(50, 50), new Dimension(300, 200));
+    $this->window = new MainWindow($this->getName().' - '.basename(__FILE__), new Point(50, 50), new Dimension(300, 200));
 
     $this->window->create(null);
   }
@@ -34,6 +34,20 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    */
   protected function tearDown() {
     $this->window->close();
+  }
+
+  /**
+   * This method tests getting and setting the title of the window.
+   *
+   * @covers \Woody\Components\Windows\AbstractWindow::getTitle
+   * @covers \Woody\Components\Windows\AbstractWindow::setTitle
+   */
+  public function testGetSetTitle() {
+    $this->assertEquals($this->window->getTitle(), 'testGetSetTitle - AbstractWindowTest.php');
+
+    $this->assertInstanceOf('\Woody\Components\Windows\AbstractWindow', $this->window->setTitle('newWindowTitle'));
+
+    $this->assertEquals($this->window->getTitle(), 'newWindowTitle');
   }
 
   /**
@@ -248,5 +262,26 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
     $this->assertNull($this->window->getWindowCloseListener());
 
     $window->close();
+  }
+
+  /**
+   * This method tests adding, getting, and removing a resize listener from the window.
+   *
+   * @covers \Woody\Components\Windows\AbstractWindow::getWindowResizeListeners
+   * @covers \Woody\Components\Windows\AbstractWindow::addWindowResizeListener
+   * @covers \Woody\Components\Windows\AbstractWindow::removeWindowResizeListener
+   */
+  public function testResizeListeners() {
+    $this->assertEquals(0, $this->window->getWindowResizeListeners()->count());
+
+    $resizeListener = $this->getMockBuilder('\Woody\Event\WindowResizeAdapter')
+                                      ->disableOriginalConstructor()
+                                      ->getMock();
+
+    $this->window->addWindowResizeListener($resizeListener);
+    $this->assertEquals(1, $this->window->getWindowResizeListeners()->count());
+
+    $this->window->removeWindowResizeListener($resizeListener);
+    $this->assertEquals(0, $this->window->getWindowResizeListeners()->count());
   }
 }

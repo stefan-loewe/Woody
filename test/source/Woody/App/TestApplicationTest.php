@@ -19,7 +19,6 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->application = new TestApplication();
   }
 
   /**
@@ -33,17 +32,24 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
    * This method tests creating the application.
    *
    * @covers \Woody\App\TestApplication::__construct
+   * @covers \Woody\App\TestApplication::getTitle
    * @covers \Woody\App\Application::__construct
    * @covers \Woody\App\Application::getInstance
    */
   public function testConstruct() {
+    $testCase = $this->getMockBuilder('\PHPUnit_Framework_TestCase')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $this->application = new TestApplication($testCase);
+
     $this->assertInstanceOf('\Woody\App\Application', $this->application);
     $this->assertInstanceOf('\Woody\App\Application', $this->application->getInstance());
 
-    $this->timer = new Timer(function() {
-          $this->timer->destroy();
-          $this->application->stop();
-        }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+    $callback = function() {
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
     $this->timer->start();
     $this->application->start();
@@ -55,12 +61,15 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\App\Application::getWindow
    */
   public function testGetWindow() {
+    $this->application = new TestApplication();
+
     $this->assertInstanceOf('Woody\Components\Windows\AbstractWindow', $this->application->getWindow());
 
-    $this->timer = new Timer(function() {
-          $this->timer->destroy();
-          $this->application->stop();
-        }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+    $callback = function() {
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
     $this->timer->start();
     $this->application->start();
@@ -73,10 +82,13 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
    * @covers \Woody\App\TestApplication::stop
    */
   public function testStartStop() {
-        $this->timer = new Timer(function() {
-          $this->timer->destroy();
-          $this->application->stop();
-        }, $this->application->getWindow(), Timer::TEST_TIMEOUT);
+    $this->application = new TestApplication();
+    
+    $callback = function() {
+      $this->timer->destroy();
+      $this->application->stop();
+    };
+    $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
     $this->timer->start();
     $this->application->start();

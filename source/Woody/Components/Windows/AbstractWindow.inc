@@ -148,16 +148,25 @@ abstract class AbstractWindow extends Component {
       | WBC_RESIZE
       | WBC_HEADERSEL;
   }
-  
+
+  /**
+   * This method gets the title of the window.
+   *
+   * @return string the title of the window
+   */
+  public function getTitle() {
+    return wb_get_text($this->controlID);
+  }
+
   /**
    * This method sets the title of the window.
-   * 
+   *
    * @param string $title the title of the window
    * @return \Woody\Components\Windows\AbstractWindow $this
    */
   public function setTitle($title) {
     wb_set_text($this->controlID, $title);
-    
+
     return $this;
   }
 
