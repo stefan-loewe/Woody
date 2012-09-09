@@ -22,6 +22,8 @@
     -->
     <directory suffix="php">./test/source/Woody/Util*</directory>
 
+    <file>./test/source/Woody/WinBinderErrorExceptionTest.php</file>
+
     <!-- blacklist all interfaces - obsolete with phpunit 3.7 -->
     <exclude>./test/source/Woody/Components/Controls/Actionable.inc</exclude>
   </testsuite>

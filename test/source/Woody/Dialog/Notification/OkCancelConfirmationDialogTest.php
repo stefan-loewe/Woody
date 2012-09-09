@@ -38,4 +38,17 @@ class OkCancelConfirmationDialogTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertInstanceOf('\Woody\Dialog\Notification\OkCancelConfirmationDialog', $this->dialog);
   }
+
+  /**
+   * This method tests getting the initial state of the dialog.
+   *
+   * @covers \Woody\Dialog\Notification\OkCancelConfirmationDialog::ok
+   * @covers \Woody\Dialog\Notification\OkCancelConfirmationDialog::cancel
+   */
+  public function testOkCancel() {
+    $this->dialog = new OkCancelConfirmationDialog('testConstruct', 'testConstruct', null);
+
+    $this->assertFalse($this->dialog->ok());
+    $this->assertFalse($this->dialog->cancel());
+  }
 }
