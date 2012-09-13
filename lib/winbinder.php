@@ -11,19 +11,11 @@
 
 *******************************************************************************/
 
-if(!extension_loaded('winbinder'))
-	if(!dl('php_winbinder.dll'))
-		trigger_error("WinBinder extension could not be loaded.\n", E_USER_ERROR);
-
-$_mainpath = pathinfo(__FILE__);
-$_mainpath = $_mainpath["dirname"] . "/";
+if(!extension_loaded('winbinder') && !dl('php_winbinder.dll')) {
+	trigger_error("WinBinder extension could not be loaded.\n", E_USER_ERROR);
+}
 
 // WinBinder PHP functions
-
-include $_mainpath . "wb_windows.inc.php";
-include $_mainpath . "wb_generic.inc.php";
-include $_mainpath . "wb_resources.inc.php";
-
-//------------------------------------------------------------------ END OF FILE
-
-?>
+require_once 'wb_windows.inc.php';
+require_once 'wb_generic.inc.php';
+require_once 'wb_resources.inc.php';
