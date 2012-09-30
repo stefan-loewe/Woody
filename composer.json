@@ -1,0 +1,12 @@
+{
+    "name": "ws/loewe/Woody",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/stefan-loewe/Utils"
+        }
+    ],
+    "require": {
+        "ws/loewe/Utils": "dev-master"
+    }
+}
