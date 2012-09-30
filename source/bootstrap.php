@@ -6,14 +6,11 @@ use \ws\loewe\Woody\Components\Component;
 
 error_reporting(E_ALL | E_STRICT);
 
-define('INSTALLATION_FOLDER', str_replace('\\', '/', realpath(__DIR__.'/..')));
-define('SOURCE_FOLDER', INSTALLATION_FOLDER.'/source');
+require_once './vendor/autoload.php';
+require_once './lib/winbinder.php';
+require_once './lib/fi/freeimage.inc.php';
 
-require_once INSTALLATION_FOLDER.'/lib/winbinder.php';
-require_once INSTALLATION_FOLDER.'/lib/fi/freeimage.inc.php';
-require_once SOURCE_FOLDER.'/Utils/Autoload/Autoloader.inc';
-
-$autoloader = new ws\loewe\Utils\Autoload\Autoloader(SOURCE_FOLDER.'/');
+$autoloader = new ws\loewe\Utils\Autoload\Autoloader('./source');
 
 spl_autoload_register(array($autoloader, 'autoload'));
 
@@ -30,7 +27,7 @@ $callback = function($errno, $errstr, $errfile, $errline) {
   $errorException = new \ErrorException($errstr, 0, $errno, $errfile, $errline);
 
   if(strpos($errstr, 'wbIsWBObj:') === 0) {
-    throw new ws\loewe\Woody\WinBinderErrorException(
+    throw new \ws\loewe\Woody\WinBinderErrorException(
       'Error when using WinBinder object - original error message was "'.$errstr.'"',
       0,
       $errorException);
