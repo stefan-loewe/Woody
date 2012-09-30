@@ -10,7 +10,7 @@
         "ws/loewe/Utils": "dev-master"
     },
     "autoload": {
-        "psr-0": { "ws\\loewe\\Woody": "" }
+        "psr-0": { "ws\\loewe\\Woody": "source/" }
     },
     "target-dir": "ws/loewe/Woody"
 }
