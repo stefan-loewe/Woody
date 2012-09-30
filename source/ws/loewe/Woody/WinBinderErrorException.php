@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody;
+namespace ws\loewe\Woody;
 
 /**
  * This class represents an Exception that is thrown if a winbinder function raises an error while being executed.
