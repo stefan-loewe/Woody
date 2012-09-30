@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\Dialog\Notification;
+namespace ws\loewe\Woody\Dialog\Notification;
 
-use \Woody\Components\Windows\AbstractWindow;
+use \ws\loewe\Woody\Components\Windows\AbstractWindow;
 
 abstract class ModalSystemDialog {
   /**
@@ -22,7 +22,7 @@ abstract class ModalSystemDialog {
   /**
    * the window the dialog belongs to, may be null
    *
-   * @var \Woody\Components\Windows\AbstractWindow
+   * @var \ws\loewe\Woody\Components\Windows\AbstractWindow
    */
   protected $window = null;
 

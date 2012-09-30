@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for PushButton.
@@ -16,21 +16,21 @@ class PushButtonTest extends \PHPUnit_Framework_TestCase {
   /**
    * the push button to test
    *
-   * @var \Woody\Components\Controls\PushButton
+   * @var \ws\loewe\Woody\Components\Controls\PushButton
    */
   private $pushButton = null;
 
   /**
    * the test application
    *
-   * @var \Woody\App\TestApplication
+   * @var \ws\loewe\Woody\App\TestApplication
    */
   private $application = null;
 
   /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -54,8 +54,8 @@ class PushButtonTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\PushButton::getLabel
-   * @covers \Woody\Components\Controls\PushButton::setLabel
+   * @covers \ws\loewe\Woody\Components\Controls\PushButton::getLabel
+   * @covers \ws\loewe\Woody\Components\Controls\PushButton::setLabel
    */
   public function testGetSetLabel() {
     $this->timer = new Timer(function() {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for ProgressBar.
@@ -16,21 +16,21 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase {
   /**
    * the progress bar to test
    *
-   * @var \Woody\Components\Controls\Progressbar
+   * @var \ws\loewe\Woody\Components\Controls\Progressbar
    */
   private $progressBar = null;
 
   /**
    * the test application
    *
-   * @var \Woody\App\TestApplication
+   * @var \ws\loewe\Woody\App\TestApplication
    */
   private $application = null;
 
   /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -54,8 +54,8 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\ProgressBar::getProgress
-   * @covers \Woody\Components\Controls\ProgressBar::setProgress
+   * @covers \ws\loewe\Woody\Components\Controls\ProgressBar::getProgress
+   * @covers \ws\loewe\Woody\Components\Controls\ProgressBar::setProgress
    */
   public function testGetSetValue() {
     $this->timer = new Timer(function() {
@@ -74,7 +74,7 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\ProgressBar::setRange
+   * @covers \ws\loewe\Woody\Components\Controls\ProgressBar::setRange
    */
   public function testSetRange() {
     $this->timer = new Timer(function() {

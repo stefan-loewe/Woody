@@ -1,10 +1,10 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\Components\Controls\EditBox;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Controls\EditBox;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for EventFactory.
@@ -22,7 +22,7 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+    $this->eventInfo = $this->getMockBuilder('\ws\loewe\Woody\Event\EventInfo')
       ->disableOriginalConstructor()
       ->getMock();
   }
@@ -35,68 +35,68 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Event\EventFactory::createEvent
-   * @covers \Woody\Event\EventFactory::createWindowClosedEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createWindowClosedEvent
    */
   public function testCreateWindowCloseEvent() {
     $this->eventInfo->expects($this->once())
         ->method('isWindowCloseEvent')
         ->will($this->returnValue(TRUE));
 
-    $this->assertInstanceOf('\Woody\Event\WindowCloseEvent', EventFactory::createEvent($this->eventInfo)[0]);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\WindowCloseEvent', EventFactory::createEvent($this->eventInfo)[0]);
   }
   
   /**
-   * @covers \Woody\Event\EventFactory::createEvent
-   * @covers \Woody\Event\EventFactory::createTimeoutEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createTimeoutEvent
    */
   public function testCreateTimeoutEvent() {
     $this->eventInfo->expects($this->once())
         ->method('isTimerEvent')
         ->will($this->returnValue(TRUE));
     
-    $this->assertInstanceOf('\Woody\Event\TimeoutEvent', EventFactory::createEvent($this->eventInfo)[0]);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\TimeoutEvent', EventFactory::createEvent($this->eventInfo)[0]);
   }
 
   /**
-   * @covers \Woody\Event\EventFactory::createEvent
-   * @covers \Woody\Event\EventFactory::createFocusEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createFocusEvent
    */
   public function testCreateFocusEvent() {
     $this->eventInfo->expects($this->once())
         ->method('isFocusEvent')
         ->will($this->returnValue(TRUE));
     
-    $this->assertInstanceOf('\Woody\Event\FocusEvent', EventFactory::createEvent($this->eventInfo)[0]);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\FocusEvent', EventFactory::createEvent($this->eventInfo)[0]);
   }
 
   /**
-   * @covers \Woody\Event\EventFactory::createEvent
-   * @covers \Woody\Event\EventFactory::createMouseEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createMouseEvent
    */
   public function testCreateMouseEvent() {
     $this->eventInfo->expects($this->once())
         ->method('isMouseEvent')
         ->will($this->returnValue(TRUE));
     
-    $this->assertInstanceOf('\Woody\Event\MouseEvent', EventFactory::createEvent($this->eventInfo)[0]);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\MouseEvent', EventFactory::createEvent($this->eventInfo)[0]);
   }
 
   /**
-   * @covers \Woody\Event\EventFactory::createEvent
-   * @covers \Woody\Event\EventFactory::createKeyEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createKeyEvent
    */
   public function testCreateKeyEvent() {
     $this->eventInfo->expects($this->once())
         ->method('isKeyEvent')
         ->will($this->returnValue(TRUE));
     
-    $this->assertInstanceOf('\Woody\Event\KeyEvent', EventFactory::createEvent($this->eventInfo)[0]);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\KeyEvent', EventFactory::createEvent($this->eventInfo)[0]);
   }
 
   /**
-   * @covers \Woody\Event\EventFactory::createEvent
-   * @covers \Woody\Event\EventFactory::createActionEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createActionEvent
    */
   public function testCreateActionEvent() {
     // even with reflection, EventInfo::source could not be set to a component in an EventInfo mock object
@@ -109,22 +109,22 @@ class EventFactoryTest extends \PHPUnit_Framework_TestCase {
     
     $this->eventInfo->expects($this->any())
         ->method('__get')
-        ->will($this->returnValue($this->getMockBuilder('\Woody\Components\Controls\EditBox')
+        ->will($this->returnValue($this->getMockBuilder('\ws\loewe\Woody\Components\Controls\EditBox')
       ->disableOriginalConstructor()
       ->getMock()));
     
-    $this->assertInstanceOf('\Woody\Event\ActionEvent', EventFactory::createEvent($this->eventInfo)[0]);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\ActionEvent', EventFactory::createEvent($this->eventInfo)[0]);
   }
 
   /**
-   * @covers \Woody\Event\EventFactory::createEvent
-   * @covers \Woody\Event\EventFactory::createWindowResizeEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createEvent
+   * @covers \ws\loewe\Woody\Event\EventFactory::createWindowResizeEvent
    */
   public function testCreateWindowResizeEvent() {return;
     $this->eventInfo->expects($this->once())
         ->method('isWindowResizeEvent')
         ->will($this->returnValue(TRUE));
     
-    $this->assertInstanceOf('\Woody\Event\WindowResizeEvent', EventFactory::createEvent($this->eventInfo)[0]);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\WindowResizeEvent', EventFactory::createEvent($this->eventInfo)[0]);
   }
 }

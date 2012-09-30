@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class Label extends Control {
   /**
@@ -32,7 +32,7 @@ class Label extends Control {
    * This method sets the label of the label control
    *
    * @param string $label the label of the label control
-   * @return \Woody\Components\Controls\Label $this
+   * @return \ws\loewe\Woody\Components\Controls\Label $this
    */
   public function setLabel($label) {
     wb_set_text($this->controlID, $label);

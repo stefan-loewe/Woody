@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
 /**
  * Test class for TimeoutCloseAdapter.
@@ -34,18 +34,18 @@ class TimeoutAdapterTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method test the constructor of the adapter
    *
-   * @covers Woody\Event\TimeoutAdapter::__construct
+   * @covers ws\loewe\Woody\Event\TimeoutAdapter::__construct
    */
   public function testConstruct() {
     $this->adapter = new TimeoutAdapter(function(){});
-    $this->assertInstanceOf('Woody\Event\TimeoutAdapter', $this->adapter);
+    $this->assertInstanceOf('ws\loewe\Woody\Event\TimeoutAdapter', $this->adapter);
   }
 
   /**
-   * @covers Woody\Event\TimeoutAdapter::timeout
+   * @covers ws\loewe\Woody\Event\TimeoutAdapter::timeout
    */
   public function testTimeout() {
-    $event = $this->getMockBuilder('Woody\Event\TimeoutEvent')
+    $event = $this->getMockBuilder('ws\loewe\Woody\Event\TimeoutEvent')
       ->disableOriginalConstructor()
       ->getMock();
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\Model\TableModel;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Model\TableModel;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class Table extends Control implements \SplObserver, Actionable {
   /**
@@ -29,7 +29,7 @@ class Table extends Control implements \SplObserver, Actionable {
   /**
    * This method returns the model of the table.
    *
-   * @return \Woody\Model\TableModel
+   * @return \ws\loewe\Woody\Model\TableModel
    */
   public function getModel() {
     return $this->model;
@@ -38,8 +38,8 @@ class Table extends Control implements \SplObserver, Actionable {
   /**
    * This method sets the table model of the table.
    *
-   * @param \Woody\Model\TableModel $model the model to set
-   * @return \Woody\Components\Controls\Table $this
+   * @param \ws\loewe\Woody\Model\TableModel $model the model to set
+   * @return \ws\loewe\Woody\Components\Controls\Table $this
    */
   public function setModel(TableModel $model) {
     return $this->update($model);
@@ -49,7 +49,7 @@ class Table extends Control implements \SplObserver, Actionable {
    * This method updates the table with the data of the new table model.
    *
    * @param \SplSubject $tableModel the new table model containing the new data
-   * @return \Woody\Components\Controls\Table $this
+   * @return \ws\loewe\Woody\Components\Controls\Table $this
    */
   public function update(\SplSubject $tableModel) {
     $this->model = $tableModel;
@@ -76,7 +76,7 @@ class Table extends Control implements \SplObserver, Actionable {
   /**
    * This method fills the header of the table. This is a mandatory step before being able to insert any data.
    *
-   * @return \Woody\Components\Controls\Table $this
+   * @return \ws\loewe\Woody\Components\Controls\Table $this
    */
   private function fillColumnHeaders() {
     $headers = new \ArrayObject();
@@ -132,7 +132,7 @@ class Table extends Control implements \SplObserver, Actionable {
    * This method sets the currently selected index of the table.
    *
    * @param int $index the index to set
-   * @return \Woody\Components\Controls\Table $this
+   * @return \ws\loewe\Woody\Components\Controls\Table $this
    */
   public function setSelectedIndex($index) {
     wb_set_selected($this->controlID, $index);

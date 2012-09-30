@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for EditArea.
@@ -16,21 +16,21 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   /**
    * the edit area to test
    *
-   * @var \Woody\Components\Controls\EditArea
+   * @var \ws\loewe\Woody\Components\Controls\EditArea
    */
   private $editArea = null;
 
   /**
    * the test application
    *
-   * @var \Woody\App\TestApplication
+   * @var \ws\loewe\Woody\App\TestApplication
    */
   private $application = null;
 
   /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -56,7 +56,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the value from the edit area.
    *
-   * @covers \Woody\Components\Controls\EditArea::getValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditArea::getValue
    */
   public function testGetValue() {
     $this->timer = new Timer(function() {
@@ -74,7 +74,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the trimmed value from the edit area.
    *
-   * @covers \Woody\Components\Controls\EditArea::getValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditArea::getValue
    */
   public function testGetValueTrimmed() {
     $this->timer = new Timer(function() {
@@ -93,7 +93,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the non-trimmed value from the edit area.
    *
-   * @covers \Woody\Components\Controls\EditArea::getValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditArea::getValue
    */
   public function testGetValueNotTrimmed() {
     $this->timer = new Timer(function() {
@@ -112,7 +112,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the multi-line value from the edit area.
    *
-   * @covers \Woody\Components\Controls\EditArea::getValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditArea::getValue
    */
   public function testGetMutiLine() {
     $this->timer = new Timer(function() {
@@ -132,7 +132,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the multi-line trimmed value from the edit area.
    *
-   * @covers \Woody\Components\Controls\EditArea::getValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditArea::getValue
    */
   public function testGetMutiLineTrimmed() {
     $this->timer = new Timer(function() {
@@ -152,7 +152,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the multi-line untrimmed value from the edit area.
    *
-   * @covers \Woody\Components\Controls\EditArea::getValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditArea::getValue
    */
   public function testGetMutiLineNotTrimmed() {
     $this->timer = new Timer(function() {
@@ -172,7 +172,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting a text value for the edit area.
    *
-   * @covers \Woody\Components\Controls\EditArea::setValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditArea::setValue
    */
   public function testSetValueText() {
     $this->timer = new Timer(function() {
@@ -191,7 +191,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting a integer value for the edit area.
    *
-   * @covers \Woody\Components\Controls\EditArea::setValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditArea::setValue
    */
   public function testSetValueInteger() {
     $this->timer = new Timer(function() {
@@ -210,7 +210,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting a decimal value for the edit area.
    *
-   * @covers \Woody\Components\Controls\EditArea::setValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditArea::setValue
    */
   public function testSetValueDecimal() {
     $this->timer = new Timer(function() {

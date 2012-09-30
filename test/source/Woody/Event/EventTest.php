@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\Components\Windows\MainWindow;
-use \Woody\Components\Controls\EditBox;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Windows\MainWindow;
+use \ws\loewe\Woody\Components\Controls\EditBox;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for Event.
@@ -22,7 +22,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+    $eventInfo = $this->getMockBuilder('\ws\loewe\Woody\Event\EventInfo')
       ->disableOriginalConstructor()
       ->getMock();
     $this->event = new KeyEvent($eventInfo);
@@ -38,7 +38,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting properties from the event.
    *
-   * @covers \Woody\Event\Event::__get
+   * @covers \ws\loewe\Woody\Event\Event::__get
    */
   public function test__get() {
     $this->assertEquals(0, $this->event->windowID);
@@ -47,7 +47,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the source of the event.
    *
-   * @covers \Woody\Event\Event::getSource
+   * @covers \ws\loewe\Woody\Event\Event::getSource
    */
   public function testGetSource() {
     $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
@@ -64,7 +64,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests determining if the alt key is pressed.
    *
-   * @covers \Woody\Event\Event::isAltKeyPressed
+   * @covers \ws\loewe\Woody\Event\Event::isAltKeyPressed
    */
   public function testIsAltKeyPressed() {
     $this->assertFalse($this->event->isAltKeyPressed());
@@ -73,7 +73,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests determining if the control key is pressed.
    *
-   * @covers \Woody\Event\Event::isCtrlKeyPressed
+   * @covers \ws\loewe\Woody\Event\Event::isCtrlKeyPressed
    */
   public function testIsCtrlKeyPressed() {
     $this->assertFalse($this->event->isCtrlKeyPressed());
@@ -82,7 +82,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests determining if the shift key is pressed.
    *
-   * @covers \Woody\Event\Event::isShiftKeyPressed
+   * @covers \ws\loewe\Woody\Event\Event::isShiftKeyPressed
    */
   public function testIsShiftKeyPressed() {
     $this->assertFalse($this->event->isShiftKeyPressed());
@@ -91,7 +91,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests the string representation of the event.
    *
-   * @covers \Woody\Event\Event::__toString
+   * @covers \ws\loewe\Woody\Event\Event::__toString
    */
   public function testToString() {
     $this->assertTrue(strpos($this->event->__toString(), 'windowID = ') !== FALSE);

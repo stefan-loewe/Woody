@@ -1,15 +1,15 @@
 <?php
 
-namespace Woody\Util\Image;
+namespace ws\loewe\Woody\Util\Image;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class ImageResource {
   /**
    * the dimension of the image resource
    *
-   * @var \Utils\Geom\Dimension
+   * @var ws\loewe\Utils\Geom\Dimension
    */
   private $dimension = null;
 
@@ -23,8 +23,8 @@ class ImageResource {
   /**
    * This method creates a blank image.
    *
-   * @param \Utils\Geom\Dimension $dimension the dimension of the image
-   * @return \Woody\Util\Image\ImageResource the blank image
+   * @param ws\loewe\Utils\Geom\Dimension $dimension the dimension of the image
+   * @return \ws\loewe\Woody\Util\Image\ImageResource the blank image
    */
   public static function create(Dimension $dimension) {
     return new ImageResource($dimension, null);
@@ -34,8 +34,8 @@ class ImageResource {
    * This method creates an image from the given file with the dimensions of the image, or with the supplied dimension.
    *
    * @param string the file name of the image file
-   * @param \Utils\Geom\Dimension $dimension the dimension to which to crop the image
-   * @return \Woody\Util\Image\ImageResource the blank image
+   * @param ws\loewe\Utils\Geom\Dimension $dimension the dimension to which to crop the image
+   * @return \ws\loewe\Woody\Util\Image\ImageResource the blank image
    */
   public static function createFromFile($imageFileName, Dimension $dimension = null) {
     if($dimension == null) {
@@ -49,7 +49,7 @@ class ImageResource {
   /**
    * This method acts as the constructor of the class.
    *
-   * @param \Utils\Geom\Dimension $dimension the dimension of the image
+   * @param ws\loewe\Utils\Geom\Dimension $dimension the dimension of the image
    * @param string $imageFileName the image file to create the image from
    */
   private function __construct(Dimension $dimension, $imageFileName = null) {
@@ -102,7 +102,7 @@ class ImageResource {
   /**
    * This method returns the dimension of the image resource.
    *
-   * @return \Utils\Geom\Dimension the image resource
+   * @return ws\loewe\Utils\Geom\Dimension the image resource
    */
   public function getDimension() {
     return new Dimension($this->dimension->width, $this->dimension->height);
@@ -111,12 +111,12 @@ class ImageResource {
   /**
    * This method draws a line on the image.
    *
-   * @param \Utils\Geom\Point $source the source point of the line
-   * @param \Utils\Geom\Point $target the target point of the line
+   * @param ws\loewe\Utils\Geom\Point $source the source point of the line
+   * @param ws\loewe\Utils\Geom\Point $target the target point of the line
    * @param int $color the color of the line
    * @param boolean $width the width of the line in pixels
    * @param boolean $style the sytle of the line
-   * @return \Woody\Util\Image\ImageResource $this
+   * @return \ws\loewe\Woody\Util\Image\ImageResource $this
    */
   public function drawLine(Point $source, Point $target, $color, $width = null, $style = null) {
     wb_draw_line($this->resource, $source->x, $source->y, $target->x, $target->y, $color, $width, $style);
@@ -127,13 +127,13 @@ class ImageResource {
   /**
    * This method draws a rectangle on the image.
    *
-   * @param \Utils\Geom\Point $tlc the top left corner of the rectangle
-   * @param \Utils\Geom\Dimension $dim the dimension of the rectangle
+   * @param ws\loewe\Utils\Geom\Point $tlc the top left corner of the rectangle
+   * @param ws\loewe\Utils\Geom\Dimension $dim the dimension of the rectangle
    * @param int $color the color of the rectangle
    * @param boolean $filled whether or not to draw the rectangle filled
    * @param boolean $width the width of the line in pixels
    * @param boolean $style the sytle of the line
-   * @return \Woody\Util\Image\ImageResource $this
+   * @return \ws\loewe\Woody\Util\Image\ImageResource $this
    */
   public function drawRectangle(Point $tlc, Dimension $dim, $color, $filled = TRUE, $width = null, $style = null) {
     wb_draw_rect(

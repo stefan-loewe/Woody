@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for EditArea.
@@ -15,21 +15,21 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
   /**
    * the checkbox to test
    *
-   * @var \Woody\Components\Controls\Checkbox
+   * @var \ws\loewe\Woody\Components\Controls\Checkbox
    */
   private $checkbox = null;
 
   /**
    * the test application
    *
-   * @var \Woody\App\TestApplication
+   * @var \ws\loewe\Woody\App\TestApplication
    */
   private $application = null;
 
   /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -55,7 +55,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests resizing the checkbox.
    *
-   * @covers \Woody\Components\Controls\Checkbox::resizeTo
+   * @covers \ws\loewe\Woody\Components\Controls\Checkbox::resizeTo
    */
   public function testResizeTo() {
     $callback = function() {
@@ -87,7 +87,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the value of the checkbox.
    *
-   * @covers \Woody\Components\Controls\Checkbox::isChecked
+   * @covers \ws\loewe\Woody\Components\Controls\Checkbox::isChecked
    */
   public function testIsChecked() {
     $this->timer = new Timer(function() {
@@ -112,7 +112,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting the value of the checkbox.
    *
-   * @covers \Woody\Components\Controls\Checkbox::setChecked
+   * @covers \ws\loewe\Woody\Components\Controls\Checkbox::setChecked
    */
   public function testSetChecked() {
     $this->timer = new Timer(function() {

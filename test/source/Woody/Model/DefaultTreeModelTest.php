@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Model;
+namespace ws\loewe\Woody\Model;
 
 use \Utils\Tree\TreeNode;
 
@@ -44,7 +44,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests that creating the tree model succeeds.
    *
-   * @covers \Woody\Model\DefaultTreeModel::__construct
+   * @covers \ws\loewe\Woody\Model\DefaultTreeModel::__construct
    */
   public function testConstruct() {
     $this->root = $this->getRootNode();
@@ -57,7 +57,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
    * This method barely tests that when getChild is called, the call is forwarded to the tree node and returned
    * unchanged.
    *
-   * @covers \Woody\Model\DefaultTreeModel::getChild
+   * @covers \ws\loewe\Woody\Model\DefaultTreeModel::getChild
    */
   public function testGetChild() {
     $child1 = $this->getChildNode();
@@ -73,7 +73,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
    * This method barely tests that when getChildCount is called, the call is forwarded to the tree node and returned
    * unchanged.
    *
-   * @covers \Woody\Model\DefaultTreeModel::getChildCount
+   * @covers \ws\loewe\Woody\Model\DefaultTreeModel::getChildCount
    */
   public function testGetChildCount() {
     $this->root->expects($this->any())
@@ -87,7 +87,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
    * This method barely tests that when getIndexOfChild is called, the call is forwarded to the tree node and returned
    * unchanged.
    *
-   * @covers \Woody\Model\DefaultTreeModel::getIndexOfChild
+   * @covers \ws\loewe\Woody\Model\DefaultTreeModel::getIndexOfChild
    */
   public function testGetIndexOfChild() {
     $this->root->expects($this->any())
@@ -100,7 +100,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method barely tests that when isLeaf is called, the call is forwarded to the tree node and returned unchanged.
    *
-   * @covers \Woody\Model\DefaultTreeModel::isLeaf
+   * @covers \ws\loewe\Woody\Model\DefaultTreeModel::isLeaf
    */
   public function testIsLeaf() {
     $this->root->expects($this->any())
@@ -114,7 +114,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
    * This method tests that, when an observer is attached and a child is appended, update() has to be called once on the
    * observer.
    *
-   * @covers \Woody\Model\DefaultTreeModel::appendChild
+   * @covers \ws\loewe\Woody\Model\DefaultTreeModel::appendChild
    */
   public function testAppenChild() {
     $observer = $this->getObserver();
@@ -128,7 +128,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
    * This method tests that, when attaching an observer and appending a child, update() has to be called once on the
    * observer.
    *
-   * @covers \Woody\Model\DefaultTreeModel::attach
+   * @covers \ws\loewe\Woody\Model\DefaultTreeModel::attach
    */
   public function testAttach() {
     $observer = $this->getObserver();
@@ -142,7 +142,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
    * This method tests that, when attaching an observer and appending a child, update() has to be called once on the
    * observer - called within notify() of the tree model.
    *
-   * @covers \Woody\Model\DefaultTreeModel::notify
+   * @covers \ws\loewe\Woody\Model\DefaultTreeModel::notify
    */
   public function testNotify() {
     $observer = $this->getObserver();
@@ -156,7 +156,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
    * This method tests that, when attaching an observer and appending a child, update() has to be called once on the
    * observer, but when detaching it, update() is not called anymore.
    *
-   * @covers \Woody\Model\DefaultTreeModel::detach
+   * @covers \ws\loewe\Woody\Model\DefaultTreeModel::detach
    */
   public function testDetach() {
     $observer = $this->getObserver();

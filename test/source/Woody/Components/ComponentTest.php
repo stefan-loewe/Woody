@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Components;
+namespace ws\loewe\Woody\Components;
 
-use \Woody\Components\Windows\MainWindow;
-use \Woody\Components\Controls\Label;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Windows\MainWindow;
+use \ws\loewe\Woody\Components\Controls\Label;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for Component.
@@ -58,10 +58,10 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the ids of the component.
    *
-   * @covers \Woody\Components\Component::getUniqueID
-   * @covers \Woody\Components\Component::getComponentByID
-   * @covers \Woody\Components\Component::getControlID
-   * @covers \Woody\Components\Component::getID
+   * @covers \ws\loewe\Woody\Components\Component::getUniqueID
+   * @covers \ws\loewe\Woody\Components\Component::getComponentByID
+   * @covers \ws\loewe\Woody\Components\Component::getControlID
+   * @covers \ws\loewe\Woody\Components\Component::getID
    */
   public function testGetIDs() {
     $id1 = Component::getUniqueID();
@@ -76,7 +76,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the parent of the component.
    *
-   * @covers \Woody\Components\Component::getParent
+   * @covers \ws\loewe\Woody\Components\Component::getParent
    */
   public function testGetParent() {
     $this->assertEquals($this->window->getRootPane(), $this->component->getParent());
@@ -85,7 +85,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the position of the component.
    *
-   * @covers \Woody\Components\Component::getPosition
+   * @covers \ws\loewe\Woody\Components\Component::getPosition
    */
   public function testGetPosition() {
     $this->assertEquals($this->topLeftCorner->x, $this->component->getPosition()->x);
@@ -96,7 +96,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the dimension of the component.
    *
-   * @covers \Woody\Components\Component::getDimension
+   * @covers \ws\loewe\Woody\Components\Component::getDimension
    */
   public function testGetDimension() {
     $this->assertEquals($this->dimension->width, $this->component->getDimension()->width);
@@ -107,14 +107,14 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding, getting, and removing an action listener from the component.
    *
-   * @covers \Woody\Components\Component::getActionListeners
-   * @covers \Woody\Components\Component::addActionListener
-   * @covers \Woody\Components\Component::removeActionListener
+   * @covers \ws\loewe\Woody\Components\Component::getActionListeners
+   * @covers \ws\loewe\Woody\Components\Component::addActionListener
+   * @covers \ws\loewe\Woody\Components\Component::removeActionListener
    */
   public function testActionListeners() {
     $this->assertEquals(0, $this->component->getActionListeners()->count());
 
-    $actionListener = $this->getMockBuilder('\Woody\Event\ActionAdapter')
+    $actionListener = $this->getMockBuilder('\ws\loewe\Woody\Event\ActionAdapter')
                                       ->disableOriginalConstructor()
                                       ->getMock();
 
@@ -128,14 +128,14 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding, getting, and removing a focus listener from the component.
    *
-   * @covers \Woody\Components\Component::getFocusListeners
-   * @covers \Woody\Components\Component::addFocusListener
-   * @covers \Woody\Components\Component::removeFocusListener
+   * @covers \ws\loewe\Woody\Components\Component::getFocusListeners
+   * @covers \ws\loewe\Woody\Components\Component::addFocusListener
+   * @covers \ws\loewe\Woody\Components\Component::removeFocusListener
    */
   public function testFocusListeners() {
     $this->assertEquals(0, $this->component->getFocusListeners()->count());
 
-    $focusListener = $this->getMockBuilder('\Woody\Event\FocusAdapter')
+    $focusListener = $this->getMockBuilder('\ws\loewe\Woody\Event\FocusAdapter')
                                       ->disableOriginalConstructor()
                                       ->getMock();
 
@@ -149,14 +149,14 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding, getting, and removing a key listener from the component.
    *
-   * @covers \Woody\Components\Component::getKeyListeners
-   * @covers \Woody\Components\Component::addKeyListener
-   * @covers \Woody\Components\Component::removeKeyListener
+   * @covers \ws\loewe\Woody\Components\Component::getKeyListeners
+   * @covers \ws\loewe\Woody\Components\Component::addKeyListener
+   * @covers \ws\loewe\Woody\Components\Component::removeKeyListener
    */
   public function testKeyListeners() {
     $this->assertEquals(0, $this->component->getKeyListeners()->count());
 
-    $keyListener = $this->getMockBuilder('\Woody\Event\KeyAdapter')
+    $keyListener = $this->getMockBuilder('\ws\loewe\Woody\Event\KeyAdapter')
                                       ->disableOriginalConstructor()
                                       ->getMock();
 
@@ -170,14 +170,14 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding, getting, and removing a mouse listener from the component.
    *
-   * @covers \Woody\Components\Component::getMouseListeners
-   * @covers \Woody\Components\Component::addMouseListener
-   * @covers \Woody\Components\Component::removeMouseListener
+   * @covers \ws\loewe\Woody\Components\Component::getMouseListeners
+   * @covers \ws\loewe\Woody\Components\Component::addMouseListener
+   * @covers \ws\loewe\Woody\Components\Component::removeMouseListener
    */
   public function testMouseListeners() {
     $this->assertEquals(0, $this->component->getMouseListeners()->count());
 
-    $mouseListener = $this->getMockBuilder('\Woody\Event\MouseAdapter')
+    $mouseListener = $this->getMockBuilder('\ws\loewe\Woody\Event\MouseAdapter')
                                       ->disableOriginalConstructor()
                                       ->getMock();
 
@@ -191,7 +191,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests refreshing the component.
    *
-   * @covers \Woody\Components\Component::refresh
+   * @covers \ws\loewe\Woody\Components\Component::refresh
    */
   public function testRefresh() {
     $this->assertSame($this->component, $this->component->refresh(TRUE));
@@ -201,8 +201,8 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests hiding and showing the component.
    *
-   * @covers \Woody\Components\Component::disable
-   * @covers \Woody\Components\Component::enable
+   * @covers \ws\loewe\Woody\Components\Component::disable
+   * @covers \ws\loewe\Woody\Components\Component::enable
    */
   public function testDisableEnable() {
     $this->assertSame($this->component, $this->component->disable());
@@ -212,8 +212,8 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests hiding and showing the component.
    *
-   * @covers \Woody\Components\Component::hide
-   * @covers \Woody\Components\Component::show
+   * @covers \ws\loewe\Woody\Components\Component::hide
+   * @covers \ws\loewe\Woody\Components\Component::show
    */
   public function testHideShow() {
     $this->assertSame($this->component, $this->component->hide());

@@ -1,21 +1,21 @@
 <?php
 
-namespace Woody\Components\Windows;
+namespace ws\loewe\Woody\Components\Windows;
 
-use \Woody\Components\Component;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
-use \Woody\System\WindowConstraints;
-use \Woody\Event\WindowResizeListener;
-use \Woody\Components\Controls\Frame;
-use \Woody\Event\WindowCloseListener;
+use \ws\loewe\Woody\Components\Component;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
+use \ws\loewe\Woody\System\WindowConstraints;
+use \ws\loewe\Woody\Event\WindowResizeListener;
+use \ws\loewe\Woody\Components\Controls\Frame;
+use \ws\loewe\Woody\Event\WindowCloseListener;
 
 abstract class AbstractWindow extends Component {
 
   /**
    * the close listener registered for this window
    *
-   * @var \Woody\Event\WindowCloseListener
+   * @var \ws\loewe\Woody\Event\WindowCloseListener
    */
   protected $closeListener        = null;
 
@@ -29,7 +29,7 @@ abstract class AbstractWindow extends Component {
   /**
    * the root pane of the window
    *
-   * @var Woody\Components\Controls\Frame
+   * @var ws\loewe\Woody\Components\Controls\Frame
    */
   protected $rootPane             = null;
 
@@ -162,7 +162,7 @@ abstract class AbstractWindow extends Component {
    * This method sets the title of the window.
    *
    * @param string $title the title of the window
-   * @return \Woody\Components\Windows\AbstractWindow $this
+   * @return \ws\loewe\Woody\Components\Windows\AbstractWindow $this
    */
   public function setTitle($title) {
     wb_set_text($this->controlID, $title);

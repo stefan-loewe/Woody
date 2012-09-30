@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Dialog\FileSystem;
+namespace ws\loewe\Woody\Dialog\FileSystem;
 
 /**
  * Test class for FileSaveDialog.
@@ -29,12 +29,12 @@ class FileSaveDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers \Woody\Dialog\FileSystem\FileSaveDialog::__construct
-   * @covers \Woody\Dialog\FileSystem\FileSystemDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FileSaveDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FileSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new FileSaveDialog('testConstruct', null, '.', null);
 
-    $this->assertInstanceOf('\Woody\Dialog\FileSystem\FileSaveDialog', $this->dialog);
+    $this->assertInstanceOf('\ws\loewe\Woody\Dialog\FileSystem\FileSaveDialog', $this->dialog);
   }
 }

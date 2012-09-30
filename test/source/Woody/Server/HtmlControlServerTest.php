@@ -1,13 +1,13 @@
 <?php
 
-namespace Woody\Server;
+namespace ws\loewe\Woody\Server;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Dimension;
-use \Utils\Geom\Point;
-use \Woody\Components\Controls\HtmlControl;
-use \Woody\Event\ActionAdapter;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Woody\Components\Controls\HtmlControl;
+use \ws\loewe\Woody\Event\ActionAdapter;
 
 /**
  * Test class for HtmlControlServer.
@@ -43,45 +43,45 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests constructing a new server.
    *
-   * @covers \Woody\Server\HtmlControlServer::__construct
+   * @covers \ws\loewe\Woody\Server\HtmlControlServer::__construct
    */
   public function testConstruct() {
-    $window = $this->getMockBuilder('\Woody\Components\Windows\AbstractWindow')
+    $window = $this->getMockBuilder('\ws\loewe\Woody\Components\Windows\AbstractWindow')
       ->disableOriginalConstructor()
       ->getMock();
 
     $this->server = new HtmlControlServer($window, 9997);
 
-    $this->assertInstanceOf('Woody\Server\HtmlControlServer', $this->server);
+    $this->assertInstanceOf('ws\loewe\Woody\Server\HtmlControlServer', $this->server);
   }
 
   /**
    * This method tests registering and untegistering HTML controls to and from the server.
    *
-   * @covers \Woody\Server\HtmlControlServer::register
-   * @covers \Woody\Server\HtmlControlServer::unregister
+   * @covers \ws\loewe\Woody\Server\HtmlControlServer::register
+   * @covers \ws\loewe\Woody\Server\HtmlControlServer::unregister
    */
   public function testRegisterUnregister() {
-    $window = $this->getMockBuilder('\Woody\Components\Windows\AbstractWindow')
+    $window = $this->getMockBuilder('\ws\loewe\Woody\Components\Windows\AbstractWindow')
       ->disableOriginalConstructor()
       ->getMock();
 
     $this->server = new HtmlControlServer($window, 9998);
 
-    $htmlControl = $this->getMockBuilder('\Woody\Components\Controls\HtmlControl')
+    $htmlControl = $this->getMockBuilder('\ws\loewe\Woody\Components\Controls\HtmlControl')
       ->disableOriginalConstructor()
       ->getMock();
 
-    $this->assertInstanceOf('\Woody\Server\HtmlControlServer', $this->server->register($htmlControl));
-    $this->assertInstanceOf('\Woody\Server\HtmlControlServer', $this->server->unregister($htmlControl));
+    $this->assertInstanceOf('\ws\loewe\Woody\Server\HtmlControlServer', $this->server->register($htmlControl));
+    $this->assertInstanceOf('\ws\loewe\Woody\Server\HtmlControlServer', $this->server->unregister($htmlControl));
   }
 
   /**
    * This method tests starting the server, as well as receiving and processing events.
    *
-   * @covers \Woody\Server\HtmlControlServer::start
-   * @covers \Woody\Server\HtmlControlServer::loopOnce
-   * @covers \Woody\Server\HtmlControlServer::processClient
+   * @covers \ws\loewe\Woody\Server\HtmlControlServer::start
+   * @covers \ws\loewe\Woody\Server\HtmlControlServer::loopOnce
+   * @covers \ws\loewe\Woody\Server\HtmlControlServer::processClient
    */
   public function testStart() {
     $this->application  = new TestApplication();

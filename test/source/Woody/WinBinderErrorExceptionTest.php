@@ -1,10 +1,10 @@
 <?php
 
-namespace Woody;
+namespace ws\loewe\Woody;
 
-use Utils\Geom\Dimension;
-use Utils\Geom\Point;
-use Woody\Components\Windows\MainWindow;
+use \ws\loewe\Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Woody\Components\Windows\MainWindow;
 
 /**
  * Test class for WinBinderErrorException.
@@ -28,7 +28,7 @@ class WinBinderErrorExceptionTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests raising the exception.
    *
-   * @covers \Woody\WinBinderErrorException::__construct
+   * @covers \ws\loewe\Woody\WinBinderErrorException::__construct
    */
   public function testConstruct() {
     $window = new MainWindow('TestApp', new Point(50, 50), new Dimension(300, 200));
@@ -37,10 +37,10 @@ class WinBinderErrorExceptionTest extends \PHPUnit_Framework_TestCase {
       // refreshing the window before it was created will lead to a winbinder exception
       $window->refresh();
     } catch(WinBinderErrorException $exception) {
-      $this->assertInstanceOf('\Woody\WinBinderErrorException', $exception);
+      $this->assertInstanceOf('\ws\loewe\Woody\WinBinderErrorException', $exception);
       return;
     }
 
-    $this->fail('The expected \Woody\WinBinderErrorException has not been raised.');
+    $this->fail('The expected \ws\loewe\Woody\WinBinderErrorException has not been raised.');
   }
 }

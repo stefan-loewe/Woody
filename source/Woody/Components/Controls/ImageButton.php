@@ -1,24 +1,24 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\Components\Component;
-use \Woody\Util\Image\ImageResource;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Component;
+use \ws\loewe\Woody\Util\Image\ImageResource;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class ImageButton extends Button {
   /**
    * the image resource the image button is associated with
    *
-   * @var \Woody\Utils\ImageResource
+   * @var \ws\loewe\Woody\Utils\ImageResource
    */
   private $imageResource = null;
 
   /**
    * This method acts as the constructor of the class.
    *
-   * @param \Woody\Utils\ImageResource $imageResource the image resource the image button is associated with
+   * @param \ws\loewe\Woody\Utils\ImageResource $imageResource the image resource the image button is associated with
    * @param Point $topLeftCorner the top left corner of the image
    * @param Dimension $dimension the dimension of the image
    */
@@ -37,7 +37,7 @@ class ImageButton extends Button {
   /**
    * This method sets the image of the image button.
    *
-   * @return \Woody\Components\Controls\ImageButton $this
+   * @return \ws\loewe\Woody\Components\Controls\ImageButton $this
    */
   private function setImage() {
     $bitmap = $this->imageResource->getResource();

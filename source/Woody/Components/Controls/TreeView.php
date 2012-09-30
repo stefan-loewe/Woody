@@ -1,10 +1,10 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Utils\Model\ITreeModel;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Model\ITreeModel;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class TreeView extends Control implements \SplObserver, Actionable {
   /**
@@ -77,7 +77,7 @@ class TreeView extends Control implements \SplObserver, Actionable {
    * This method sets the given item as the selected item.
    *
    * @param object $item the item to set
-   * @return \Woody\Components\Controls\TreeView $this
+   * @return \ws\loewe\Woody\Components\Controls\TreeView $this
    */
   public function setSelectedItem($item) {
     wb_set_selected($this->controlID, $this->controlNodes[self::getHash($item)]);
@@ -88,7 +88,7 @@ class TreeView extends Control implements \SplObserver, Actionable {
   /**
    * This method returns the tree model of the tree view.
    *
-   * @return \Woody\Model\ITreeModel
+   * @return \ws\loewe\Woody\Model\ITreeModel
    */
   public function getModel() {
     return $this->model;
@@ -97,8 +97,8 @@ class TreeView extends Control implements \SplObserver, Actionable {
   /**
    * This method sets the tree model of the tree view.
    *
-   * @param \Woody\Model\ITreeModel $model the model to set
-   * @return \Woody\Components\Controls\TreeView $this
+   * @param \ws\loewe\Woody\Model\ITreeModel $model the model to set
+   * @return \ws\loewe\Woody\Components\Controls\TreeView $this
    */
   public function setModel(ITreeModel $model) {
     return $this->update($model);
@@ -108,7 +108,7 @@ class TreeView extends Control implements \SplObserver, Actionable {
    * This method sets the cell renderer of the tree view.
    *
    * @param \callable $nodeRenderer
-   * @return \Woody\Components\Controls\TreeView $this
+   * @return \ws\loewe\Woody\Components\Controls\TreeView $this
    */
   public function setNodeRenderer(callable $nodeRenderer) {
     $this->nodeRenderer = $nodeRenderer;
@@ -120,7 +120,7 @@ class TreeView extends Control implements \SplObserver, Actionable {
    * This method expands the node associated with the given item.
    *
    * @param object $item the item whose node to expand
-   * @return \Woody\Components\Controls\TreeView $this
+   * @return \ws\loewe\Woody\Components\Controls\TreeView $this
    */
   public function expandNode($item) {
     $hash = self::getHash($item);
@@ -141,7 +141,7 @@ class TreeView extends Control implements \SplObserver, Actionable {
    * This method collapses the node associated with the given item.
    *
    * @param object $item the item whose node to collapse
-   * @return \Woody\Components\Controls\TreeView $this
+   * @return \ws\loewe\Woody\Components\Controls\TreeView $this
    */
   public function collapseNode($item) {
     $hash = self::getHash($item);
@@ -157,7 +157,7 @@ class TreeView extends Control implements \SplObserver, Actionable {
    * This method updates the tree view with the data from the given model.
    *
    * @param \SplSubject $treeModel the tree model which contains the data to display
-   * @return \Woody\Components\Controls\TreeView $this
+   * @return \ws\loewe\Woody\Components\Controls\TreeView $this
    */
   public function update(\SplSubject $treeModel) {
     $this->model = $treeModel;
@@ -194,7 +194,7 @@ class TreeView extends Control implements \SplObserver, Actionable {
   /**
    * This method clears all entries from the view.
    *
-   * @return \Woody\Components\Controls\TreeView $this
+   * @return \ws\loewe\Woody\Components\Controls\TreeView $this
    */
   protected function clear() {
     wb_delete_items($this->controlID, null);
@@ -205,7 +205,7 @@ class TreeView extends Control implements \SplObserver, Actionable {
   /**
    * This method rebuilds the view.
    *
-   * @return \Woody\Components\Controls\TreeView $this
+   * @return \ws\loewe\Woody\Components\Controls\TreeView $this
    */
   protected function rebuild() {
     $root = $this->model->getRoot();
@@ -232,7 +232,7 @@ class TreeView extends Control implements \SplObserver, Actionable {
    *
    * @param object $node the node to insert
    * @param object $parent the parent under which the node has to be inserted
-   * @return \Woody\Components\Controls\TreeView $this
+   * @return \ws\loewe\Woody\Components\Controls\TreeView $this
    */
   protected function addNode($node, $parent) {
     $value = $this->nodeRenderer->__invoke($node);

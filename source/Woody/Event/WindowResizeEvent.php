@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class WindowResizeEvent extends Event {
 

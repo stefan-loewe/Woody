@@ -1,13 +1,13 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\Model\DefaultTreeModel;
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
+use \ws\loewe\Woody\Model\DefaultTreeModel;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
 use \Utils\Tree\TreeNode;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for TreeView.
@@ -17,21 +17,21 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
   /**
    * the tree view to test
    *
-   * @var \Woody\Components\Controls\Treeview
+   * @var \ws\loewe\Woody\Components\Controls\Treeview
    */
   private $treeView = null;
 
   /**
    * the test application
    *
-   * @var \Woody\App\TestApplication
+   * @var \ws\loewe\Woody\App\TestApplication
    */
   private $application = null;
 
   /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -55,9 +55,9 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\TreeView::getSelectedItem
-   * @covers \Woody\Components\Controls\TreeView::findNodeByHash
-   * @covers \Woody\Components\Controls\TreeView::setSelectedItem
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::getSelectedItem
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::findNodeByHash
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::setSelectedItem
    */
   public function testGetSetSelectedItem() {
     $this->timer = new Timer(function() {
@@ -81,7 +81,7 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\TreeView::getParentItem
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::getParentItem
    */
   public function testGetParentItem() {
     $this->timer = new Timer(function() {
@@ -105,14 +105,14 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\TreeView::getModel
-   * @covers \Woody\Components\Controls\TreeView::setModel
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::getModel
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::setModel
    */
   public function testGetSetModel() {
     $this->timer = new Timer(function() {
           $this->assertNull($this->treeView->getModel());
 
-          $model = $this->getMockBuilder('\Woody\Model\DefaultTreeModel')
+          $model = $this->getMockBuilder('\ws\loewe\Woody\Model\DefaultTreeModel')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -130,11 +130,11 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\TreeView::update
-   * @covers \Woody\Components\Controls\TreeView::clear
-   * @covers \Woody\Components\Controls\TreeView::rebuild
-   * @covers \Woody\Components\Controls\TreeView::addNode
-   * @covers \Woody\Components\Controls\TreeView::getHash
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::update
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::clear
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::rebuild
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::addNode
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::getHash
    */
   public function testUpdate() {
     $this->timer = new Timer(function() {
@@ -165,8 +165,8 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests expanding and collapsing a node in the tree view.
    *
-   * @covers \Woody\Components\Controls\TreeView::expandNode
-   * @covers \Woody\Components\Controls\TreeView::collapseNode
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::expandNode
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::collapseNode
    */
   public function testExpandCollapse() {
     $callback = function() {
@@ -190,7 +190,7 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting the node renderer.
    *
-   * @covers \Woody\Components\Controls\TreeView::setNodeRenderer
+   * @covers \ws\loewe\Woody\Components\Controls\TreeView::setNodeRenderer
    */
   public function testSetNodeRenderer() {
     $callback = function() {
@@ -210,7 +210,7 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method returns the default mock object for testing this class.
    *
-   * @return \Woody\Model\DefaultTreeModel
+   * @return \ws\loewe\Woody\Model\DefaultTreeModel
    */
   private function getDefaultMock() {
     $root = new TreeNode('root');

@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
 /**
  * Test class for ActionAdapter.
@@ -34,20 +34,20 @@ class ActionAdapterTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method test the constructor of the adapter
    *
-   * @covers Woody\Event\ActionAdapter::__construct
+   * @covers ws\loewe\Woody\Event\ActionAdapter::__construct
    */
   public function testConstruct() {
     $this->adapter = new ActionAdapter(function(){});
-    $this->assertInstanceOf('Woody\Event\ActionAdapter', $this->adapter);
+    $this->assertInstanceOf('ws\loewe\Woody\Event\ActionAdapter', $this->adapter);
   }
 
   /**
    * This method test the callback execution when an action is performed gains focus.
    *
-   * @covers Woody\Event\ActionAdapter::actionPerformed
+   * @covers ws\loewe\Woody\Event\ActionAdapter::actionPerformed
    */
   public function testActionPerformed() {
-    $event = $this->getMockBuilder('\Woody\Event\ActionEvent')
+    $event = $this->getMockBuilder('\ws\loewe\Woody\Event\ActionEvent')
       ->disableOriginalConstructor()
       ->getMock();
 

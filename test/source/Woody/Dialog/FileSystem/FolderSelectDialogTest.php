@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Dialog\FileSystem;
+namespace ws\loewe\Woody\Dialog\FileSystem;
 
 /**
  * Test class for FolderSelectDialog.
@@ -29,12 +29,12 @@ class FolderSelectDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers \Woody\Dialog\FileSystem\FolderSelectDialog::__construct
-   * @covers \Woody\Dialog\FileSystem\FileSystemDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FolderSelectDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FileSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new FolderSelectDialog('testConstruct', null, '.');
 
-    $this->assertInstanceOf('\Woody\Dialog\FileSystem\FolderSelectDialog', $this->dialog);
+    $this->assertInstanceOf('\ws\loewe\Woody\Dialog\FileSystem\FolderSelectDialog', $this->dialog);
   }
 }

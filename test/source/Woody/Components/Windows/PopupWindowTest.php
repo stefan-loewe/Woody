@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Components\Windows;
+namespace ws\loewe\Woody\Components\Windows;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for PopupWindow.
@@ -32,7 +32,7 @@ class PopupWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests constructing the popup window.
    *
-   * @covers \Woody\Components\Windows\PopupWindow::__construct
+   * @covers \ws\loewe\Woody\Components\Windows\PopupWindow::__construct
    */
   public function testConstruct() {
     $this->window = new PopupWindow('PopupWindow', new Point(121, 343), new Dimension(987, 654));

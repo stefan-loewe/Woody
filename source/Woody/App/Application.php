@@ -1,12 +1,12 @@
 <?php
 
-namespace Woody\App;
+namespace ws\loewe\Woody\App;
 
 abstract class Application {
   /**
    * the main window of the application
    *
-   * @var \Woody\Components\Windows\AbstractWindow
+   * @var \ws\loewe\Woody\Components\Windows\AbstractWindow
    */
   protected $window = null;
 
@@ -38,7 +38,7 @@ abstract class Application {
   /**
    * This method returns the main window of the application.
    *
-   * @return \Woody\Components\Windows\AbstractWindow
+   * @return \ws\loewe\Woody\Components\Windows\AbstractWindow
    */
   public function getWindow() {
     return $this->window;

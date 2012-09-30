@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Util\WinApi\Types;
+namespace ws\loewe\Woody\Util\WinApi\Types;
 
 class Dword implements Type {
   public function getPackFormatCharacter() {

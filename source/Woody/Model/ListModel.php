@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Model;
+namespace ws\loewe\Woody\Model;
 
 class ListModel implements \SplSubject {
   /**
@@ -39,7 +39,7 @@ class ListModel implements \SplSubject {
    * This method exchanges the data in the current model with the one given.
    *
    * @param \Traversable $data the new data of the model
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function setData(\Traversable $data = null) {
     $this->data = new \ArrayObject();
@@ -60,7 +60,7 @@ class ListModel implements \SplSubject {
    * This method adds an item as the last element of the model.
    *
    * @param mixed $item the element to add
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function addElement($item) {
     // $this->data[] = $item; did not work when adding elements after having
@@ -77,7 +77,7 @@ class ListModel implements \SplSubject {
    * This method adds multiple items as the last elements of the model.
    *
    * @param \Traversable $items the collection of elements to add
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function addElements(\Traversable $items) {
     $this->isAdjusting = TRUE;
@@ -142,7 +142,7 @@ class ListModel implements \SplSubject {
    *
    * @param mixed $element the element to add
    * @param int $index the index where to add the element
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function insertElementAt($element, $index) {
     // the index of the new element may not exeed the index after the currenly last element
@@ -164,7 +164,7 @@ class ListModel implements \SplSubject {
   /**
    * This method clears the model of all elements.
    *
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function removeAllElements() {
     foreach($this->data as $entry) {
@@ -184,7 +184,7 @@ class ListModel implements \SplSubject {
    * This method removed the given element from the model.
    *
    * @param mixed $element the element to remove
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function removeElement($element) {
     $this->removeElementAt($this->getIndexOf($element));
@@ -196,7 +196,7 @@ class ListModel implements \SplSubject {
    * This method removes the item at a specific index.
    *
    * @param int $index the index of the item to remove
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function removeElementAt($index) {
     $count = $this->count();
@@ -224,7 +224,7 @@ class ListModel implements \SplSubject {
    * This method adds an observer to the model.
    *
    * @param \SplObserver $observer the observer to add
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function attach(\SplObserver $observer) {
     $this->observers->attach($observer);
@@ -236,7 +236,7 @@ class ListModel implements \SplSubject {
    * This method removes an observer to the model.
    *
    * @param \SplObserver $observer the observer to remove
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function detach(\SplObserver $observer) {
     $this->observers->detach($observer);
@@ -247,7 +247,7 @@ class ListModel implements \SplSubject {
   /**
    * This method notifies all observer of the model to update themselves.
    *
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function notify() {
     if(!$this->isAdjusting) {

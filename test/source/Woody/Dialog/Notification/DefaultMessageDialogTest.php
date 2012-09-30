@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Dialog\Notification;
+namespace ws\loewe\Woody\Dialog\Notification;
 
 /**
  * Test class for DefaultMessageDialog.
@@ -29,13 +29,13 @@ class DefaultMessageDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers \Woody\Dialog\Notification\DefaultMessageDialog::__construct
-   * @covers \Woody\Dialog\Notification\MessageDialog::__construct
-   * @covers \Woody\Dialog\Notification\ModalSystemDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\Notification\DefaultMessageDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\Notification\MessageDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\Notification\ModalSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new DefaultMessageDialog('testConstruct', 'testConstruct', null);
 
-    $this->assertInstanceOf('\Woody\Dialog\Notification\DefaultMessageDialog', $this->dialog);
+    $this->assertInstanceOf('\ws\loewe\Woody\Dialog\Notification\DefaultMessageDialog', $this->dialog);
   }
 }

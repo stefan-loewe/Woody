@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
 /**
  * Test class for MouseAdapter.
@@ -34,24 +34,24 @@ class MouseAdapterTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method test the constructor of the adapter
    *
-   * @covers Woody\Event\MouseAdapter::__construct
+   * @covers ws\loewe\Woody\Event\MouseAdapter::__construct
    */
   public function testConstruct() {
     $this->adapter = new MouseAdapter(null, null);
-    $this->assertInstanceOf('Woody\Event\MouseAdapter', $this->adapter);
+    $this->assertInstanceOf('ws\loewe\Woody\Event\MouseAdapter', $this->adapter);
 
     $this->adapter = new MouseAdapter(function(){}, function(){});
-    $this->assertInstanceOf('Woody\Event\MouseAdapter', $this->adapter);
+    $this->assertInstanceOf('ws\loewe\Woody\Event\MouseAdapter', $this->adapter);
   }
 
   /**
    * This method test the callback execution when a key is pressed and released.
    *
-   * @covers Woody\Event\MouseAdapter::mousePressed
-   * @covers Woody\Event\MouseAdapter::mouseReleased
+   * @covers ws\loewe\Woody\Event\MouseAdapter::mousePressed
+   * @covers ws\loewe\Woody\Event\MouseAdapter::mouseReleased
    */
   public function testMousePressedMouseReleased() {
-    $event = $this->getMockBuilder('\Woody\Event\MouseEvent')
+    $event = $this->getMockBuilder('\ws\loewe\Woody\Event\MouseEvent')
       ->disableOriginalConstructor()
       ->getMock();
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Utils\DataStructures\RingBuffer;
-use \Utils\Geom\Point;
+use \ws\loewe\Utils\DataStructures\RingBuffer;
+use \ws\loewe\Utils\Geom\Point;
 
 class MouseEvent extends Event {
   /**

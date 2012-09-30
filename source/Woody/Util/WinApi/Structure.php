@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Util\WinApi;
+namespace ws\loewe\Woody\Util\WinApi;
 
 abstract class Structure {
 
@@ -19,7 +19,7 @@ abstract class Structure {
     $packString = '';
 
     foreach($this->getTypeMapping() as $type) {
-      $typeClassName  = "\\Woody\\Util\\WinApi\\Types\\".$type;
+      $typeClassName  = "\\ws\loewe\Woody\\Util\\WinApi\\Types\\".$type;
       $typeClass      = new $typeClassName();
 
       $packString = $packString.pack($typeClass->getPackFormatCharacter(), $typeClass->getLength());
@@ -50,7 +50,7 @@ abstract class Structure {
     $unpackString = '';
 
     foreach($this->getTypeMapping() as $propertyName => $type) {
-      $typeClassName  = "\\Woody\\Util\\WinApi\\Types\\".$type;
+      $typeClassName  = "\\ws\loewe\Woody\\Util\\WinApi\\Types\\".$type;
       $typeClass      = new $typeClassName();
 
       $unpackString = $unpackString.$typeClass->getPackFormatCharacter().$propertyName.'/';

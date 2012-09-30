@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
 /**
  * Test class for FocusAdapter.
@@ -34,20 +34,20 @@ class FocusAdapterTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method test the constructor of the adapter
    *
-   * @covers Woody\Event\FocusAdapter::__construct
+   * @covers ws\loewe\Woody\Event\FocusAdapter::__construct
    */
   public function testConstruct() {
     $this->adapter = new FocusAdapter(function(){});
-    $this->assertInstanceOf('Woody\Event\FocusAdapter', $this->adapter);
+    $this->assertInstanceOf('ws\loewe\Woody\Event\FocusAdapter', $this->adapter);
   }
 
   /**
    * This method test the callback execution when a component gains focus.
    *
-   * @covers Woody\Event\FocusAdapter::focusGained
+   * @covers ws\loewe\Woody\Event\FocusAdapter::focusGained
    */
   public function testFocusGained() {
-    $event = $this->getMockBuilder('\Woody\Event\FocusEvent')
+    $event = $this->getMockBuilder('\ws\loewe\Woody\Event\FocusEvent')
       ->disableOriginalConstructor()
       ->getMock();
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Util\Image;
+namespace ws\loewe\Woody\Util\Image;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for ImageResource.
@@ -50,10 +50,10 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the image resource.
    *
-   * @covers \Woody\Util\Image\ImageResource::create
-   * @covers \Woody\Util\Image\ImageResource::__construct
-   * @covers \Woody\Util\Image\ImageResource::createResourceBlank
-   * @covers \Woody\Util\Image\ImageResource::getDimension
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::create
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::__construct
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::createResourceBlank
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::getDimension
    */
   public function testCreate() {
     $this->imageResource  = ImageResource::create(new Dimension(100, 50));
@@ -67,10 +67,10 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the image resource.
    *
-   * @covers \Woody\Util\Image\ImageResource::createFromFile
-   * @covers \Woody\Util\Image\ImageResource::__construct
-   * @covers \Woody\Util\Image\ImageResource::createResourceFromFile
-   * @covers \Woody\Util\Image\ImageResource::getDimension
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::createFromFile
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::__construct
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::createResourceFromFile
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::getDimension
    */
   public function testCreateFromFile() {
     $this->imageResource  = ImageResource::createFromFile($this->jpgImage);
@@ -92,8 +92,8 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the resource for a jpg-image.
    *
-   * @covers \Woody\Util\Image\ImageResource::getResource
-   * @covers \Woody\Util\Image\ImageResource::isJpeg
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::getResource
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::isJpeg
    */
   public function testGetBitmapJpg() {
     $this->imageResource = ImageResource::createFromFile($this->jpgImage);
@@ -104,8 +104,8 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the resource for a bitmap-image.
    *
-   * @covers \Woody\Util\Image\ImageResource::getResource
-   * @covers \Woody\Util\Image\ImageResource::isJpeg
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::getResource
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::isJpeg
    */
   public function testGetBitmapBmp() {
     $this->imageResource = ImageResource::createFromFile($this->bmpImage);
@@ -116,16 +116,16 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests drawing onto the image resource.
    *
-   * @covers \Woody\Util\Image\ImageResource::drawLine
-   * @covers \Woody\Util\Image\ImageResource::drawRectangle
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::drawLine
+   * @covers \ws\loewe\Woody\Util\Image\ImageResource::drawRectangle
    */
   public function testDraw() {
     $this->imageResource = ImageResource::create(new Dimension(100, 50));
 
     $this->imageResource = $this->imageResource->drawLine(new Point(0, 0), new Point(100, 50), 0);
-    $this->assertInstanceOf('Woody\Util\Image\ImageResource', $this->imageResource);
+    $this->assertInstanceOf('ws\loewe\Woody\Util\Image\ImageResource', $this->imageResource);
 
     $this->imageResource = $this->imageResource->drawRectangle(new Point(0, 0), new Dimension(100, 50), 0);
-    $this->assertInstanceOf('Woody\Util\Image\ImageResource', $this->imageResource);
+    $this->assertInstanceOf('ws\loewe\Woody\Util\Image\ImageResource', $this->imageResource);
   }
 }

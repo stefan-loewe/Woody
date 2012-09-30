@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\App;
+namespace ws\loewe\Woody\App;
 
-use \Woody\Components\Windows\MainWindow;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Windows\MainWindow;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class TestApplication extends Application {
   /**
@@ -55,7 +55,7 @@ class TestApplication extends Application {
   /**
    * This method starts the test application.
    *
-   * @return \Woody\App\TestApplication $this
+   * @return \ws\loewe\Woody\App\TestApplication $this
    */
   public function start() {
     $this->isRunning = TRUE;
@@ -71,7 +71,7 @@ class TestApplication extends Application {
    * The stopping is delayed for up to the length of the interval of self::$SHUT_DOWN_TIMER_INTERAL, as this is the
    * interval in which the shutdown timer is executed.
    *
-   * @return \Woody\App\TestApplication $this
+   * @return \ws\loewe\Woody\App\TestApplication $this
    */
   public function stop() {
     $this->isRunning = FALSE;

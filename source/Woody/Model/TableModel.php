@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Model;
+namespace ws\loewe\Woody\Model;
 
 abstract class TableModel implements \SplSubject {
   /**
@@ -83,7 +83,7 @@ abstract class TableModel implements \SplSubject {
    * This method adds an observer to the model.
    *
    * @param \SplObserver $observer the observer to add
-   * @return \Woody\Model\TableModel $this
+   * @return \ws\loewe\Woody\Model\TableModel $this
    */
   public function attach(\SplObserver $observer) {
     $this->observers->attach($observer);
@@ -95,7 +95,7 @@ abstract class TableModel implements \SplSubject {
    * This method removes an observer to the model.
    *
    * @param \SplObserver $observer the observer to remove
-   * @return \Woody\Model\TableModel $this
+   * @return \ws\loewe\Woody\Model\TableModel $this
    */
   public function detach(\SplObserver $observer) {
     $this->observers->detach($observer);
@@ -106,7 +106,7 @@ abstract class TableModel implements \SplSubject {
   /**
    * This method notifies all observer of the model to update themselves.
    *
-   * @return \Woody\Model\TableModel $this
+   * @return \ws\loewe\Woody\Model\TableModel $this
    */
   public function notify() {
     foreach($this->observers as $observer) {

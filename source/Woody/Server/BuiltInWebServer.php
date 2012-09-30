@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Server;
+namespace ws\loewe\Woody\Server;
 
-use \Woody\Components\Windows\AbstractWindow;
-use \Woody\Components\Controls\HtmlControl;
+use \ws\loewe\Woody\Components\Windows\AbstractWindow;
+use \ws\loewe\Woody\Components\Controls\HtmlControl;
 
 class BuiltInWebServer {
   /**

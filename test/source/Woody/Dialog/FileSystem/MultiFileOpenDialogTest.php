@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Dialog\FileSystem;
+namespace ws\loewe\Woody\Dialog\FileSystem;
 
 /**
  * Test class for MultiFileOpenDialog.
@@ -29,19 +29,19 @@ class MultiFileOpenDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers \Woody\Dialog\FileSystem\MultiFileOpenDialog::__construct
-   * @covers \Woody\Dialog\FileSystem\FileSystemDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\MultiFileOpenDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FileSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new MultiFileOpenDialog('testConstruct', null, '.', null);
 
-    $this->assertInstanceOf('\Woody\Dialog\FileSystem\MultiFileOpenDialog', $this->dialog);
+    $this->assertInstanceOf('\ws\loewe\Woody\Dialog\FileSystem\MultiFileOpenDialog', $this->dialog);
   }
 
   /**
    * This method tests getting the current selection from the multi-file dialog.
    *
-   * @covers \Woody\Dialog\FileSystem\MultiFileOpenDialog::getSelection
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\MultiFileOpenDialog::getSelection
    */
   public function testGetSelection() {
     $this->dialog = new MultiFileOpenDialog('testMultiFileSelection', null, '.', null);

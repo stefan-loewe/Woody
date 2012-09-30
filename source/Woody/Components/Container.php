@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Components;
+namespace ws\loewe\Woody\Components;
 
 /**
  * This interface defines methods for adding and removing components to a container component, e.g. a window, a frame,

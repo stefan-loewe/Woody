@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Layouts;
+namespace ws\loewe\Woody\Layouts;
 
 /**
  * Test class for GridLayout.
@@ -25,21 +25,21 @@ class GridLayoutTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the application.
    *
-   * @covers \Woody\Layouts\GridLayout::__construct
+   * @covers \ws\loewe\Woody\Layouts\GridLayout::__construct
    */
   public function testConstruct() {
-    $this->assertInstanceOf('Woody\Layouts\GridLayout', new GridLayout(1, 1));
+    $this->assertInstanceOf('ws\loewe\Woody\Layouts\GridLayout', new GridLayout(1, 1));
   }
 
   /**
    * This method tests layouting a container.
    *
-   * @covers \Woody\Layouts\GridLayout::layout
-   * @covers \Woody\Layouts\GridLayout::getComponentDimension
+   * @covers \ws\loewe\Woody\Layouts\GridLayout::layout
+   * @covers \ws\loewe\Woody\Layouts\GridLayout::getComponentDimension
    */
   public function testLayout() {
     // create and configure a mock for a standard control, here an edit box
-    $editBox = $this->getMockBuilder('\Woody\Components\Controls\EditBox')
+    $editBox = $this->getMockBuilder('\ws\loewe\Woody\Components\Controls\EditBox')
       ->disableOriginalConstructor()
       ->getMock();
     $editBox->expects($this->once())
@@ -48,7 +48,7 @@ class GridLayoutTest extends \PHPUnit_Framework_TestCase {
       ->method('moveTo');
 
     // also create and configure a mock for a frame ...
-    $frame = $this->getMockBuilder('\Woody\Components\Controls\Frame')
+    $frame = $this->getMockBuilder('\ws\loewe\Woody\Components\Controls\Frame')
       ->disableOriginalConstructor()
       ->getMock();
     // .. which is made to contain the edit box mock
@@ -57,7 +57,7 @@ class GridLayoutTest extends \PHPUnit_Framework_TestCase {
       ->will($this->returnValue(array($editBox)));
     $frame->expects($this->once())
       ->method('getDimension')
-      ->will($this->returnValue(new \Utils\Geom\Dimension(200, 100)));
+      ->will($this->returnValue(new ws\loewe\Utils\Geom\Dimension(200, 100)));
 
     // layout the edit box in the frame
     (new GridLayout(1, 1))->layout($frame);

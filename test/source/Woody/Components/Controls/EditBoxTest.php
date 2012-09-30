@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for EditBox.
@@ -15,21 +15,21 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
   /**
    * the edit box to test
    *
-   * @var \Woody\Components\Controls\EditBox
+   * @var \ws\loewe\Woody\Components\Controls\EditBox
    */
   private $editBox = null;
 
   /**
    * the test application
    *
-   * @var \Woody\App\TestApplication
+   * @var \ws\loewe\Woody\App\TestApplication
    */
   private $application = null;
 
 /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -55,7 +55,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the value from the editbox.
    *
-   * @covers \Woody\Components\Controls\EditBox::getValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditBox::getValue
    */
   public function testGetValue() {
     $this->timer = new Timer(function() {
@@ -81,7 +81,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the trimmed value from the editbox.
    *
-   * @covers \Woody\Components\Controls\EditBox::getValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditBox::getValue
    */
   public function testGetValueTrimmed() {
     $this->timer = new Timer(function() {
@@ -101,7 +101,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the non-trimmed value from the editbox.
    *
-   * @covers \Woody\Components\Controls\EditBox::getValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditBox::getValue
    */
   public function testGetValueNotTrimmed() {
     $this->timer = new Timer(function() {
@@ -120,7 +120,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting a text value for the editbox.
    *
-   * @covers \Woody\Components\Controls\EditBox::setValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditBox::setValue
    */
   public function testSetValueText() {
     $this->timer = new Timer(function() {
@@ -139,7 +139,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting a integer value for the editbox.
    *
-   * @covers \Woody\Components\Controls\EditBox::setValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditBox::setValue
    */
   public function testSetValueInteger() {
     $this->timer = new Timer(function() {
@@ -158,7 +158,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting a decimal value for the editbox.
    *
-   * @covers \Woody\Components\Controls\EditBox::setValue
+   * @covers \ws\loewe\Woody\Components\Controls\EditBox::setValue
    */
   public function testSetValueDecimal() {
     $this->timer = new Timer(function() {
@@ -177,7 +177,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting the editbox readonly.
    *
-   * @covers \Woody\Components\Controls\EditBox::setReadOnly
+   * @covers \ws\loewe\Woody\Components\Controls\EditBox::setReadOnly
    */
   public function testSetReadOnly() {
     $callback = function() {
@@ -196,7 +196,7 @@ class EditBoxTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting the cursor of the editbox.
    *
-   * @covers \Woody\Components\Controls\EditBox::setCursor
+   * @covers \ws\loewe\Woody\Components\Controls\EditBox::setCursor
    */
   public function testSetCursor() {
     $callback = function() {

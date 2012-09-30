@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Dialog\Notification;
+namespace ws\loewe\Woody\Dialog\Notification;
 
 /**
  * Test class for OkCancelConfirmationDialog.
@@ -29,21 +29,21 @@ class OkCancelConfirmationDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers \Woody\Dialog\Notification\OkCancelConfirmationDialog::__construct
-   * @covers \Woody\Dialog\Notification\ConfirmationDialog::__construct
-   * @covers \Woody\Dialog\Notification\ModalSystemDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\Notification\OkCancelConfirmationDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\Notification\ConfirmationDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\Notification\ModalSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new OkCancelConfirmationDialog('testConstruct', 'testConstruct', null);
 
-    $this->assertInstanceOf('\Woody\Dialog\Notification\OkCancelConfirmationDialog', $this->dialog);
+    $this->assertInstanceOf('\ws\loewe\Woody\Dialog\Notification\OkCancelConfirmationDialog', $this->dialog);
   }
 
   /**
    * This method tests getting the initial state of the dialog.
    *
-   * @covers \Woody\Dialog\Notification\OkCancelConfirmationDialog::ok
-   * @covers \Woody\Dialog\Notification\OkCancelConfirmationDialog::cancel
+   * @covers \ws\loewe\Woody\Dialog\Notification\OkCancelConfirmationDialog::ok
+   * @covers \ws\loewe\Woody\Dialog\Notification\OkCancelConfirmationDialog::cancel
    */
   public function testOkCancel() {
     $this->dialog = new OkCancelConfirmationDialog('testConstruct', 'testConstruct', null);

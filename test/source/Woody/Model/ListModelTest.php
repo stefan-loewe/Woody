@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Model;
+namespace ws\loewe\Woody\Model;
 
 /**
  * Test class for ListModel.
@@ -9,7 +9,7 @@ namespace Woody\Model;
 class ListModelTest extends \PHPUnit_Framework_TestCase {
 
   /**
-   * @var \Woody\Model\ListModel
+   * @var \ws\loewe\Woody\Model\ListModel
    */
   private $listModel = null;
 
@@ -30,7 +30,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::__construct
+   * @covers \ws\loewe\Woody\Model\ListModel::__construct
    */
   public function testConstruct() {
     $this->listModel = new ListModel(new \ArrayObject($rawData = array(1, 2, 3, 4, 5)));
@@ -43,7 +43,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::setData
+   * @covers \ws\loewe\Woody\Model\ListModel::setData
    */
   public function testSetData() {
     $data = new \ArrayObject($rawData = array(1, 2, 3, 4, 5));
@@ -54,7 +54,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::addElement
+   * @covers \ws\loewe\Woody\Model\ListModel::addElement
    */
   public function testAddElement() {
     $this->listModel->setData(new \ArrayObject());
@@ -65,7 +65,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::addElements
+   * @covers \ws\loewe\Woody\Model\ListModel::addElements
    */
   public function testAddElementsZeroIndexed() {
     $this->listModel->setData(new \ArrayObject());
@@ -77,7 +77,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::addElements
+   * @covers \ws\loewe\Woody\Model\ListModel::addElements
    */
   public function testAddElementsNonZeroIndexed() {
     $this->listModel->setData(new \ArrayObject());
@@ -89,7 +89,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::addElements
+   * @covers \ws\loewe\Woody\Model\ListModel::addElements
    */
   public function testAddElementsNonLinearIndexed() {
     $this->listModel->setData(new \ArrayObject());
@@ -104,7 +104,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::getElementAt
+   * @covers \ws\loewe\Woody\Model\ListModel::getElementAt
    */
   public function testGetElementAt() {
     $this->listModel->setData(new \ArrayObject(array('a')));
@@ -115,7 +115,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::getIndexOf
+   * @covers \ws\loewe\Woody\Model\ListModel::getIndexOf
    */
   public function testGetIndexOf() {
     $this->listModel->setData(new \ArrayObject(array('a')));
@@ -134,7 +134,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::count
+   * @covers \ws\loewe\Woody\Model\ListModel::count
    */
   public function testCount() {
     $this->assertEquals(0, $this->listModel->count());
@@ -154,7 +154,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::insertElementAt
+   * @covers \ws\loewe\Woody\Model\ListModel::insertElementAt
    */
   public function testInsertElementAt() {
     $this->listModel->setData(new \ArrayObject());
@@ -173,7 +173,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::removeAllElements
+   * @covers \ws\loewe\Woody\Model\ListModel::removeAllElements
    */
   public function testRemoveAllElements() {
     $this->assertEquals(0, $this->listModel->count());
@@ -188,7 +188,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::removeElement
+   * @covers \ws\loewe\Woody\Model\ListModel::removeElement
    */
   public function testRemoveElement() {
     $this->assertEquals(0, $this->listModel->count());
@@ -211,7 +211,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::removeElementAt
+   * @covers \ws\loewe\Woody\Model\ListModel::removeElementAt
    */
   public function testRemoveElementAt() {
     $this->assertEquals(0, $this->listModel->count());
@@ -242,7 +242,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::attach
+   * @covers \ws\loewe\Woody\Model\ListModel::attach
    */
   public function testAttach() {
     $observer = $this->getMock('SplObserver', array('update'));
@@ -253,7 +253,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::notify
+   * @covers \ws\loewe\Woody\Model\ListModel::notify
    */
   public function testNotify() {
     $observer = $this->getMock('SplObserver', array('update'));
@@ -265,7 +265,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Model\ListModel::detach
+   * @covers \ws\loewe\Woody\Model\ListModel::detach
    */
   public function testDetach() {
     $observer = $this->getMock('SplObserver', array('update'));

@@ -1,19 +1,19 @@
 <?php
 
-namespace Woody\Server;
+namespace ws\loewe\Woody\Server;
 
-use \Woody\Components\Windows\AbstractWindow;
-use \Woody\Components\Timer\Timer;
-use \Utils\Sockets\ServerSocket;
-use \Utils\Sockets\Server;
-use \Utils\Logging\Logger;
+use \ws\loewe\Woody\Components\Windows\AbstractWindow;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Sockets\ServerSocket;
+use \ws\loewe\Utils\Sockets\Server;
+use \ws\loewe\Utils\Logging\Logger;
 
 class ReplyServer extends Server {
   /**
    * the window this server is associated with, normally this would be the main
    * window of the application
    *
-   * @var \Woody\Components\Windows\AbstractWindow
+   * @var \ws\loewe\Woody\Components\Windows\AbstractWindow
    */
   private $window = null;
 

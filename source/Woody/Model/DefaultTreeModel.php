@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\Model;
+namespace ws\loewe\Woody\Model;
 
-use \Utils\Model\TreeModel;
+use \ws\loewe\Utils\Model\TreeModel;
 
 /**
  * This class acts as a full TreeModel implementation for the tree view.
@@ -18,7 +18,7 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
   /**
    * This method acts as the constructor of the class.
    *
-   * @param \Utils\Tree\TreeNode $root the root of the tree
+   * @param ws\loewe\Utils\Tree\TreeNode $root the root of the tree
    */
   public function __construct($root) {
     parent::__construct($root);
@@ -29,10 +29,10 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
   /**
    * This method returns the child of the given parent at the given index.
    *
-   * @param \Utils\Tree\TreeNode $parent the parent node
+   * @param ws\loewe\Utils\Tree\TreeNode $parent the parent node
    * @param int $index the index
    *
-   * @return \Utils\Tree\TreeNode the tree node at the given index
+   * @return ws\loewe\Utils\Tree\TreeNode the tree node at the given index
    */
   public function getChild($parent, $index) {
     return $parent->getChildAtIndex($index);
@@ -41,7 +41,7 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
   /**
    * This method returns the number of children of the given parent.
    *
-   * @param \Utils\Tree\TreeNode $parent the parent node
+   * @param ws\loewe\Utils\Tree\TreeNode $parent the parent node
    * @return int the number of children of the given parent
    */
   public function getChildCount($parent) {
@@ -51,8 +51,8 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
   /**
    * This method returns the index of the given child in the given parent.
    *
-   * @param \Utils\Tree\TreeNode $parent the parent node
-   * @param \Utils\Tree\TreeNode $child the cild node
+   * @param ws\loewe\Utils\Tree\TreeNode $parent the parent node
+   * @param ws\loewe\Utils\Tree\TreeNode $child the cild node
    * @return int the index of the given child in the given parent
    */
   public function getIndexOfChild($parent, $child) {
@@ -62,7 +62,7 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
   /**
    * This method returns true if the given node is a leaf.
    *
-   * @param \Utils\Tree\TreeNode $node the node
+   * @param ws\loewe\Utils\Tree\TreeNode $node the node
    * @return boolean true, if the the node is a leaf, else false
    */
   public function isLeaf($node) {
@@ -88,7 +88,7 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
    * This method adds an observer to the model.
    *
    * @param \SplObserver $observer the observer to add
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function attach(\SplObserver $observer) {
     $this->observers->attach($observer);
@@ -100,7 +100,7 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
    * This method removes an observer to the model.
    *
    * @param \SplObserver $observer the observer to remove
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function detach(\SplObserver $observer) {
     $this->observers->detach($observer);
@@ -111,7 +111,7 @@ class DefaultTreeModel extends TreeModel implements \SplSubject {
   /**
    * This method notifies all observer of the model to update themselves.
    *
-   * @return \Woody\Model\ListModel $this
+   * @return \ws\loewe\Woody\Model\ListModel $this
    */
   public function notify() {
     /* if(!$this->isAdjusting) */ {

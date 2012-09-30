@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
 /**
  * Test class for KeyAdapter.
@@ -34,24 +34,24 @@ class KeyAdapterTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method test the constructor of the adapter
    *
-   * @covers Woody\Event\KeyAdapter::__construct
+   * @covers ws\loewe\Woody\Event\KeyAdapter::__construct
    */
   public function testConstruct() {
     $this->adapter = new KeyAdapter(null, null);
-    $this->assertInstanceOf('Woody\Event\KeyAdapter', $this->adapter);
+    $this->assertInstanceOf('ws\loewe\Woody\Event\KeyAdapter', $this->adapter);
 
     $this->adapter = new KeyAdapter(function(){}, function(){});
-    $this->assertInstanceOf('Woody\Event\KeyAdapter', $this->adapter);
+    $this->assertInstanceOf('ws\loewe\Woody\Event\KeyAdapter', $this->adapter);
   }
 
   /**
    * This method test the callback execution when a key is pressed and released.
    *
-   * @covers Woody\Event\KeyAdapter::keyPressed
-   * @covers Woody\Event\KeyAdapter::keyReleased
+   * @covers ws\loewe\Woody\Event\KeyAdapter::keyPressed
+   * @covers ws\loewe\Woody\Event\KeyAdapter::keyReleased
    */
   public function testKeyPressedKeyReleased() {
-    $event = $this->getMockBuilder('\Woody\Event\KeyEvent')
+    $event = $this->getMockBuilder('\ws\loewe\Woody\Event\KeyEvent')
       ->disableOriginalConstructor()
       ->getMock();
 

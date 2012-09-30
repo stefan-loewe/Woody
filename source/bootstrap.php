@@ -1,8 +1,8 @@
 <?php
 
-use \Woody\Event\EventInfo;
-use \Woody\Event\EventFactory;
-use \Woody\Components\Component;
+use \ws\loewe\Woody\Event\EventInfo;
+use \ws\loewe\Woody\Event\EventFactory;
+use \ws\loewe\Woody\Components\Component;
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -13,7 +13,7 @@ require_once INSTALLATION_FOLDER.'/lib/winbinder.php';
 require_once INSTALLATION_FOLDER.'/lib/fi/freeimage.inc.php';
 require_once SOURCE_FOLDER.'/Utils/Autoload/Autoloader.inc';
 
-$autoloader = new \Utils\Autoload\Autoloader(SOURCE_FOLDER.'/');
+$autoloader = new ws\loewe\Utils\Autoload\Autoloader(SOURCE_FOLDER.'/');
 
 spl_autoload_register(array($autoloader, 'autoload'));
 
@@ -30,7 +30,7 @@ $callback = function($errno, $errstr, $errfile, $errline) {
   $errorException = new \ErrorException($errstr, 0, $errno, $errfile, $errline);
 
   if(strpos($errstr, 'wbIsWBObj:') === 0) {
-    throw new Woody\WinBinderErrorException(
+    throw new ws\loewe\Woody\WinBinderErrorException(
       'Error when using WinBinder object - original error message was "'.$errstr.'"',
       0,
       $errorException);

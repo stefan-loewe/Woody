@@ -1,24 +1,24 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\Components\Component;
-use \Woody\Util\Image\ImageResource;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Component;
+use \ws\loewe\Woody\Util\Image\ImageResource;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class Image extends Control implements Actionable {
   /**
    * the image resource the image control is associated with
    *
-   * @var \Woody\Utils\Image\ImageResource
+   * @var \ws\loewe\Woody\Utils\Image\ImageResource
    */
   protected $imageResource = null;
 
   /**
    * This method acts as the constructor of the class.
    *
-   * @param \Woody\Utils\Image\ImageResource $imageResource the image resource the image control is associated with
+   * @param \ws\loewe\Woody\Utils\Image\ImageResource $imageResource the image resource the image control is associated with
    * @param Point $topLeftCorner the top left corner of the image
    * @param Dimension $dimension the dimension of the image
    */
@@ -40,7 +40,7 @@ class Image extends Control implements Actionable {
   /**
    * This method sets the image of the image control.
    *
-   * @return \Woody\Components\Controls\Image $this
+   * @return \ws\loewe\Woody\Components\Controls\Image $this
    */
   protected function setImage() {
     $bitmap = $this->imageResource->getResource();

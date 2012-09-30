@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
 interface TimeoutListener {
   function timeout(TimeoutEvent $event);

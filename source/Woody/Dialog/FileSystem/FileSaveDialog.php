@@ -1,14 +1,14 @@
 <?php
 
-namespace Woody\Dialog\FileSystem;
+namespace ws\loewe\Woody\Dialog\FileSystem;
 
-use \Woody\Components\Windows\AbstractWindow;
+use \ws\loewe\Woody\Components\Windows\AbstractWindow;
 
 class FileSaveDialog extends FileSystemDialog {
   /**
    * the collection of file filters for this dialog
    *
-   * @var \Woody\Dialog\FileSystem\FileFilters
+   * @var \ws\loewe\Woody\Dialog\FileSystem\FileFilters
    */
   private $filters = null;
 

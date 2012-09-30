@@ -1,12 +1,12 @@
 <?php
 
-namespace Woody\Components\Timer;
+namespace ws\loewe\Woody\Components\Timer;
 
-use \Woody\Components\Windows\MainWindow;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
-use \Woody\Components\Timer\TimerAlreadyRunningException;
-use \Woody\Components\Timer\TimerNotRunningException;
+use \ws\loewe\Woody\Components\Windows\MainWindow;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Timer\TimerAlreadyRunningException;
+use \ws\loewe\Woody\Components\Timer\TimerNotRunningException;
 
 /**
  * Test class for Timer.
@@ -16,14 +16,14 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   /**
    * the timer to test
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
   /**
    * the window to which the timer is bound to
    *
-   * @var \Woody\Components\Windows\MainWindow
+   * @var \ws\loewe\Woody\Components\Windows\MainWindow
    */
   private $window = null;
 
@@ -55,7 +55,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests the construction of a timer.
    *
-   * @covers Woody\Components\Timer\Timer::__construct
+   * @covers ws\loewe\Woody\Components\Timer\Timer::__construct
    */
   public function testConstruct() {
     $callback = function() {
@@ -74,7 +74,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * This method tests the starting of a timer by checking if the callback gets executed at least once after the timer
    * has been started.
    *
-   * @covers Woody\Components\Timer\Timer::start
+   * @covers ws\loewe\Woody\Components\Timer\Timer::start
    */
   public function testStart() {
     $callback = function() {
@@ -93,7 +93,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests the destroying of the timer.
    *
-   * @covers Woody\Components\Timer\Timer::destroy
+   * @covers ws\loewe\Woody\Components\Timer\Timer::destroy
    */
   public function testDestroy() {
     $callback = function() {
@@ -114,7 +114,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests the returning of the timer id.
    *
-   * @covers Woody\Components\Timer\Timer::getID
+   * @covers ws\loewe\Woody\Components\Timer\Timer::getID
    */
   public function testGetID() {
     $callback = function() {
@@ -141,7 +141,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests the returning of the timer id.
    *
-   * @covers Woody\Components\Timer\Timer::getTimerByID
+   * @covers ws\loewe\Woody\Components\Timer\Timer::getTimerByID
    */
   public function testGetTimerByID() {
     $callback = function() {
@@ -165,7 +165,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests the returning of the execution counter of the timer.
    *
-   * @covers Woody\Components\Timer\Timer::getExecutionCount
+   * @covers ws\loewe\Woody\Components\Timer\Timer::getExecutionCount
    */
   public function testGetExecutionCount() {
     $callback = function() {
@@ -186,11 +186,11 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * This method tests if the \Woody\Components\Timer\TimerAlreadyRunningException is
+   * This method tests if the \ws\loewe\Woody\Components\Timer\TimerAlreadyRunningException is
    * thrown, when starting an already started timer.
    *
-   * @covers \Woody\Components\Timer\Timer::start
-   * @covers \Woody\Components\Timer\TimerAlreadyRunningException::__construct
+   * @covers \ws\loewe\Woody\Components\Timer\Timer::start
+   * @covers \ws\loewe\Woody\Components\Timer\TimerAlreadyRunningException::__construct
    */
   public function testTimerAlreadyRunningException() {
     $callback = function() {
@@ -217,8 +217,8 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * This method tests if the TimerNotRunningException are thrown,
    * when destroying an timer which was not yet started.
    *
-   * @covers Woody\Components\Timer\Timer::destroy
-   * @covers \Woody\Components\Timer\TimerNotRunningException::__construct
+   * @covers ws\loewe\Woody\Components\Timer\Timer::destroy
+   * @covers \ws\loewe\Woody\Components\Timer\TimerNotRunningException::__construct
    */
   public function testTimerNotRunningDestroyException() {
     $this->timer = new Timer(function(){}, $this->window, Timer::TEST_TIMEOUT);
@@ -237,7 +237,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests determining if the timer is running.
    *
-   * @covers Woody\Components\Timer\Timer::isRunning
+   * @covers ws\loewe\Woody\Components\Timer\Timer::isRunning
    */
   public function testIsRunning() {
     $callback = function() {
@@ -260,12 +260,12 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding, getting and removing timeout listeners.
    *
-   * @covers \Woody\Components\Timer\Timer::addTimeoutListener
-   * @covers \Woody\Components\Timer\Timer::getTimeoutListeners
-   * @covers \Woody\Components\Timer\Timer::removeTimeoutListener
+   * @covers \ws\loewe\Woody\Components\Timer\Timer::addTimeoutListener
+   * @covers \ws\loewe\Woody\Components\Timer\Timer::getTimeoutListeners
+   * @covers \ws\loewe\Woody\Components\Timer\Timer::removeTimeoutListener
    */
   public function testWindowResizeListeners() {
-    $timeoutListener = $this->getMockBuilder('\Woody\Event\TimeoutAdapter')
+    $timeoutListener = $this->getMockBuilder('\ws\loewe\Woody\Event\TimeoutAdapter')
       ->disableOriginalConstructor()
       ->getMock();
 

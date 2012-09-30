@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Dialog\FileSystem;
+namespace ws\loewe\Woody\Dialog\FileSystem;
 
 /**
  * Test class for FileOpenDialog.
@@ -29,19 +29,19 @@ class FileOpenDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers \Woody\Dialog\FileSystem\FileOpenDialog::__construct
-   * @covers \Woody\Dialog\FileSystem\FileSystemDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FileOpenDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FileSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new FileOpenDialog('testConstruct', null, '.', null);
 
-    $this->assertInstanceOf('\Woody\Dialog\FileSystem\FileOpenDialog', $this->dialog);
+    $this->assertInstanceOf('\ws\loewe\Woody\Dialog\FileSystem\FileOpenDialog', $this->dialog);
   }
 
   /**
    * This method tests getting the current selection from the select-file dialog.
    *
-   * @covers \Woody\Dialog\FileSystem\FileSystemDialog::getSelection
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FileSystemDialog::getSelection
    */
   public function testGetSelection() {
     $this->dialog = new FileOpenDialog('testFileSelection', null, '.', null);

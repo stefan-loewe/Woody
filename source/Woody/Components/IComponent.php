@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Components;
+namespace ws\loewe\Woody\Components;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 interface IComponent {
 
@@ -31,21 +31,21 @@ interface IComponent {
   /**
    * This method returns the top left corner of the component.
    *
-   * @return Woody\Utils\Geom\Point the top left corner of the component.
+   * @return Woodyws\loewe\Utils\Geom\Point the top left corner of the component.
    */
   public function getPosition();
 
   /**
    * This method returns the dimension of the top left corner of the component.
    *
-   * @return Woody\Utils\Geom\Dimension the dimension of the control
+   * @return Woodyws\loewe\Utils\Geom\Dimension the dimension of the control
    */
   public function getDimension();
 
   /**
    * This method moves the component by an offset, given as dimension.
    *
-   * @param \Utils\Geom\Dimension $dimension the dimension by which this point shall be moved by
+   * @param ws\loewe\Utils\Geom\Dimension $dimension the dimension by which this point shall be moved by
    * @return Component $this
    */
   public function moveBy(Dimension $dimension);

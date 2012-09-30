@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class ScrollBar extends Control implements Actionable {
   /**
@@ -31,7 +31,7 @@ class ScrollBar extends Control implements Actionable {
    * This method sets the current value of the scroll bar.
    *
    * @param $value the new value of the scroll bar
-   * @return \Woody\Components\Controls\ScrollBar $this
+   * @return \ws\loewe\Woody\Components\Controls\ScrollBar $this
    */
   public function setOffset($value) {
     wb_set_value($this->controlID, $value);
@@ -44,7 +44,7 @@ class ScrollBar extends Control implements Actionable {
    *
    * @param int $min the minimal value of the scroll bar
    * @param int $max the maximal value of the scroll bar
-   * @return \Woody\Components\Controls\ScrollBar $this
+   * @return \ws\loewe\Woody\Components\Controls\ScrollBar $this
    */
   public function setRange($min, $max) {
     wb_set_range($this->controlID, $min, $max);

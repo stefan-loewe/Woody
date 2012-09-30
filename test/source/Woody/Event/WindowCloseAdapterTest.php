@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
 /**
  * Test class for WindowCloseAdapter.
@@ -34,18 +34,18 @@ class WindowCloseAdapterTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method test the constructor of the adapter
    *
-   * @covers Woody\Event\WindowCloseAdapter::__construct
+   * @covers ws\loewe\Woody\Event\WindowCloseAdapter::__construct
    */
   public function testConstruct() {
     $this->adapter = new WindowCloseAdapter(function(){});
-    $this->assertInstanceOf('Woody\Event\WindowCloseAdapter', $this->adapter);
+    $this->assertInstanceOf('ws\loewe\Woody\Event\WindowCloseAdapter', $this->adapter);
   }
 
   /**
-   * @covers Woody\Event\WindowCloseAdapter::windowClosed
+   * @covers ws\loewe\Woody\Event\WindowCloseAdapter::windowClosed
    */
   public function testWindowClosed() {
-    $event = $this->getMockBuilder('Woody\Event\WindowCloseEvent')
+    $event = $this->getMockBuilder('ws\loewe\Woody\Event\WindowCloseEvent')
       ->disableOriginalConstructor()
       ->getMock();
 

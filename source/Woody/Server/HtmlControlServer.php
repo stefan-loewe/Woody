@@ -1,16 +1,16 @@
 <?php
 
-namespace Woody\Server;
+namespace ws\loewe\Woody\Server;
 
-use \Woody\Components\Windows\AbstractWindow;
-use \Woody\Components\Controls\HtmlControl;
-use \Woody\Components\Timer\Timer;
-use \Woody\Event\EventFactory;
-use \Woody\Event\EventInfo;
-use \Utils\Sockets\ServerSocket;
-use \Utils\Sockets\Server;
-use \Utils\Http\HttpRequestFactory;
-use \Utils\Logging\Logger;
+use \ws\loewe\Woody\Components\Windows\AbstractWindow;
+use \ws\loewe\Woody\Components\Controls\HtmlControl;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Woody\Event\EventFactory;
+use \ws\loewe\Woody\Event\EventInfo;
+use \ws\loewe\Utils\Sockets\ServerSocket;
+use \ws\loewe\Utils\Sockets\Server;
+use \ws\loewe\Utils\Http\HttpRequestFactory;
+use \ws\loewe\Utils\Logging\Logger;
 
 /**
  * This class implements a HTTP server for WinBinder HtmlControl.
@@ -27,7 +27,7 @@ class HtmlControlServer extends Server {
    * the window this server is associated with, normally this would be the main
    * window of the application
    *
-   * @var \Woody\Components\Windows\AbstractWindow
+   * @var \ws\loewe\Woody\Components\Windows\AbstractWindow
    */
   private $window = null;
 
@@ -55,7 +55,7 @@ class HtmlControlServer extends Server {
   /**
    * This method registers a given HtmlControl.
    *
-   * @param \Woody\Components\Controls\HtmlControl $control the HtmlControl to
+   * @param \ws\loewe\Woody\Components\Controls\HtmlControl $control the HtmlControl to
    * be registered
    *
    * @return HtmlControlServer $this

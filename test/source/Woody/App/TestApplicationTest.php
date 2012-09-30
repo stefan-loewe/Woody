@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\App;
+namespace ws\loewe\Woody\App;
 
-use \Woody\Components\Timer\Timer;
+use \ws\loewe\Woody\Components\Timer\Timer;
 
 /**
  * Test class for TestApplication.
@@ -31,10 +31,10 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the application.
    *
-   * @covers \Woody\App\TestApplication::__construct
-   * @covers \Woody\App\TestApplication::getTitle
-   * @covers \Woody\App\Application::__construct
-   * @covers \Woody\App\Application::getInstance
+   * @covers \ws\loewe\Woody\App\TestApplication::__construct
+   * @covers \ws\loewe\Woody\App\TestApplication::getTitle
+   * @covers \ws\loewe\Woody\App\Application::__construct
+   * @covers \ws\loewe\Woody\App\Application::getInstance
    */
   public function testConstruct() {
     $testCase = $this->getMockBuilder('\PHPUnit_Framework_TestCase')
@@ -42,8 +42,8 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
       ->getMock();
     $this->application = new TestApplication($testCase);
 
-    $this->assertInstanceOf('\Woody\App\Application', $this->application);
-    $this->assertInstanceOf('\Woody\App\Application', $this->application->getInstance());
+    $this->assertInstanceOf('\ws\loewe\Woody\App\Application', $this->application);
+    $this->assertInstanceOf('\ws\loewe\Woody\App\Application', $this->application->getInstance());
 
     $callback = function() {
       $this->timer->destroy();
@@ -58,12 +58,12 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the window from the application.
    *
-   * @covers \Woody\App\Application::getWindow
+   * @covers \ws\loewe\Woody\App\Application::getWindow
    */
   public function testGetWindow() {
     $this->application = new TestApplication();
 
-    $this->assertInstanceOf('Woody\Components\Windows\AbstractWindow', $this->application->getWindow());
+    $this->assertInstanceOf('ws\loewe\Woody\Components\Windows\AbstractWindow', $this->application->getWindow());
 
     $callback = function() {
       $this->timer->destroy();
@@ -78,8 +78,8 @@ class TestApplicationTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests starting and stopping the application.
    *
-   * @covers \Woody\App\TestApplication::start
-   * @covers \Woody\App\TestApplication::stop
+   * @covers \ws\loewe\Woody\App\TestApplication::start
+   * @covers \ws\loewe\Woody\App\TestApplication::stop
    */
   public function testStartStop() {
     $this->application = new TestApplication();

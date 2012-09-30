@@ -1,12 +1,12 @@
 <?php
 
-namespace Woody\Components\Windows;
+namespace ws\loewe\Woody\Components\Windows;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
-use \Woody\Event\EventInfo;
-use \Woody\Event\WindowCloseEvent;
-use \Woody\WinBinderErrorException;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
+use \ws\loewe\Woody\Event\EventInfo;
+use \ws\loewe\Woody\Event\WindowCloseEvent;
+use \ws\loewe\Woody\WinBinderErrorException;
 
 /**
  * Test class for AbstractWindow.
@@ -39,13 +39,13 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting and setting the title of the window.
    *
-   * @covers \Woody\Components\Windows\AbstractWindow::getTitle
-   * @covers \Woody\Components\Windows\AbstractWindow::setTitle
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::getTitle
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::setTitle
    */
   public function testGetSetTitle() {
     $this->assertEquals($this->window->getTitle(), 'testGetSetTitle - AbstractWindowTest.php');
 
-    $this->assertInstanceOf('\Woody\Components\Windows\AbstractWindow', $this->window->setTitle('newWindowTitle'));
+    $this->assertInstanceOf('\ws\loewe\Woody\Components\Windows\AbstractWindow', $this->window->setTitle('newWindowTitle'));
 
     $this->assertEquals($this->window->getTitle(), 'newWindowTitle');
   }
@@ -53,8 +53,8 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests constructing the window.
    *
-   * @covers \Woody\Components\Windows\AbstractWindow::__construct
-   * @covers \Woody\Components\Component::__construct
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::__construct
+   * @covers \ws\loewe\Woody\Components\Component::__construct
    */
   public function testConstruct() {
     $this->window2 = new MainWindow('AbstractWindow', new Point(12, 34), new Dimension(456, 789));
@@ -72,12 +72,12 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding, getting and removing resize listeners.
    *
-   * @covers \Woody\Components\Windows\AbstractWindow::addWindowResizeListener
-   * @covers \Woody\Components\Windows\AbstractWindow::getWindowResizeListeners
-   * @covers \Woody\Components\Windows\AbstractWindow::removeWindowResizeListener
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::addWindowResizeListener
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::getWindowResizeListeners
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::removeWindowResizeListener
    */
   public function testWindowResizeListeners() {return;
-    $resizeListener = $this->getMockBuilder('\Woody\Event\WindowResizeAdapter')
+    $resizeListener = $this->getMockBuilder('\ws\loewe\Woody\Event\WindowResizeAdapter')
       ->disableOriginalConstructor()
       ->getMock();
 
@@ -91,9 +91,9 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the window.
    *
-   * @covers \Woody\Components\Windows\AbstractWindow::create
-   * @covers \Woody\Components\Windows\AbstractWindow::createRootPane
-   * @covers \Woody\Components\Windows\AbstractWindow::getParameters
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::create
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::createRootPane
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::getParameters
    */
   public function testCreate() {
     $this->window3 = new MainWindow('AbstractWindow', new Point(34, 12), new Dimension(789, 456));
@@ -109,8 +109,8 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests closing the window.
    *
-   * @covers \Woody\Components\Windows\AbstractWindow::close
-   * @covers \Woody\Components\Windows\AbstractWindow::destroy
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::close
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::destroy
    */
   public function testClose() {
     $this->window4 = new MainWindow('AbstractWindow', new Point(11, 22), new Dimension(555, 333));
@@ -137,17 +137,17 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the root pane of the window.
    *
-   * @covers \Woody\Components\Windows\AbstractWindow::getRootPane
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::getRootPane
    */
   public function testGetRootPane() {
-    $this->assertInstanceOf('\Woody\Components\Controls\Frame', $this->window->getRootPane());
+    $this->assertInstanceOf('\ws\loewe\Woody\Components\Controls\Frame', $this->window->getRootPane());
   }
 
   /**
    * This method tests moving the window by an offset.
    *
-   * @covers \Woody\Components\Component::moveBy
-   * @covers \Woody\Components\Component::move
+   * @covers \ws\loewe\Woody\Components\Component::moveBy
+   * @covers \ws\loewe\Woody\Components\Component::move
    */
   public function testMoveBy() {
     $this->window->moveBy(new Dimension(10, 10));
@@ -170,8 +170,8 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests moving the window to a location.
    *
-   * @covers \Woody\Components\Component::moveTo
-   * @covers \Woody\Components\Component::move
+   * @covers \ws\loewe\Woody\Components\Component::moveTo
+   * @covers \ws\loewe\Woody\Components\Component::move
    */
   public function testMoveTo() {
     $this->window->moveTo(new Point(0, 0));
@@ -194,9 +194,9 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests resizing the window by an offset.
    *
-   * @covers \Woody\Components\Windows\AbstractWindow::resize
-   * @covers \Woody\Components\Component::resizeBy
-   * @covers \Woody\Components\Component::resize
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::resize
+   * @covers \ws\loewe\Woody\Components\Component::resizeBy
+   * @covers \ws\loewe\Woody\Components\Component::resize
    */
   public function testResizeBy() {
     $this->window->resizeBy(new Dimension(0, 0));
@@ -215,9 +215,9 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests resizing the window to a specific dimension.
    *
-   * @covers \Woody\Components\Windows\AbstractWindow::resize
-   * @covers \Woody\Components\Component::resizeTo
-   * @covers \Woody\Components\Component::resize
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::resize
+   * @covers \ws\loewe\Woody\Components\Component::resizeTo
+   * @covers \ws\loewe\Woody\Components\Component::resize
    */
   public function testResizeTo() {
     $this->window->resizeTo(new Dimension(300, 200));
@@ -236,16 +236,16 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding, getting and removing close listeners.
    *
-   * @covers \Woody\Components\Windows\AbstractWindow::setWindowCloseListener
-   * @covers \Woody\Components\Windows\AbstractWindow::getWindowCloseListener
-   * @covers \Woody\Components\Windows\AbstractWindow::removeWindowCloseListener
-   * @covers \Woody\Components\Windows\AbstractWindow::close
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::setWindowCloseListener
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::getWindowCloseListener
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::removeWindowCloseListener
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::close
    */
   public function testWindowCloseListeners() {
     $window = new MainWindow($this->getName().'-'.basename(__FILE__), new Point(12, 34), new Dimension(456, 789));
     $window->create();
 
-    $closeListener = $this->getMockBuilder('\Woody\Event\WindowCloseAdapter')
+    $closeListener = $this->getMockBuilder('\ws\loewe\Woody\Event\WindowCloseAdapter')
       ->disableOriginalConstructor()
       ->getMock();
     $closeListener->expects($this->once())
@@ -267,14 +267,14 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding, getting, and removing a resize listener from the window.
    *
-   * @covers \Woody\Components\Windows\AbstractWindow::getWindowResizeListeners
-   * @covers \Woody\Components\Windows\AbstractWindow::addWindowResizeListener
-   * @covers \Woody\Components\Windows\AbstractWindow::removeWindowResizeListener
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::getWindowResizeListeners
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::addWindowResizeListener
+   * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::removeWindowResizeListener
    */
   public function testResizeListeners() {
     $this->assertEquals(0, $this->window->getWindowResizeListeners()->count());
 
-    $resizeListener = $this->getMockBuilder('\Woody\Event\WindowResizeAdapter')
+    $resizeListener = $this->getMockBuilder('\ws\loewe\Woody\Event\WindowResizeAdapter')
                                       ->disableOriginalConstructor()
                                       ->getMock();
 

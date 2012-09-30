@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use Woody\Components\Timer\Timer;
+use \ws\loewe\Woody\Components\Timer\Timer;
 
 class TimeoutEvent extends Event {
   /**

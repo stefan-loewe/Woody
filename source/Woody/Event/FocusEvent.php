@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\Components\Component;
+use \ws\loewe\Woody\Components\Component;
 
 class FocusEvent extends Event {
   /**

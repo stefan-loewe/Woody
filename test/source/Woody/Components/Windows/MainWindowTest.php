@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Components\Windows;
+namespace ws\loewe\Woody\Components\Windows;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for MainWindow.
@@ -32,7 +32,7 @@ class MainWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests constructing the main window.
    *
-   * @covers \Woody\Components\Windows\MainWindow::__construct
+   * @covers \ws\loewe\Woody\Components\Windows\MainWindow::__construct
    */
   public function testConstruct() {
     $this->window = new MainWindow('MainWindow', new Point(121, 343), new Dimension(987, 654));

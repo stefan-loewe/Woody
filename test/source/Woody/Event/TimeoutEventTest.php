@@ -1,10 +1,10 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for TimeoutEvent.
@@ -36,25 +36,25 @@ class TimeoutEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the event.
    *
-   * @covers \Woody\Event\TimeoutEvent::__construct
-   * @covers \Woody\Event\Event::__construct
+   * @covers \ws\loewe\Woody\Event\TimeoutEvent::__construct
+   * @covers \ws\loewe\Woody\Event\Event::__construct
    */
   public function testConstruct() {
-    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+    $eventInfo = $this->getMockBuilder('\ws\loewe\Woody\Event\EventInfo')
       ->disableOriginalConstructor()
       ->getMock();
     
     $event = new TimeoutEvent($eventInfo);
-    $this->assertInstanceOf('\Woody\Event\TimeoutEvent', $event);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\TimeoutEvent', $event);
   }
 
  /**
    * This method tests dispatching the event.
    *
-   * @covers \Woody\Event\TimeoutEvent::dispatch
+   * @covers \ws\loewe\Woody\Event\TimeoutEvent::dispatch
    */
   public function testDispatch() {
-    $window = $this->getMockBuilder('\Woody\Components\Windows\MainWindow')
+    $window = $this->getMockBuilder('\ws\loewe\Woody\Components\Windows\MainWindow')
       ->disableOriginalConstructor()
       ->getMock();
     

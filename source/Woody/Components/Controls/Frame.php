@@ -1,12 +1,12 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\Components\Component;
-use \Woody\Components\Container;
-use \Woody\Layouts\GridLayout;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Component;
+use \ws\loewe\Woody\Components\Container;
+use \ws\loewe\Woody\Layouts\GridLayout;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class Frame extends Control implements Container {
   /**
@@ -19,7 +19,7 @@ class Frame extends Control implements Container {
   /**
    * the layout of frame
    *
-   * @var \Woody\Layouts\GridLayout
+   * @var \ws\loewe\Woody\Layouts\GridLayout
    */
   protected $layout = null;
   
@@ -110,7 +110,7 @@ class Frame extends Control implements Container {
   /**
    * This method returns the layout of the frame.
    *
-   * @return \Woody\Layouts\GridLayout the layout of the frame
+   * @return \ws\loewe\Woody\Layouts\GridLayout the layout of the frame
    */
   public function getLayout() {
     return $this->layout;
@@ -119,7 +119,7 @@ class Frame extends Control implements Container {
   /**
    * This method sets the layout of the frame.
    *
-   * @param \Woody\Layouts\GridLayout $layout the layout to set
+   * @param \ws\loewe\Woody\Layouts\GridLayout $layout the layout to set
    */
   public function setLayout(GridLayout $layout) {
     $this->layout = $layout;

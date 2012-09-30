@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\Components\Windows\MainWindow;
-use \Woody\Components\Controls\EditBox;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Windows\MainWindow;
+use \ws\loewe\Woody\Components\Controls\EditBox;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for FocusEvent.
@@ -34,30 +34,30 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the event.
    *
-   * @covers \Woody\Event\FocusEvent::__construct
-   * @covers \Woody\Event\Event::__construct
+   * @covers \ws\loewe\Woody\Event\FocusEvent::__construct
+   * @covers \ws\loewe\Woody\Event\Event::__construct
    */
   public function testConstruct() {
-    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+    $eventInfo = $this->getMockBuilder('\ws\loewe\Woody\Event\EventInfo')
       ->disableOriginalConstructor()
       ->getMock();
 
     $this->event = new FocusEvent($eventInfo);
 
-    $this->assertInstanceOf('\Woody\Event\FocusEvent', $this->event);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\FocusEvent', $this->event);
   }
 
  /**
    * This method tests dispatching the event.
    *
-   * @covers \Woody\Event\FocusEvent::dispatch
+   * @covers \ws\loewe\Woody\Event\FocusEvent::dispatch
    */
   public function testDispatch() {
     $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
     $window->create()->getRootPane()->add($editbox);
 
-    $focusListener = $this->getMockBuilder('\Woody\Event\FocusAdapter')
+    $focusListener = $this->getMockBuilder('\ws\loewe\Woody\Event\FocusAdapter')
       ->disableOriginalConstructor()
       ->getMock();
 
@@ -73,10 +73,10 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the component that gained the focus.
    *
-   * @covers \Woody\Event\FocusEvent::getFocusGainedComponent
-   * @covers \Woody\Event\FocusEvent::getFocusLostComponent
-   * @covers \Woody\Event\FocusEvent::__toString
-   * @covers \Woody\Event\Event::__toString
+   * @covers \ws\loewe\Woody\Event\FocusEvent::getFocusGainedComponent
+   * @covers \ws\loewe\Woody\Event\FocusEvent::getFocusLostComponent
+   * @covers \ws\loewe\Woody\Event\FocusEvent::__toString
+   * @covers \ws\loewe\Woody\Event\Event::__toString
    */
   public function testGetFocusGainedComponent() {
     $window       = new MainWindow('FocusEventTest', new Point(20, 20), new Dimension(300, 200));

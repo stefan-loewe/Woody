@@ -1,12 +1,12 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Utils\Geom\Dimension;
-use \Utils\Geom\Point;
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Woody\Layouts\GridLayout;
+use \ws\loewe\Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Woody\Layouts\GridLayout;
 
 /**
  * Test class for EditBox.
@@ -30,7 +30,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
   /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -56,8 +56,8 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests adding components to the frame.
    *
-   * @covers \Woody\Components\Controls\Frame::add
-   * @covers \Woody\Components\Controls\Control::create
+   * @covers \ws\loewe\Woody\Components\Controls\Frame::add
+   * @covers \ws\loewe\Woody\Components\Controls\Control::create
    */
   public function testAdd() {
     $callback = function() {
@@ -84,7 +84,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the components of the frame.
    *
-   * @covers \Woody\Components\Controls\Frame::getComponents
+   * @covers \ws\loewe\Woody\Components\Controls\Frame::getComponents
    */
   public function testGetComponents() {
     $this->timer = new Timer(function() {
@@ -113,7 +113,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests removing components to the frame.
    *
-   * @covers \Woody\Components\Controls\Frame::remove
+   * @covers \ws\loewe\Woody\Components\Controls\Frame::remove
    */
   public function testRemove() {
     $this->timer = new Timer(function() {
@@ -141,8 +141,8 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting and setting the layout.
    *
-   * @covers \Woody\Components\Controls\Frame::getLayout
-   * @covers \Woody\Components\Controls\Frame::setLayout
+   * @covers \ws\loewe\Woody\Components\Controls\Frame::getLayout
+   * @covers \ws\loewe\Woody\Components\Controls\Frame::setLayout
    */
   public function testGetSetLayout() {
     $callback = function() {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Components\Windows;
+namespace ws\loewe\Woody\Components\Windows;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for ResizableWindow.
@@ -32,7 +32,7 @@ class ResizableWindowTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests constructing the resizable window.
    *
-   * @covers \Woody\Components\Windows\ResizableWindow::__construct
+   * @covers \ws\loewe\Woody\Components\Windows\ResizableWindow::__construct
    */
   public function testConstruct() {
     $this->window = new ResizableWindow('ResizableWindow', new Point(121, 343), new Dimension(987, 654));

@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class PushButton extends Button {
   /**
@@ -32,7 +32,7 @@ class PushButton extends Button {
    * This method sets the label of the button.
    *
    * @param string $label the label to set
-   * @return \Woody\Components\Controls\PushButton
+   * @return \ws\loewe\Woody\Components\Controls\PushButton
    */
   public function setLabel($label) {
     wb_set_text($this->controlID, $label);

@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\Components\Component;
+use \ws\loewe\Woody\Components\Component;
 
 abstract class Event {
-  use \Utils\Common\ValueObject;
+  use \ws\loewe\Utils\Common\ValueObject;
   /**
    * the winbinder identifier for the window or origin
    *
@@ -118,7 +118,7 @@ abstract class Event {
    * @return string the string representation of the event
    */
   public function __toString() {
-    return PHP_EOL.'------- '.str_replace('Woody\\Event\\', '', get_class($this)).' -------------'.PHP_EOL.
+    return PHP_EOL.'------- '.str_replace(' ws\loewe\Woody\\Event\\', '', get_class($this)).' -------------'.PHP_EOL.
             'windowID = '.$this->windowID.PHP_EOL.
             'id = '.$this->id.PHP_EOL.
             'controlID = '.$this->controlID.PHP_EOL.

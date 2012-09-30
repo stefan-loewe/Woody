@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Model;
+namespace ws\loewe\Woody\Model;
 
 class DefaultTableModel extends TableModel {
   /**

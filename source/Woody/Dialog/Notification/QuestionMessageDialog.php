@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\Dialog\Notification;
+namespace ws\loewe\Woody\Dialog\Notification;
 
-use \Woody\Components\Windows\AbstractWindow;
+use \ws\loewe\Woody\Components\Windows\AbstractWindow;
 
 class QuestionMessageDialog extends MessageDialog {
   public function __construct($title, $text, AbstractWindow $parentWindow = null) {

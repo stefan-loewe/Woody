@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
 /**
  * Test class for EventInfo.
@@ -27,11 +27,11 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers Woody\Event\EventInfo::isWindowEvent
-   * @covers Woody\Event\EventInfo::__construct
+   * @covers ws\loewe\Woody\Event\EventInfo::isWindowEvent
+   * @covers ws\loewe\Woody\Event\EventInfo::__construct
    */
   public function testIsWindowEvent() {
-    $window = $this->getMockBuilder('\Woody\Components\Windows\MainWindow')
+    $window = $this->getMockBuilder('\ws\loewe\Woody\Components\Windows\MainWindow')
       ->disableOriginalConstructor()
       ->getMock();
     $window->expects($this->at(0))
@@ -44,10 +44,10 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers Woody\Event\EventInfo::isWindowResizeEvent
+   * @covers ws\loewe\Woody\Event\EventInfo::isWindowResizeEvent
    */
   public function testIsWindowResizeEvent() {
-    $window = $this->getMockBuilder('\Woody\Components\Windows\MainWindow')
+    $window = $this->getMockBuilder('\ws\loewe\Woody\Components\Windows\MainWindow')
       ->disableOriginalConstructor()
       ->getMock();
     $window->expects($this->at(0))
@@ -60,10 +60,10 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers Woody\Event\EventInfo::isWindowCloseEvent
+   * @covers ws\loewe\Woody\Event\EventInfo::isWindowCloseEvent
    */
   public function testIsWindowCloseEvent() {
-    $window = $this->getMockBuilder('\Woody\Components\Windows\MainWindow')
+    $window = $this->getMockBuilder('\ws\loewe\Woody\Components\Windows\MainWindow')
       ->disableOriginalConstructor()
       ->getMock();
     $window->expects($this->at(0))
@@ -76,10 +76,10 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers Woody\Event\EventInfo::isTimerEvent
+   * @covers ws\loewe\Woody\Event\EventInfo::isTimerEvent
    */
   public function testIsTimerEvent() {
-    $window = $this->getMockBuilder('\Woody\Components\Windows\MainWindow')
+    $window = $this->getMockBuilder('\ws\loewe\Woody\Components\Windows\MainWindow')
       ->disableOriginalConstructor()
       ->getMock();
     $window->expects($this->at(0))
@@ -91,10 +91,10 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers Woody\Event\EventInfo::isControlEvent
+   * @covers ws\loewe\Woody\Event\EventInfo::isControlEvent
    */
   public function testIsControlEvent() {
-    $editBox = $this->getMockBuilder('\Woody\Components\Controls\EditBox')
+    $editBox = $this->getMockBuilder('\ws\loewe\Woody\Components\Controls\EditBox')
       ->disableOriginalConstructor()
       ->getMock();
     $editBox->expects($this->at(0))
@@ -106,10 +106,10 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers Woody\Event\EventInfo::isFocusEvent
+   * @covers ws\loewe\Woody\Event\EventInfo::isFocusEvent
    */
   public function testIsFocusEvent() {
-    $editBox = $this->getMockBuilder('\Woody\Components\Controls\EditBox')
+    $editBox = $this->getMockBuilder('\ws\loewe\Woody\Components\Controls\EditBox')
       ->disableOriginalConstructor()
       ->getMock();
     $editBox->expects($this->at(0))
@@ -123,10 +123,10 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers Woody\Event\EventInfo::isMouseEvent
+   * @covers ws\loewe\Woody\Event\EventInfo::isMouseEvent
    */
   public function testIsMouseEvent() {
-    $editBox = $this->getMockBuilder('\Woody\Components\Controls\EditBox')
+    $editBox = $this->getMockBuilder('\ws\loewe\Woody\Components\Controls\EditBox')
       ->disableOriginalConstructor()
       ->getMock();
     $editBox->expects($this->at(0))
@@ -139,10 +139,10 @@ class EventInfoTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers Woody\Event\EventInfo::isKeyEvent
+   * @covers ws\loewe\Woody\Event\EventInfo::isKeyEvent
    */
   public function testIsKeyEvent() {
-    $editBox = $this->getMockBuilder('\Woody\Components\Controls\EditBox')
+    $editBox = $this->getMockBuilder('\ws\loewe\Woody\Components\Controls\EditBox')
       ->disableOriginalConstructor()
       ->getMock();
     $editBox->expects($this->at(0))

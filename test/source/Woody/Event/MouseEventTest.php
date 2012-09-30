@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\Components\Windows\MainWindow;
-use \Woody\Components\Controls\EditBox;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Windows\MainWindow;
+use \ws\loewe\Woody\Components\Controls\EditBox;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for MouseEvent.
@@ -34,32 +34,32 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the event.
    *
-   * @covers \Woody\Event\MouseEvent::__construct
-   * @covers \Woody\Event\Event::__construct
+   * @covers \ws\loewe\Woody\Event\MouseEvent::__construct
+   * @covers \ws\loewe\Woody\Event\Event::__construct
    */
   public function testConstruct() {
     // some magic to enforce reinitialisation of the event buffer 
-    $property = new \ReflectionProperty('\Woody\Event\MouseEvent', 'eventBuffer');
+    $property = new \ReflectionProperty('\ws\loewe\Woody\Event\MouseEvent', 'eventBuffer');
     $property->setAccessible(TRUE);
     $property->setValue(null);
     
     $this->event = new MouseEvent($this->getEventInfoMock());
-    $this->assertInstanceOf('\Woody\Event\MouseEvent', $this->event);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\MouseEvent', $this->event);
   }
   
   /**
    * This method tests dispatching the event.
    *
-   * @covers \Woody\Event\MouseEvent::dispatch
-   * @covers \Woody\Event\MouseEvent::isMouseDownEvent
-   * @covers \Woody\Event\MouseEvent::isMouseUpEvent
+   * @covers \ws\loewe\Woody\Event\MouseEvent::dispatch
+   * @covers \ws\loewe\Woody\Event\MouseEvent::isMouseDownEvent
+   * @covers \ws\loewe\Woody\Event\MouseEvent::isMouseUpEvent
    */
   public function testDispatch() {
     $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
     $window->create()->getRootPane()->add($editbox);
 
-    $mouseListener = $this->getMockBuilder('\Woody\Event\MouseAdapter')
+    $mouseListener = $this->getMockBuilder('\ws\loewe\Woody\Event\MouseAdapter')
       ->disableOriginalConstructor()
       ->getMock();
 
@@ -79,7 +79,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This methos tests getting the position of the mouse event.
    *
-   * @covers \Woody\Event\MouseEvent::getPosition
+   * @covers \ws\loewe\Woody\Event\MouseEvent::getPosition
    */
   public function testGetPosition() {
     $this->event = new MouseEvent($this->getEventInfoMock());
@@ -92,7 +92,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting if the right button was pressed.
    *
-   * @covers \Woody\Event\MouseEvent::getPressedButton
+   * @covers \ws\loewe\Woody\Event\MouseEvent::getPressedButton
    */
   public function testGetPressedButton1() {
     $this->event = new MouseEvent($this->getEventInfoMock());
@@ -102,10 +102,10 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting if the left button was pressed.
    *
-   * @covers \Woody\Event\MouseEvent::getPressedButton
+   * @covers \ws\loewe\Woody\Event\MouseEvent::getPressedButton
    */
   public function testGetPressedButton2() {
-    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+    $eventInfo = $this->getMockBuilder('\ws\loewe\Woody\Event\EventInfo')
       ->disableOriginalConstructor()
       ->getMock();
 
@@ -122,10 +122,10 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting if the middle button was pressed.
    *
-   * @covers \Woody\Event\MouseEvent::getPressedButton
+   * @covers \ws\loewe\Woody\Event\MouseEvent::getPressedButton
    */
   public function testGetPressedButton3() {
-    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+    $eventInfo = $this->getMockBuilder('\ws\loewe\Woody\Event\EventInfo')
       ->disableOriginalConstructor()
       ->getMock();
 
@@ -142,7 +142,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the click count of the event.
    *
-   * @covers \Woody\Event\MouseEvent::getClickCount
+   * @covers \ws\loewe\Woody\Event\MouseEvent::getClickCount
    */
   public function testGetClickCount() {
     $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
@@ -187,8 +187,8 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the string representation of the event.
    *
-   * @covers \Woody\Event\MouseEvent::__toString
-   * @covers \Woody\Event\Event::__toString
+   * @covers \ws\loewe\Woody\Event\MouseEvent::__toString
+   * @covers \ws\loewe\Woody\Event\Event::__toString
    */
   public function test__toString() {
     $this->event = new MouseEvent($this->getEventInfoMock());
@@ -198,7 +198,7 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
   
   private function getEventInfoMock() {
     
-    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+    $eventInfo = $this->getMockBuilder('\ws\loewe\Woody\Event\EventInfo')
       ->disableOriginalConstructor()
       ->getMock();
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\Dialog\FileSystem;
+namespace ws\loewe\Woody\Dialog\FileSystem;
 
-use \Woody\Components\Windows\AbstractWindow;
+use \ws\loewe\Woody\Components\Windows\AbstractWindow;
 
 class FolderSelectDialog extends FileSystemDialog {
   public function __construct($title, AbstractWindow $parentWindow = null, $path = null) {

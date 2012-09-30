@@ -1,10 +1,10 @@
 <?php
 
-namespace Woody\Layouts;
+namespace ws\loewe\Woody\Layouts;
 
-use \Woody\Components\Container;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Container;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class GridLayout implements Layout {
 
@@ -72,7 +72,7 @@ class GridLayout implements Layout {
    * This method computes the dimension to be used for each component in the container to be layouted.
    *
    * @param Dimension $containerDimension the dimension of the container
-   * @return \Utils\Geom\Dimension the dimension to be used for each component in the container to be layouted.
+   * @return ws\loewe\Utils\Geom\Dimension the dimension to be used for each component in the container to be layouted.
    */
   private function getComponentDimension(Dimension $containerDimension) {
     $frameInsetX  = 10;

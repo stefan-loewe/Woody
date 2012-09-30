@@ -1,14 +1,14 @@
 <?php
 
-namespace Woody\Components;
+namespace ws\loewe\Woody\Components;
 
-use \Woody\Components\Windows\AbstractWindow;
-use \Woody\Event\ActionListener;
-use \Woody\Event\FocusListener;
-use \Woody\Event\KeyListener;
-use \Woody\Event\MouseListener;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Windows\AbstractWindow;
+use \ws\loewe\Woody\Event\ActionListener;
+use \ws\loewe\Woody\Event\FocusListener;
+use \ws\loewe\Woody\Event\KeyListener;
+use \ws\loewe\Woody\Event\MouseListener;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Description of Component
@@ -40,14 +40,14 @@ abstract class Component implements IComponent {
   /**
    * the top left corner of the component
    *
-   * @var Woody\Utils\Geom\Point
+   * @var ws\loewe\Utils\Geom\Point
    */
   protected $topLeftCorner = null;
 
   /**
    * the dimension of the component
    *
-   * @var Woody\Utils\Geom\Dimension
+   * @var ws\loewe\Utils\Geom\Dimension
    */
   protected $dimension = null;
 
@@ -146,7 +146,7 @@ abstract class Component implements IComponent {
   /**
    * This method creates a component physically as a winbinder control.
    *
-   * Do not call this method manually, it is called by Woody\Components\Container::add only. It is an implementation
+   * Do not call this method manually, it is called by ws\loewe\Woody\Components\Container::add only. It is an implementation
    * side-effect that it is public.
    *
    * @param Component $parent the parent component of this component

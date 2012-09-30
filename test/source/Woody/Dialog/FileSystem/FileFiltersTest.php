@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Dialog\FileSystem;
+namespace ws\loewe\Woody\Dialog\FileSystem;
 
 /**
  * Test class for FileFilters.
@@ -29,19 +29,19 @@ class FileFiltersTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the filter.
    *
-   * @covers \Woody\Dialog\FileSystem\FileFilters::__construct
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FileFilters::__construct
    */
   public function testConstruct() {
     $this->filters = new FileFilters();
 
-    $this->assertInstanceOf('\Woody\Dialog\FileSystem\FileFilters', $this->filters);
+    $this->assertInstanceOf('\ws\loewe\Woody\Dialog\FileSystem\FileFilters', $this->filters);
   }
 
   /**
    * This method tests adding filters and getting them in array representation.
    *
-   * @covers \Woody\Dialog\FileSystem\FileFilters::add
-   * @covers \Woody\Dialog\FileSystem\FileFilters::toArray
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FileFilters::add
+   * @covers \ws\loewe\Woody\Dialog\FileSystem\FileFilters::toArray
    */
   public function testAdd() {
     $this->filters = new FileFilters();

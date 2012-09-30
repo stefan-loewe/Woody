@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for Table.
@@ -16,21 +16,21 @@ class TableTest extends \PHPUnit_Framework_TestCase {
   /**
    * the table to test
    *
-   * @var \Woody\Components\Controls\Table
+   * @var \ws\loewe\Woody\Components\Controls\Table
    */
   private $table = null;
 
   /**
    * the test application
    *
-   * @var \Woody\App\TestApplication
+   * @var \ws\loewe\Woody\App\TestApplication
    */
   private $application = null;
 
   /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -54,14 +54,14 @@ class TableTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers Woody\Components\Controls\Table::getModel
-   * @covers Woody\Components\Controls\Table::setModel
+   * @covers ws\loewe\Woody\Components\Controls\Table::getModel
+   * @covers ws\loewe\Woody\Components\Controls\Table::setModel
    */
   public function testGetSetModel() {
     $this->timer = new Timer(function() {
                               $this->assertNull($this->table->getModel());
 
-                              $model = $this->getMockBuilder('\Woody\Model\TableModel')
+                              $model = $this->getMockBuilder('\ws\loewe\Woody\Model\TableModel')
                                       ->disableOriginalConstructor()
                                       ->getMock();
                               $this->table->setModel($model);
@@ -77,10 +77,10 @@ class TableTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers Woody\Components\Controls\Table::update
-   * @covers Woody\Components\Controls\Table::clear
-   * @covers Woody\Components\Controls\Table::fillColumnHeaders
-   * @covers Woody\Components\Controls\Table::fillDataCells
+   * @covers ws\loewe\Woody\Components\Controls\Table::update
+   * @covers ws\loewe\Woody\Components\Controls\Table::clear
+   * @covers ws\loewe\Woody\Components\Controls\Table::fillColumnHeaders
+   * @covers ws\loewe\Woody\Components\Controls\Table::fillDataCells
    */
   public function testUpdate() {
     $this->timer = new Timer(function() {
@@ -110,8 +110,8 @@ class TableTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\Table::getSelectedIndex
-   * @covers \Woody\Components\Controls\Table::setSelectedIndex
+   * @covers \ws\loewe\Woody\Components\Controls\Table::getSelectedIndex
+   * @covers \ws\loewe\Woody\Components\Controls\Table::setSelectedIndex
    */
   public function testGetSetSelectedIndex() {
     $this->timer = new Timer(function() {
@@ -148,10 +148,10 @@ class TableTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method returns a mocked model object.
    *
-   * @return \Woody\Model\TableModel the mocked model object
+   * @return \ws\loewe\Woody\Model\TableModel the mocked model object
    */
   private function createModel($columns, $rows) {
-    $model = $this->getMockBuilder('\Woody\Model\TableModel')
+    $model = $this->getMockBuilder('\ws\loewe\Woody\Model\TableModel')
             ->disableOriginalConstructor()
             ->getMock();
 

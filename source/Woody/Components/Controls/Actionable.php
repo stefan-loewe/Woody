@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
 interface Actionable {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Dialog\Notification;
+namespace ws\loewe\Woody\Dialog\Notification;
 
 /**
  * Test class for YesNoCancelConfirmationDialog.
@@ -29,22 +29,22 @@ class YesNoCancelConfirmationDialogTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the dialog.
    *
-   * @covers \Woody\Dialog\Notification\YesNoCancelConfirmationDialog::__construct
-   * @covers \Woody\Dialog\Notification\ConfirmationDialog::__construct
-   * @covers \Woody\Dialog\Notification\ModalSystemDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\Notification\YesNoCancelConfirmationDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\Notification\ConfirmationDialog::__construct
+   * @covers \ws\loewe\Woody\Dialog\Notification\ModalSystemDialog::__construct
    */
   public function testConstruct() {
     $this->dialog = new YesNoCancelConfirmationDialog('testConstruct', 'testConstruct', null);
 
-    $this->assertInstanceOf('\Woody\Dialog\Notification\YesNoCancelConfirmationDialog', $this->dialog);
+    $this->assertInstanceOf('\ws\loewe\Woody\Dialog\Notification\YesNoCancelConfirmationDialog', $this->dialog);
   }
 
   /**
    * This method tests getting the initial state of the dialog.
    *
-   * @covers \Woody\Dialog\Notification\YesNoCancelConfirmationDialog::yes
-   * @covers \Woody\Dialog\Notification\YesNoCancelConfirmationDialog::no
-   * @covers \Woody\Dialog\Notification\YesNoCancelConfirmationDialog::cancel
+   * @covers \ws\loewe\Woody\Dialog\Notification\YesNoCancelConfirmationDialog::yes
+   * @covers \ws\loewe\Woody\Dialog\Notification\YesNoCancelConfirmationDialog::no
+   * @covers \ws\loewe\Woody\Dialog\Notification\YesNoCancelConfirmationDialog::cancel
    */
   public function testYesNoCancel() {
     $this->dialog = new YesNoCancelConfirmationDialog('testConstruct', 'testConstruct', null);

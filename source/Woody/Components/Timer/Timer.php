@@ -1,12 +1,12 @@
 <?php
 
-namespace Woody\Components\Timer;
+namespace ws\loewe\Woody\Components\Timer;
 
-use \Woody\WinBinderException;
-use \Woody\Components\Component;
-use \Woody\Components\Windows\AbstractWindow;
-use \Woody\Event\TimeoutListener;
-use \Woody\Event\TimeoutAdapter;
+use \ws\loewe\Woody\WinBinderException;
+use \ws\loewe\Woody\Components\Component;
+use \ws\loewe\Woody\Components\Windows\AbstractWindow;
+use \ws\loewe\Woody\Event\TimeoutListener;
+use \ws\loewe\Woody\Event\TimeoutAdapter;
 
 class Timer {
   /**
@@ -19,7 +19,7 @@ class Timer {
   /**
    * the window to which the timer is bound to
    *
-   * @var \Woody\Components\Windows\AbstractWindow
+   * @var \ws\loewe\Woody\Components\Windows\AbstractWindow
    */
   protected $window = null;
 
@@ -62,7 +62,7 @@ class Timer {
    * This method acts as the constructor of the timer.
    *
    * @param \Closure $callback the default callback that is executed on each timeout
-   * @param \Woody\Components\Windows\AbstractWindow $window the window to which the timer is bound to.
+   * @param \ws\loewe\Woody\Components\Windows\AbstractWindow $window the window to which the timer is bound to.
    * @param int $interval the number of milliseconds that pass between each timeout
    */
   public function __construct(\Closure $callback, AbstractWindow $window, $interval) {
@@ -108,7 +108,7 @@ class Timer {
    * This method starts the timer. If it was already started before without being destroyed since, an exception is
    * thrown.
    *
-   * @return Woody\Components\Timer\Timer $this
+   * @return ws\loewe\Woody\Components\Timer\Timer $this
    */
   public function start() {
     if($this->isRunning) {
@@ -127,7 +127,7 @@ class Timer {
   /**
    * This method destroys the timer, i.e. associated callbacks will no longer be executed.
    *
-   * @return Woody\Components\Timer\Timer $this
+   * @return ws\loewe\Woody\Components\Timer\Timer $this
    */
   public function destroy() {
     if(!$this->isRunning) {

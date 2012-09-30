@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\System;
+namespace ws\loewe\Woody\System;
 
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for WindowConstraints.
@@ -28,16 +28,16 @@ class WindowConstraintsTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the instance from the singleton class.
    *
-   * @covers \Woody\System\WindowConstraints::getInstance
-   * @covers \Woody\System\WindowConstraints::__construct
-   * @covers \Woody\System\WindowConstraints::determineMinima
+   * @covers \ws\loewe\Woody\System\WindowConstraints::getInstance
+   * @covers \ws\loewe\Woody\System\WindowConstraints::__construct
+   * @covers \ws\loewe\Woody\System\WindowConstraints::determineMinima
    */
   public function testGetInstance() {
-    $this->assertInstanceOf('Woody\System\WindowConstraints', WindowConstraints::getInstance());
+    $this->assertInstanceOf('ws\loewe\Woody\System\WindowConstraints', WindowConstraints::getInstance());
   }
 
   /**
-   * @covers \Woody\System\WindowConstraints::enforceConstraints
+   * @covers \ws\loewe\Woody\System\WindowConstraints::enforceConstraints
    */
   public function testEnsureMinimalDimension() {
     $windowConstraints  = WindowConstraints::getInstance();

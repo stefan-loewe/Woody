@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 abstract class EditField extends Control implements Actionable {
   /**
@@ -43,7 +43,7 @@ abstract class EditField extends Control implements Actionable {
    * This method sets the value of the edit field.
    *
    * @param mixed $newValue the new value of the edit field.
-   * @return \Woody\Components\Controls\EditField $this
+   * @return \ws\loewe\Woody\Components\Controls\EditField $this
    */
   public function setValue($newValue) {
     //$this->pauseEvents = TRUE;
@@ -59,7 +59,7 @@ abstract class EditField extends Control implements Actionable {
    * This method sets the edit field to be either read-only or not.
    *
    * @param boolean $isReadonly the read-only state of the edit field
-   * @return \Woody\Components\Controls\EditField $this
+   * @return \ws\loewe\Woody\Components\Controls\EditField $this
    */
   public function setReadOnly($isReadonly) {
     // 0x00CF = EM_SETREADONLY

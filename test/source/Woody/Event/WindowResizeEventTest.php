@@ -1,12 +1,12 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Woody\Components\Windows\MainWindow;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Woody\Components\Windows\MainWindow;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for WindowResizeEvent.
@@ -30,13 +30,13 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
  /**
    * This method tests dispatching the event.
    *
-   * @covers \Woody\Event\WindowResizeEvent::dispatch
+   * @covers \ws\loewe\Woody\Event\WindowResizeEvent::dispatch
    */
   public function testDispatch() {
     $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $window->create();
     
-    $resizeListener = $this->getMockBuilder('\Woody\Event\WindowResizeAdapter')
+    $resizeListener = $this->getMockBuilder('\ws\loewe\Woody\Event\WindowResizeAdapter')
       ->disableOriginalConstructor()
       ->getMock();
     
@@ -50,11 +50,11 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @covers \Woody\Event\WindowResizeEvent::__construct
-   * @covers \Woody\Event\Event::__construct
-   * @covers \Woody\Event\WindowResizeEvent::getOldDimension
-   * @covers \Woody\Event\WindowResizeEvent::getNewDimension
-   * @covers \Woody\Event\WindowResizeEvent::getDeltaDimension
+   * @covers \ws\loewe\Woody\Event\WindowResizeEvent::__construct
+   * @covers \ws\loewe\Woody\Event\Event::__construct
+   * @covers \ws\loewe\Woody\Event\WindowResizeEvent::getOldDimension
+   * @covers \ws\loewe\Woody\Event\WindowResizeEvent::getNewDimension
+   * @covers \ws\loewe\Woody\Event\WindowResizeEvent::getDeltaDimension
    */
   public function testDim() {
     $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));

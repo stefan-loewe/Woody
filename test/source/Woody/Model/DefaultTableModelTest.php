@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Model;
+namespace ws\loewe\Woody\Model;
 
 /**
  * Test class for DefaultTableModelTest.
@@ -42,7 +42,7 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests that creating the table model succeeds.
    *
-   * @covers \Woody\Model\DefaultTableModel::__construct
+   * @covers \ws\loewe\Woody\Model\DefaultTableModel::__construct
    */
   public function testConstruct() {
     $this->tableModel = new DefaultTableModel(array(array(1, 2, 3, 4), array(4, 3, 2, 1)));
@@ -54,7 +54,7 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting a cell entry.
    *
-   * @covers \Woody\Model\DefaultTableModel::getEntry
+   * @covers \ws\loewe\Woody\Model\DefaultTableModel::getEntry
    */
   public function testGetEntry() {
     $this->assertEquals(1, $this->tableModel->getEntry(0, 0));
@@ -66,7 +66,7 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the current number of rows.
    *
-   * @covers \Woody\Model\DefaultTableModel::getRowCount
+   * @covers \ws\loewe\Woody\Model\DefaultTableModel::getRowCount
    */
   public function testGetRowCount() {
     $this->assertEquals(2, $this->tableModel->getRowCount());
@@ -75,7 +75,7 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the current number of columns.
    *
-   * @covers \Woody\Model\DefaultTableModel::getColumnCount
+   * @covers \ws\loewe\Woody\Model\DefaultTableModel::getColumnCount
    */
   public function testGetColumnCount() {
     $this->assertEquals(4, $this->tableModel->getColumnCount());
@@ -84,7 +84,7 @@ class DefaultTableModelTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting new data.
    *
-   * @covers \Woody\Model\DefaultTableModel::setData
+   * @covers \ws\loewe\Woody\Model\DefaultTableModel::setData
    */
   public function testSetData() {
     $this->assertEquals(1, $this->tableModel->getEntry(0, 0));

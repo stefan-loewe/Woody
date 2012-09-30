@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Util\WinApi;
+namespace ws\loewe\Woody\Util\WinApi;
 
 class WinApi {
   /**

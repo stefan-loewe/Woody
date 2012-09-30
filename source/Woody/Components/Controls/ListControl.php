@@ -1,10 +1,10 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\Model\ListModel;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Model\ListModel;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 abstract class ListControl extends Control implements \SplObserver, Actionable {
   /**
@@ -70,7 +70,7 @@ abstract class ListControl extends Control implements \SplObserver, Actionable {
   /**
    * This method returns the list model of the list control.
    *
-   * @return \Woody\Model\ListModel
+   * @return \ws\loewe\Woody\Model\ListModel
    */
   public function getModel() {
     return $this->model;
@@ -79,8 +79,8 @@ abstract class ListControl extends Control implements \SplObserver, Actionable {
   /**
    * This method sets the list model of the list control.
    *
-   * @param \Woody\Model\ListModel $model the model to set
-   * @return \Woody\Components\Controls\ListControl $this
+   * @param \ws\loewe\Woody\Model\ListModel $model the model to set
+   * @return \ws\loewe\Woody\Components\Controls\ListControl $this
    */
   public function setModel(ListModel $model) {
     return $this->update($model);
@@ -90,7 +90,7 @@ abstract class ListControl extends Control implements \SplObserver, Actionable {
    * This method sets the cell renderer of the list control.
    *
    * @param \Callable $cellRenderer
-   * @return \Woody\Components\Controls\ListControl $this
+   * @return \ws\loewe\Woody\Components\Controls\ListControl $this
    */
   public function setCellRenderer(callable $cellRenderer) {
     $this->cellRenderer = $cellRenderer;
@@ -102,7 +102,7 @@ abstract class ListControl extends Control implements \SplObserver, Actionable {
    * This method updates the content of the list control with the elements given in the list model.
    *
    * @param \SplSubject $listModel the model to update the list control with
-   * @return \Woody\Components\Controls\ListControl $this
+   * @return \ws\loewe\Woody\Components\Controls\ListControl $this
    */
   public function update(\SplSubject $listModel) {
     $this->model = $listModel;
@@ -136,7 +136,7 @@ abstract class ListControl extends Control implements \SplObserver, Actionable {
    * This method sets the currently selected index.
    *
    * @param int $index the index to set
-   * @return \Woody\Components\Controls\ListControl $this
+   * @return \ws\loewe\Woody\Components\Controls\ListControl $this
    */
   public function setSelectedIndex($index) {
 
@@ -174,7 +174,7 @@ abstract class ListControl extends Control implements \SplObserver, Actionable {
   /**
    * This method clears the selection, i.e. afterwards, no entry is selected
    *
-   * @return \Woody\Components\Controls\ListControl $this
+   * @return \ws\loewe\Woody\Components\Controls\ListControl $this
    */
   public function clearSelection() {
     wb_set_selected($this->controlID, self::NO_SELECTION);
@@ -201,7 +201,7 @@ abstract class ListControl extends Control implements \SplObserver, Actionable {
    * This method sets the selected element.
    *
    * @param mixed $selectedValue the element to select
-   * @return \Woody\Components\Controls\ListControl $this
+   * @return \ws\loewe\Woody\Components\Controls\ListControl $this
    */
   public function setSelectedElement($selectedElement) {
     if($this->model !== null) {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\Components\Component;
+use \ws\loewe\Woody\Components\Component;
 
 class EventInfo {
-  use \Utils\Common\ValueObject;
+  use \ws\loewe\Utils\Common\ValueObject;
 
   private $windowID    = null;
   private $id          = null;

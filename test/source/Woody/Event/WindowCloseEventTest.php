@@ -1,10 +1,10 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\Components\Windows\MainWindow;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Windows\MainWindow;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for WindowCloseEvent.
@@ -21,7 +21,7 @@ class WindowCloseEventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+    $eventInfo = $this->getMockBuilder('\ws\loewe\Woody\Event\EventInfo')
       ->disableOriginalConstructor()
       ->getMock();
     
@@ -38,23 +38,23 @@ class WindowCloseEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the event.
    *
-   * @covers \Woody\Event\WindowCloseEvent::__construct
-   * @covers \Woody\Event\Event::__construct
+   * @covers \ws\loewe\Woody\Event\WindowCloseEvent::__construct
+   * @covers \ws\loewe\Woody\Event\Event::__construct
    */
   public function testConstruct() {
-    $this->assertInstanceOf('\Woody\Event\WindowCloseEvent', $this->event);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\WindowCloseEvent', $this->event);
   }
 
  /**
    * This method tests dispatching the event.
    *
-   * @covers \Woody\Event\WindowCloseEvent::dispatch
+   * @covers \ws\loewe\Woody\Event\WindowCloseEvent::dispatch
    */
   public function testDispatch() {
     $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $window->create();
 
-    $closeListener = $this->getMockBuilder('\Woody\Event\WindowCloseAdapter')
+    $closeListener = $this->getMockBuilder('\ws\loewe\Woody\Event\WindowCloseAdapter')
       ->disableOriginalConstructor()
       ->getMock();
 

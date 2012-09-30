@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Model;
+namespace ws\loewe\Woody\Model;
 
 /**
  * Test class for TableModelTest.
@@ -42,7 +42,7 @@ class TableModelTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests that creating the table model succeeds.
    *
-   * @covers \Woody\Model\TableModel::__construct
+   * @covers \ws\loewe\Woody\Model\TableModel::__construct
    */
   public function testConstruct() {
     $this->tableModel = new DefaultTableModel(array(array(1, 2, 3, 4), array(4, 3, 2, 1)));
@@ -54,8 +54,8 @@ class TableModelTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests retrieving the default names of the column headers.
    *
-   * @covers \Woody\Model\DefaultTableModel::getColumnName
-   * @covers \Woody\Model\DefaultTableModel::toBase26
+   * @covers \ws\loewe\Woody\Model\DefaultTableModel::getColumnName
+   * @covers \ws\loewe\Woody\Model\DefaultTableModel::toBase26
    */
   public function testGetColumnName() {
     $this->assertEquals('A', $this->tableModel->getColumnName(0));
@@ -66,7 +66,7 @@ class TableModelTest extends \PHPUnit_Framework_TestCase {
    * This method tests that, when attaching an observer and setting new data, update() has to be called once on the
    * observer.
    *
-   * @covers \Woody\Model\TableModel::attach
+   * @covers \ws\loewe\Woody\Model\TableModel::attach
    */
   public function testAttach() {
     $observer = $this->getObserver();
@@ -80,7 +80,7 @@ class TableModelTest extends \PHPUnit_Framework_TestCase {
    * This method tests that, when attaching an observer and setting new data, update() has to be called once on the
    * observer - called within notify() of the table model.
    *
-   * @covers \Woody\Model\TableModel::notify
+   * @covers \ws\loewe\Woody\Model\TableModel::notify
    */
   public function testNotify() {
     $observer = $this->getObserver();
@@ -94,7 +94,7 @@ class TableModelTest extends \PHPUnit_Framework_TestCase {
    * This method tests that, when attaching an observer and setting new data, update() has to be called once on the
    * observer, but when detaching it, update() is not called anymore.
    *
-   * @covers \Woody\Model\TableModel::detach
+   * @covers \ws\loewe\Woody\Model\TableModel::detach
    */
   public function testDetach() {
     $observer = $this->getObserver();

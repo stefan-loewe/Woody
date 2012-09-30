@@ -1,15 +1,15 @@
 <?php
 
-namespace Woody\Layouts;
+namespace ws\loewe\Woody\Layouts;
 
-use \Woody\Components\Container;
+use \ws\loewe\Woody\Components\Container;
 
 interface Layout {
 
   /**
    * This method layouts the given container using this layout.
    *
-   * @param \Woody\Components\Container $container
+   * @param \ws\loewe\Woody\Components\Container $container
    */
   function layout(Container $container);
 }

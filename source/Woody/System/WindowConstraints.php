@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\System;
+namespace ws\loewe\Woody\System;
 
-use \Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Dimension;
 
 class WindowConstraints {
   /**
@@ -22,7 +22,7 @@ class WindowConstraints {
   /**
    * the instance that this singleton encapsulates
    *
-   * @var Woody\System\WindowConstraints
+   * @var ws\loewe\Woody\System\WindowConstraints
    */
   private static $instance = null;
 
@@ -56,7 +56,7 @@ class WindowConstraints {
   /**
    * This method returns the sole instance of this class.
    *
-   * @return Woody\System\WindowConstraints the sole instance of this class
+   * @return ws\loewe\Woody\System\WindowConstraints the sole instance of this class
    */
   public static function getInstance() {
     if(self::$instance === null) {
@@ -69,7 +69,7 @@ class WindowConstraints {
   /**
    * This method calculates and sets the minimal width and height a window may have with the current display settings.
    *
-   * @return Woody\System\WindowConstraints $this
+   * @return ws\loewe\Woody\System\WindowConstraints $this
    */
   private function determineMinima() {
     wb_set_size($this->window, 0, 0);
@@ -84,7 +84,7 @@ class WindowConstraints {
    * This method enforces the contraints on the given dimension, and mutates it accordingly.
    *
    * @param Dimension $dimension the dimension to enforce the contraints on
-   * @return \Utils\Geom\Dimension the dimension with the contraints enforced
+   * @return ws\loewe\Utils\Geom\Dimension the dimension with the contraints enforced
    */
   public function enforceConstraints(Dimension $dimension) {
     $width  = max($this->minWidth, $dimension->width);

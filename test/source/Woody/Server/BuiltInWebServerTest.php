@@ -1,13 +1,13 @@
 <?php
 
-namespace Woody\Server;
+namespace ws\loewe\Woody\Server;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Dimension;
-use \Utils\Geom\Point;
-use \Woody\Components\Controls\HtmlControl;
-use \Woody\Event\ActionAdapter;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Woody\Components\Controls\HtmlControl;
+use \ws\loewe\Woody\Event\ActionAdapter;
 
 /**
  * Test class for BuiltInWebServer.
@@ -41,10 +41,10 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests constructing a new server.
    *
-   * @covers \Woody\Server\BuiltInWebServer::__construct
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::__construct
    */
   public function testConstruct() {
-    $window = $this->getMockBuilder('\Woody\Components\Windows\AbstractWindow')
+    $window = $this->getMockBuilder('\ws\loewe\Woody\Components\Windows\AbstractWindow')
       ->disableOriginalConstructor()
       ->getMock();
 
@@ -56,21 +56,21 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
       realpath(__DIR__.'\\..\\..\\..\\..\\doc\\examples\\server.php'),
       new HtmlControlServer($window, 1235));
 
-    $this->assertInstanceOf('Woody\Server\BuiltInWebServer', $this->server);
+    $this->assertInstanceOf('ws\loewe\Woody\Server\BuiltInWebServer', $this->server);
   }
 
   /**
    * This method tests registering and untegistering HTML controls to and from the server.
    *
-   * @covers \Woody\Server\BuiltInWebServer::register
-   * @covers \Woody\Server\BuiltInWebServer::unregister
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::register
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::unregister
    */
   public function testRegisterUnregister() {
-    $window = $this->getMockBuilder('\Woody\Components\Windows\AbstractWindow')
+    $window = $this->getMockBuilder('\ws\loewe\Woody\Components\Windows\AbstractWindow')
       ->disableOriginalConstructor()
       ->getMock();
 
-    $replyServer = $this->getMockBuilder('\Woody\Server\HtmlControlServer')
+    $replyServer = $this->getMockBuilder('\ws\loewe\Woody\Server\HtmlControlServer')
       ->disableOriginalConstructor()
       ->getMock();
 
@@ -82,23 +82,23 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
       '',
       $replyServer);
 
-    $htmlControl = $this->getMockBuilder('\Woody\Components\Controls\HtmlControl')
+    $htmlControl = $this->getMockBuilder('\ws\loewe\Woody\Components\Controls\HtmlControl')
       ->disableOriginalConstructor()
       ->getMock();
 
-    $this->assertInstanceOf('\Woody\Server\BuiltInWebServer', $this->server->register($htmlControl));
-    $this->assertInstanceOf('\Woody\Server\BuiltInWebServer', $this->server->unregister($htmlControl));
+    $this->assertInstanceOf('\ws\loewe\Woody\Server\BuiltInWebServer', $this->server->register($htmlControl));
+    $this->assertInstanceOf('\ws\loewe\Woody\Server\BuiltInWebServer', $this->server->unregister($htmlControl));
   }
 
   /**
    * This method tests starting the server.
    *
-   * @covers \Woody\Server\BuiltInWebServer::start
-   * @covers \Woody\Server\BuiltInWebServer::startWebServerProcess
-   * @covers \Woody\Server\BuiltInWebServer::startHtmlReplyServer
-   * @covers \Woody\Server\BuiltInWebServer::stop
-   * @covers \Woody\Event\EventInfo::isMouseEvent
-   * @covers \Woody\Event\EventInfo::isKeyEvent
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::start
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::startWebServerProcess
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::startHtmlReplyServer
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::stop
+   * @covers \ws\loewe\Woody\Event\EventInfo::isMouseEvent
+   * @covers \ws\loewe\Woody\Event\EventInfo::isKeyEvent
    */
   public function testStart() {
     $this->application  = new TestApplication($this);
@@ -150,13 +150,13 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests starting the server.
    *
-   * @covers \Woody\Server\BuiltInWebServer::start
-   * @covers \Woody\Server\BuiltInWebServer::startWebServerProcess
-   * @covers \Woody\Server\BuiltInWebServer::startHtmlReplyServer
-   * @covers \Woody\Server\BuiltInWebServer::stop
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::start
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::startWebServerProcess
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::startHtmlReplyServer
+   * @covers \ws\loewe\Woody\Server\BuiltInWebServer::stop
    */
   public function testStop() {
-    $window   = new \Woody\Components\Windows\MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $window   = new \ws\loewe\Woody\Components\Windows\MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $window->create();
 
     $this->server = new BuiltInWebServer(

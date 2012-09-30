@@ -1,9 +1,9 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
 
 /**
  * Test class for ListControl.
@@ -13,21 +13,21 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
   /**
    * the list control under test
    *
-   * @var \Woody\Components\Controls\ListControl
+   * @var \ws\loewe\Woody\Components\Controls\ListControl
    */
   protected $listControl = null;
 
   /**
    * the test application
    *
-   * @var \Woody\App\TestApplication
+   * @var \ws\loewe\Woody\App\TestApplication
    */
   protected $application = null;
 
   /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -51,14 +51,14 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\ListControl::getModel
-   * @covers \Woody\Components\Controls\ListControl::setModel
+   * @covers \ws\loewe\Woody\Components\Controls\ListControl::getModel
+   * @covers \ws\loewe\Woody\Components\Controls\ListControl::setModel
    */
   public function testGetSetModel() {
     $this->timer = new Timer(function() {
                               $this->assertNull($this->listControl->getModel());
 
-                              $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                              $model = $this->getMockBuilder('\ws\loewe\Woody\Model\ListModel')
                                       ->disableOriginalConstructor()
                                       ->getMock();
 
@@ -76,13 +76,13 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\ListControl::update
+   * @covers \ws\loewe\Woody\Components\Controls\ListControl::update
    */
   public function testUpdate() {
     $this->timer = new Timer(function() {
                               $this->assertEquals(-1, $this->listControl->getSelectedIndex());
 
-                              $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                              $model = $this->getMockBuilder('\ws\loewe\Woody\Model\ListModel')
                                       ->disableOriginalConstructor()
                                       ->getMock();
                               // ... returning 'A' on each call to getElementAt
@@ -100,7 +100,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
                               $this->listControl->setSelectedIndex(0);
                               $this->assertEquals('A', $this->listControl->getSelectedElement());
 
-                              $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                              $model = $this->getMockBuilder('\ws\loewe\Woody\Model\ListModel')
                                       ->disableOriginalConstructor()
                                       ->getMock();
                               $model->expects($this->any())
@@ -124,9 +124,9 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\ListControl::getSelectedIndex
-   * @covers \Woody\Components\Controls\ListControl::setSelectedIndex
-   * @covers \Woody\Components\Controls\ListControl::isValidIndex
+   * @covers \ws\loewe\Woody\Components\Controls\ListControl::getSelectedIndex
+   * @covers \ws\loewe\Woody\Components\Controls\ListControl::setSelectedIndex
+   * @covers \ws\loewe\Woody\Components\Controls\ListControl::isValidIndex
    */
   public function testGetSetSelectedIndex() {
     $this->timer = new Timer(function() {
@@ -136,7 +136,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
                               $this->assertEquals(ListControl::NO_SELECTION, $this->listControl->getSelectedIndex());
 
                               // get a mock for the model ...
-                              $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                              $model = $this->getMockBuilder('\ws\loewe\Woody\Model\ListModel')
                                       ->disableOriginalConstructor()
                                       ->getMock();
                               // ... returning 'A' on each call to getElementAt
@@ -185,7 +185,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\ListControl::getSelectedElement
+   * @covers \ws\loewe\Woody\Components\Controls\ListControl::getSelectedElement
    */
   public function testGetSelectedElement() {
     $this->timer = new Timer(function() {
@@ -195,7 +195,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
                               $this->assertNull($this->listControl->getSelectedElement());
 
                               // get a mock for the model ...
-                              $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                              $model = $this->getMockBuilder('\ws\loewe\Woody\Model\ListModel')
                                       ->disableOriginalConstructor()
                                       ->getMock();
                               // ... returning 'A' on each call to getElementAt
@@ -238,7 +238,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\ListControl::clearSelection
+   * @covers \ws\loewe\Woody\Components\Controls\ListControl::clearSelection
    */
   public function testClearSelection() {
     $this->timer = new Timer(function() {
@@ -248,7 +248,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
                               $this->assertNull($this->listControl->getSelectedElement());
 
                               // get a mock for the model ...
-                              $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                              $model = $this->getMockBuilder('\ws\loewe\Woody\Model\ListModel')
                                       ->disableOriginalConstructor()
                                       ->getMock();
                               // ... returning 'A' on each call to getElementAt
@@ -282,7 +282,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @covers \Woody\Components\Controls\ListControl::setSelectedElement
+   * @covers \ws\loewe\Woody\Components\Controls\ListControl::setSelectedElement
    */
   public function testSetSelectedElement() {
     $this->timer = new Timer(function() {
@@ -295,7 +295,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
                               $this->assertNull($this->listControl->getSelectedElement());
 
                               // get a mock for the model ...
-                              $model = $this->getMockBuilder('\Woody\Model\ListModel')
+                              $model = $this->getMockBuilder('\ws\loewe\Woody\Model\ListModel')
                                       ->disableOriginalConstructor()
                                       ->getMock();
                               // ... returning 'A' on each call to getElementAt
@@ -334,7 +334,7 @@ abstract class ListControlTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting the cell renderer.
    *
-   * @covers \Woody\Components\Controls\ListControl::setCellRenderer
+   * @covers \ws\loewe\Woody\Components\Controls\ListControl::setCellRenderer
    */
   public function testSetCellRenderer() {
     $callback = function() {

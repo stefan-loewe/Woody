@@ -1,8 +1,8 @@
 <?php
 
-namespace Woody\Dialog\FileSystem;
+namespace ws\loewe\Woody\Dialog\FileSystem;
 
-use \Woody\Components\Windows\AbstractWindow;
+use \ws\loewe\Woody\Components\Windows\AbstractWindow;
 
 abstract class FileSystemDialog {
   /**
@@ -15,7 +15,7 @@ abstract class FileSystemDialog {
   /**
    * the window the dialog belongs to, may be null
    *
-   * @var \Woody\Components\Windows\AbstractWindow
+   * @var \ws\loewe\Woody\Components\Windows\AbstractWindow
    */
   protected $window = null;
 

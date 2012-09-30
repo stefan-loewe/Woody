@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for Calendar.
@@ -15,21 +15,21 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
   /**
    * the calendar to test
    *
-   * @var \Woody\Components\Controls\Calendar
+   * @var \ws\loewe\Woody\Components\Controls\Calendar
    */
   private $calendar = null;
 
   /**
    * the test application
    *
-   * @var \Woody\App\TestApplication
+   * @var \ws\loewe\Woody\App\TestApplication
    */
   private $application = null;
 
   /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -55,8 +55,8 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting and setting the timestamp from the calendar.
    *
-   * @covers \Woody\Components\Controls\Calendar::getDate
-   * @covers \Woody\Components\Controls\Calendar::setDate
+   * @covers \ws\loewe\Woody\Components\Controls\Calendar::getDate
+   * @covers \ws\loewe\Woody\Components\Controls\Calendar::setDate
    */
   public function testGetSetDate() {
     $this->timer = new Timer(function() {

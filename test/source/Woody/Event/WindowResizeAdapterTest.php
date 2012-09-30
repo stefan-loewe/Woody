@@ -1,6 +1,6 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
 /**
  * Test class for WindowResizeAdapter.
@@ -34,18 +34,18 @@ class WindowResizeAdapterTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method test the constructor of the adapter
    *
-   * @covers Woody\Event\WindowResizeAdapter::__construct
+   * @covers ws\loewe\Woody\Event\WindowResizeAdapter::__construct
    */
   public function testConstruct() {
     $this->adapter = new WindowResizeAdapter(function(){});
-    $this->assertInstanceOf('Woody\Event\WindowResizeAdapter', $this->adapter);
+    $this->assertInstanceOf('ws\loewe\Woody\Event\WindowResizeAdapter', $this->adapter);
   }
 
   /**
-   * @covers Woody\Event\WindowResizeAdapter::windowResized
+   * @covers ws\loewe\Woody\Event\WindowResizeAdapter::windowResized
    */
   public function testWindowResized() {
-    $event = $this->getMockBuilder('\Woody\Event\WindowResizeEvent')
+    $event = $this->getMockBuilder('\ws\loewe\Woody\Event\WindowResizeEvent')
       ->disableOriginalConstructor()
       ->getMock();
 

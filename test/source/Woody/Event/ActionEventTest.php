@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Event;
+namespace ws\loewe\Woody\Event;
 
-use \Woody\Components\Windows\MainWindow;
-use \Woody\Components\Controls\EditBox;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\Components\Windows\MainWindow;
+use \ws\loewe\Woody\Components\Controls\EditBox;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for ActionEvent.
@@ -22,7 +22,7 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $eventInfo = $this->getMockBuilder('\Woody\Event\EventInfo')
+    $eventInfo = $this->getMockBuilder('\ws\loewe\Woody\Event\EventInfo')
       ->disableOriginalConstructor()
       ->getMock();
     
@@ -39,24 +39,24 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests creating the event.
    *
-   * @covers \Woody\Event\ActionEvent::__construct
-   * @covers \Woody\Event\Event::__construct
+   * @covers \ws\loewe\Woody\Event\ActionEvent::__construct
+   * @covers \ws\loewe\Woody\Event\Event::__construct
    */
   public function testConstruct() {
-    $this->assertInstanceOf('\Woody\Event\ActionEvent', $this->event);
+    $this->assertInstanceOf('\ws\loewe\Woody\Event\ActionEvent', $this->event);
   }
 
  /**
    * This method tests dispatching the event.
    *
-   * @covers \Woody\Event\ActionEvent::dispatch
+   * @covers \ws\loewe\Woody\Event\ActionEvent::dispatch
    */
   public function testDispatch() {
     $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
     $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
     $window->create()->getRootPane()->add($editbox);
 
-    $actionListener = $this->getMockBuilder('\Woody\Event\ActionAdapter')
+    $actionListener = $this->getMockBuilder('\ws\loewe\Woody\Event\ActionAdapter')
       ->disableOriginalConstructor()
       ->getMock();
 
@@ -72,8 +72,8 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests the string representation of the action event.
    *
-   * @covers \Woody\Event\ActionEvent::__toString
-   * @covers \Woody\Event\Event::__toString
+   * @covers \ws\loewe\Woody\Event\ActionEvent::__toString
+   * @covers \ws\loewe\Woody\Event\Event::__toString
    */
   public function testToString() {
     $this->assertTrue(strpos($this->event->__toString(), 'A/C/S = ') !== FALSE);

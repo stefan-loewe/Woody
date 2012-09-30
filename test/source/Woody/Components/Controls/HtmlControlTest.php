@@ -1,11 +1,11 @@
 <?php
 
-namespace Woody\Components\Controls;
+namespace ws\loewe\Woody\Components\Controls;
 
-use \Woody\App\TestApplication;
-use \Woody\Components\Timer\Timer;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
+use \ws\loewe\Woody\App\TestApplication;
+use \ws\loewe\Woody\Components\Timer\Timer;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Geom\Dimension;
 
 /**
  * Test class for HtmlControl.
@@ -23,14 +23,14 @@ class HtmlControlTest extends \PHPUnit_Framework_TestCase {
   /**
    * the test application
    *
-   * @var \Woody\App\TestApplication
+   * @var \ws\loewe\Woody\App\TestApplication
    */
   private $application = null;
 
   /**
    * the timer for the test application
    *
-   * @var \Woody\Components\Timer\Timer
+   * @var \ws\loewe\Woody\Components\Timer\Timer
    */
   private $timer = null;
 
@@ -56,7 +56,7 @@ class HtmlControlTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests getting the URL of the html control.
    *
-   * @covers \Woody\Components\Controls\HtmlControl::getUrl
+   * @covers \ws\loewe\Woody\Components\Controls\HtmlControl::getUrl
    */
   public function testGetUrl() {
     $this->timer = new Timer(function() {
@@ -74,7 +74,7 @@ class HtmlControlTest extends \PHPUnit_Framework_TestCase {
   /**
    * This method tests setting the URL of the html control.
    *
-   * @covers \Woody\Components\Controls\HtmlControl::setUrl
+   * @covers \ws\loewe\Woody\Components\Controls\HtmlControl::setUrl
    */
   public function testSetUrl() {
     $this->timer = new Timer(function() {
