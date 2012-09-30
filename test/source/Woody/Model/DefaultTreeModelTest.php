@@ -188,7 +188,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
    * @return TreeNode the default mock object for the root
    */
   private function getRootNode() {
-    return $this->getMockBuilder('\Utils\Tree\TreeNode')
+    return $this->getMockBuilder('\ws\loewe\Utils\Tree\TreeNode')
       ->setConstructorArgs(array('root'))
       ->setMethods(array())
       ->getMock();
@@ -200,7 +200,7 @@ class DefaultTreeModelTest extends \PHPUnit_Framework_TestCase {
    * @return TreeNode the default mock object for a node of the tree model
    */
   private function getChildNode() {
-    return $this->getMockBuilder('\Utils\Tree\TreeNode')
+    return $this->getMockBuilder('\ws\loewe\Utils\Tree\TreeNode')
       ->setConstructorArgs(array('childNode'))
       ->setMethods(array())
       ->getMock();
