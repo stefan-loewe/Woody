@@ -11,6 +11,5 @@
     },
     "autoload": {
         "psr-0": { "ws\\loewe\\Woody": "source/" }
-    },
-    "target-dir": "ws/loewe/Woody"
+    }
 }
