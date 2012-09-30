@@ -5,7 +5,7 @@ namespace ws\loewe\Woody\Components\Controls;
 use \ws\loewe\Woody\Model\DefaultTreeModel;
 use \ws\loewe\Woody\App\TestApplication;
 use \ws\loewe\Woody\Components\Timer\Timer;
-use \Utils\Tree\TreeNode;
+use \ws\loewe\Utils\Tree\TreeNode;
 use \ws\loewe\Utils\Geom\Point;
 use \ws\loewe\Utils\Geom\Dimension;
 
