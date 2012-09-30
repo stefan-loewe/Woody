@@ -57,7 +57,7 @@ class GridLayoutTest extends \PHPUnit_Framework_TestCase {
       ->will($this->returnValue(array($editBox)));
     $frame->expects($this->once())
       ->method('getDimension')
-      ->will($this->returnValue(new ws\loewe\Utils\Geom\Dimension(200, 100)));
+      ->will($this->returnValue(new \ws\loewe\Utils\Geom\Dimension(200, 100)));
 
     // layout the edit box in the frame
     (new GridLayout(1, 1))->layout($frame);
