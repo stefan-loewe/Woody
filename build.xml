@@ -32,7 +32,7 @@
 
  <target name="dependencies" description="get dependencies with composer">
   <exec executable="php">
-   <arg value="../composer/composer.phar" />
+   <arg value="D:/workspace/programming/PHP/composer/composer.phar" />
    <arg value="install" />
   </exec>
  </target>
