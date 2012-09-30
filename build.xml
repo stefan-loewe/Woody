@@ -2,7 +2,7 @@
 
 <project name="name-of-project" default="build">
  <target name="build"
-   depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdoc,phpunit,phpcb"/>
+   depends="prepare,dependencies,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdoc,phpunit,phpcb"/>
    
  <target name="build-parallel"
    depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
@@ -27,6 +27,14 @@
   <delete dir="${basedir}/build/coverage"/>
   <delete dir="${basedir}/build/logs"/>
   <delete dir="${basedir}/build/pdepend"/>
+  <delete dir="${basedir}/vendor"/>
+ </target>
+
+ <target name="dependencies" description="get dependencies with composer">
+  <exec executable="php">
+   <arg value="../composer/composer.phar" />
+   <arg value="install" />
+  </exec>
  </target>
 
  <target name="prepare" depends="clean"
@@ -42,8 +50,8 @@
   <apply executable="php" failonerror="true">
    <arg value="-l" />
 
-   <fileset dir="${basedir}/source/Woody">
-    <include name="**/*.inc" />
+   <fileset dir="${basedir}/source/">
+    <include name="**/*.php" />
     <modified />
    </fileset>
 
