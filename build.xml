@@ -32,8 +32,10 @@
  </target>
 
  <target name="dependencies" description="get dependencies with composer">
-  <exec executable="composer.bat">
-   <arg value="install" />
+  <exec executable="cmd">
+    <arg value="/c"/>
+    <arg value="composer.bat"/>
+    <arg value="install"/>
   </exec>
  </target>
 
