@@ -1,8 +1,8 @@
 <?php
 
-use Utils\Geom\Dimension;
-use Utils\Geom\Point;
-use Utils\Logging\Logger;
+use \ws\loewe\Utils\Geom\Dimension;
+use \ws\loewe\Utils\Geom\Point;
+use \ws\loewe\Utils\Logging\Logger;
 use Woody\App\Application;
 use Woody\Components\Controls\EditArea;
 use Woody\Components\Controls\HTMLControl;
