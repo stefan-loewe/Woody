@@ -40,7 +40,7 @@ class Image extends Control implements Actionable {
   /**
    * This method sets the image of the image control.
    *
-   * @return \ws\loewe\Woody\Components\Controls\Image $this
+   * @return Image $this
    */
   protected function setImage() {
     $bitmap = $this->imageResource->getResource();

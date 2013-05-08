@@ -2,7 +2,6 @@
 
 namespace ws\loewe\Woody\Components;
 
-use \ws\loewe\Woody\Components\Windows\AbstractWindow;
 use \ws\loewe\Woody\Event\ActionListener;
 use \ws\loewe\Woody\Event\FocusListener;
 use \ws\loewe\Woody\Event\KeyListener;
@@ -11,9 +10,9 @@ use \ws\loewe\Utils\Geom\Point;
 use \ws\loewe\Utils\Geom\Dimension;
 
 /**
- * Description of Component
+ * This class defines the basic frame for any component of a graphical user interface.
  *
- * @author Stefan
+ * @author stefan.loewe.ws
  */
 abstract class Component implements IComponent {
   /**
@@ -232,7 +231,7 @@ abstract class Component implements IComponent {
       $this->actionListeners = new \SplObjectStorage();
     }
 
-    $this->actionListeners[$actionListener] = true;
+    $this->actionListeners->attach($actionListener);
 
     return $this;
   }
@@ -271,7 +270,7 @@ abstract class Component implements IComponent {
       $this->focusListeners = new \SplObjectStorage();
     }
 
-    $this->focusListeners[$focusListener] = true;
+    $this->focusListeners->attach($focusListener);
 
     return $this;
   }
@@ -310,7 +309,7 @@ abstract class Component implements IComponent {
       $this->keyListeners = new \SplObjectStorage();
     }
 
-    $this->keyListeners[$keyListener] = true;
+    $this->keyListeners->attach($keyListener);
 
     return $this;
   }
@@ -349,7 +348,7 @@ abstract class Component implements IComponent {
       $this->mouseListeners = new \SplObjectStorage();
     }
 
-    $this->mouseListeners[$mouseListener] = true;
+    $this->mouseListeners->attach($mouseListener);
 
     return $this;
   }

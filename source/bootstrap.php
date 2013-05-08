@@ -6,9 +6,9 @@ use \ws\loewe\Woody\Components\Component;
 
 error_reporting(E_ALL | E_STRICT);
 
-require_once './vendor/autoload.php';
-require_once './lib/winbinder.php';
-require_once './lib/fi/freeimage.inc.php';
+require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../lib/winbinder.php';
+require_once __DIR__.'/../lib/fi/freeimage.inc.php';
 
 $autoloader = new ws\loewe\Utils\Autoload\Autoloader('./source');
 
