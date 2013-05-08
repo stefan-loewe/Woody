@@ -42,8 +42,13 @@ class Timer {
    *
    * @var int
    */
-  private $counter = 0;
-  
+  protected $counter = 0;
+
+  /**
+   * the collection of timeout listeners
+   *
+   * @var \SplObjectStorage
+   */
   private $timeoutListeners = null;
 
   /**
@@ -74,7 +79,7 @@ class Timer {
 
     // an auxilliary callback to track the number of executions
     $this->addTimeoutListener(new TimeoutAdapter(function () {$this->counter++;}));
-    
+
     // the default callback provided by the user
     $this->addTimeoutListener(new TimeoutAdapter($callback));
 
