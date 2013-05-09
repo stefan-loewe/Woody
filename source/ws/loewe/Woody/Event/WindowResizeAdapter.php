@@ -6,20 +6,20 @@ class WindowResizeAdapter implements WindowResizeListener {
   /**
    * the callback to be executed for the window resize event
    *
-   * @var callable
+   * @var \Closure
    */
   private $onWindowResize = null;
 
   /**
    * This method acts as the constructor of the class.
    *
-   * @param callable $onWindowResize the callback to be executed for the window resize event
+   * @param \Closure $onWindowResize the callback to be executed for the window resize event
    */
-  public function __construct(callable $onWindowResize) {
+  public function __construct(\Closure $onWindowResize) {
     $this->onWindowResize = $onWindowResize;
   }
 
   public function windowResized(WindowResizeEvent $event) {
-    $this->onWindowResize($event);
+    $this->onWindowResize->__invoke($event);
   }
 }

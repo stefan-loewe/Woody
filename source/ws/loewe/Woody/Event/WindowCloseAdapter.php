@@ -6,20 +6,20 @@ class WindowCloseAdapter implements WindowCloseListener {
   /**
    * the callback to be executed when the window is closed
    *
-   * @var callable
+   * @var \Closure
    */
   private $onWindowClosed = null;
 
   /**
    * This method acts as the constructor of the class.
    *
-   * @param callable $onWindowClosed the callback to be executed when the window is closed
+   * @param \Closure $onWindowClosed the callback to be executed when the window is closed
    */
-  public function __construct(callable $onWindowClosed) {
+  public function __construct(\Closure $onWindowClosed) {
     $this->onWindowClosed = $onWindowClosed;
   }
 
   public function windowClosed(WindowCloseEvent $event) {
-    $this->onWindowClosed($event);
+    $this->onWindowClosed->__invoke($event);
   }
 }
