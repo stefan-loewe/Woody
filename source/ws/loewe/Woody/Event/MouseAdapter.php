@@ -32,13 +32,13 @@ class MouseAdapter implements MouseListener {
 
   public function mousePressed(MouseEvent $event) {
     if($this->onMousePressed != null) {
-      $this->onMousePressed->__invoke($event);
+      $this->onMousePressed($event);
     }
   }
 
   public function mouseReleased(MouseEvent $event) {
     if($this->onMouseReleased != null) {
-      $this->onMouseReleased->__invoke($event);
+      $this->onMouseReleased($event);
     }
   }
 }

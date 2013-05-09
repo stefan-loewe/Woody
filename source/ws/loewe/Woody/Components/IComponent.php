@@ -2,8 +2,9 @@
 
 namespace ws\loewe\Woody\Components;
 
-use \ws\loewe\Utils\Geom\Point;
-use \ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Woody\Components\Controls\Frame;
+use ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Point;
 
 interface IComponent {
 
@@ -24,28 +25,28 @@ interface IComponent {
   /**
    * This method returns the container holding the component.
    *
-   * @return Container the container holding the component
+   * @return Frame the container holding the component
    */
   public function getParent();
 
   /**
    * This method returns the top left corner of the component.
    *
-   * @return Woodyws\loewe\Utils\Geom\Point the top left corner of the component.
+   * @return Point the top left corner of the component.
    */
   public function getPosition();
 
   /**
    * This method returns the dimension of the top left corner of the component.
    *
-   * @return Woodyws\loewe\Utils\Geom\Dimension the dimension of the control
+   * @return Dimension the dimension of the control
    */
   public function getDimension();
 
   /**
    * This method moves the component by an offset, given as dimension.
    *
-   * @param ws\loewe\Utils\Geom\Dimension $dimension the dimension by which this point shall be moved by
+   * @param Dimension $dimension the dimension by which this point shall be moved by
    * @return Component $this
    */
   public function moveBy(Dimension $dimension);

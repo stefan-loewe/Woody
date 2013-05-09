@@ -5,7 +5,6 @@ namespace ws\loewe\Woody\Event;
 use \ws\loewe\Utils\Http\HttpGetRequest;
 use \ws\loewe\Woody\Components\Controls\Actionable;
 use \ws\loewe\Woody\Components\Controls\Control;
-use \ws\loewe\Woody\Components\Timer\Timer;
 
 /**
  * This class is responsible for creating events from the raw winbinder event data. Furhtermore, it dispatched the

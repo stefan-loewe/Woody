@@ -3,12 +3,11 @@
 namespace ws\loewe\Woody\Components\Controls;
 
 use \ws\loewe\Woody\Components\Component;
-use \ws\loewe\Woody\Components\Container;
 use \ws\loewe\Woody\Layouts\GridLayout;
 use \ws\loewe\Utils\Geom\Point;
 use \ws\loewe\Utils\Geom\Dimension;
 
-class Frame extends Control implements Container {
+class Frame extends Control  {
   /**
    * the child controls of this frame
    *
@@ -22,13 +21,6 @@ class Frame extends Control implements Container {
    * @var \ws\loewe\Woody\Layouts\GridLayout
    */
   protected $layout = null;
-  
-  /**
-   * the tab index of the frame, needed for adding the frame to a page of tab control
-   *
-   * @var int
-   */
-  protected $tabIndex = null;
 
   /**
    * This method acts as the constructor of the class.
@@ -36,7 +28,9 @@ class Frame extends Control implements Container {
    * @param string $label the label of the frame
    * @param Point $topLeftCorner the top left corner of the frame
    * @param Dimension $dimension the dimension of the frame, denoting the height of the bounding box - including the
-   *  border but without the excess vertical space used by the (optional) label of the frame
+   * border but without the excess vertical space used by the (optional) label of the frame
+   * @param int $tabIndex the index of the tab page where to add the frame, only needed when adding frames to tabs
+   * 
    */
   public function __construct($label, Point $topLeftCorner, Dimension $dimension, $tabIndex = null) {
     // the frame has to be increased by 8 pixels in height, to get the user specified height

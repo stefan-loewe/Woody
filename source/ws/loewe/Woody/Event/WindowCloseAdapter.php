@@ -20,6 +20,6 @@ class WindowCloseAdapter implements WindowCloseListener {
   }
 
   public function windowClosed(WindowCloseEvent $event) {
-    $this->onWindowClosed->__invoke($event);
+    $this->onWindowClosed($event);
   }
 }

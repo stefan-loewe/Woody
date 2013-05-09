@@ -20,6 +20,6 @@ class WindowResizeAdapter implements WindowResizeListener {
   }
 
   public function windowResized(WindowResizeEvent $event) {
-    $this->onWindowResize->__invoke($event);
+    $this->onWindowResize($event);
   }
 }

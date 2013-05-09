@@ -2,6 +2,8 @@
 
 namespace ws\loewe\Woody\Event;
 
+use ws\loewe\Woody\Components\Windows\AbstractWindow;
+
 class WindowCloseEvent extends Event {
   /**
    * This method acts as the constructor of the class.
@@ -13,10 +15,16 @@ class WindowCloseEvent extends Event {
   }
   
   public function dispatch() {
-    $closeListener = $this->getSource()->getWindowCloseListener();
+    $source = $this->getSource();
+    
+    if($source instanceof AbstractWindow) {
+      $closeListener = $source->getWindowCloseListener();
 
-    if($closeListener !== null) {
-      $closeListener->windowClosed($this);
+      if($closeListener !== null) {
+        $closeListener->windowClosed($this);
+      }
+    } else {
+      throw new \RuntimeException('Dispatching WindowCloseEvent from a non-window control!');
     }
   }
 }

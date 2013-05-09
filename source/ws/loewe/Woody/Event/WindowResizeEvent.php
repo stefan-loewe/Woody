@@ -2,7 +2,8 @@
 
 namespace ws\loewe\Woody\Event;
 
-use \ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Woody\Components\Windows\AbstractWindow;
 
 class WindowResizeEvent extends Event {
 
@@ -37,8 +38,14 @@ class WindowResizeEvent extends Event {
   }
 
   public function dispatch() {
-    foreach($this->getSource()->getWindowResizeListeners() as $resizeListener) {
-      $resizeListener->windowResized($this);
+    $source = $this->getSource();
+
+    if($source instanceof AbstractWindow) {
+      foreach($source->getWindowResizeListeners() as $resizeListener) {
+        $resizeListener->windowResized($this);
+      }
+    } else {
+      throw new \RuntimeException('Dispatching WindowResizedEvent from a non-window control!');
     }
   }
 

@@ -32,11 +32,11 @@ class KeyAdapter implements KeyListener {
 
   public function keyPressed(KeyEvent $event) {
     if($this->onKeyPressed != null)
-      $this->onKeyPressed->__invoke($event);
+      $this->onKeyPressed($event);
   }
 
   public function keyReleased(KeyEvent $event) {
     if($this->onKeyReleased != null)
-      $this->onKeyReleased->__invoke($event);
+      $this->onKeyReleased($event);
   }
 }

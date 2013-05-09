@@ -2,12 +2,13 @@
 
 namespace ws\loewe\Woody\Components;
 
-use \ws\loewe\Woody\Event\ActionListener;
-use \ws\loewe\Woody\Event\FocusListener;
-use \ws\loewe\Woody\Event\KeyListener;
-use \ws\loewe\Woody\Event\MouseListener;
-use \ws\loewe\Utils\Geom\Point;
-use \ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Point;
+use ws\loewe\Woody\Components\Controls\Frame;
+use ws\loewe\Woody\Event\ActionListener;
+use ws\loewe\Woody\Event\FocusListener;
+use ws\loewe\Woody\Event\KeyListener;
+use ws\loewe\Woody\Event\MouseListener;
 
 /**
  * This class defines the basic frame for any component of a graphical user interface.
@@ -39,14 +40,14 @@ abstract class Component implements IComponent {
   /**
    * the top left corner of the component
    *
-   * @var ws\loewe\Utils\Geom\Point
+   * @var Point
    */
   protected $topLeftCorner = null;
 
   /**
    * the dimension of the component
    *
-   * @var ws\loewe\Utils\Geom\Dimension
+   * @var Dimension
    */
   protected $dimension = null;
 
@@ -60,7 +61,7 @@ abstract class Component implements IComponent {
   /**
    * the parent container of this window
    *
-   * @var Container
+   * @var Frame
    */
   protected $parent = null;
 

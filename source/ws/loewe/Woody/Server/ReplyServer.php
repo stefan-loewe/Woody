@@ -39,8 +39,14 @@ class ReplyServer extends Server {
 
     Logger::log(Logger::DEBUG, 'client said: '.$message);
 
-    $answer = $this->operation($message);
-    $answer = '<html><h1>Hello Visitor</h1><br><img src="A1.png"></html>';
+    $debug = FALSE;
+    if($debug) {
+      $answer = '<html><h1>Hello Visitor</h1><br><img src="A1.png"></html>';
+    }
+    else {
+      $answer = $this->operation($message);
+    }
+    
     $clientSocket->write($answer);
 
     Logger::log(Logger::DEBUG, 'server replied '.$answer);

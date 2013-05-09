@@ -20,6 +20,6 @@ class TimeoutAdapter implements TimeoutListener {
   }
 
   public function timeout(TimeoutEvent $event) {
-    $this->onTimeout->__invoke($event);
+    $this->onTimeout($event);
   }
 }

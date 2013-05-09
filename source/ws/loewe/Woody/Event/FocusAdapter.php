@@ -22,6 +22,6 @@ class FocusAdapter implements FocusListener {
 
   public function focusGained(FocusEvent $event) {
     if($this->onFocusGained != null)
-      $this->onFocusGained->__invoke($event);
+      $this->onFocusGained($event);
   }
 }

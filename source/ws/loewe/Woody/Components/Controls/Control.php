@@ -7,6 +7,14 @@ use \ws\loewe\Utils\Geom\Point;
 use \ws\loewe\Utils\Geom\Dimension;
 
 abstract class Control extends Component {
+  
+  /**
+   * the tab index of the control
+   *
+   * @var int
+   */
+  protected $tabIndex = null;
+  
   /**
    * This method acts as the constructor of the class.
    *

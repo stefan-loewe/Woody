@@ -2,7 +2,7 @@
 
 namespace ws\loewe\Woody\Layouts;
 
-use \ws\loewe\Woody\Components\Container;
+use \ws\loewe\Woody\Components\Controls\Frame;
 use \ws\loewe\Utils\Geom\Point;
 use \ws\loewe\Utils\Geom\Dimension;
 
@@ -51,7 +51,7 @@ class GridLayout implements Layout {
     $this->verticalGap    = $verticalGap;
   }
 
-  public function layout(Container $container) {
+  public function layout(Frame $container) {
     $initialOffsetX   = 7;
     $initialOffsetY   = 13;
 

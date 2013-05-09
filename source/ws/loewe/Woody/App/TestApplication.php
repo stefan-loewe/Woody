@@ -84,7 +84,7 @@ class TestApplication extends Application {
    * @param \PHPUnit_Framework_TestCase $testCase the test test cases that is run by this application
    * @return string the title for the main window containing the name of the test case and the corresponding file
    */
-  private function getTitle($testCase) {
+  private function getTitle(\PHPUnit_Framework_TestCase $testCase = null) {
     $title = 'TestApplication';
 
     if($testCase != null) {
