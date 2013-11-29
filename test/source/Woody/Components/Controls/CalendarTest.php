@@ -40,7 +40,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->application = new TestApplication($this);
 
-    $this->calendar = new Calendar(new Point(20, 20), new Dimension(197, 157));
+    $this->calendar = new Calendar(Point::createInstance(20, 20), Dimension::createInstance(197, 157));
 
     $this->application->getWindow()->getRootPane()->add($this->calendar);
   }

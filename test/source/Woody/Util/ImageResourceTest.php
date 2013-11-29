@@ -56,8 +56,8 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Util\Image\ImageResource::getDimension
    */
   public function testCreate() {
-    $this->imageResource  = ImageResource::create(new Dimension(100, 50));
-    $expected             = new Dimension(100, 50);
+    $this->imageResource  = ImageResource::create(Dimension::createInstance(100, 50));
+    $expected             = Dimension::createInstance(100, 50);
     $actual               = $this->imageResource->getDimension();
 
     $this->assertEquals($expected->width, $actual->width);
@@ -81,8 +81,8 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($expected[1], $actual->height);
 
 
-    $this->imageResource = ImageResource::createFromFile($this->jpgImage, new Dimension(200, 100));
-    $expected = new Dimension(200, 100);
+    $this->imageResource = ImageResource::createFromFile($this->jpgImage, Dimension::createInstance(200, 100));
+    $expected = Dimension::createInstance(200, 100);
     $actual   = $this->imageResource->getDimension();
 
     $this->assertEquals($expected->width, $actual->width);
@@ -120,12 +120,12 @@ class ImageResourceTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Util\Image\ImageResource::drawRectangle
    */
   public function testDraw() {
-    $this->imageResource = ImageResource::create(new Dimension(100, 50));
+    $this->imageResource = ImageResource::create(Dimension::createInstance(100, 50));
 
-    $this->imageResource = $this->imageResource->drawLine(new Point(0, 0), new Point(100, 50), 0);
+    $this->imageResource = $this->imageResource->drawLine(Point::createInstance(0, 0), Point::createInstance(100, 50), 0);
     $this->assertInstanceOf('ws\loewe\Woody\Util\Image\ImageResource', $this->imageResource);
 
-    $this->imageResource = $this->imageResource->drawRectangle(new Point(0, 0), new Dimension(100, 50), 0);
+    $this->imageResource = $this->imageResource->drawRectangle(Point::createInstance(0, 0), Dimension::createInstance(100, 50), 0);
     $this->assertInstanceOf('ws\loewe\Woody\Util\Image\ImageResource', $this->imageResource);
   }
 }

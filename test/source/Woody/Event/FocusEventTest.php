@@ -53,8 +53,8 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Event\FocusEvent::dispatch
    */
   public function testDispatch() {
-    $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
-    $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
+    $window   = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
+    $editbox  = new EditBox('', Point::createInstance(20, 20), Dimension::createInstance(100, 18));
     $window->create()->getRootPane()->add($editbox);
 
     $focusListener = $this->getMockBuilder('\ws\loewe\Woody\Event\FocusAdapter')
@@ -79,9 +79,9 @@ class FocusEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Event\Event::__toString
    */
   public function testGetFocusGainedComponent() {
-    $window       = new MainWindow('FocusEventTest', new Point(20, 20), new Dimension(300, 200));
-    $control1     = new EditBox('123', new Point(20, 20), new Dimension(100, 18));
-    $control2     = new EditBox('456', new Point(20, 45), new Dimension(100, 18));
+    $window       = new MainWindow('FocusEventTest', Point::createInstance(20, 20), Dimension::createInstance(300, 200));
+    $control1     = new EditBox('123', Point::createInstance(20, 20), Dimension::createInstance(100, 18));
+    $control2     = new EditBox('456', Point::createInstance(20, 45), Dimension::createInstance(100, 18));
 
     $window->create();
     $window->getRootPane()->add($control1);

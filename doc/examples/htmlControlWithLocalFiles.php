@@ -52,13 +52,13 @@ class HTMLControlDemo extends Application {
         $this->port         = $port;
         $this->documentRoot = __DIR__.'\\www';
 
-        $this->window       = new MainWindow('custom webserver', new Point(50, 50), new Dimension(800, 500));
+        $this->window       = new MainWindow('custom webserver', Point::createInstance(50, 50), Dimension::createInstance(800, 500));
         $this->window->create();
 
-        $this->editArea     = new EditArea('', new Point(450, 50), new Dimension(300, 300));
-        $this->htmlControl  = new HTMLControl('http://127.0.0.1:'.$this->port, new Point(50, 50), new Dimension(350, 300));
-        $this->btnRefresh   = new PushButton("refresh", new Point(50, 370), new Dimension(150, 22));
-        $this->btnBrowse    = new PushButton("browse ...", new Point(220, 370), new Dimension(150, 22));
+        $this->editArea     = new EditArea('', Point::createInstance(450, 50), Dimension::createInstance(300, 300));
+        $this->htmlControl  = new HTMLControl('http://127.0.0.1:'.$this->port, Point::createInstance(50, 50), Dimension::createInstance(350, 300));
+        $this->btnRefresh   = new PushButton("refresh", Point::createInstance(50, 370), Dimension::createInstance(150, 22));
+        $this->btnBrowse    = new PushButton("browse ...", Point::createInstance(220, 370), Dimension::createInstance(150, 22));
 
         $this->window->getRootPane()->add($this->htmlControl);
         $this->window->getRootPane()->add($this->editArea);

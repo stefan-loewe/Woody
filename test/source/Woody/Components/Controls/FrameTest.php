@@ -41,7 +41,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->application = new TestApplication();
 
-    $this->frame = new Frame('frameLabel', new Point(20, 20), new Dimension(100, 18));
+    $this->frame = new Frame('frameLabel', Point::createInstance(20, 20), Dimension::createInstance(100, 18));
 
     $this->application->getWindow()->getRootPane()->add($this->frame);
   }
@@ -61,7 +61,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
    */
   public function testAdd() {
     $callback = function() {
-      $checkbox = new Checkbox(false, new Point(10, 10), new Dimension(10, 10));
+      $checkbox = new Checkbox(false, Point::createInstance(10, 10), Dimension::createInstance(10, 10));
       $this->assertNull($checkbox->getParent());
 
       $this->frame->add($checkbox);
@@ -88,10 +88,10 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetComponents() {
     $this->timer = new Timer(function() {
-      $checkbox = new Checkbox(false, new Point(10, 10), new Dimension(10, 10));
+      $checkbox = new Checkbox(false, Point::createInstance(10, 10), Dimension::createInstance(10, 10));
       $this->frame->add($checkbox);
 
-      $editbox = new EditBox('false', new Point(10, 40), new Dimension(100, 22));
+      $editbox = new EditBox('false', Point::createInstance(10, 40), Dimension::createInstance(100, 22));
       $this->frame->add($editbox);
 
       $components = $this->frame->getComponents();
@@ -117,7 +117,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase {
    */
   public function testRemove() {
     $this->timer = new Timer(function() {
-          $checkbox = new Checkbox(false, new Point(10, 10), new Dimension(10, 10));
+          $checkbox = new Checkbox(false, Point::createInstance(10, 10), Dimension::createInstance(10, 10));
           $this->assertNull($checkbox->getParent());
 
           $this->frame->remove($checkbox);

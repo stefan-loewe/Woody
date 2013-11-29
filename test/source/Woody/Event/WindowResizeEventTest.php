@@ -33,7 +33,7 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Event\WindowResizeEvent::dispatch
    */
   public function testDispatch() {
-    $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $window = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
     $window->create();
     
     $resizeListener = $this->getMockBuilder('\ws\loewe\Woody\Event\WindowResizeAdapter')
@@ -57,7 +57,7 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Event\WindowResizeEvent::getDeltaDimension
    */
   public function testDim() {
-    $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $window = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
     $window->create();
     
     // simulate an event - no real event will be triggered, as event loop is not running ...
@@ -67,9 +67,9 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
     $event = new WindowResizeEvent(new EventInfo($window->getControlID(), 0, $window, WBC_RESIZE, 0));
     $event->dispatch();
     
-    $this->assertEquals(new Dimension(300, 200), $event->getOldDimension());
-    $this->assertEquals(new Dimension(400, 250), $event->getNewDimension());
-    $this->assertEquals(new Dimension(100, 50), $event->getDeltaDimension());
+    $this->assertEquals(Dimension::createInstance(300, 200), $event->getOldDimension());
+    $this->assertEquals(Dimension::createInstance(400, 250), $event->getNewDimension());
+    $this->assertEquals(Dimension::createInstance(100, 50), $event->getDeltaDimension());
     
     $window->close();
   }

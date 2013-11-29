@@ -37,8 +37,8 @@ class Tab extends Control {
 
     $this->pages[$header] = new Frame(
       null,
-      new Point(-2, -9),
-      new Dimension($this->dimension->width, $this->dimension->height),
+      Point::createInstance(-2, -9),
+      Dimension::createInstance($this->dimension->width, $this->dimension->height),
       $this->pages->count()
     );
     $this->pages[$header]->create($this);

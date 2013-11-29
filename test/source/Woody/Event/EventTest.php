@@ -50,8 +50,8 @@ class EventTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Event\Event::getSource
    */
   public function testGetSource() {
-    $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
-    $control  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
+    $window   = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
+    $control  = new EditBox('', Point::createInstance(20, 20), Dimension::createInstance(100, 18));
     $window->create()->getRootPane()->add($control);
 
     $event = new KeyEvent(new EventInfo($window->getID(), $control->getID(), $control, 0, 0));

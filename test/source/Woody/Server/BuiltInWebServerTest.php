@@ -122,7 +122,7 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
     };
 
     $this->timer = new Timer($this->callback, $this->application->getWindow(), 1000);
-    $htmlControl = new HtmlControl('none', new Point(10, 20), new Dimension(200, 100));
+    $htmlControl = new HtmlControl('none', Point::createInstance(10, 20), Dimension::createInstance(200, 100));
 
     // the action listener of the HTML control checks, if the received response equals the expected one,
     // and also set the eventFired flag to true
@@ -156,7 +156,7 @@ class BuiltInWebServerTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Server\BuiltInWebServer::stop
    */
   public function testStop() {
-    $window   = new \ws\loewe\Woody\Components\Windows\MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $window   = new \ws\loewe\Woody\Components\Windows\MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
     $window->create();
 
     $this->server = new BuiltInWebServer(

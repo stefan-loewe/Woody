@@ -40,7 +40,7 @@ class ImageResource {
   public static function createFromFile($imageFileName, Dimension $dimension = null) {
     if($dimension == null) {
       $dimension = getimagesize($imageFileName);
-      $dimension = new Dimension($dimension[0], $dimension[1]);
+      $dimension = Dimension::createInstance($dimension[0], $dimension[1]);
     }
 
     return new ImageResource($dimension, $imageFileName);
@@ -53,7 +53,7 @@ class ImageResource {
    * @param string $imageFileName the image file to create the image from
    */
   private function __construct(Dimension $dimension, $imageFileName = null) {
-    $this->dimension = new Dimension($dimension->width, $dimension->height);
+    $this->dimension = Dimension::createInstance($dimension->width, $dimension->height);
 
     if($imageFileName !== null) {
       $this->createResourceFromFile($imageFileName);
@@ -105,7 +105,7 @@ class ImageResource {
    * @return Dimension the image resource
    */
   public function getDimension() {
-    return new Dimension($this->dimension->width, $this->dimension->height);
+    return Dimension::createInstance($this->dimension->width, $this->dimension->height);
   }
 
   /**

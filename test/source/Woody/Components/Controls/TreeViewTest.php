@@ -42,7 +42,7 @@ class TreeViewTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->application = new TestApplication();
 
-    $this->treeView = new TreeView(new Point(20, 20), new Dimension(260, 130));
+    $this->treeView = new TreeView(Point::createInstance(20, 20), Dimension::createInstance(260, 130));
 
     $this->application->getWindow()->getRootPane()->add($this->treeView);
   }

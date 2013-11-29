@@ -55,8 +55,8 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Event\MouseEvent::isMouseUpEvent
    */
   public function testDispatch() {
-    $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
-    $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
+    $window   = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
+    $editbox  = new EditBox('', Point::createInstance(20, 20), Dimension::createInstance(100, 18));
     $window->create()->getRootPane()->add($editbox);
 
     $mouseListener = $this->getMockBuilder('\ws\loewe\Woody\Event\MouseAdapter')
@@ -145,8 +145,8 @@ class MouseEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Event\MouseEvent::getClickCount
    */
   public function testGetClickCount() {
-    $window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
-    $control1 = new EditBox('', new Point(20, 20), new Dimension(100, 18));
+    $window = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
+    $control1 = new EditBox('', Point::createInstance(20, 20), Dimension::createInstance(100, 18));
     $window->create()->getRootPane()->add($control1);
 
     // create a one-second delay to have a single-click only again

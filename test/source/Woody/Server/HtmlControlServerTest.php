@@ -98,7 +98,7 @@ class HtmlControlServerTest extends \PHPUnit_Framework_TestCase {
     };
     $this->timer        = new Timer($this->callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
 
-    $htmlControl        = new HtmlControl("none", new Point(10, 20), new Dimension(200, 100));
+    $htmlControl        = new HtmlControl("none", Point::createInstance(10, 20), Dimension::createInstance(200, 100));
 
     // the action listener of the HTML control checks if the received response equals the expected one,
     // and also sets eventFired flag to true

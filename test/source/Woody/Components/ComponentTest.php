@@ -38,11 +38,11 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->window = new MainWindow('MainWindow2', new Point(121, 343), new Dimension(300, 200));
+    $this->window = new MainWindow('MainWindow2', Point::createInstance(121, 343), Dimension::createInstance(300, 200));
     $this->window->create();
 
-    $this->topLeftCorner  = new Point(20, 20);
-    $this->dimension      = new Dimension(100, 20);
+    $this->topLeftCorner  = Point::createInstance(20, 20);
+    $this->dimension      = Dimension::createInstance(100, 20);
     $this->component      = new Label('TestLabel', $this->topLeftCorner, $this->dimension);
     $this->window->getRootPane()->add($this->component);
   }

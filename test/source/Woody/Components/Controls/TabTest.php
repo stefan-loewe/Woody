@@ -61,7 +61,7 @@ class TabTest extends \PHPUnit_Framework_TestCase {
     $this->timer = new Timer($callback, $this->application->getWindow(), Timer::TEST_TIMEOUT);
     $this->timer->start();
 
-    $this->tab   = new Tab(new Point(10, 10), new Dimension(200, 100));
+    $this->tab   = new Tab(Point::createInstance(10, 10), Dimension::createInstance(200, 100));
     $this->application->getWindow()->getRootPane()->add($this->tab);
     $this->tab->addTabPage('tab1');
     $this->tab->addTabPage('tab2');
@@ -69,11 +69,11 @@ class TabTest extends \PHPUnit_Framework_TestCase {
     $tabPage1 = $this->tab->getTabPage('tab1');
     $tabPage2 = $this->tab->getTabPage('tab2');
 
-    $tabPage1->add(new EditBox('box 1.1', new Point(5, 15), new Dimension(50, 20)));
-    $tabPage1->add(new EditBox('box 1.2', new Point(65, 15), new Dimension(50, 20)));
+    $tabPage1->add(new EditBox('box 1.1', Point::createInstance(5, 15), Dimension::createInstance(50, 20)));
+    $tabPage1->add(new EditBox('box 1.2', Point::createInstance(65, 15), Dimension::createInstance(50, 20)));
 
-    $tabPage2->add(new EditBox('box 2.1', new Point(5, 15), new Dimension(50, 20)));
-    $tabPage2->add(new EditBox('box 2.2', new Point(5, 45), new Dimension(50, 20)));
+    $tabPage2->add(new EditBox('box 2.1', Point::createInstance(5, 15), Dimension::createInstance(50, 20)));
+    $tabPage2->add(new EditBox('box 2.2', Point::createInstance(5, 45), Dimension::createInstance(50, 20)));
 
     $this->application->start();
   }

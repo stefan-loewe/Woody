@@ -43,12 +43,12 @@ class HTMLControlDemoBuiltInWebServer extends Application {
 
         $this->documentRoot = __DIR__.'\\www';
 
-        $this->window       = new MainWindow('built-in-webserver', new Point(50, 50), new Dimension(800, 500));
+        $this->window       = new MainWindow('built-in-webserver', Point::createInstance(50, 50), Dimension::createInstance(800, 500));
         $this->window->create();
 
-        $this->htmlControl  = new HTMLControl('http://127.0.0.1:'.$this->port, new Point(20, 25), new Dimension(760, 300));$this->btnRoot      = new PushButton("document root", new Point(20, 345), new Dimension(100, 22));
-        $this->btnWeb       = new PushButton("www.google.com", new Point(135, 345), new Dimension(100, 22));
-        $this->btnPhpInfo   = new PushButton("phpinfo()", new Point(250, 345), new Dimension(100, 22));
+        $this->htmlControl  = new HTMLControl('http://127.0.0.1:'.$this->port, Point::createInstance(20, 25), Dimension::createInstance(760, 300));$this->btnRoot      = new PushButton("document root", Point::createInstance(20, 345), Dimension::createInstance(100, 22));
+        $this->btnWeb       = new PushButton("www.google.com", Point::createInstance(135, 345), Dimension::createInstance(100, 22));
+        $this->btnPhpInfo   = new PushButton("phpinfo()", Point::createInstance(250, 345), Dimension::createInstance(100, 22));
 
         $this->htmlControl->addActionListener(new ActionAdapter($this->getHtmlControlCallback()));
         $this->window->getRootPane()->add($this->htmlControl);

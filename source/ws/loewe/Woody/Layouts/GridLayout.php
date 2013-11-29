@@ -64,7 +64,7 @@ class GridLayout implements Layout {
       $xOffset = ($this->horizontalGap + $componentDimension->width) * ($index % $this->columns);
       $yOffset = ($this->verticalGap + $componentDimension->height) * floor(($index / $this->columns));
 
-      $component->moveTo(new Point($initialOffsetX + $xOffset, $initialOffsetY + $yOffset));
+      $component->moveTo(Point::createInstance($initialOffsetX + $xOffset, $initialOffsetY + $yOffset));
     }
   }
 
@@ -86,6 +86,6 @@ class GridLayout implements Layout {
     $containerInnerHeight = $containerInnerHeight - (($this->rows - 1) * $this->verticalGap);
     $heightPerComponent   = $containerInnerHeight / $this->rows;
 
-    return new Dimension(intval($widthPerComponent), intval($heightPerComponent));
+    return Dimension::createInstance(intval($widthPerComponent), intval($heightPerComponent));
   }
 }

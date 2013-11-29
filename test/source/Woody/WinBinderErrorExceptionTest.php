@@ -31,7 +31,7 @@ class WinBinderErrorExceptionTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\WinBinderErrorException::__construct
    */
   public function testConstruct() {
-    $window = new MainWindow('TestApp', new Point(50, 50), new Dimension(300, 200));
+    $window = new MainWindow('TestApp', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
 
     try {
       // refreshing the window before it was created will lead to a winbinder exception

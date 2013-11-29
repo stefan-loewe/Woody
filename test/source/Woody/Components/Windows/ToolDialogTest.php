@@ -35,7 +35,7 @@ class ToolDialogTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Windows\ToolDialog::__construct
    */
   public function testConstruct() {
-    $this->window = new ToolDialog('ToolDialog', new Point(121, 343), new Dimension(987, 654));
+    $this->window = new ToolDialog('ToolDialog', Point::createInstance(121, 343), Dimension::createInstance(987, 654));
 
     $this->assertEquals($this->window->getPosition()->x, 121);
     $this->assertEquals($this->window->getPosition()->y, 343);

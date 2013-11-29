@@ -112,9 +112,9 @@ abstract class Component implements IComponent {
 
     $this->value = $value;
 
-    $this->topLeftCorner = new Point($topLeftCorner->x, $topLeftCorner->y);
+    $this->topLeftCorner = Point::createInstance($topLeftCorner->x, $topLeftCorner->y);
 
-    $this->dimension = new Dimension($dimension->width, $dimension->height);
+    $this->dimension = Dimension::createInstance($dimension->width, $dimension->height);
   }
 
   /**
@@ -167,11 +167,11 @@ abstract class Component implements IComponent {
   }
 
   public function getPosition() {
-    return new Point($this->topLeftCorner->x, $this->topLeftCorner->y);
+    return Point::createInstance($this->topLeftCorner->x, $this->topLeftCorner->y);
   }
 
   public function getDimension() {
-    return new Dimension($this->dimension->width, $this->dimension->height);
+    return Dimension::createInstance($this->dimension->width, $this->dimension->height);
   }
 
   public function moveBy(Dimension $dimension) {
@@ -191,7 +191,7 @@ abstract class Component implements IComponent {
   protected function move(Point $topLeftCorner) {
     wb_set_position($this->controlID, $topLeftCorner->x, $topLeftCorner->y);
 
-    $this->topLeftCorner = new Point($topLeftCorner->x, $topLeftCorner->y);
+    $this->topLeftCorner = Point::createInstance($topLeftCorner->x, $topLeftCorner->y);
 
     return $this;
   }
@@ -216,7 +216,7 @@ abstract class Component implements IComponent {
 
     wb_set_size($this->controlID, $width, $height);
 
-    $this->dimension = new Dimension($width, $height);
+    $this->dimension = Dimension::createInstance($width, $height);
 
     return $this;
   }

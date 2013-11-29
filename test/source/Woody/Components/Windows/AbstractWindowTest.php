@@ -23,7 +23,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * This method is called before a test is executed.
    */
   protected function setUp() {
-    $this->window = new MainWindow($this->getName().' - '.basename(__FILE__), new Point(50, 50), new Dimension(300, 200));
+    $this->window = new MainWindow($this->getName().' - '.basename(__FILE__), Point::createInstance(50, 50), Dimension::createInstance(300, 200));
 
     $this->window->create(null);
   }
@@ -57,7 +57,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Component::__construct
    */
   public function testConstruct() {
-    $this->window2 = new MainWindow('AbstractWindow', new Point(12, 34), new Dimension(456, 789));
+    $this->window2 = new MainWindow('AbstractWindow', Point::createInstance(12, 34), Dimension::createInstance(456, 789));
 
     $this->assertEquals($this->window2->getPosition()->x, 12);
     $this->assertEquals($this->window2->getPosition()->y, 34);
@@ -96,7 +96,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::getParameters
    */
   public function testCreate() {
-    $this->window3 = new MainWindow('AbstractWindow', new Point(34, 12), new Dimension(789, 456));
+    $this->window3 = new MainWindow('AbstractWindow', Point::createInstance(34, 12), Dimension::createInstance(789, 456));
 
     $this->window3->create();
 
@@ -113,7 +113,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::destroy
    */
   public function testClose() {
-    $this->window4 = new MainWindow('AbstractWindow', new Point(11, 22), new Dimension(555, 333));
+    $this->window4 = new MainWindow('AbstractWindow', Point::createInstance(11, 22), Dimension::createInstance(555, 333));
 
     $this->window4->create();
     $this->window4->close();
@@ -150,19 +150,19 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Component::move
    */
   public function testMoveBy() {
-    $this->window->moveBy(new Dimension(10, 10));
+    $this->window->moveBy(Dimension::createInstance(10, 10));
     $this->assertEquals(60, $this->window->getPosition()->x);
     $this->assertEquals(60, $this->window->getPosition()->y);
 
-    $this->window->moveBy(new Dimension(100, 300));
+    $this->window->moveBy(Dimension::createInstance(100, 300));
     $this->assertEquals(160, $this->window->getPosition()->x);
     $this->assertEquals(360, $this->window->getPosition()->y);
 
-    $this->window->moveBy(new Dimension(-150, -340));
+    $this->window->moveBy(Dimension::createInstance(-150, -340));
     $this->assertEquals(10, $this->window->getPosition()->x);
     $this->assertEquals(20, $this->window->getPosition()->y);
 
-    $this->window->moveBy(new Dimension(-10, -20));
+    $this->window->moveBy(Dimension::createInstance(-10, -20));
     $this->assertEquals(0, $this->window->getPosition()->x);
     $this->assertEquals(0, $this->window->getPosition()->y);
   }
@@ -174,19 +174,19 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Component::move
    */
   public function testMoveTo() {
-    $this->window->moveTo(new Point(0, 0));
+    $this->window->moveTo(Point::createInstance(0, 0));
     $this->assertEquals(0, $this->window->getPosition()->x);
     $this->assertEquals(0, $this->window->getPosition()->y);
 
-    $this->window->moveTo(new Point(400, 300));
+    $this->window->moveTo(Point::createInstance(400, 300));
     $this->assertEquals(400, $this->window->getPosition()->x);
     $this->assertEquals(300, $this->window->getPosition()->y);
 
-    $this->window->moveTo(new Point(100, 200));
+    $this->window->moveTo(Point::createInstance(100, 200));
     $this->assertEquals(100, $this->window->getPosition()->x);
     $this->assertEquals(200, $this->window->getPosition()->y);
 
-    $this->window->moveTo(new Point(0, 0));
+    $this->window->moveTo(Point::createInstance(0, 0));
     $this->assertEquals(0, $this->window->getPosition()->x);
     $this->assertEquals(0, $this->window->getPosition()->y);
   }
@@ -199,15 +199,15 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Component::resize
    */
   public function testResizeBy() {
-    $this->window->resizeBy(new Dimension(0, 0));
+    $this->window->resizeBy(Dimension::createInstance(0, 0));
     $this->assertEquals(300, $this->window->getDimension()->width);
     $this->assertEquals(200, $this->window->getDimension()->height);
 
-    $this->window->resizeBy(new Dimension(500, 400));
+    $this->window->resizeBy(Dimension::createInstance(500, 400));
     $this->assertEquals(800, $this->window->getDimension()->width);
     $this->assertEquals(600, $this->window->getDimension()->height);
 
-    $this->window->resizeBy(new Dimension(-100, -200));
+    $this->window->resizeBy(Dimension::createInstance(-100, -200));
     $this->assertEquals(700, $this->window->getDimension()->width);
     $this->assertEquals(400, $this->window->getDimension()->height);
   }
@@ -220,15 +220,15 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Component::resize
    */
   public function testResizeTo() {
-    $this->window->resizeTo(new Dimension(300, 200));
+    $this->window->resizeTo(Dimension::createInstance(300, 200));
     $this->assertEquals(300, $this->window->getDimension()->width);
     $this->assertEquals(200, $this->window->getDimension()->height);
 
-    $this->window->resizeTo(new Dimension(600, 400));
+    $this->window->resizeTo(Dimension::createInstance(600, 400));
     $this->assertEquals(600, $this->window->getDimension()->width);
     $this->assertEquals(400, $this->window->getDimension()->height);
 
-    $this->window->resizeTo(new Dimension(300, 200));
+    $this->window->resizeTo(Dimension::createInstance(300, 200));
     $this->assertEquals(300, $this->window->getDimension()->width);
     $this->assertEquals(200, $this->window->getDimension()->height);
   }
@@ -242,7 +242,7 @@ class AbstractWindowTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::close
    */
   public function testWindowCloseListeners() {
-    $window = new MainWindow($this->getName().'-'.basename(__FILE__), new Point(12, 34), new Dimension(456, 789));
+    $window = new MainWindow($this->getName().'-'.basename(__FILE__), Point::createInstance(12, 34), Dimension::createInstance(456, 789));
     $window->create();
 
     $closeListener = $this->getMockBuilder('\ws\loewe\Woody\Event\WindowCloseAdapter')

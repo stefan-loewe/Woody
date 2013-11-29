@@ -35,7 +35,7 @@ class TestApplication extends Application {
 
     $title = $this->getTitle($testCase);
 
-    $this->window = new MainWindow($title, new Point(50, 50), new Dimension(300, 200));
+    $this->window = new MainWindow($title, Point::createInstance(50, 50), Dimension::createInstance(300, 200));
 
     // the callback that actually closes the window
     $callback = function() {

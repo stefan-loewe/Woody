@@ -41,7 +41,7 @@ class WindowConstraintsTest extends \PHPUnit_Framework_TestCase {
    */
   public function testEnsureMinimalDimension() {
     $windowConstraints  = WindowConstraints::getInstance();
-    $dimension          = $windowConstraints->enforceConstraints($dimension = new Dimension(0, 0));
+    $dimension          = $windowConstraints->enforceConstraints($dimension = Dimension::createInstance(0, 0));
 
     $this->assertGreaterThan(0, $dimension->width);
     $this->assertGreaterThan(0, $dimension->height);

@@ -41,7 +41,7 @@ class LabelTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->application = new TestApplication();
 
-    $this->label = new Label('Label', new Point(20, 20), new Dimension(80, 20));
+    $this->label = new Label('Label', Point::createInstance(20, 20), Dimension::createInstance(80, 20));
 
     $this->application->getWindow()->getRootPane()->add($this->label);
   }

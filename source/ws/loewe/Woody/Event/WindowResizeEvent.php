@@ -34,7 +34,7 @@ class WindowResizeEvent extends Event {
 
     // the winbinder resource already has the new dimension
     $newDim = wb_get_size($this->getSource()->getControlID());
-    $this->newDimension = new Dimension($newDim[0], $newDim[1]);
+    $this->newDimension = Dimension::createInstance($newDim[0], $newDim[1]);
   }
 
   public function dispatch() {
@@ -68,11 +68,11 @@ class WindowResizeEvent extends Event {
   }
 
   /**
-   * This method returns the delta of the old and new dimension, i.e. new Dimension(newX - oldX, newY - oldY)
+   * This method returns the delta of the old and new dimension, i.e. Dimension::createInstance(newX - oldX, newY - oldY)
    *
    * @return Dimension
    */
   public function getDeltaDimension() {
-    return $this->newDimension->resizeBy(new Dimension(-$this->oldDimension->width, -$this->oldDimension->height));
+    return $this->newDimension->resizeBy(Dimension::createInstance(-$this->oldDimension->width, -$this->oldDimension->height));
   }
 }

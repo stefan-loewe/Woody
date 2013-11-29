@@ -53,7 +53,7 @@ class AbstractWindowEventLoopTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::startEventHandler
    */
   public function testStartEventHandler() {
-    $this->window = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
+    $this->window = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
     $this->window->create(null);
     $this->counter = 0;
 

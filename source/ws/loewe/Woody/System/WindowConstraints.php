@@ -90,6 +90,6 @@ class WindowConstraints {
     $width  = max($this->minWidth, $dimension->width);
     $height = max($this->minHeight, $dimension->height);
 
-    return new Dimension($width, $height);
+    return Dimension::createInstance($width, $height);
   }
 }

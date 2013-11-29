@@ -41,7 +41,7 @@ class PushButtonTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->application = new TestApplication();
 
-    $this->pushButton = new PushButton('buttonLabel', new Point(20, 20), new Dimension(80, 20));
+    $this->pushButton = new PushButton('buttonLabel', Point::createInstance(20, 20), Dimension::createInstance(80, 20));
 
     $this->application->getWindow()->getRootPane()->add($this->pushButton);
   }

@@ -41,7 +41,7 @@ class HtmlControlTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->application = new TestApplication();
 
-    $this->htmlControl = new HtmlControl('http://www.loewe.ws', new Point(20, 20), new Dimension(260, 160));
+    $this->htmlControl = new HtmlControl('http://www.loewe.ws', Point::createInstance(20, 20), Dimension::createInstance(260, 160));
 
     $this->application->getWindow()->getRootPane()->add($this->htmlControl);
   }

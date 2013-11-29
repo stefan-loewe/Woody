@@ -19,6 +19,6 @@ class ListBoxTest extends ListControlTest {
    * @return ComboBox the object under test
    */
   protected function getObjectUnderTest() {
-    return new ListBox(new Point(20, 20), new Dimension(80, 200));
+    return new ListBox(Point::createInstance(20, 20), Dimension::createInstance(80, 200));
   }
 }

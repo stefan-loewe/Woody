@@ -40,7 +40,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->application = new TestApplication();
 
-    $this->checkbox = new Checkbox(FALSE, new Point(20, 20), new Dimension(20, 20));
+    $this->checkbox = new Checkbox(FALSE, Point::createInstance(20, 20), Dimension::createInstance(20, 20));
 
     $this->application->getWindow()->getRootPane()->add($this->checkbox);
   }
@@ -59,7 +59,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
    */
   public function testResizeTo() {
     $callback = function() {
-      $expected = new Dimension(15, 15);
+      $expected = Dimension::createInstance(15, 15);
       $this->checkbox->resizeTo($expected);
 
       $actual = $this->checkbox->getDimension();
@@ -67,7 +67,7 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
       $this->assertEquals($expected->height, $actual->height);
 
 
-      $this->checkbox->resizeTo(new Dimension(150, 150));
+      $this->checkbox->resizeTo(Dimension::createInstance(150, 150));
 
       $actual = $this->checkbox->getDimension();
       $this->assertEquals(Checkbox::MAX_WIDTH, $actual->width);

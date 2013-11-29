@@ -38,11 +38,11 @@ class Checkbox extends Control implements Actionable {
    */
   public function resizeTo(Dimension $dimension) {
     if($dimension->width > Checkbox::MAX_WIDTH) {
-      $dimension = $dimension->resizeTo(new Dimension(Checkbox::MAX_WIDTH, $dimension->height));
+      $dimension = $dimension->resizeTo(Dimension::createInstance(Checkbox::MAX_WIDTH, $dimension->height));
     }
 
     if($dimension->height > Checkbox::MAX_HEIGHT) {
-      $dimension = $dimension->resizeTo(new Dimension($dimension->width, Checkbox::MAX_HEIGHT));
+      $dimension = $dimension->resizeTo(Dimension::createInstance($dimension->width, Checkbox::MAX_HEIGHT));
     }
 
     parent::resizeTo($dimension);

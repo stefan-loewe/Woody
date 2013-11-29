@@ -36,7 +36,7 @@ class Frame extends Control  {
     // the frame has to be increased by 8 pixels in height, to get the user specified height
     // these 8 pixels are subtracted by the Windows API when creating frames, as they are
     // reserved for the (optional) label
-    parent::__construct($label, $topLeftCorner, $dimension->resizeBy(new Dimension(0, 8)));
+    parent::__construct($label, $topLeftCorner, $dimension->resizeBy(Dimension::createInstance(0, 8)));
 
     $this->type     = Frame;
     $this->tabIndex = $tabIndex;

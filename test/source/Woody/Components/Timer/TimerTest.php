@@ -38,7 +38,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * This method sets up a plain window for testing.
    */
   protected function setUp() {
-    $this->window = new MainWindow($this->getName().'-'.basename(__FILE__), new Point(50, 50), new Dimension(300, 200));
+    $this->window = new MainWindow($this->getName().'-'.basename(__FILE__), Point::createInstance(50, 50), Dimension::createInstance(300, 200));
 
     $this->window->create(null);
 

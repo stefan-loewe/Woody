@@ -41,7 +41,7 @@ class EditAreaTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->application = new TestApplication();
 
-    $this->editArea = new EditArea('testValue', new Point(20, 20), new Dimension(100, 80));
+    $this->editArea = new EditArea('testValue', Point::createInstance(20, 20), Dimension::createInstance(100, 80));
 
     $this->application->getWindow()->getRootPane()->add($this->editArea);
   }

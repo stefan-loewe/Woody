@@ -35,7 +35,7 @@ class ModelessDialogTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Windows\ModelessDialog::__construct
    */
   public function testConstruct() {
-    $this->window = new ModelessDialog('ModelessDialog', new Point(121, 343), new Dimension(987, 654));
+    $this->window = new ModelessDialog('ModelessDialog', Point::createInstance(121, 343), Dimension::createInstance(987, 654));
 
     $this->assertEquals($this->window->getPosition()->x, 121);
     $this->assertEquals($this->window->getPosition()->y, 343);

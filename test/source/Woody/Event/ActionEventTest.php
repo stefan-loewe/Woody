@@ -52,8 +52,8 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Event\ActionEvent::dispatch
    */
   public function testDispatch() {
-    $window   = new MainWindow('MainWindow', new Point(50, 50), new Dimension(300, 200));
-    $editbox  = new EditBox('', new Point(20, 20), new Dimension(100, 18));
+    $window   = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
+    $editbox  = new EditBox('', Point::createInstance(20, 20), Dimension::createInstance(100, 18));
     $window->create()->getRootPane()->add($editbox);
 
     $actionListener = $this->getMockBuilder('\ws\loewe\Woody\Event\ActionAdapter')

@@ -75,7 +75,7 @@ class MouseEvent extends Event {
    * @var Point the position of the mouse when the event occured
    */
   public function getPosition() {
-    return new Point($this->property & 0xFFFF, ($this->property & 0xFFFF0000) >> 16);
+    return Point::createInstance($this->property & 0xFFFF, ($this->property & 0xFFFF0000) >> 16);
   }
 
   /**
