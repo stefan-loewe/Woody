@@ -90,7 +90,6 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   public function testGetPosition() {
     $this->assertEquals($this->topLeftCorner->x, $this->component->getPosition()->x);
     $this->assertEquals($this->topLeftCorner->y, $this->component->getPosition()->y);
-    $this->assertFalse($this->topLeftCorner === $this->component->getPosition());
   }
 
   /**
@@ -101,7 +100,6 @@ class ComponentTest extends \PHPUnit_Framework_TestCase {
   public function testGetDimension() {
     $this->assertEquals($this->dimension->width, $this->component->getDimension()->width);
     $this->assertEquals($this->dimension->height, $this->component->getDimension()->height);
-    $this->assertFalse($this->dimension === $this->component->getDimension());
   }
 
   /**
