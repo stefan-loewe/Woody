@@ -24,9 +24,10 @@ class Checkbox extends Control implements Actionable {
    * @param Dimension $dimension the dimension of the checkbox
    */
   public function __construct($value, Point $topLeftCorner, Dimension $dimension) {
-    parent::__construct($value, $topLeftCorner, $dimension);
+    parent::__construct('', $topLeftCorner, $dimension);
 
-    $this->type = CheckBox;
+    $this->type   = CheckBox;
+    $this->param  = ($value === true) ? 1 : 0;
   }
 
   /**
@@ -65,8 +66,8 @@ class Checkbox extends Control implements Actionable {
    * @param boolean $isChecked a flag whether to check or uncheck the checkbox
    * @return Checkbox $this
    */
-  public function setChecked($isChecked) {
-    wb_set_value($this->controlID, $isChecked);
+  public function setChecked($value) {
+    wb_set_value($this->controlID, ($value === true) ? 1 : 0);
 
     return $this;
   }
