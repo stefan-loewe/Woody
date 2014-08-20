@@ -30,7 +30,7 @@ class Frame extends Control  {
    * @param Dimension $dimension the dimension of the frame, denoting the height of the bounding box - including the
    * border but without the excess vertical space used by the (optional) label of the frame
    * @param int $tabIndex the index of the tab page where to add the frame, only needed when adding frames to tabs
-   * 
+   *
    */
   public function __construct($label, Point $topLeftCorner, Dimension $dimension, $tabIndex = null) {
     // the frame has to be increased by 8 pixels in height, to get the user specified height
@@ -39,6 +39,8 @@ class Frame extends Control  {
     parent::__construct($label, $topLeftCorner, $dimension->resizeBy(Dimension::createInstance(0, 8)));
 
     $this->type     = Frame;
+    $this->style    = $this->style | WBC_NOTIFY;
+    $this->param    = $this->param | WBC_HEADERSEL;
     $this->tabIndex = $tabIndex;
     $this->children = new \SplObjectStorage();
   }
