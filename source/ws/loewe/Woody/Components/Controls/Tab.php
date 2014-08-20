@@ -53,4 +53,25 @@ class Tab extends Control {
   public function getTabPage($header) {
     return $this->pages[$header];
   }
+
+  /**
+   * This method sets the focus on the page with the given header.
+   *
+   * @param string $header the name of the tab page to be focused.
+   */
+  public function setFocus($header) {
+    if(!$this->pages->offsetExists($header)) {
+      return;
+    }
+
+    $index = 0;
+    foreach($this->pages as $title => $frame) {
+      if($title == $header) {
+        wb_set_selected($this->getControlID(), $index);
+        return;
+      }
+
+      $index++;
+    }
+  }
 }
