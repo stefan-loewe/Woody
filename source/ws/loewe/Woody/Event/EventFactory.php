@@ -32,6 +32,11 @@ class EventFactory {
       $events[] = self::createWindowClosedEvent($eventInfo);
     }
 
+    // events being triggered when pressing ENTER or ESC in controls
+    else if($eventInfo->isOkEvent() || $eventInfo->isCancelEvent()) {
+      // ignore for now
+    }
+
     // timeout of timers are handled here, too - the callback is executed by calling Timer::run
     else if($eventInfo->isTimerEvent()) {
       $events[] = self::createTimeoutEvent($eventInfo);
@@ -113,7 +118,7 @@ class EventFactory {
   private static function createWindowClosedEvent($eventInfo) {
     return new WindowCloseEvent($eventInfo);
   }
-  
+
   private static function createTimeoutEvent($eventInfo) {
     return new TimeoutEvent($eventInfo);
   }

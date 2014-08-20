@@ -36,6 +36,14 @@ class EventInfo {
     return $this->id === IDCLOSE;
   }
 
+  public function isOkEvent() {
+    return $this->isWindowEvent() && $this->id == 1 && $this->id != IDCLOSE;
+  }
+
+  public function isCancelEvent() {
+    return $this->isWindowEvent() && $this->id == 2 && $this->id != IDCLOSE;
+  }
+
   public function isTimerEvent() {
     return $this->isWindowEvent() && $this->id != 0 && $this->id != IDCLOSE;
   }
