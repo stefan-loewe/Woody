@@ -22,7 +22,7 @@ class Tab extends Control {
   public function __construct(Point $topLeftCorner, Dimension $dimension) {
     parent::__construct(null, $topLeftCorner, $dimension);
 
-    $this->type   = TabControl;
+    $this->type  = TabControl;
     $this->pages = new \ArrayObject();
   }
 
