@@ -302,7 +302,6 @@ class ManyControlsApp extends Application {
         foreach($component->getTabPages() as $frame) {
           $this->addActionListener($frame, $statusbar);
         }
-        continue;
       }
 
       // add action listener to simple controls
