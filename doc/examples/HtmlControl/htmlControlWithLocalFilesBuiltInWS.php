@@ -1,17 +1,18 @@
 <?php
 
-use \Woody\App\Application;
-use \Woody\Components\Windows\MainWindow;
-use \Utils\Geom\Point;
-use \Utils\Geom\Dimension;
-use \Woody\Event\ActionEvent;
-use \Woody\Components\Controls\HTMLControl;
-use \Woody\Event\ActionAdapter;
-use \Woody\Components\Controls\PushButton;
-use \Woody\Server\BuiltInWebServer;
-use \Woody\Server\HtmlControlServer;
+require_once(realpath(__DIR__.'/../../../source/bootstrap.php'));
 
-require_once(realpath(__DIR__.'../../../source/bootstrap/bootstrap.php'));
+use ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Point;
+use ws\loewe\Utils\Logging\Logger;
+use ws\loewe\Woody\App\Application;
+use ws\loewe\Woody\Components\Controls\HTMLControl;
+use ws\loewe\Woody\Components\Controls\PushButton;
+use ws\loewe\Woody\Components\Windows\MainWindow;
+use ws\loewe\Woody\Event\ActionAdapter;
+use ws\loewe\Woody\Event\ActionEvent;
+use ws\loewe\Woody\Server\BuiltInWebServer;
+use ws\loewe\Woody\Server\HtmlControlServer;
 
 class HTMLControlDemoBuiltInWebServer extends Application {
 
@@ -38,7 +39,7 @@ class HTMLControlDemoBuiltInWebServer extends Application {
 
     public function __construct($port) {
         parent::__construct();
-\Utils\Logging\Logger::setLogLevel(\Utils\Logging\Logger::ALL);
+        Logger::setLogLevel(Logger::ALL);
         $this->port         = $port;
 
         $this->documentRoot = __DIR__.'\\www';

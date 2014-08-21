@@ -1,6 +1,8 @@
 <?php
 
-require_once(realpath(__DIR__.'..\..\..\source\bootstrap\bootstrap.php'));
+use ws\loewe\Utils\Sockets\ClientSocket;
+
+require_once(realpath(__DIR__.'/../../../source/bootstrap.php'));
 
 $requestUri = $_SERVER['REQUEST_URI'];
 
@@ -24,7 +26,7 @@ else if($requestUri === '/') {
   return;
 }
 else {
-  $client = new \Utils\Sockets\ClientSocket('127.0.0.1', 1234);
+  $client = new ClientSocket('127.0.0.1', 1234);
 
   $client->connect();
 
@@ -42,7 +44,7 @@ else {
  * endlesslly, as no reply is sent there. This work-around is not really nice but works with both the test case and the
  * htmlControlWithLocalFilesBuiltInWS example.
  *
- * @param \Utils\Sockets\ClientSocket $client the socket connection of the client connecting to the HtmlControlServer
+ * @param ClientSocket $client the socket connection of the client connecting to the HtmlControlServer
  */
 function getReply($client) {
   $client->setNonBlocking();

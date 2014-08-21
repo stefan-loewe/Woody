@@ -1,20 +1,20 @@
 <?php
 
-use \ws\loewe\Utils\Geom\Dimension;
-use \ws\loewe\Utils\Geom\Point;
-use \ws\loewe\Utils\Logging\Logger;
-use Woody\App\Application;
-use Woody\Components\Controls\EditArea;
-use Woody\Components\Controls\HTMLControl;
-use Woody\Components\Controls\PushButton;
-use Woody\Components\Windows\MainWindow;
-use Woody\Dialog\FileSystem\FileFilters;
-use Woody\Dialog\FileSystem\FileOpenDialog;
-use Woody\Event\ActionAdapter;
-use Woody\Event\ActionEvent;
-use Woody\Server\HtmlControlServer;
+require_once(realpath(__DIR__.'/../../../source/bootstrap.php'));
 
-require_once(realpath(__DIR__.'../../../source/bootstrap/bootstrap.php'));
+use ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Point;
+use ws\loewe\Utils\Logging\Logger;
+use ws\loewe\Woody\App\Application;
+use ws\loewe\Woody\Components\Controls\EditArea;
+use ws\loewe\Woody\Components\Controls\HTMLControl;
+use ws\loewe\Woody\Components\Controls\PushButton;
+use ws\loewe\Woody\Components\Windows\MainWindow;
+use ws\loewe\Woody\Dialog\FileSystem\FileFilters;
+use ws\loewe\Woody\Dialog\FileSystem\FileOpenDialog;
+use ws\loewe\Woody\Event\ActionAdapter;
+use ws\loewe\Woody\Event\ActionEvent;
+use ws\loewe\Woody\Server\HtmlControlServer;
 
 class HTMLControlDemo extends Application {
 
@@ -23,12 +23,12 @@ class HTMLControlDemo extends Application {
      *
      * @var HtmlControlServer
      */
-    private $server         = null;
+    private $server       = null;
 
     /**
      * the port on which the internal server listens
      */
-    private $port           = null;
+    private $port         = null;
 
     /**
      * the document root of the web server
@@ -42,7 +42,7 @@ class HTMLControlDemo extends Application {
      *
      * @var string
      */
-    private $selectedFile   = null;
+    private $selectedFile = null;
 
     public function __construct($port) {
         parent::__construct();
