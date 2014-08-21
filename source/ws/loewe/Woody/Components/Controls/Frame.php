@@ -75,6 +75,11 @@ class Frame extends Control  {
     return $this;
   }
 
+  /**
+   * This method returns all controls contained in the frame.
+   *
+   * @return Control[]
+   */
   public function getComponents() {
     $components = new \SplFixedArray($this->children->count());
 
