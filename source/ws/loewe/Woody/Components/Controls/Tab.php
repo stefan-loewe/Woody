@@ -55,6 +55,22 @@ class Tab extends Control {
   }
 
   /**
+   * This method returns a new collection of the tab pages of the control.
+   *
+   * @return Frame[]
+   */
+  public function getTabPages() {
+    $pages = new \SplFixedArray($this->pages->count());
+
+    $index = 0;
+    foreach($this->pages as $page) {
+      $pages[$index++] = $page;
+    }
+
+    return $pages;
+  }
+
+  /**
    * This method sets the focus on the page with the given header.
    *
    * @param string $header the name of the tab page to be focused.
