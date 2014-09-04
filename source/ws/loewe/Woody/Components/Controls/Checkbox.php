@@ -33,17 +33,17 @@ class Checkbox extends Control implements Actionable {
   /**
    * @inheritDoc
    *
-   * A checkbox cannot be resized any larger than defined by VISIBLE_WIDTH and VISIBLE_HEIGHT, respectively.
+   * A checkbox cannot be resized any larger than defined by Checkbox::MAX_WIDTH and Checkbox::MAX_HEIGHT, respectively.
    *
    * @param Dimension $dimension the Dimension to resize the Checkbox to.
    */
   public function resizeTo(Dimension $dimension) {
-    if($dimension->width > Checkbox::MAX_WIDTH) {
-      $dimension = $dimension->resizeTo(Dimension::createInstance(Checkbox::MAX_WIDTH, $dimension->height));
+    if($dimension->width > self::MAX_WIDTH) {
+      $dimension = $dimension->resizeTo(Dimension::createInstance(self::MAX_WIDTH, $dimension->height));
     }
 
-    if($dimension->height > Checkbox::MAX_HEIGHT) {
-      $dimension = $dimension->resizeTo(Dimension::createInstance($dimension->width, Checkbox::MAX_HEIGHT));
+    if($dimension->height > self::MAX_HEIGHT) {
+      $dimension = $dimension->resizeTo(Dimension::createInstance($dimension->width, self::MAX_HEIGHT));
     }
 
     parent::resizeTo($dimension);
@@ -66,8 +66,8 @@ class Checkbox extends Control implements Actionable {
    * @param boolean $isChecked a flag whether to check or uncheck the checkbox
    * @return Checkbox $this
    */
-  public function setChecked($value) {
-    wb_set_value($this->controlID, ($value === true) ? 1 : 0);
+  public function setChecked($isChecked) {
+    wb_set_value($this->controlID, ($isChecked === true) ? 1 : 0);
 
     return $this;
   }
