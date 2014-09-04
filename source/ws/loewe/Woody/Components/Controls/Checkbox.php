@@ -56,8 +56,7 @@ class Checkbox extends Control implements Actionable {
    * @return boolean true, if the checkbox is checked, else false
    */
   public function isChecked() {
-    // comparison with === 1 fails for checked checkbox
-    return wb_get_value($this->controlID) == 1;
+    return wb_get_value($this->controlID) === 1;
   }
 
   /**
