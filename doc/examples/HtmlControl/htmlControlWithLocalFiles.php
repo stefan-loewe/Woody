@@ -14,6 +14,7 @@ use ws\loewe\Woody\Dialog\FileSystem\FileFilters;
 use ws\loewe\Woody\Dialog\FileSystem\FileOpenDialog;
 use ws\loewe\Woody\Event\ActionAdapter;
 use ws\loewe\Woody\Event\ActionEvent;
+use ws\loewe\Woody\Event\WindowCloseAdapter;
 use ws\loewe\Woody\Server\HtmlControlServer;
 
 class HTMLControlDemo extends Application {
@@ -68,6 +69,12 @@ class HTMLControlDemo extends Application {
         $this->htmlControl->addActionListener(new ActionAdapter($this->getHtmlControlCallback()));
         $this->btnRefresh->addActionListener(new ActionAdapter($this->getBtnRefreshCallback()));
         $this->btnBrowse->addActionListener(new ActionAdapter($this->getBtnBrowseCallback()));
+
+        $this->window->setWindowCloseListener(
+          new WindowCloseAdapter(
+            function($event) {
+              $event->getSource()->close();
+            }));
     }
 
     private function getHtmlControlCallback() {
@@ -159,7 +166,7 @@ class HTMLControlDemo extends Application {
 
     public function start() {
         $this->server = new HtmlControlServer($this->window, $this->port, $this->documentRoot);
-        $this->server->start(100)->register($this->htmlControl);
+        $this->server->start(500)->register($this->htmlControl);
 
         $this->window->startEventHandler();
     }

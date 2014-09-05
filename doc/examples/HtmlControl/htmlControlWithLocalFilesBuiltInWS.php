@@ -11,6 +11,7 @@ use ws\loewe\Woody\Components\Controls\PushButton;
 use ws\loewe\Woody\Components\Windows\MainWindow;
 use ws\loewe\Woody\Event\ActionAdapter;
 use ws\loewe\Woody\Event\ActionEvent;
+use ws\loewe\Woody\Event\WindowCloseAdapter;
 use ws\loewe\Woody\Server\BuiltInWebServer;
 use ws\loewe\Woody\Server\HtmlControlServer;
 
@@ -62,6 +63,12 @@ class HTMLControlDemoBuiltInWebServer extends Application {
 
         $this->btnPhpInfo->addActionListener(new ActionAdapter($this->getBtnPhpInfoCallback()));
         $this->window->getRootPane()->add($this->btnPhpInfo);
+
+        $this->window->setWindowCloseListener(
+          new WindowCloseAdapter(
+            function($event) {
+              $event->getSource()->close();
+            }));
     }
 
     private function getHtmlControlCallback() {
