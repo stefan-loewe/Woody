@@ -2,16 +2,25 @@
 
 namespace ws\loewe\Woody\Components\Controls;
 
-use \ws\loewe\Utils\Geom\Point;
-use \ws\loewe\Utils\Geom\Dimension;
+use ArrayObject;
+use SplFixedArray;
+use ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Point;
 
 class Tab extends Control {
   /**
    * the collection of pages associated with each winbinder tab page
    *
-   * @var \ArrayObject
+   * @var ArrayObject
    */
-  private $pages = null;
+  private $pages;
+
+  /**
+   *
+   * @var boolean determines, whether the pages get vertical scrollbars once
+   * they overflow
+   */
+  private $autoscroll;
 
   /**
    * This method acts as the constructor of the class.
@@ -19,11 +28,12 @@ class Tab extends Control {
    * @param Point $topLeftCorner the top left corner of the edit box
    * @param Dimension $dimension the dimension of the edit box
    */
-  public function __construct(Point $topLeftCorner, Dimension $dimension) {
+  public function __construct(Point $topLeftCorner, Dimension $dimension, $autoscroll = false) {
     parent::__construct(null, $topLeftCorner, $dimension);
 
-    $this->type  = TabControl;
-    $this->pages = new \ArrayObject();
+    $this->type       = TabControl;
+    $this->pages      = new ArrayObject();
+    $this->autoscroll = $autoscroll;
   }
 
   /**
@@ -35,12 +45,21 @@ class Tab extends Control {
     // create a winbinder tab page item
     wb_create_items($this->controlID, $header);
 
-    $this->pages[$header] = new Frame(
-      null,
-      Point::createInstance(-2, -9),
-      Dimension::createInstance($this->dimension->width, $this->dimension->height),
-      $this->pages->count()
-    );
+    if($this->autoscroll) {
+      $this->pages[$header] = new AutoScrollFrame(
+        null,
+        Point::createInstance(-2, -9),
+        Dimension::createInstance($this->dimension->width, $this->dimension->height),
+        $this->pages->count());
+    }
+
+    else {
+      $this->pages[$header] = new Frame(
+        null,
+        Point::createInstance(-2, -9),
+        Dimension::createInstance($this->dimension->width, $this->dimension->height),
+        $this->pages->count());
+    }
     $this->pages[$header]->create($this);
   }
 
@@ -60,7 +79,7 @@ class Tab extends Control {
    * @return Frame[]
    */
   public function getTabPages() {
-    $pages = new \SplFixedArray($this->pages->count());
+    $pages = new SplFixedArray($this->pages->count());
 
     $index = 0;
     foreach($this->pages as $page) {
