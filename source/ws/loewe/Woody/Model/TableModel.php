@@ -20,10 +20,9 @@ abstract class TableModel implements \SplSubject {
   /**
    * This method acts as the constructor of the class.
    */
-  public function __construct() {
-    $this->observers = new \SplObjectStorage();
-
-    $this->headers = new \ArrayObject();
+  public function __construct(array $headers = array()) {
+    $this->headers    = new \ArrayObject($headers);
+    $this->observers  = new \SplObjectStorage();
   }
 
   /**
@@ -55,7 +54,7 @@ abstract class TableModel implements \SplSubject {
     if(!isset($this->headers[$columnIndex])) {
       $this->headers[$columnIndex] = $this->toBase26($columnIndex);
     }
-    
+
     return $this->headers[$columnIndex];
   }
 

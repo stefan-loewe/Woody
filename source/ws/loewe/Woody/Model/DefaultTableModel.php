@@ -14,9 +14,10 @@ class DefaultTableModel extends TableModel {
    * This method acts as the constructor of the class.
    *
    * @param array $data the data of the table model.
+   * @param array $headers the table headers of the table model.
    */
-  public function __construct(array $data) {
-    parent::__construct();
+  public function __construct(array $data, array $headers = array()) {
+    parent::__construct($headers);
 
     $this->data = $data;
   }
