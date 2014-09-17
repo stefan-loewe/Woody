@@ -48,7 +48,7 @@ class Tab extends Control {
     }
 
     // create a winbinder tab page item
-    wb_create_items($this->controlID, $pageLabel);
+    wb_create_items($this->controlID, strlen($pageLabel) > 0 ? $pageLabel : $pageId);
 
     if($this->autoscroll) {
       $this->pages[$pageId] = new AutoScrollFrame(
