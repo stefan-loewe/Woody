@@ -2,11 +2,14 @@
 
 namespace ws\loewe\Woody\Components\Controls;
 
-use \ws\loewe\Woody\Model\TableModel;
-use \ws\loewe\Utils\Geom\Point;
-use \ws\loewe\Utils\Geom\Dimension;
+use ArrayObject;
+use SplObserver;
+use SplSubject;
+use ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Point;
+use ws\loewe\Woody\Model\TableModel;
 
-class Table extends Control implements \SplObserver, Actionable {
+class Table extends Control implements SplObserver, Actionable {
   /**
    * the table model of the table
    *
@@ -29,7 +32,7 @@ class Table extends Control implements \SplObserver, Actionable {
   /**
    * This method returns the model of the table.
    *
-   * @return \ws\loewe\Woody\Model\TableModel
+   * @return TableModel
    */
   public function getModel() {
     return $this->model;
@@ -38,8 +41,8 @@ class Table extends Control implements \SplObserver, Actionable {
   /**
    * This method sets the table model of the table.
    *
-   * @param \ws\loewe\Woody\Model\TableModel $model the model to set
-   * @return \ws\loewe\Woody\Components\Controls\Table $this
+   * @param TableModel $model the model to set
+   * @return Table $this
    */
   public function setModel(TableModel $model) {
     return $this->update($model);
@@ -48,16 +51,20 @@ class Table extends Control implements \SplObserver, Actionable {
   /**
    * This method updates the table with the data of the new table model.
    *
-   * @param \SplSubject $tableModel the new table model containing the new data
-   * @return \ws\loewe\Woody\Components\Controls\Table $this
+   * @param SplSubject $tableModel the new table model containing the new data
+   * @return Table $this
    */
-  public function update(\SplSubject $tableModel) {
+  public function update(SplSubject $tableModel) {
     $this->model = $tableModel;
 
     // clear all entries from the table, and rebuild it with the new data
     $this->clear();
     $this->fillColumnHeaders();
     $this->fillDataCells();
+
+    // remove the selection (of course it would be nice to reselect the previously
+    // selected item, if it is still there, but how to reliable get the new row where it is)
+    $this->setSelectedIndex(null);
 
     return $this;
   }
@@ -76,10 +83,10 @@ class Table extends Control implements \SplObserver, Actionable {
   /**
    * This method fills the header of the table. This is a mandatory step before being able to insert any data.
    *
-   * @return \ws\loewe\Woody\Components\Controls\Table $this
+   * @return Table $this
    */
   private function fillColumnHeaders() {
-    $headers = new \ArrayObject();
+    $headers = new ArrayObject();
     $columnCount = $this->model->getColumnCount();
 
     for($columnIndex = 0; $columnIndex < $columnCount; $columnIndex++) {
@@ -116,15 +123,15 @@ class Table extends Control implements \SplObserver, Actionable {
   /**
    * This method returns the currently selected index of the table.
    *
-   * @return int
+   * @return ArrayObject
    */
   public function getSelectedIndex() {
     if(($selection = wb_get_selected($this->controlID)) !== null) {
-      return new \ArrayObject($selection);
+      return new ArrayObject($selection);
     }
 
     else {
-      return new \ArrayObject();
+      return new ArrayObject();
     }
   }
 
@@ -132,7 +139,7 @@ class Table extends Control implements \SplObserver, Actionable {
    * This method sets the currently selected index of the table.
    *
    * @param int $index the index to set
-   * @return \ws\loewe\Woody\Components\Controls\Table $this
+   * @return Table $this
    */
   public function setSelectedIndex($index) {
     wb_set_selected($this->controlID, $index);
