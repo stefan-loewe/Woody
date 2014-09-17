@@ -39,14 +39,19 @@ class Tab extends Control {
   /**
    * This method adds a new tab page to the tab control.
    *
-   * @param string $header the name of the tab page
+   * @param string $pageId the id of the tab page
+   * @param string $pageLabel the label of the tab page
    */
-  public function addTabPage($header) {
+  public function addTabPage($pageId, $pageLabel = '') {
+    if($this->hasTabPage($pageId)) {
+      throw new \LogicException('The tab control already contains a page with the header id '.$pageId);
+    }
+
     // create a winbinder tab page item
-    wb_create_items($this->controlID, $header);
+    wb_create_items($this->controlID, $pageLabel);
 
     if($this->autoscroll) {
-      $this->pages[$header] = new AutoScrollFrame(
+      $this->pages[$pageId] = new AutoScrollFrame(
         null,
         Point::createInstance(-2, -9),
         Dimension::createInstance($this->dimension->width, $this->dimension->height),
@@ -54,23 +59,37 @@ class Tab extends Control {
     }
 
     else {
-      $this->pages[$header] = new Frame(
+      $this->pages[$pageId] = new Frame(
         null,
         Point::createInstance(-2, -9),
         Dimension::createInstance($this->dimension->width, $this->dimension->height),
         $this->pages->count());
     }
-    $this->pages[$header]->create($this);
+    $this->pages[$pageId]->create($this);
   }
 
   /**
-   * This method returns a handle to the tab page with the given header.
+   * This method returns a handle to the tab page with the given header id.
    *
-   * @param string $header the name of the tab page to be returned.
-   * @return Frame
+   * @param string $pageId the id of the tab page to be returned.
+   * @return Frame the tab page
    */
-  public function getTabPage($header) {
-    return $this->pages[$header];
+  public function getTabPage($pageId) {
+    if(!$this->hasTabPage($pageId)) {
+      throw new \OutOfBoundsException('The tab control does not contain a page with the header id '.$pageId);
+    }
+
+    return $this->pages[$pageId];
+  }
+
+  /**
+   * This method check if the tab page with the given header id exists in this tab control.
+   *
+   * @param string $pageId the id of the tab page for which to perform the check
+   * @return boolean true, if a tab page with the given header id exits, else false
+   */
+  public function hasTabPage($pageId) {
+    return $this->pages->offsetExists($pageId);
   }
 
   /**
@@ -90,18 +109,18 @@ class Tab extends Control {
   }
 
   /**
-   * This method sets the focus on the page with the given header.
+   * This method sets the focus on the page with the given header id.
    *
-   * @param string $header the name of the tab page to be focused.
+   * @param string $pageId the id of the tab page to be focused.
    */
-  public function setFocus($header) {
-    if(!$this->pages->offsetExists($header)) {
-      return;
+  public function setFocus($pageId) {
+    if(!$this->pages->offsetExists($pageId)) {
+      throw new \OutOfBoundsException('The tab control does not contain a page with the header id '.$pageId);
     }
 
     $index = 0;
     foreach($this->pages as $title => $frame) {
-      if($title == $header) {
+      if($title == $pageId) {
         wb_set_selected($this->getControlID(), $index);
         return;
       }
