@@ -27,6 +27,8 @@ class Table extends Control implements SplObserver, Actionable {
     parent::__construct(null, $topLeftCorner, $dimension);
 
     $this->type = ListView;
+    // set this for single selection
+    // $this->style = $this->style | WBC_SINGLE;
   }
 
   /**
