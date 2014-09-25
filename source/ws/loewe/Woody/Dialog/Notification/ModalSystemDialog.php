@@ -54,6 +54,9 @@ abstract class ModalSystemDialog {
    * This method opens the dialog.
    */
   public function open() {
-    $this->state = wb_message_box($this->window->getControlID(), $this->text, $this->title, $this->style);
+    $this->state = wb_message_box($this->window === null ? null : $this->window->getControlID(),
+      $this->text,
+      $this->title,
+      $this->style);
   }
 }
