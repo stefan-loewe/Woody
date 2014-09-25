@@ -6,17 +6,30 @@ use ws\loewe\Utils\Geom\Dimension;
 use ws\loewe\Utils\Geom\Point;
 
 class HyperLink extends Control implements Actionable {
+
+  /**
+   * the url to which the hyperlink control points
+   *
+   * @var string
+   */
+  private $url;
+
   /**
    * This method acts as the constructor of the class.
    *
+   * @param string $url the url to which the hyperlink control points
    * @param string $label the label of the hyperlink control
    * @param Point $topLeftCorner the top left corner of the hyperlink control
    * @param Dimension $dimension the dimension of the hyperlink control
    */
-  public function __construct($label, Point $topLeftCorner, Dimension $dimension) {
+  public function __construct($url, $label, Point $topLeftCorner, Dimension $dimension) {
     parent::__construct($label, $topLeftCorner, $dimension);
 
-    $this->type = HyperLink;
+    $this->type   = HyperLink;
+    $this->style  = $this->style | WBC_LINES;
+    $this->param  = $this->param | BLUE;
+
+    $this->url    = $url;
   }
 
   /**
@@ -38,5 +51,23 @@ class HyperLink extends Control implements Actionable {
     wb_set_text($this->controlID, $label);
 
     return $this;
+  }
+
+  /**
+   * This method returns the url to which the hyperlink points.
+   *
+   * @return string
+   */
+  public function getUrl() {
+    return $this->url;
+  }
+
+  /**
+   * This method sets the url to which the hyperlink points.
+   *
+   * @param string $url the url to which the hyperlink points
+   */
+  public function setUrl($url) {
+    $this->url = $url;
   }
 }
