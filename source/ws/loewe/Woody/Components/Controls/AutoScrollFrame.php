@@ -141,4 +141,12 @@ class AutoScrollFrame extends Frame  {
 
     return $maxYOffset +  self::$SCROLL_PANE_EXTRA_OUTSET;
   }
+
+  public function resizeBy(Dimension $dimension) {
+    parent::resizeBy($dimension);
+
+    $this->scrollPane->resizeBy($dimension);
+
+    $this->scrollBar->resizeBy($dimension);
+  }
 }

@@ -128,4 +128,12 @@ class Tab extends Control {
       $index++;
     }
   }
+
+  public function resizeBy(Dimension $dimension) {
+    parent::resizeBy($dimension);
+
+    foreach($this->pages as $page) {
+      $page->resizeBy($dimension);
+    }
+  }
 }
