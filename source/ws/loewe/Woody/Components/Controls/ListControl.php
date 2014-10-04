@@ -107,7 +107,6 @@ abstract class ListControl extends Control implements \SplObserver, Actionable {
   public function update(\SplSubject $listModel) {
     $this->model = $listModel;
 
-    $selectedIndex = /* max(0, */$this->getSelectedIndex()/* ) */;
     $options = array();
 
     if(($count = $this->model->count()) > 0) {
@@ -118,7 +117,7 @@ abstract class ListControl extends Control implements \SplObserver, Actionable {
 
     wb_set_text($this->controlID, $options);
 
-    $this->setSelectedIndex($selectedIndex);
+    $this->setSelectedIndex(self::NO_SELECTION);
 
     return $this;
   }
