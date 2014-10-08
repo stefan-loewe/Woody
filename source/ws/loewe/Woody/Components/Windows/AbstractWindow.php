@@ -2,34 +2,35 @@
 
 namespace ws\loewe\Woody\Components\Windows;
 
-use \ws\loewe\Woody\Components\Component;
-use \ws\loewe\Utils\Geom\Point;
-use \ws\loewe\Utils\Geom\Dimension;
-use \ws\loewe\Woody\System\WindowConstraints;
-use \ws\loewe\Woody\Event\WindowResizeListener;
-use \ws\loewe\Woody\Components\Controls\Frame;
-use \ws\loewe\Woody\Event\WindowCloseListener;
+use SplObjectStorage;
+use ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Point;
+use ws\loewe\Woody\Components\Component;
+use ws\loewe\Woody\Components\Controls\Frame;
+use ws\loewe\Woody\Event\WindowCloseListener;
+use ws\loewe\Woody\Event\WindowResizeListener;
+use ws\loewe\Woody\System\WindowConstraints;
 
 abstract class AbstractWindow extends Component {
 
   /**
    * the close listener registered for this window
    *
-   * @var \ws\loewe\Woody\Event\WindowCloseListener
+   * @var WindowCloseListener
    */
   protected $closeListener        = null;
 
   /**
    * the collection of resize listeners registered for this window
    *
-   * @var \SplObjectStorage
+   * @var SplObjectStorage
    */
   protected $resizeListeners      = null;
 
   /**
    * the root pane of the window
    *
-   * @var ws\loewe\Woody\Components\Controls\Frame
+   * @var Frame
    */
   protected $rootPane             = null;
 
@@ -162,7 +163,7 @@ abstract class AbstractWindow extends Component {
    * This method sets the title of the window.
    *
    * @param string $title the title of the window
-   * @return \ws\loewe\Woody\Components\Windows\AbstractWindow $this
+   * @return AbstractWindow $this
    */
   public function setTitle($title) {
     wb_set_text($this->controlID, $title);
@@ -211,7 +212,7 @@ abstract class AbstractWindow extends Component {
    */
   public function addWindowResizeListener(WindowResizeListener $resizeListener) {
     if($this->resizeListeners == null) {
-      $this->resizeListeners = new \SplObjectStorage();
+      $this->resizeListeners = new SplObjectStorage();
     }
 
     $this->resizeListeners->attach($resizeListener);
@@ -222,10 +223,10 @@ abstract class AbstractWindow extends Component {
   /**
    * This method returns the collection of resize listeners registered for this window.
    *
-   * @return \SplObjectStorage the collection of resize listeners registered for this window
+   * @return SplObjectStorage the collection of resize listeners registered for this window
    */
   public function getWindowResizeListeners() {
-    return ($this->resizeListeners == null) ? new \SplObjectStorage() : $this->resizeListeners;
+    return ($this->resizeListeners == null) ? new SplObjectStorage() : $this->resizeListeners;
   }
 
   /**
