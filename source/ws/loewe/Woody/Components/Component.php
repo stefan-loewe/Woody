@@ -406,4 +406,10 @@ abstract class Component implements IComponent {
 
     return $this;
   }
+
+  public function focus() {
+    wb_set_focus($this->controlID);
+
+    return $this;
+  }
 }

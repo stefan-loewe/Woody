@@ -80,4 +80,6 @@ interface IComponent {
   public function enable();
 
   public function disable();
+
+  public function focus();
 }
