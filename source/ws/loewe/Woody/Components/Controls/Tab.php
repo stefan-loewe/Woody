@@ -3,11 +3,21 @@
 namespace ws\loewe\Woody\Components\Controls;
 
 use ArrayObject;
+use LogicException;
+use OutOfBoundsException;
 use SplFixedArray;
 use ws\loewe\Utils\Geom\Dimension;
 use ws\loewe\Utils\Geom\Point;
 
 class Tab extends Control {
+
+  /**
+   * a constant for the maximum dimensions of a tab control
+   *
+   * @var int
+   */
+  private static $MAX_SIZE = 32768;
+
   /**
    * the collection of pages associated with each winbinder tab page
    *
@@ -44,11 +54,18 @@ class Tab extends Control {
    */
   public function addTabPage($pageId, $pageLabel = '') {
     if($this->hasTabPage($pageId)) {
-      throw new \LogicException('The tab control already contains a page with the header id '.$pageId);
+      throw new LogicException('The tab control already contains a page with the header id '.$pageId);
     }
 
     // create a winbinder tab page item
+    // the size set to MAX_SIZE in both dimensions, because tab pages cannot be
+    // resized (WinBinder/WinApi bug), so when trying to increase the size of a
+    // tab page the tab page is not getting larger
+    // so we just make it really big, that it fits everything, and have to live
+    // with the fact that it oveflows its parent, resulting in an ugly UI effect
+    wb_set_size($this->controlID, self::$MAX_SIZE, self::$MAX_SIZE);
     wb_create_items($this->controlID, strlen($pageLabel) > 0 ? $pageLabel : $pageId);
+    wb_set_size($this->controlID, $this->dimension->width, $this->dimension->height);
 
     if($this->autoscroll) {
       $this->pages[$pageId] = new AutoScrollFrame(
@@ -76,7 +93,7 @@ class Tab extends Control {
    */
   public function getTabPage($pageId) {
     if(!$this->hasTabPage($pageId)) {
-      throw new \OutOfBoundsException('The tab control does not contain a page with the header id '.$pageId);
+      throw new OutOfBoundsException('The tab control does not contain a page with the header id '.$pageId);
     }
 
     return $this->pages[$pageId];
@@ -109,13 +126,26 @@ class Tab extends Control {
   }
 
   /**
+   * This method gets the tab currently having the focus.
+   *
+   * @return Frame the tab page having the focus
+   */
+  public function getFocusedTab() {
+    if($this->pages->count() === 0) {
+      return null;
+    }
+
+    return $this->getTabPages()[wb_get_selected($this->getControlID())];
+  }
+
+  /**
    * This method sets the focus on the page with the given header id.
    *
    * @param string $pageId the id of the tab page to be focused.
    */
   public function setFocus($pageId) {
     if(!$this->pages->offsetExists($pageId)) {
-      throw new \OutOfBoundsException('The tab control does not contain a page with the header id '.$pageId);
+      throw new OutOfBoundsException('The tab control does not contain a page with the header id '.$pageId);
     }
 
     $index = 0;
@@ -129,6 +159,11 @@ class Tab extends Control {
     }
   }
 
+  /**
+   * This method resizes the tab by the given dimension.
+   *
+   * @param Dimension $dimension
+   */
   public function resizeBy(Dimension $dimension) {
     parent::resizeBy($dimension);
 
