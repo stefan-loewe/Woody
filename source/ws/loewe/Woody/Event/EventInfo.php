@@ -2,7 +2,9 @@
 
 namespace ws\loewe\Woody\Event;
 
-use \ws\loewe\Woody\Components\Component;
+use ws\loewe\Woody\Components\Accelerators\Accelerator;
+use ws\loewe\Woody\Components\Component;
+use ws\loewe\Woody\Components\Timer\Timer;
 
 class EventInfo {
   use \ws\loewe\Utils\Common\ValueObject;
@@ -22,6 +24,10 @@ class EventInfo {
     $this->property    = $propertyID;
 
     $this->source      = $component;
+
+    if($this->isAcceleratorEvent()) {
+      $this->source = Accelerator::getAcceleratorByID($this->id);
+    }
   }
 
   public function isWindowEvent() {
@@ -45,7 +51,11 @@ class EventInfo {
   }
 
   public function isTimerEvent() {
-    return $this->isWindowEvent() && $this->id != 0 && $this->id != IDCLOSE;
+    return $this->isWindowEvent() && $this->id != 0 && $this->id != IDCLOSE && Timer::getTimerByID($this->id) !== null;
+  }
+
+  public function isAcceleratorEvent() {
+    return $this->isWindowEvent() && $this->id != 0 && $this->id != IDCLOSE && Accelerator::getAcceleratorByID($this->id) !== null;
   }
 
   public function isControlEvent() {

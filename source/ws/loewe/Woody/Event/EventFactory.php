@@ -44,6 +44,10 @@ class EventFactory {
       $events[] = self::createTimeoutEvent($eventInfo);
     }
 
+    else if($eventInfo->isAcceleratorEvent()) {
+      $events[] = self::createActionEvent($eventInfo);
+    }
+
     else if($eventInfo->isFocusEvent()) {
       $events[] = self::createFocusEvent($eventInfo);
     }
@@ -97,7 +101,8 @@ class EventFactory {
     $event = new ActionEvent($eventInfo);
 
     // only Actionables and HttpGetRequests can trigger action events, the rest just emits NoOpEvents
-    if(!(($event->getSource() instanceof Actionable) || ($event->property instanceof HttpGetRequest))) {
+    if(!(($event->getSource() instanceof Actionable)
+      || ($event->property instanceof HttpGetRequest))) {
       return new NoOpEvent($eventInfo);
     }
 
