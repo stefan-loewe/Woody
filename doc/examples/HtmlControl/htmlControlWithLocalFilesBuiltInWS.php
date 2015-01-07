@@ -110,7 +110,7 @@ class HTMLControlDemoBuiltInWebServer extends Application {
 
         $this->server->start()->register($this->htmlControl);
 
-        $this->window->startEventHandler();
+        parent::start();
     }
 
     public function stop() {

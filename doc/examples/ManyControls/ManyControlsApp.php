@@ -93,9 +93,7 @@ class ManyControlsApp extends Application {
   }
 
   public function start() {
-    $this->window->startEventHandler();
-
-    return $this;
+    parent::start();
   }
 
   public function stop() {

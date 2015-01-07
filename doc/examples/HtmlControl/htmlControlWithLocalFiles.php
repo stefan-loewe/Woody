@@ -168,7 +168,7 @@ class HTMLControlDemo extends Application {
         $this->server = new HtmlControlServer($this->window, $this->port, $this->documentRoot);
         $this->server->start(500)->register($this->htmlControl);
 
-        $this->window->startEventHandler();
+        parent::start();
     }
 
     public function stop() {
