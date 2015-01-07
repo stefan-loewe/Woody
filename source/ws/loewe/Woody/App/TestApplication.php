@@ -54,15 +54,11 @@ class TestApplication extends Application {
 
   /**
    * This method starts the test application.
-   *
-   * @return \ws\loewe\Woody\App\TestApplication $this
    */
   public function start() {
     $this->isRunning = TRUE;
 
-    $this->window->startEventHandler();
-
-    return $this;
+    parent::start();
   }
 
   /**

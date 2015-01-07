@@ -59,6 +59,8 @@ abstract class AbstractWindow extends Component {
 
     $this->createRootPane();
 
+    wb_set_handler($this->controlID, 'globalWinBinderEventHandler');
+
     return $this;
   }
 
@@ -91,19 +93,6 @@ abstract class AbstractWindow extends Component {
    */
   private function destroy() {
     wb_destroy_window($this->controlID);
-
-    return $this;
-  }
-
-  /**
-   * This method starts the main loop of the window.
-   *
-   * @return AbstractWindow $this
-   */
-  public function startEventHandler() {
-    wb_set_handler($this->controlID, 'globalWinBinderEventHandler');
-
-    wb_main_loop();
 
     return $this;
   }

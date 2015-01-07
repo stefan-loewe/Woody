@@ -46,8 +46,13 @@ abstract class Application {
 
   /**
    * This method starts the application.
+   *
+   * Any subclass of this class must call this method at the end of its own
+   * implementation of start, so that the main loop is executed.
    */
-  abstract public function start();
+  public function start() {
+    wb_main_loop();
+  }
 
   /**
    * This method stops the application.
