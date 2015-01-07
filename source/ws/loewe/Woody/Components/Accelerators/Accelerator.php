@@ -5,16 +5,31 @@ namespace ws\loewe\Woody\Components\Accelerators;
 use SplObjectStorage;
 use ws\loewe\Woody\Components\Component;
 use ws\loewe\Woody\Components\Controls\Actionable;
-use ws\loewe\Woody\Components\Controls\Button;
 use ws\loewe\Woody\Components\Windows\AbstractWindow;
 use ws\loewe\Woody\Event\ActionListener;
 
 class Accelerator implements Actionable {
 
+  /**
+   * the internal id of this component
+   *
+   * @var int
+   */
   private $id;
 
+  /**
+   * the keys bound to this control, e.g. array("Alt", "F2") for the key
+   * combination of "ALT+F2"
+   *
+   * @var array
+   */
   private $keys;
 
+  /**
+   * the window to which this accelerator is bound to
+   *
+   * @var AbstractWindow
+   */
   private $window;
 
   /**
@@ -25,7 +40,7 @@ class Accelerator implements Actionable {
   private $actionListeners = null;
 
   /**
-   * the collection of all timers
+   * the collection of all accelerators
    *
    * @var array[int]Accelerator
    */
