@@ -60,7 +60,7 @@ class CalendarTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetSetDate() {
     $this->timer = new Timer(function() {
-                              $date = \DateTime::createFromFormat('d.m.Y H:i:s', '1.1.2011 00:00:00');
+                              $date = \DateTime::createFromFormat('d.m.Y H:i:s', '1.1.2015 00:00:00');
                               $correct = TRUE;
                               for($i = 0; $i <= 366 * 4; ++$i) {
                                 $date = $date->add(new \DateInterval('P1D'));

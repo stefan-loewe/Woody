@@ -2,11 +2,12 @@
 
 namespace ws\loewe\Woody\Components\Timer;
 
-use \ws\loewe\Woody\Components\Windows\MainWindow;
-use \ws\loewe\Utils\Geom\Point;
-use \ws\loewe\Utils\Geom\Dimension;
-use \ws\loewe\Woody\Components\Timer\TimerAlreadyRunningException;
-use \ws\loewe\Woody\Components\Timer\TimerNotRunningException;
+use ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Point;
+use ws\loewe\Woody\App\TestApplication;
+use ws\loewe\Woody\Components\Timer\TimerAlreadyRunningException;
+use ws\loewe\Woody\Components\Timer\TimerNotRunningException;
+use ws\loewe\Woody\Components\Windows\MainWindow;
 
 /**
  * Test class for Timer.
@@ -16,14 +17,21 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
   /**
    * the timer to test
    *
-   * @var \ws\loewe\Woody\Components\Timer\Timer
+   * @var Timer
    */
   private $timer = null;
 
   /**
+   * the test application
+   *
+   * @var TestApplication
+   */
+  private $app = null;
+
+  /**
    * the window to which the timer is bound to
    *
-   * @var \ws\loewe\Woody\Components\Windows\MainWindow
+   * @var MainWindow
    */
   private $window = null;
 
@@ -38,9 +46,9 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    * This method sets up a plain window for testing.
    */
   protected function setUp() {
-    $this->window = new MainWindow($this->getName().'-'.basename(__FILE__), Point::createInstance(50, 50), Dimension::createInstance(300, 200));
+    $this->app = new TestApplication();
 
-    $this->window->create(null);
+    $this->window = $this->app->getWindow();
 
     $this->counter = 0;
   }
@@ -67,7 +75,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
     $this->timer = new Timer($callback, $this->window, Timer::TEST_TIMEOUT);
 
     $this->timer->start();
-    $this->window->startEventHandler();
+    $this->app->start();
   }
 
   /**
@@ -87,7 +95,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
 
     $this->timer->start();
 
-    $this->window->startEventHandler();
+    $this->app->start();
   }
 
   /**
@@ -108,7 +116,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
 
     $this->timer->start();
 
-    $this->window->startEventHandler();
+    $this->app->start();
   }
 
   /**
@@ -118,24 +126,24 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetID() {
     $callback = function() {
-      $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
+      $this->assertEquals($this->window->getID() + 3, $this->timer->getID());
 
       $this->timer->destroy();
       $this->window->close();
 
-      $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
+      $this->assertEquals($this->window->getID() + 3, $this->timer->getID());
     };
     $this->timer = new Timer($callback, $this->window, Timer::TEST_TIMEOUT);
 
-    $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
+    $this->assertEquals($this->window->getID() + 3, $this->timer->getID());
 
     $this->timer->start();
 
-    $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
+    $this->assertEquals($this->window->getID() + 3, $this->timer->getID());
 
-    $this->window->startEventHandler();
+    $this->app->start();
 
-    $this->assertEquals($this->window->getID() + 2, $this->timer->getID());
+    $this->assertEquals($this->window->getID() + 3, $this->timer->getID());
   }
 
   /**
@@ -156,7 +164,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
     $this->assertNull(Timer::getTimerByID(1000));
 
     $this->timer->start();
-    $this->window->startEventHandler();
+    $this->app->start();
 
     $this->assertEquals($timer->getID(), $this->timer->getID());
     $this->assertNull(Timer::getTimerByID(1000));
@@ -182,7 +190,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(0, $this->timer->getExecutionCount());
 
     $this->timer->start();
-    $this->window->startEventHandler();
+    $this->app->start();
   }
 
   /**
@@ -210,7 +218,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
 
     $this->timer->start();
 
-    $this->window->startEventHandler();
+    $this->app->start();
   }
 
   /**
@@ -254,7 +262,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
     $this->timer->start();
     $this->assertTrue($this->timer->isRunning());
 
-    $this->window->startEventHandler();
+    $this->app->start();
   }
 
   /**
@@ -270,13 +278,13 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
       ->getMock();
 
     $this->timer = new Timer(function() {}, $this->window, Timer::TEST_TIMEOUT);
-    
+
     $this->assertEquals($this->timer, $this->timer->addTimeoutListener($timeoutListener));
     $this->assertTrue($this->timer->getTimeoutListeners()->contains($timeoutListener));
 
     $this->assertEquals($this->timer, $this->timer->removeTimeoutListener($timeoutListener));
     $this->assertFalse($this->timer->getTimeoutListeners()->contains($timeoutListener));
-    
+
     $this->window->close();
   }
 }

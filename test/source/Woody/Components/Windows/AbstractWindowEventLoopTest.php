@@ -2,9 +2,8 @@
 
 namespace ws\loewe\Woody\Components\Windows;
 
-use \ws\loewe\Utils\Geom\Point;
-use \ws\loewe\Utils\Geom\Dimension;
-use \ws\loewe\Woody\Components\Timer\Timer;
+use ws\loewe\Woody\App\TestApplication;
+use ws\loewe\Woody\Components\Timer\Timer;
 
 /**
  * Test class for AbstractWindow.
@@ -53,8 +52,10 @@ class AbstractWindowEventLoopTest extends \PHPUnit_Framework_TestCase {
    * @covers \ws\loewe\Woody\Components\Windows\AbstractWindow::startEventHandler
    */
   public function testStartEventHandler() {
-    $this->window = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
-    $this->window->create(null);
+    $app = new TestApplication();
+
+    $this->window = $app->getWindow();
+
     $this->counter = 0;
 
     $this->assertEquals(1, ++$this->counter);
@@ -72,7 +73,7 @@ class AbstractWindowEventLoopTest extends \PHPUnit_Framework_TestCase {
     $this->timer->start();
 
     $this->assertEquals(3, ++$this->counter);
-    $this->window->startEventHandler();
+    $app->start();
 
     $this->assertEquals(7, ++$this->counter);
   }

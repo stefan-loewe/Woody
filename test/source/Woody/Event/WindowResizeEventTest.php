@@ -2,11 +2,9 @@
 
 namespace ws\loewe\Woody\Event;
 
-use \ws\loewe\Woody\App\TestApplication;
-use \ws\loewe\Woody\Components\Timer\Timer;
-use \ws\loewe\Woody\Components\Windows\MainWindow;
-use \ws\loewe\Utils\Geom\Point;
-use \ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Dimension;
+use ws\loewe\Utils\Geom\Point;
+use ws\loewe\Woody\Components\Windows\MainWindow;
 
 /**
  * Test class for WindowResizeEvent.
@@ -26,7 +24,7 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
    */
   protected function tearDown() {
   }
-  
+
  /**
    * This method tests dispatching the event.
    *
@@ -35,20 +33,20 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
   public function testDispatch() {
     $window = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
     $window->create();
-    
+
     $resizeListener = $this->getMockBuilder('\ws\loewe\Woody\Event\WindowResizeAdapter')
       ->disableOriginalConstructor()
       ->getMock();
-    
+
     $resizeListener->expects($this->once())->method('windowResized');
     $window->addWindowResizeListener($resizeListener);
 
     $event = new WindowResizeEvent(new EventInfo($window->getControlID(), 0, $window, WBC_RESIZE, 0));
     $event->dispatch();
-    
+
     $window->close();
   }
-  
+
   /**
    * @covers \ws\loewe\Woody\Event\WindowResizeEvent::__construct
    * @covers \ws\loewe\Woody\Event\Event::__construct
@@ -59,18 +57,21 @@ class WindowResizeEventTest extends \PHPUnit_Framework_TestCase {
   public function testDim() {
     $window = new MainWindow('MainWindow', Point::createInstance(50, 50), Dimension::createInstance(300, 200));
     $window->create();
-    
-    // simulate an event - no real event will be triggered, as event loop is not running ...
+
+    // override the event handler ...
+    wb_set_handler($window->getControlID(), 'noopEventHandler');
+
+    // ... simulate an event - no real event will be triggered, as event loop is not running ...
     wb_set_size($window->getControlID(), 400, 250);
 
     // ... therefore, we have to build our own
     $event = new WindowResizeEvent(new EventInfo($window->getControlID(), 0, $window, WBC_RESIZE, 0));
     $event->dispatch();
-    
+
     $this->assertEquals(Dimension::createInstance(300, 200), $event->getOldDimension());
     $this->assertEquals(Dimension::createInstance(400, 250), $event->getNewDimension());
     $this->assertEquals(Dimension::createInstance(100, 50), $event->getDeltaDimension());
-    
+
     $window->close();
   }
 }
