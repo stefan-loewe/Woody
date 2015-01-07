@@ -23,6 +23,10 @@ function globalWinBinderEventHandler($windowID, $id, $controlID = 0, $type = 0, 
   }
 }
 
+function noopEventHandler($windowID, $id, $controlID = 0, $type = 0, $property = 0) {
+
+}
+
 $callback = function($errno, $errstr, $errfile, $errline) {
   $errorException = new \ErrorException($errstr, 0, $errno, $errfile, $errline);
 

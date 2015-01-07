@@ -68,7 +68,8 @@ class Calendar extends Control implements Actionable {
     $actual = wb_get_value($this->controlID);
 
     // ... differs from the expected, add the difference to the timestamp
-    if(($difference = $timestamp - $actual) != 0)
+    if(($difference = $timestamp - $actual) != 0) {
       wb_set_value($this->controlID, $date->getTimestamp() + $difference);
+    }
   }
 }

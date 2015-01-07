@@ -30,7 +30,7 @@ class WindowResizeEvent extends Event {
     parent::__construct($eventInfo);
 
     // the previous dimension is still stored in the Woody object
-      $this->oldDimension = $this->getSource()->getDimension();
+    $this->oldDimension = $this->getSource()->getDimension();
 
     // the winbinder resource already has the new dimension
     $newDim = wb_get_size($this->getSource()->getControlID());
