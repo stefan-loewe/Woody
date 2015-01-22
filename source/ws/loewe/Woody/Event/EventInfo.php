@@ -25,7 +25,11 @@ class EventInfo {
 
     $this->source      = $component;
 
-    if($this->isAcceleratorEvent()) {
+    if($this->isTimerEvent()) {
+      $this->source = Timer::getTimerByID($this->id);
+    }
+
+    else if($this->isAcceleratorEvent()) {
       $this->source = Accelerator::getAcceleratorByID($this->id);
     }
   }
