@@ -26,13 +26,6 @@ class Accelerator implements Actionable {
   private $keys;
 
   /**
-   * the window to which this accelerator is bound to
-   *
-   * @var AbstractWindow
-   */
-  private $window;
-
-  /**
    * the collection of action listeners registered for the component
    *
    * @var \SplObjectStorage
@@ -53,12 +46,16 @@ class Accelerator implements Actionable {
     self::$accelerators[$this->id] = $this;
   }
 
-  public function bindToWindow(AbstractWindow $window) {
-    $this->window = $window;
+  public static function attachToWindow(AbstractWindow $window) {
+    $accels = array();
 
-    wb_create_control($window->getControlID(), Accel, array(
-        array($this->id, implode('+', $this->keys))
-    ));
+    foreach(self::$accelerators as $accel) {
+      $accels[] = array($accel->id, implode('+', $accel->keys));
+    }
+
+    if(count($accels) > 0) {
+      wb_create_control($window->getControlID(), Accel, $accels);
+    }
   }
 
   /**

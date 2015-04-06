@@ -135,7 +135,7 @@ class Tab extends Control {
       return null;
     }
 
-    return $this->getTabPages()[wb_get_selected($this->getControlID())];
+    return $this->getTabPages()[$this->getIndexOfFocusedTab()];
   }
 
   /**
@@ -157,6 +157,41 @@ class Tab extends Control {
 
       $index++;
     }
+  }
+
+  public function focusTabByIndex($tabIndex) {
+    wb_set_selected($this->getControlID(), $tabIndex);
+  }
+
+  public function focusNextTab() {
+    $this->focusTab(+1);
+  }
+
+  public function focusPreviousTab() {
+    $this->focusTab(-1);
+  }
+
+  private function focusTab($direction) {
+    if($this->pages->count() === 0) {
+      return;
+    }
+
+    $currentIndex = $this->getIndexOfFocusedTab();
+    $newIndex = $currentIndex + $direction;
+
+    if($newIndex < 0) {
+      $newIndex = $this->pages->count() - 1;
+    }
+
+    else if($newIndex >= $this->pages->count()) {
+      $newIndex = 0;
+    }
+
+    wb_set_selected($this->getControlID(), $newIndex);
+  }
+
+  private function getIndexOfFocusedTab() {
+    return wb_get_selected($this->getControlID());
   }
 
   /**
